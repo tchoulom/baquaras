@@ -1,0 +1,314 @@
+/* liste_appli.css */
+
+@font-face {
+	font-family: 'roboto';
+	src: url('../polices/roboto-regular-webfont.eot');
+	src: url('../polices/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-regular-webfont.woff') format('woff'),
+		url('../polices/Roboto-Regular.ttf') format('truetype'),
+		url('../polices/roboto-regular-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'robotolight';
+	src: url('../polices/roboto-light-webfont.eot') format('truetype');
+	src: url('../polices/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-light-webfont.woff') format('woff'),
+		url('../polices/Roboto-Light.ttf') format('truetype'),
+		url('../polices/roboto-light-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'Trebuchet MS';
+	src: url('../polices/trebuc.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+#page div#flashbag {
+	font-family: "Trebuchet MS";
+	font-size: 0.8em;
+	color: #444444;
+}
+#page div#flashbag #img {
+	display: block;
+	height: 30px;
+	width: 30px;
+	padding: 0;
+	float: left;
+	background: url('../images/info_icon.png') no-repeat;
+	margin-bottom: 20px;
+}
+#page div#flashbag #texte {
+	display: block;
+	height: 24px;
+	padding: 0;
+	float: left;
+	margin: 6px 0 20px 15px;
+	vertical-align:middle;
+	color: #444444;
+}
+
+/***************************************************************************************************************** Tableau (liste d'applications) **********/
+#listerappli,
+#listerappliqualif,
+#listerUsers {
+	padding: 20px 45px 30px 45px;
+}
+#listerappliqualif div#content div.position_link {
+	font-size:0.9em;
+	text-align:center;
+}
+#listerappliqualif div#content div.position_link  a{
+	color:#333333;
+}
+#listerappliqualif div#content div.position_link a:hover {
+	color: #008080;
+}
+#listerappli table#liste ,
+#listerappliqualif table#liste ,
+#listerUsers table#liste {
+	border-collapse:collapse;
+	width: 100%;
+	font-family:"Trebuchet MS", "robotolight";
+	box-shadow: 4px 4px 5px #999999;
+	z-index:0;
+	margin-top:20px;
+}
+#listerappli table#boutons {
+	border-collapse:collapse;
+	width: 100%;
+	font-family:"Trebuchet MS", "robotolight";
+	z-index:0;
+}
+
+#listerappli table#liste  tbody,
+#listerappliqualif table#liste  tbody,
+#listerUsers table#liste tbody {
+	padding:0;
+	z-index:0;
+}
+#listerappli table#liste  tr#trpair,
+#listerappliqualif table#liste  tr#trpair,
+#listerUsers table#liste tbody tr#trpair {
+	background-color: #afd6d6;
+	border-top:1px solid white;
+	z-index:0;
+}
+#listerappli table#liste  tr#trimpair,
+#listerappliqualif table#liste  tr#trimpair,
+#listerUsers table#liste tbody tr#trimpair {
+	background-color: #ddeded;
+	border-top:1px solid white;
+	z-index:0;
+}
+#listerappli table#liste  tr#tr1,
+#listerappliqualif table#liste  tr#tr1,
+#listerUsers table#liste tbody tr#tr1 {
+	background-color:#444444;
+	border-bottom : none;
+	color:white;
+	font-size: 1.1em;
+	margin: 0;
+	padding: 6px;
+	font-family: "Trebuchet MS", "robotolight";
+	height: 20px;
+	font-weight:normal;
+	z-index:0;
+	border-radius: 5px 5px 0 0;
+}
+#listerappliqualif table#liste  tr td,
+#listerUsers table#liste tbody tr td {
+	border-right:1px dashed white;
+}
+#listerappliqualif table#liste  tr td#td6,
+#listerUsers table#liste tbody trtd#td7 {
+	border-right: none;
+}
+#listerappli table#liste  tbody tr td,
+#listerappliqualif table#liste  tbody tr td,
+#listerUsers table#liste tbody tr td {
+	font-size: 0.8em;
+	padding:7px 5px 9px 10px;
+	z-index:0;
+}
+#listerappli table#liste  a,
+#listerappliqualif table#liste  a,
+#listerUsers table#liste a {
+	color:#008080;
+	z-index:0;
+}
+#listerappli table#boutons tbody tr td {
+	text-align: center;
+}
+#listerappli table#boutons tbody tr td a,
+#listerUsers table#liste tbody tr td a {
+	cursor: pointer;
+	text-decoration: none;
+}
+#listerappli table#boutons tbody tr td a button {
+	font-family: "Trebuchet MS";
+	margin: 0 auto;
+	cursor: pointer;
+	background: rgba(133, 194, 194, 1);
+	border-radius: 5px;
+	border : 1px solid #54AAA9;
+	color: white;
+	padding: 5px;
+	box-shadow: 2px 2px 4px #999999;
+	background: #54AAA9; 
+}
+#listerappli table#boutons tbody tr td a button:hover{ 
+	color: white;
+	background: rgba(133, 194, 194, 1);
+	background: #018181; 
+}
+#listerappli table#boutons tbody tr td a button:active{ 
+	color: #000; 
+	background: #85C2C2;
+	background: #9FE6E6; 
+	box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba( 255, 255, 255, 0.4); 
+}
+#listerappli div#export {
+	margin-top: 10px;
+}
+#listerappli div#export a {
+	color: #058282;
+	font-size: 0.9em;
+}
+
+/**************************************************************************************************/
+#page form.rechercher  {
+	width: 1050px;
+	padding: 20px 45px 0px 45px;
+}
+.rechercher div#simple {
+	border:1px solid #54aaa9;
+	padding-bottom: 15px;
+	margin-bottom: 10px;
+}
+.rechercher div#simple h2,
+.rechercher div#avancee h2 {
+	font-size: 1em;
+	color: white;
+	background: #54aaa9;
+	margin-top: 0;
+	padding: 6px 0 6px 10px;
+	font-family: "roboto";
+	font-weight: normal;
+}
+.rechercher div#avancee {
+	border:1px solid #54aaa9;
+	padding-bottom: 15px;
+}
+.rechercher div table tbody tr td#choice {
+	padding:5px 15px 5px 0px;
+	font-size:0.9em;
+}
+.rechercher div#avancee table tbody tr td#choice div#form_type input,
+.rechercher div#avancee table tbody tr td#choice div#form_palierTechnique input {
+	clear:both;
+	float:left;
+	display:block
+}
+.rechercher div#avancee table tbody tr td#choice div#form_type label,
+.rechercher div#avancee table tbody tr td#choice div#form_palierTechnique label {
+	float:left;
+	width:500px;
+	margin-left:8px;
+	margin-bottom:3px; /*** IE FIX ***/
+}
+.rechercher div#resultat table {
+	border-collapse:collapse;
+	width: 100%;
+	font-family:"Trebuchet MS", "robotolight";
+	box-shadow: 4px 4px 5px #999999;
+	z-index:0;
+	margin-bottom:30px;
+}
+.rechercher div#resultat table tbody tr th {
+	font-size:0.9em;
+	border-left: 1px dashed white;
+}
+.rechercher div#resultat table tbody {
+	padding:0;
+	z-index:0;
+}
+
+.rechercher div#resultat table tr {
+	background-color: rgba(133,194,194,0.7);
+	z-index:0;
+	font-weight:normal;
+}
+.rechercher div#resultat table tr#trimpair {
+	background-color: rgba(133,194,194,0.3);
+	z-index:0;
+}
+.rechercher div#resultat table tr#tr1 {
+	background-color:#444444;
+	border-bottom : none;
+	color:white;
+	font-size: 1em;
+	margin: 0;
+	padding: 6px;
+	font-family: "Trebuchet MS", "robotolight";
+	height: 20px;
+	font-weight:normal;
+	z-index:0;
+}
+.rechercher div#resultat table tbody tr#trin2 { 
+	border-top:1px solid white;
+	z-index:0;
+}
+.rechercher div#resultat table tbody tr td {
+	font-size: 0.8em;
+	padding:7px 5px 9px 10px;
+	z-index:0;
+	border-left: 1px dashed white;
+}
+.rechercher div#resultat table a {
+	color:#008080;
+	z-index:0;
+}
+.rechercher div#avancee table tbody tr td#choice select#form_statut,
+.rechercher div#avancee table tbody tr td#choice select#form_preRequis {
+	font-family: "Trebuchet MS";
+}
+
+
+
+/************************************************************************************************************************** Pagination (lettres) ***********/
+#page.listerappli div#pagination_alphab,
+#page .listerappliqualif div#pagination_alphab {
+	font-family: "Trebuchet MS", "robotolight";
+	margin: 0 auto 25px auto;
+	text-align:center;
+	margin: 10px 0 10px 0;
+}
+#page.listerappli div#pagination_alphab a,
+#page .listerappliqualif div#pagination_alphab a {
+	color: #333333;
+}
+#page.listerappli div#pagination_alphab a:hover,
+#page .listerappliqualif div#pagination_alphab a:hover {
+	color: #008080;
+}
+
+
+/************************************************************************************************************************** Pagination (nombres) ***********/
+#page div#pagin div.pagination,
+#page div.pagination {
+	font-family: "Trebuchet MS", "robotolight";
+	margin: 15px auto 10px auto;
+}
+#page div#pagin div.pagination div.pagination-buttons,
+#page div.pagination div.pagination-buttons  {
+	text-align:center;
+}
+#page div#pagin div.pagination div.pagination-buttons a,
+#page div.pagination div.pagination-buttons a {
+	color: #085252;
+}
+#page div#pagin div.pagination div.pagination-buttons a:hover,
+#page div.pagination div.pagination-buttons a:hover {
+	color: #008080;
+}

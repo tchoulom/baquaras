@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Générer un mode opératoire </title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/fenetre.css') }}" type="text/css"/>
+		{% endblock %}
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		
+		<div id="page">
+		
+			<h1> Générer un mode opératoire </h1>
+ 
+			<script src="{{ asset('bundles/baquaras/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+		
+			<form action="{{path('genererModeOperatoire', {'packageId': packageId }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="generermodeop">
+			
+			{{ form_start(form) }}
+		   
+			<div>
+				<table>
+					
+					<tr> 
+						<td id="label"> {{ form_label(form.precautions) }} </td>
+						<td id="cke"> {{ form_widget(form.precautions) }} </td> </tr> <tr>
+						<td > {{ form_errors(form.precautions) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.prerequis) }} </td>
+						<td id="cke"> {{ form_widget(form.prerequis) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.prerequis) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.preliminaire) }} </td>
+						<td id="cke"> {{ form_widget(form.preliminaire) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.preliminaire) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.installation) }} </td>
+						<td id="cke"> {{ form_widget(form.installation) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.installation) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.repriseexistant) }} </td>
+						<td id="cke"> {{ form_widget(form.repriseexistant) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.repriseexistant) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.arborescence) }} </td>
+						<td id="cke"> {{ form_widget(form.arborescence) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.arborescence) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.parameters) }} </td>
+						<td id="cke"> {{ form_widget(form.parameters) }} </td> </tr> <tr>
+						<td> {{ form_errors(form.parameters) }} </td>
+					</tr>
+
+				</table>
+					
+				{{ form_widget(form.save) }}
+					
+		    </div>			
+				 					
+			{{ form_end(form) }}
+			
+		</form>
+    </body>
+</html>

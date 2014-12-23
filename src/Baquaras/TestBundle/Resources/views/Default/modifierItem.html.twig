@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<head>
+		<title> Gestion des listes déroulantes </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+	
+    <body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}	
+		
+		<div id="page">
+		
+			<h1> Gestion des listes déroulantes </h1>
+			
+			<div class="modifieritem">
+				
+
+		
+				<form  action="{{ path('modifierItem', {'itemId' : item.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+					{{ form_start(form) }}
+			
+					<table>
+						<tr> 
+							<td> {{ form_errors(form) }} </td>
+						</tr>
+						<tr> 
+							<td class="label"> {{ form_label(form.liste) }} </td>
+							<td class="text"> {{ form_widget(form.liste) }} </td> </tr> <tr>  <td> </td>
+							<td class="errors"> {{ form_errors(form.liste) }} </td>
+						</tr>
+						<tr>
+							<td class="label"> {{ form_label(form.libelle) }} </td>
+							<td class="text"> {{ form_widget(form.libelle) }} </td> </tr> <tr> <td> </td>
+							<td class="errors"> {{ form_errors(form.libelle) }} </td>
+						</tr>
+					</table>
+
+					{{ form_end(form) }}
+
+				</form>
+			
+			
+			<div id="table_items">
+			
+				<h2> Listes déroulantes </h2>
+				
+				{% for liste in listes %}
+					<table id="accordeon_liste{{ liste.id }}">
+						<tr>
+							<td rowspan="15" id="titre"> <a id="liste{{liste.id}}"> {{ liste.libelle}} </a> </div> </td>
+							<td coslpan=3 id="vide"></td>
+						</tr>
+				
+						{% for item in items %}
+							{% if item.liste.id == liste.id %}
+								<tr>
+									<td> {{item.libelle}} </td> 
+									<td> <a id="Supprimer cet item" href="{{ path('supprimerItem', {'itemId' : item.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet item ?')"> Supprimer </a> </td>
+									<td> <a id="Modifier cet item" href="{{ path('modifierItem', {'itemId' : item.id }) }}" > Modifier </a> </td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+
+					</table>
+				{% endfor %}
+			
+			</div>
+						
+		</div>
+    </body>
+</html>

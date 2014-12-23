@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<head>
+		<title> Ajouter un groupe d'utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+
+		<div id="rechercheGroupeAD">			
+			
+			<form action="{{ path('rechercherGroupeAD', {'applicationId' : application.id}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="rechercher">
+		
+				{{ form_start(form) }} 
+		
+			    {{ form_errors(form) }}
+		   
+				<table id="recherche">
+					<tr>
+						<td id="explic" colspan="2"> {{ form_label(form.champRecherche) }} </td>
+					</tr>
+					<tr>
+						<td id="text"> {{ form_widget(form.champRecherche) }} </td>
+						<td> <button type="submit" name="submitAction"  value="rechercher"  class="btn btn-primary">Rechercher</button> 
+{#{{ form_widget(form.save) }}#} </td>
+					</tr>
+					<tr> 
+						<td>  </td>
+						<td id="errors"> {{ form_errors(form.champRecherche) }} </td>
+					</tr>						
+				</table>
+				
+				<table id="zoneForm">
+						<tr>
+							<td id="selectG"> 
+								<select id="form_leftValues" multiple>
+									{% if resultats is not empty %}
+									{% for resultat in resultats %}
+										<option> {{resultat }} </option>
+									{% endfor %}
+									{% endif %}
+								</select>
+							</td>
+							<td>
+								<button id="btnLeft" type="button" name=">>"> >> </button> <br/>
+								<button id="btnRight" type="button" name="<<"> << </button> 
+							</td>
+							<td id="selectD">
+								<select id="form_rightValues" multiple>
+									{% if rightValues is not empty %}
+									{% for groupe in rightValues %}
+										<option> {{ groupe }} </option>
+									{% endfor %}
+									{% endif %}
+								</select>
+							</td>								
+						</tr>	
+						<tr>
+							<td colspan="3">
+								<button type="submit" name="submitAction"  value="enregistrer"  class="btn btn-primary">Enregistrer</button> 
+
+							</td>
+						</tr>
+					</table>
+					
+				{{ form_rest(form) }}
+				
+				{{ form_end(form) }}
+				
+			</form>
+			
+			
+			
+		{% block jquery23 %}
+			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+			<script>
+				$("#btnLeft").click(function () {
+					var selectedItem = $("#form_leftValues option:selected");
+					$("#form_rightValues").append(selectedItem);
+				});
+
+				$("#btnRight").click(function () {
+					var selectedItem = $("#form_rightValues option:selected");
+					$("#form_leftValues").append(selectedItem);
+				});
+			</script>
+		{% endblock %}
+			
+		</div>
+
+    </body>
+ 
+</html>

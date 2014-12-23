@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Gestion des utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+    
+	<body>
+		
+		<div id="page" class="ajouterutilisateur">
+	
+			<h1> Gestion des utilisateurs </h1>
+
+			<form action="{{ path('ajouterUtilisateur', {'applicationId' : application.id, 'champ' : champ, 'utilisateur' : utilisateur}) }}" method="post" {{ form_enctype(form) }} class="ajouterutilisateur" novalidate="novalidate">
+		
+				{{ form_start(form) }}
+						
+				{{ form_errors(form) }}						
+				
+				<table id="global">					
+					<tr>
+						<td id="label"> {{ form_label(form.utilisateurs) }} </td>
+						<td id="text"> {{ form_widget(form.utilisateurs) }} <a href="{{path('ajouterUtilisateurAD') }}" onClick="window.open(this.href,'','scrollbars=yes'); return false;"> > Ajouter un utilisateur à partir de l'AD </a> </td> </tr> <tr>
+						<td id="error"> {{ form_errors(form.utilisateurs) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> Informations sur l'utilisateur </td>
+						<td id="text"> 
+							<table>
+								<tr>
+									<td class="label"> Nom :</td>
+									<td> 
+										{% if utilisateur is not null %}
+											{{ utilisateur.nom }}
+										{% endif %}
+									</td>
+								</tr>
+								<tr>
+									<td class="label"> Prénom :</td>
+									<td> 
+										{% if utilisateur is not null %}
+											{{ utilisateur.prenom }}
+										{% endif %}
+									</td>
+								</tr>
+								<tr>
+									<td class="label"> Matricule :</td>
+									<td> 
+										{% if utilisateur is not null %}
+											{{ utilisateur.matricule }}
+										{% endif %}
+									</td>
+								</tr>
+								<tr>
+									<td class="label"> Email :</td>
+									<td> 
+										{% if utilisateur is not null %}
+											{{ utilisateur.email }}
+										{% endif %}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.profil) }} </td>
+						<td id="text"> {{ form_widget(form.profil) }} </td> </tr> <tr>
+						<td id="error"> {{ form_errors(form.profil) }} </td>
+					</tr>
+				</table>
+		
+				{{ form_widget(form.save) }}
+			
+				{{ form_end(form) }}
+
+			</form>
+		</div>
+		
+    </body>
+</html>

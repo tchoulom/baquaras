@@ -1,0 +1,13 @@
+AppliBundle:
+    resource: "@BaquarasAppliBundle/Controller/"
+    type:     annotation
+
+
+# Security layer routes
+# No controller needed as the Security Layer will handle requests on those urls
+_LogoutLink:
+    pattern:   /secured/logout
+
+_LoginLink:
+    pattern:   /secured/login
+    defaults: { _controller: "BaquarasAppliBundle:Appli:login" }

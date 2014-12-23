@@ -1,0 +1,21 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    be_simple.sso_auth.client.option.curlopt_ssl_verifypeer.value : false
+    sso_login_url : https://zu6int.info.ratp/websso/login
+    sso_logout_url : https://zu6int.info.ratp/websso/logout
+    sso_logout_target : /
+    sso_validate_url : https://zu6int.info.ratp/websso/serviceValidate
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt

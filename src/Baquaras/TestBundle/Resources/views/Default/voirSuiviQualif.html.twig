@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+	<head>
+		<title> Suivi des qualifications </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+
+	<body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 	
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+		
+		<div id="page">
+					
+			<h1> Suivi des qualifications </h1>
+			
+			<div id="listerappliqualif">
+
+				<div id="content"> 
+					<div class='position_link'>
+						<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': 'Toutes', 'page': pagination.page}) }}">Toutes</a>&nbsp;
+						<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': '@', 'page': pagination.page}) }}">@</a>&nbsp;
+						{% for lettre in 'A'..'Z' %}
+							<a href="{{ path('voirSuiviQualif',{'triSuiviQualif': lettre, 'page': pagination.page})}}">{{ lettre|upper }}</a>&nbsp;
+						{% endfor %}
+					</div>
+				
+					<table id="liste">
+					<tr>
+						<td> Statut
+							<a href=""><img alt="ASC" src="{{asset('bundles/baquaras/images/s_asc.png')}}"></a> 
+							<a href=""><img alt="DESC" src="{{asset('bundles/baquaras/images/s_desc.png')}}"></a>
+						</td>
+						<td> Nom de l'aplication
+							<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': 'AZ', 'page': pagination.page}) }}"><img alt="AZ" src="{{asset('bundles/baquaras/images/s_asc.png')}}"/></a>
+							<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': 'ZA', 'page': pagination.page}) }}"><img alt="ZA" src="{{asset('bundles/baquaras/images/s_desc.png')}}"/></a>
+						</td>
+						<td> Version</th>
+						<td> ProductCorrectifQualif</th>
+						<td> Dernière modification
+								<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': 'ascN', 'page': pagination.page }) }}"><img alt="ASC" src="{{asset('bundles/baquaras/images/s_asc.png')}}"></a>
+								<a href="{{ path('voirSuiviQualif', {'triSuiviQualif': 'descN', 'page': pagination.page }) }}"><img alt="DESC" src="{{asset('bundles/baquaras/images/s_desc.png')}}"></a>
+						</td>
+						<td> Actions </th>
+					</tr>
+					
+					{% for onePackage in packages %}
+					<tr>
+						<td>
+							{% if onePackage.statutQualif is defined and onePackage.statutQualif is not null %}
+								{{  onePackage.statutQualif.libelle }}
+							{% endif %}
+						</td>		
+						<td>
+							{% if onePackage.application is defined and onePackage.application is not null %}
+								{{ onePackage.application.nom }}
+							{% endif %}
+						</td>
+				
+							<td>
+								{% if onePackage.application is defined and onePackage.application is not null %}
+									{{ onePackage.application.version }}
+								{% endif %}
+							</td>
+								
+							<td>
+								{% if onePackage.application is defined and onePackage.application is not null %}
+									{{ onePackage.application.correctifQualif }}
+								{% endif %}
+							</td>
+							
+							<td>
+							
+								{% if onePackage.evolutionsStatut is defined and onePackage.evolutionsStatut is not null %}
+								
+									{% for dateModifs in onePackage.evolutionsStatut %}
+										{{ dateModifs.dateModif|date('d/m/Y')  }}
+									{% endfor %}
+								{% endif %}
+							</td>
+								
+							<td>
+								{% if onePackage.statutQualif is defined and onePackage.statutQualif is not null %}
+								
+									{% if onePackage.statutQualif.libelle == 'Planifiée(suspendue)' or onePackage.statutQualif.libelle == 'Planifiée'%}
+									
+										{#{% for droit in droits %}
+											{% if droit.statut.libelle == onePackage.statutQualif.libelle %}
+												{% for profilusers in utilisateur.profilusers %}
+													{% if droit.profil.libelle == profilusers.profil.libelle %} 
+														{% if droit.acces.id >= 2 %}#}
+															<a href="{{path('consulterApplication', {'id': onePackage.application.id }) }}" target="_blank">L</a>
+															{#{% if droit.acces.id >= 3 %}#}
+																{% if onePackage.statutQualif.id <=5 %}
+																	| <a href="{{path('modifierApplication', {'id': onePackage.application.id }) }}">M</a>
+																	<!-- <a id='packaging_v' href="{#{path('voirSuiviQualif', {'idPackage': onePackage.id, 'motCle':'valider', 'triSuiviQualif':'Toutes'}) }#}">V</a>|-->
+																	| <a id='packaging_p' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">P</a>
+																{% elseif onePackage.statutQualif.id >=12  %}
+																	| <a id='packaging_A' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">A</a>
+																{% endif %}
+															{% endif %}
+														{#{% endif %}
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+										{% endfor %}	
+									{% endif %}#}
+									
+									{% if onePackage.statutQualif.libelle == 'Pré-qualifiée' or onePackage.statutQualif.libelle == 'Pré-qualifiée (suspendue)'%}
+									
+										<a href="{{path('consulterApplication', {'id': onePackage.application.id }) }}" target="_blank"> L </a>|
+																				
+										{% if onePackage.statutQualif.id <=5 %}
+											<a href="{{path('modifierApplication', {'id': onePackage.application.id }) }}">M</a>|
+											<!--<a id='packaging_v' href="{#{path('voirSuiviQualif', {'idPackage': onePackage.id, 'motCle': 'valider','triSuiviQualif': 'Toutes'}) }#}">V</a>|-->
+											<a id='packaging_p' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">P</a>
+										{% elseif onePackage.statutQualif.id >=12  %}
+											<a id='packaging_A' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">A</a>
+										{% endif %}
+										
+									{% endif %}
+									
+									{% if onePackage.statutQualif.libelle == 'Packaging' or onePackage.statutQualif.libelle == 'Packaging (suspendue)'%}
+									
+										<a id='packaging_l' href="{{path('consulterApplication', {'id': onePackage.application.id}) }}" target="_blank">L</a>|
+																														
+										{% if onePackage.statutQualif.id <=5 %}
+											<a id='packaging_m' href="{{path('modifierApplication', {'id': onePackage.application.id }) }}">M </a>|
+											<!--<a id='packaging_v' href="{#{path('voirSuiviQualif', {'idPackage': onePackage.id, 'motCle': 'valider','triSuiviQualif': 'Toutes'}) }#}">V</a>|-->
+											<a id='packaging_p' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">P</a>
+										{% elseif onePackage.statutQualif.id >=12 %}
+											<a id='packaging_A' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">A</a>
+										{% endif %}
+										
+									{% endif %}
+									
+									{% if onePackage.statutQualif.libelle == 'Pré-production' or onePackage.statutQualif.libelle == 'Pré-production (suspendue)'%}
+									
+										<a href="{{path('consulterApplication', {'id': onePackage.application.id}) }}" target="_blank">L</a>|
+																				
+										{% if onePackage.statutQualif.id <=5 %}
+											<a href="{{path('modifierApplication', {'id': onePackage.application.id}) }}">M</a>|
+											<!--<a id='packaging_v' href="{#{path('voirSuiviQualif', {'idPackage': onePackage.id, 'motCle': 'valider','triSuiviQualif': 'Toutes'}) }#}">V</a>|-->
+											<a id='packaging_p' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">P</a>
+										{% elseif onePackage.statutQualif.id >=12  %}
+											<a id='packaging_A' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">A</a>
+										{% endif %}
+										
+									{% endif %}
+									
+									{% if onePackage.statutQualif.libelle == 'En production' or onePackage.statutQualif.libelle == 'En production (suspendue)'%}
+										<a href="{{path('consulterApplication', {'id': onePackage.application.id }) }}" target="_blank">L</a>|
+																				
+										{% if onePackage.statutQualif.id <=5 %}
+											<a href="{{path('modifierApplication', {'id': onePackage.application.id }) }}">M</a>|
+											<!-- <a id='packaging_v' href="{#{path('voirSuiviQualif', {'idPackage': onePackage.id, 'motCle': 'valider','triSuiviQualif': 'Toutes'}) }#}">V</a>|-->
+											<a id='packaging_p' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">P</a>
+										{% elseif onePackage.statutQualif.id >=12  %}
+											<a id='packaging_A' href="{{path('voirSuiviQualif', {'idPackage': onePackage.id,'triSuiviQualif': 'Toutes'}) }}">A</a>
+										{% endif %}
+									{% endif %}
+									
+								{% endif %}
+							</td>
+						</tr>
+						
+							{% endfor %}
+							{#% endfor %#}
+					</tbody>
+				</table>
+				  <div class='position_link' id='position_link'> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div> 
+			</div>
+				
+			</div>
+	
+	</body>
+	
+		{% block javascripts %} 
+		
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript" ></script>
+			<script >
+			 	var DATA = 'id_Statut=' + $(this).val();
+				$(".loading").hide();
+					$("#packaging_p").click(function()
+					    
+					   
+					    $.ajax({
+					        type: "POST",
+					        url: "{{ path('voirSuiviQualif')}}",
+					        data: DATA,
+					        cache: false,
+					        success: function(content){
+					           $('#td').html(data);
+					           $(".loading").hide();
+					        }
+					    });    
+				    return false;
+				});
+					</script>
+				{#
+					<script type="text/javascript">
+					
+							$(document).ready(function(){
+								var new_td = "<a id='packaging_p' href=''>A</a>"
+				  			$("#packaging_p").click(function(){$(this).html(new_td);
+							  });
+							});
+							
+					</script>
+				
+				{<script  src="{{ asset('bundles/baquaras/js/suiviQualif.js')}}" type="text/javascript"></script>}
+			#}
+		{% endblock %}
+	
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<body>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		
+		<div id="page">
+	
+			<head>
+				<h1> Ajouter un groupe d'utilisateurs </h1>
+				{% block stylesheets %}
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+				{% endblock %} 
+			</head>
+
+			
+			<form action="{{ path('ajouterGroupe') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" >
+		
+				{{ form_start(form) }}
+		
+			    {{ form_errors(form) }}
+		   
+				<div>
+					<table>
+						<tr>
+							<td id="label"> {{ form_label(form.utilisateurs) }} </td>
+							<td id="text-bouton"> {{ form_widget(form.utilisateurs) }} </td>
+						</tr> 
+						<tr> 
+							<td id="error"> {{ form_errors(form.utilisateurs) }} </td>
+						</tr>
+					</tr>
+						
+					</table>
+					
+					{{ form_widget(form.save) }}
+					
+				</div>	
+				 					
+				{{ form_end(form) }}
+			</form>
+			
+		</div>	
+
+    </body>
+ 
+</html>

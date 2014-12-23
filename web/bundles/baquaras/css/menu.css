@@ -1,0 +1,235 @@
+
+/********* Polices ***********/
+@font-face {
+	font-family: 'roboto';
+	src: url('../polices/Roboto-Regular.ttf');
+	src: url('../polices/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-regular-webfont.woff') format('woff'),
+		url('../polices/Roboto-Regular.ttf') format('truetype'),
+		url('../polices/roboto-regular-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'robotolight';
+	src: url('../polices/Roboto-Light.ttf') format('truetype');
+	src: url('../polices/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-light-webfont.woff') format('woff'),
+		url('../polices/Roboto-Light.ttf') format('truetype'),
+		url('../polices/roboto-light-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'Trebuchet MS';
+	src: url('../polices/trebuc.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+div#header {
+	background: url('../images/bord-menu-gauche.jpg') no-repeat top left;
+	height: 150px;
+	min-width:1000px;
+	padding:0;
+	margin: 0 0 15px 0;
+}
+div#menu {
+	/*width: 100%;*/
+	margin:0 50px 0 50px;
+	background: url('../images/menu-texture.jpg') no-repeat;
+	height:150px;
+	font-family:"roboto";
+}
+
+/****************************************************************************************************************** Lien connexion/déconnexion ************/
+#menu div#connexion {
+	height:25px;
+}
+#menu div#connexion ul {
+	padding:0;
+	margin:0;
+	height:25px;
+}
+#menu div#connexion ul li {
+	list-style-type:none;
+	height:25px;
+}
+#menu div#connexion ul li a {
+	font-size:0.85em;
+	display:block;
+	margin-left:1075px;
+	width:auto;
+	text-align:center;
+	color:white;
+	text-decoration:none;
+	display:block;
+	padding:6px 12px;
+	background: #058282;
+	position:absolute;
+	right:150px;
+	border: 2px solid #138888;
+}
+
+/************************************************************************************************************************ Logo / Lien Accueil ************/
+#menu div#accueil {
+	margin:0;
+	padding:0;
+	width:200px;
+	display:inline;
+	float:left;
+	height:50px;
+}
+#menu div#accueil ul {
+	margin:0;
+	padding:0;
+}
+#menu div#accueil ul li.first {
+	list-style-type:none;
+}
+#menu div#accueil ul li a {
+	list-style-image:none;
+	font-size: 1.4em;
+	font-family:"roboto";
+	display:block;
+	width:205px;
+	height:40px;
+	padding-top:10px;
+	padding-left:50px;
+	color: white;
+	text-decoration:none;
+}
+
+/**************************************************************************************************************************** Menu Principal ************/
+/**************************************************************************************************************************** Menu Principal ************/
+#menu div#menu-principal {
+	margin:0;
+	padding:0;
+	/*width:670px;*/
+	height:37px;
+	display:inline;
+	float:right;
+	z-index:1000;
+	position:absolute;
+	right:50px;
+	top:80px;
+}
+#menu div#menu-principal ul {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	z-index:1000;
+}
+#menu div#menu-principal ul li {
+	float:left;
+	background-color:none;
+	height:37px;
+	width: auto;
+}
+#menu div#menu-principal ul li {
+	width: 200px;
+}
+#menu div#menu-principal ul li:nth-child(2) {
+	width:120px;
+}
+#menu div#menu-principal ul li:nth-child(4) {
+	width:140px;
+}
+#menu div#menu-principal ul li.first {
+	width:120px;
+}
+#menu div#menu-principal ul li.last {
+	width:150px;
+}
+#menu div#menu-principal ul li:hover a {
+	color: #AED6D6;
+}
+#menu div#menu-principal ul li:hover ul li a {
+	color: white;
+}
+#menu div#menu-principal li a {
+	display:block;
+	color:white;
+	text-decoration:none;
+	padding:9px 20px 9px 20px;
+	margin:0;
+	height:19px;
+	text-align:center;
+	border-right:1px dashed #AED6D6;
+	font-size:0.9em;
+	background-color:#444444;
+}
+#menu div#menu-principal ul li.last a {
+	border-right:none;
+}
+#menu div#menu-principal ul li ul.menu_level_1 {
+	display:none;
+}
+#menu div#menu-principal ul li:hover ul.menu_level_1 {
+	display:block;
+}
+#menu div#menu-principal ul li ul li {
+	float:none;
+	background-color: #333333;
+	height:auto;
+	width:auto;
+	padding:0;
+	margin:0;
+	border-bottom:1px solid #AED6D6;
+}
+#menu div#menu-principal ul li ul li a {
+	display:block;
+	padding:7px 7px 7px 12px;
+	background-color: rgba(10,10,10,0);
+	height:auto;
+	width:auto;
+	font-size:0.7em;
+	text-align:left;
+	vertical-align: middle;
+	border-right:none;
+	width:auto;
+}
+#menu div#menu-principal ul li ul li.first {
+	border-top: 1px solid #AED6D6;
+}
+#menu div#menu-principal ul li ul.menu_level_1 li:hover {
+	background-color:#027F81;
+}
+#menu div#menu-principal ul li ul.menu_level_1 li:hover a {
+	color:white;
+}
+#menu div#menu-principal ul li.first ul.menu_level_1 li {
+	width:150px;
+}
+
+#menu div#menu-principal ul li ul.menu_level_1 li.last {
+	width:160px;
+}
+
+#menu div#menu-principal ul li:hover ul.menu_level_1 li a,
+#menu div#menu-principal ul li ul.menu_level_1 li:hover a {
+	color:#ffffff;
+}
+#menu div#menu-principal ul li ul.menu_level_1 li.first {
+	width:160px;
+}
+#menu div#menu-principal ul li.last ul.menu_level_1 li{
+	width:150px;
+}/*
+#menu div#menu-principal ul li.last ul.menu_level_1 li {
+	width:170px;
+}*/
+
+/*********************************************************************************************************************************** Fil d'Ariane **********/
+#menu div#breadcrumbwrap {
+	width:350px;
+	height:25px;
+	padding:23px 0 0 15px;
+	font-size:0.8em;
+	/*clear:both;*/
+	color:#ffffff;
+}
+#menu div#breadcrumbwrap a{
+	color:#ffffff;
+	text-decoration:none;
+}
+#menu div#breadcrumbwrap a:hover {
+	color: #AED6D6;
+}

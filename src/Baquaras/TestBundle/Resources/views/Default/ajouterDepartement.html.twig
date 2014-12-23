@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Population Cible </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %} 
+		<style>
+			#form_selectDpt {
+				width:150px;
+				height:150px;
+			}
+		</style>
+	</head>
+
+    <body>
+		
+		<div id="ajouterDepartement">
+		
+			<h1> Population Cible </h1>
+		
+			<form  action="{{ path('ajouterDepartement', {'applicationId' : application.id}) }}" method="post" id="ajouterDpt" novalidate="novalidate">
+				
+				<div class="container">
+						
+					<table id="form_left">
+						<tr>
+							<td class="label"> Département </td>
+							<td class="text">
+								<select id="departement">
+									{% for dpt in listDpt %}
+										<option value={{ dpt.id }}> {{ dpt.libelle }} </option>
+									{% endfor %}
+								</select>
+							</td>
+							<td class="buttons">
+								<button type="button" id="btnLeftDpt"> >> </button>
+
+							</td>
+							<td rowspan="3">
+								<button type="button" id="btnRight"> << </button>
+							</td>
+							<td rowspan="3">
+								<select id="form_selectDpt" name="selectDpt[]" multiple>
+									{% for pop in application.populationCible %}
+										<option> {{ pop.libelle }} </option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"> Unité départementale </td>
+							<td class="text">
+								<select id="ud">
+								</select>
+							</td>
+							<td class="buttons">
+								<button type="button" id="btnLeftUD"> >> </button>
+							</td>
+						</tr>
+						<tr>
+							<td class="label"> Unité locale </td>
+							<td class="text">
+								<select id="ul">
+								</select>
+							</td>
+							<td class="buttons">
+								<button type="button" id="btnLeftUL"> >> </button>
+								{#<button type="button" id="btnRight"> << </button>#}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4"> <button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button> </td>
+						</tr>
+					</table>						
+				</div>
+				
+			</form>	
+				
+
+		{% block javascripts1 %}
+			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.chained.min.js') }}"></script>
+			<script>
+				$(document).ready(function(){
+					$("#btnLeftDpt").click(function () {
+						var selectedItem = $("#departement option:selected");
+						$("#form_selectDpt").append(selectedItem);
+					});
+					$("#btnLeftUD").click(function () {
+						var selectedItem = $("#ud option:selected");
+						$("#form_selectDpt").append(selectedItem);
+					});
+					$("#btnLeftUL").click(function () {
+						var selectedItem = $("#ul option:selected");
+						$("#form_selectDpt").append(selectedItem);
+					});
+					$("#btnRight").click(function () {
+						var selectedItem = $("#form_selectDpt option:selected");
+						$("#ul").append(selectedItem);
+					});  
+					$("#departement").change(function() {
+						mafonctionchange('ud','departement');
+					}).trigger('change');
+			 
+					$("#ud").change(function() {
+						mafonctionchange('ul','ud');;
+					});
+							 
+					function mafonctionchange(selecteur,selecteurparent)
+					{         
+						$('#'+selecteur).empty(); 
+						$.ajax({
+							url: "{{ path('ajouterDepartement', {'applicationId' : application.id})}}",
+							type: 'POST',
+							data:
+							{
+								id : $("#"+selecteurparent+" option:selected").val(),
+								select : selecteur
+							},
+							dataType: 'json',
+							success: function(reponse) {
+								var liste;
+								for(i in reponse) {	
+									liste = reponse[i];
+									$.each(liste, function(index, element) {
+										if(element.nom != null)
+											$('#' + selecteur).append('<option value="'+ element.id +'" selected="selected"> '+ element.libelle +' </option>');
+									});            
+								}				  
+								if (selecteur == 'ud') {
+									mafonctionchange('ul','ud');
+								}
+							}
+						});
+					}
+				});
+			</script>
+		{% endblock %}
+
+			
+		</div>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Ajout d'un script </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+
+    <body>
+			
+		<div id="page-sans-menu">
+		
+			<h1> Ajout d'un script </h1>
+		
+			{### Zone d'affichage des messages/annotations ###}
+				<div id="flashbag"> 
+					{% for flashMessage in app.session.flashbag.get('notice') %}
+						<div id="img"> </div>
+						<div id="texte"> {{ flashMessage }} </div> <br/>
+					{% endfor %}
+				</div>
+		
+			<form  action="{{ path('ajouterScript', {'packageId' : package.id }) }}" method="post" {{ form_enctype(form) }} class="ajouterscript" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			{{ form_errors(form) }}
+			
+			<table>
+				<tr>
+					<td id="label"> {{ form_label(form.nom) }} </td>
+					<td id="text"> {{ form_widget(form.nom) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.nom) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.fonction) }} </td>
+					<td id="text"> {{ form_widget(form.fonction) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.fonction) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.type) }} </td>
+					<td id="text"> {{ form_widget(form.type) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.type) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.techno) }} </td>
+					<td id="text"> {{ form_widget(form.techno) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.techno) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.oscible) }} </td>
+					<td id="text"> {{ form_widget(form.oscible) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.oscible) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.conditionExecution) }} </td>
+					<td id="text"> {{ form_widget(form.conditionExecution) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.conditionExecution) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.conditionLancement) }} </td>
+					<td id="text"> {{ form_widget(form.conditionLancement) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.conditionLancement) }} </td>
+				</tr>
+				<tr>
+					<td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
+					<td class="valider"> {{ form_widget(form.save) }} </td>
+				</tr>
+				
+			</table>
+			
+			{{ form_end(form) }}
+
+			</form>
+		
+		</div>
+		
+    </body>
+</html>

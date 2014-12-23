@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Ajout/Suppression d'utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+		<style>
+			#zoneBouton {
+				 margin-top : -100px; 
+				 margin-left : 190px;
+				 position : relative;
+			}
+			#zoneForm {
+				position : relative;
+				margin-top : 30px; 
+			}
+			#form_leftValues {
+				margin-left : 15px; 
+				width:150px;
+				height:150px;
+			}
+			#form_rightValues {
+				margin-left : 85px; 
+				width:150px;
+				height:150px;
+			}
+			#form_enregistrer {
+				position : relative;
+				margin-top : 100px;
+			}
+		</style>
+	</head>
+
+    <body>
+					
+		<div class="rechercheHarpe">
+		
+			<h1> Ajout/Suppression d'utilisateurs </h1>
+		
+			<form  action="{{ path('ajouterGroupe', {'applicationId' : applicationId}) }}" method="post" {{ form_enctype(form) }} class="ajouterGroup" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+				<div class="container">
+							
+					<table id="tab1">
+						<tr> 
+							<td id="errors"> {{ form_errors(form) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.recherche) }} </td>
+							<td  id="text"> {{ form_widget(form.recherche) }} </td> 
+							<td> {{ form_widget(form.save) }} </ </td>
+						</tr> 
+					</table>
+				{{ form_rest(form) }}
+				
+					<aside id="zoneForm">
+						<select id="form_leftValues" name="leftValues[]" multiple>
+							{% if agents is defined %}
+								{% for agent in agents %}
+										<option> {{ agent.prenom }} {{ agent.nom }} </option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<!-- 2ème select -->
+						<select id="form_rightValues" name="rightValues[]" multiple>
+							{% if rightValues is defined %}
+								{% for agent in rightValues %}
+										<option> {{ agent }} </option>
+								{% endfor %}
+							{% endif %}
+						</select>
+					</aside>
+					
+					<aside id="zoneBouton">
+						<button id="btnLeft" type="button" name=">>"> >> </button> <br/>
+						<button id="btnRight" type="button" name="<<"> << </button> 
+					</aside>
+					
+					<button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
+					
+				</div>
+				
+				{{ form_end(form) }}
+			</form>
+
+			
+		{% block javascripts %}
+			<script>
+				$("#btnLeft").click(function () {
+					document.getElementById("form_recherche").disabled = true;
+					var selectedItem = $("#form_leftValues option:selected");
+					$("#form_rightValues").append(selectedItem);
+				});
+
+				$("#btnRight").click(function () {
+					document.getElementById("form_recherche").disabled = true;
+					var selectedItem = $("#form_rightValues option:selected");
+					$("#form_leftValues").append(selectedItem);
+				});
+			</script>
+		{% endblock %}
+			
+		</div>
+    </body>
+</html>

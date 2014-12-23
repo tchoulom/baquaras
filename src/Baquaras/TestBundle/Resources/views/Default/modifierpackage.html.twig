@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+				
+	<head>
+		<h1> Modifier un package </h1>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+	
+		<div id="page">
+					
+			<form action="{{ path('modifierpackage') }}" method="post" {{ form_enctype(form) }} class="modifierpackage" novalidate="novalidate">
+
+				{{ form_start(form) }}
+				
+				{{ form_errors(form) }}
+				
+				<ul id="accordion">
+				<li>
+					<h2> <a id="infogenerales_accordeon"> Informations Générales </a> </h2>	
+							
+							{% block javascripts1 %}
+							<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+							<script>
+								$(document).ready(function(){
+									$("#infogenerales_accordeon").click(function(){
+										$("#infogenerales").toggle();
+									});
+							});
+							</script>
+							{% endblock %}
+							
+					<div class="content" id="infogenerales">
+					<table>
+						<tr>
+							<td id="label"> {{ form_label(form.nom) }} </td>
+							<td id="text"> {{ form_widget(form.nom) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.nom) }} </td>
+						</tr>
+					
+						<tr>
+							<td id="label"> {{ form_label(form.nomPublication) }} </td>
+							<td id="text"> {{ form_widget(form.nomPublication) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.nomPublication) }} </td> 							
+						</tr>
+					
+						<tr>
+							<td id="label"> {{ form_label(form.type) }} </td>
+							<td> {{ form_widget(form.type) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.type) }} </td>
+						</tr>
+						
+						<tr>
+							<td id="label"> {{ form_label(form.taille) }} </td>
+							<td id="text"> {{ form_widget(form.taille) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.taille) }} </td>
+						</tr>
+						
+						<tr>
+							<td id="label"> {{ form_label(form.chemin) }} </td>
+							<td id="text"> {{ form_widget(form.chemin) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.chemin) }} </td>
+						</tr>
+						
+						<tr>
+							<td id="label"> {{ form_label(form.espaceDisqueInstalle) }} </td>
+							<td id="text"> {{ form_widget(form.espaceDisqueInstalle) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.espaceDisqueInstalle) }} </td>
+						</tr>
+						
+						<tr>
+							<td id="label"> {{ form_label(form.versionTemplate) }} </td>
+							<td id="text"> {{ form_widget(form.versionTemplate) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.versionTemplate) }} </td>
+						</tr>
+						
+						<tr>
+							<td id="label"> {{ form_label(form.versionOutilPackaging) }} </td>
+							<td id="text"> {{ form_widget(form.versionOutilPackaging) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.versionOutilPackaging) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.productCode) }} </td>
+							<td id="text"> {{ form_widget(form.productCode) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.productCode) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.activeSetup) }} </td>
+							<td> {{ form_widget(form.activeSetup) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.activeSetup) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.tNSNAMES) }} </td>
+							<td> {{ form_widget(form.tNSNAMES) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.tNSNAMES) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.nomEntreeTNSNAMES) }} </td>
+							<td id="text"> {{ form_widget(form.nomEntreeTNSNAMES) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.nomEntreeTNSNAMES) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.commentaire) }} </td>
+							<td id="text"> {{ form_widget(form.commentaire) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.commentaire) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.creationCustomActions) }} </td>
+							<td> {{ form_widget(form.creationCustomActions) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.creationCustomActions) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.statutQualification) }} </td>
+							<td id="text"> {{ form_widget(form.statutQualification) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.statutQualification) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.qualificateur) }} </td>
+							<td id="text"> {{ form_widget(form.qualificateur) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.qualificateur) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.prequalificateur) }} </td>
+							<td id="text"> {{ form_widget(form.prequalificateur) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.prequalificateur) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.paliersTechniques) }} </td>
+							<td id="text"> {{ form_widget(form.paliersTechniques) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.paliersTechniques) }} </td>
+						</tr>
+					</table>
+					</div>
+				</li>
+				
+				<li>
+					<h2> <a id="installation_accordeon"> Installation </a> </h2>	
+							
+							{% block javascripts2 %}
+							<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+							<script>
+								$(document).ready(function(){
+									$("#installation_accordeon").click(function(){
+										$("#installation").toggle();
+									});
+							});
+							</script>
+							{% endblock %}
+							
+					<div class="content" id="installation">
+					<table id="install">
+						<tr>
+							<td id="label"> {{ form_label(form.installation.repertoireInstallationApplication) }} </td>
+							<td id="text"> {{ form_widget(form.installation.repertoireInstallationApplication) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.repertoireInstallationApplication) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.repertoireInstallationDonnees) }} </td>
+							<td id="text"> {{ form_widget(form.installation.repertoireInstallationDonnees) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.repertoireInstallationDonnees) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.portsOuvertsLocaux) }} </td>
+							<td id="text"> {{ form_widget(form.installation.portsOuvertsLocaux) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.portsOuvertsLocaux) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.portsOuvertsDistants) }} </td>
+							<td id="text"> {{ form_widget(form.installation.portsOuvertsDistants) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.portsOuvertsDistants) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.packageVirtualise) }} </td>
+							<td> {{ form_widget(form.installation.packageVirtualise) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.packageVirtualise) }} </td>
+						</tr>
+					</table>
+				{% block javascripts3 %}
+				{#<script type="text/javascript" src="{{ asset('bundles/baquaras/js/jquery-ui.js')}}">#}
+				<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+				<script>
+				$(document).ready(function(){
+				$("#baquaras_testbundle_package_installation_packageVirtualise_0").click(function(){
+					$("p").show();
+				});
+				$("#baquaras_testbundle_package_installation_packageVirtualise_1").click(function(){
+					$("p").hide();
+				});
+  
+
+});
+				</script>
+				{% endblock %}
+					
+					<p id="packageVirtualise">
+					<table id="install2">
+						<tr>
+							<td id="label"> {{ form_label(form.installation.connectionGroup) }} </td>
+							<td> {{ form_widget(form.installation.connectionGroup) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.connectionGroup) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.versionAppVXP) }} </td>
+							<td> {{ form_widget(form.installation.versionAppVXP) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.versionAppVXP) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.installation.versionAppVW7) }} </td>
+							<td> {{ form_widget(form.installation.versionAppVW7) }} </td> </tr> <tr>
+							<td id="error"> {{ form_errors(form.installation.versionAppVW7) }} </td>
+						</tr>
+					</table>
+					</p>
+					</div>
+				</li>
+				
+				<li>
+					<h2> </h2>
+					
+					<div class="content">
+					<table>
+					
+					</table>
+					</div>
+				</li>
+				
+				<li>
+					<h2> </h2>
+					
+					<div class="content">
+					<table>
+					
+					</table>
+					</div>
+				</li>
+					
+				</ul>	
+	
+				{{ form_widget(form.save) }}
+				
+				{{ form_end(form) }}
+		
+			</form>
+		
+		</div>
+	
+
+    </body>
+</html>

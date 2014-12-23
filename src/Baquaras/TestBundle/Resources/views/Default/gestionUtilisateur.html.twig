@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Ajout/Suppression d'utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %} 
+	</head>
+
+    <body>
+					
+		<div class="rechercheHarpe">
+		
+			<h1> Ajout/Suppression d'utilisateurs </h1>
+		
+			<form  action="{{ path('gestionUtilisateur', {'champ' : 1,'applicationId' : application.id}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			<div class="container">
+							
+				<table>
+					<tr> 
+						<td id="errors"> {{ form_errors(form) }} </td>
+					</tr>
+					<tr>
+						<td id="errors"> {{ form_errors(form.recherche) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.recherche) }} </td>
+						<td  id="text"> {{ form_widget(form.recherche) }} </td> 
+						<td> {{ form_widget(form.save1) }} </a> </td>
+					</tr> 
+					<tr>
+						<td> {{ form_widget(form.leftValues) }} </td>
+						<td> {{ form_widget(form.btnLeft) }} 
+							 {{ form_widget(form.btnRight) }}
+						</td>
+						<td> {{ form_widget(form.rightValues) }} </td>
+					</tr>
+					<tr>
+						<td> 
+				</div>
+				
+				<div> {{ form_widget(form.save2) }} </div> 
+			</div>
+
+			{% block javascript %}			
+				<script>
+					$("#form_btnLeft").click(function () {
+						var selectedItem = $("#form_leftValues option:selected");
+						$("#form_rightValues").append(selectedItem);
+					});
+
+					$("#form_btnRight").click(function () {
+						var selectedItem = $("#form_rightValues option:selected");
+						$("#form_leftValues").append(selectedItem);
+					});
+
+				</script>
+			{% endblock %}
+					
+				
+				{#</div>
+				
+					<tr>
+						<td>
+							<select id="inputList" ondblclick="addUserList('inputList','outputList')" name="inputList" size="15" multiple>
+								{% for agent in agents %} <option> {{ agent }} </option> {% endfor %}
+							</select>
+						</td>
+						<td>
+							<input type="button" id="btnLeft" onclick="addUserList('inputList, 'outputList')" name="add" value=">>">
+							<br>
+							<input type="button" id="btnRight" onclick="removeUser('outputList')" name="remove" value="<<">
+						</td>
+						<td>
+							<select id="outputList" ondblclick="removeUser('outputList')" size="15" multiple name="outputList">
+						</td>
+					</tr>
+				</table>
+			</div>#}
+
+			
+			{{ form_end(form) }}
+
+			</form>
+			
+		</div>
+    </body>
+</html>

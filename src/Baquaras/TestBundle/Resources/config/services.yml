@@ -1,0 +1,7 @@
+parameters:
+#    baquaras_test.example.class: Baquaras\TestBundle\Example
+
+services:
+#    baquaras_test.example:
+#        class: %baquaras_test.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Liste des utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+
+		<div id="page">
+		
+			<h1> Liste des utilisateurs </h1>
+		
+			<div id="listerUsers">
+			
+				{### Zone d'affichage des messages/annotations ###}
+				<div id="flashbag"> 
+					{% for flashMessage in app.session.flashbag.get('notice') %}
+						<div id="img"> </div>
+						<div id="texte"> {{ flashMessage }} </div> <br/>
+					{% endfor %}
+				</div>
+			
+				<table id="liste">
+					<tr>
+						<td> Prénom </td>
+						<td> Nom </td>
+						<td> Compte matriculaire </td>
+						<td> Téléphone </td>
+						<td> Mail </td>
+						<td> Profil(s) </td>
+						<td> Actions </td>
+					</tr>
+	
+					{% for utilisateur in utilisateurs %}
+					<tr>
+						<td> {{ utilisateur.prenom }} </td>
+						<td> {{ utilisateur.nom }} </td>
+						<td> {{ utilisateur.cpteMatriculaire }} </td>
+						<td> {{ utilisateur.telephone }} </td>
+						<td> {{ utilisateur.mail }} </td>
+						<td> {{ utilisateur.profil1 }} {% if utilisateur.profil2 is not null %}, {{ utilisateur.profil2 }} {% endif %} </td>
+						<td> 
+							<a href="{{path('modifierUser', {'userId': utilisateur.id }) }}"> Modifier cet utilisateur </a> <br/>
+							<a href="{{path('supprimerUser', {'userId': utilisateur.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pré-requis ?')"> Supprimer cet utilisateur </a>
+						</td>
+					</tr>	
+					{% endfor %}
+					
+				</table>
+			
+				{### Pagination numérique ###}
+				{#<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>#}
+
+			</div>
+		</div>
+	</body>
+</html>

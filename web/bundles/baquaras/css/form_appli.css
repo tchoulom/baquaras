@@ -1,0 +1,1069 @@
+/*** form_appli.css ***/
+
+@font-face {
+	font-family: 'roboto';
+	src: url('../polices/roboto-regular-webfont.eot');
+	src: url('../polices/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-regular-webfont.woff') format('woff'),
+		url('../polices/Roboto-Regular.ttf') format('truetype'),
+		url('../polices/roboto-regular-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'robotolight';
+	src: url('../polices/roboto-light-webfont.eot') format('truetype');
+	src: url('../polices/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../polices/roboto-light-webfont.woff') format('woff'),
+		url('../polices/Roboto-Light.ttf') format('truetype'),
+		url('../polices/roboto-light-webfont.svg') format('svg');
+}
+@font-face {
+	font-family: 'Trebuchet MS';
+	src: url('../polices/trebuc.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+
+.accordion {
+	border-collapse:collapse;
+	margin: 10px auto 15px auto;
+	width:1200px;
+	font-family:"Trebuchet MS", "robotolight";
+	box-shadow: 4px 4px 5px #bbbbbb;
+	list-style-type: none; 
+	padding:0px;
+	clear:both;
+}
+.accordion h2{ 
+	margin: 0;
+	padding: 12px 10px 9px 20px;
+	background-color: #444444;
+	color:#ffffff;
+	font-family: "Trebuchet MS","robotolight";
+	height:20px;
+	font-size:0.9em;
+	list-style-type:none;
+	border-top:2px solid white;
+	font-weight:normal;
+}
+.accordion h3 {
+	margin:0;
+	padding:10px 0 10px 15px;
+	font-family: "robotolight";
+	font-size:0.9em;
+}
+.accordion li a:hover {
+	cursor: pointer;
+}
+#page div#flashbag,
+#page-sans-menu div#flashbag {
+	width:1180px;
+	margin:10px auto 0 auto;
+	font-family:"Trebuchet MS";
+	font-size:0.8em;
+	color:#444444;
+	margin:0 0 0 25px;
+}
+#page form,
+#page-sans-menu form {
+	font-family:"Trebuchet MS";
+	width:1200px;
+	margin:25px auto 15px auto;
+}
+#page form table,
+#page-sans-menu form table {
+	width:1200px;
+	margin:0px;
+	padding:0px;
+	border-collapse:collapse;
+}
+#page form button,
+#page-sans-menu form button {
+	//display: block;
+	//text-align: center;
+	//margin:15px auto 25px auto; 
+	//font-family: "Trebuchet MS", "robotolight";
+	//padding:4px 6px;
+}
+#page form table tbody tr td#label,
+#page form table tbody tr td.label,
+#page-sans-menu form table tbody tr td#label {
+	font-size:0.9em;
+}
+#page form table tbody tr td#text input,
+#page form table tbody tr td#text select,
+#page form table tbody tr td#text textarea,
+#page form table tbody tr td.texte input,
+#page form table tbody tr td.texte select,
+#page form table tbody tr td.texte textarea,
+#page-sans-menu form table tbody tr td#text input, 
+#page-sans-menu form table tbody tr td#text select, 
+#page-sans-menu form table tbody tr td#text textarea {
+	width: 350px;
+	font-size: 0.9em;
+	font-family: "Trebuchet MS";
+	padding-left: 2px;
+	text-align: left;
+}
+#page form table tbody tr td#errors ul,
+#page form table tbody tr td.errors ul,
+#page-sans-menu form table tbody tr td#errors ul {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+#page form table tbody tr td#errors ul li,
+#page form table tbody tr td.errors ul li,
+#page-sans-menu form table tbody tr td#errors ul li {
+	list-style-type: none;
+	color: #cb2244;
+	font-size: 0.9em;
+}
+#page form ul.accordion li div.content table tbody tr td textarea {
+	width:350px;
+	font-size:0.9em;
+	font-family:"Trebuchet MS";
+}
+#page form table tbody tr td div select,
+#page-sans-menu form table tbody tr td div select {
+	font-family:"Trebuchet MS";
+}
+#page form table tbody tr td#label,
+#page form table tbody tr td.label {
+	width:450px;
+	padding:5px 15px 5px 0px;
+	text-align:right;
+}
+#page-sans-menu form table tbody tr td#label {
+	width:250px;
+	padding:5px 15px 5px 0px;
+	text-align: right;
+}
+#page-sans-menu form table tbody tr td.annuler button {
+	display:block;
+	float:right;
+	margin-top : 10px;
+}
+#page-sans-menu form table tbody tr td.valider button {
+	display:block;
+	float:left;
+	margin-left: 15px;
+}
+
+th {
+	font-weight:normal;
+}
+
+
+/*************************************************************************************************************** Page consulter appplication ***************/
+.consulterappli {
+	padding:0;
+	margin:0;
+	font-family: 'Trebuchet MS';
+	border-top:2px solid #54AAA9;
+}
+.consulterappli div#onglet {
+	margin: 10px 0 0 40px;
+}
+.consulterappli div#onglet div#infos_appli a#infos_appli_onglet {
+	width: 206px;
+}
+.consulterappli h1 {
+	font-family: 'roboto';
+	font-size: 1.1em;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+}
+.consulterappli ul.accordion {
+	margin: 0 50px 25px 40px;
+	width: 1200px;
+}
+.consulterappli ul.accordion li h2 {
+	margin: 0;
+	display:block;
+	float:left;
+	width: 1129px;
+}
+.consulterappli ul.accordion li#li1 h2 {
+	border-top: none;
+	display: block;
+	float:left;
+	width: 1129px;
+	margin-bottom:2px;///////////////////////////////////////////////////////////
+}
+.consulterappli ul.accordion li div.content {
+	border:none;
+	border-top:2px solid white;
+	padding:
+}
+.consulterappli ul.accordion li div.content table{
+	font-size:0.8em;
+}
+.consulterappli ul.accordion li table {
+	border-collapse:collapse;
+	width:1200px;
+	margin:0;
+	padding:0;
+	border:none;
+}
+.consulterappli ul.accordion li table tr {
+	background-color: #afd6d6;
+}
+.consulterappli ul.accordion li table tr#trn2 { 
+	border-top:1px solid white;
+}
+.consulterappli ul.accordion li table tr#tr2n1 {
+	background-color: #ddeded;
+}
+.consulterappli ul.accordion li div.content table tbody tr td {
+	padding:6px 10px;
+}
+.consulterappli ul.accordion li div.content table tbody tr td#label {
+	width: 260px;
+	border-right:1px solid white;
+}
+.consulterappli ul.accordion {
+	clear:both;
+}
+.consulterappli ul#accordion_package.accordion li div#histo_script.content {
+	display:none;
+}
+.consulterappli ul#accordion_maj.accordion li div#histo_maj.content table.maj,
+.consulterappli ul#accordion_package.accordion li div#histo_script.content table.script  {
+	display:none;
+}
+.consulterappli ul.accordion li div.content #lien {
+	background-color:white;
+	padding:10px 0 10px 15px;
+	font-size:0.9em;
+}
+.consulterappli ul.accordion li div.content #lien a {
+	color: #444444;
+}
+.consulterappli ul#accordion_appli.accordion li div#requis div#prerequis.content table#prerequis_liste,
+.consulterappli ul#accordion_appli.accordion li div#requis div#nonrequis.content table#nonrequis_liste,
+.consulterappli ul#accordion_appli.accordion li div#requis div#autreprerequis.content table#autreprerequis_liste {
+	width:1150px;
+	margin-left:10px;
+	margin-bottom: 15px;
+}
+.consulterappli ul#accordion_appli.accordion li div#requis div#prerequis.content table#prerequis_liste tbody tr th,
+.consulterappli ul#accordion_appli.accordion li div#requis div#nonrequis.content table#nonrequis_liste tbody tr th,
+.consulterappli ul#accordion_appli.accordion li div#requis div#autreprerequis.content table#autreprerequis_liste tbody tr th {
+	font-size:1em;
+	background-color: #54aaa9;
+	border:1px solid #cccccc;
+	text-align: left;
+	padding: 5px;
+	padding-left: 10px;
+	color: white;
+}
+.consulterappli ul#accordion_appli.accordion li div#requis div#prerequis.content table#prerequis_liste tbody tr td,
+.consulterappli ul#accordion_appli.accordion li div#requis div#nonrequis.content table#nonrequis_liste tbody tr td,
+.consulterappli ul#accordion_appli.accordion li div#requis div#autreprerequis.content table#autreprerequis_liste tbody tr td {
+	font-size:0.9em;
+	border:1px solid #cccccc;
+	background-color:white;
+	padding: 5px 10px 5px 10px;
+}
+
+/********************************************************************************************************* Gestion droits utilisateurs (workflow) **********/
+#page form#gestiondroits div table {
+	width:1100px;
+	font-size:0.9em;
+	font-family:"Trebuchet MS";
+	border-collapse:collapse;
+	margin:10px 0;
+}
+#page form#gestiondroits div table tbody tr td select{
+	font-family:"Trebuchet MS";
+}
+#page form#gestiondroits div table tbody tr td#text select {
+	border:1px solid #bbbbbb;
+}
+#page div.table_droits {
+	padding:20px 40px 30px 30px;
+}
+#page div.table_droits table {
+	border-collapse:collapse;
+	width:100%;
+	min-width:1000px;
+	margin:0;
+	border:none;
+	font-size:0.9em;
+	box-shadow: 4px 4px 5px #999999;
+}
+#page div.table_droits table tbody tr th {
+	background-color:#555555;
+	font-size:1em;
+	color:white;
+	padding:8px 7px;
+	border-right:1px solid #999999;
+	font-weight: normal;
+}
+#page div.table_droits table tbody tr td {
+	border-right:1px solid #999999;
+}
+#page div.table_droits table tbody tr td:nth-child(n+2) {
+	text-align: center;
+}
+#page div.table_droits table tbody tr th:nth-child(n+11) {
+	border-right:none;
+}
+#page div.table_droits table tbody tr {
+	background-color: rgba(133,194,194,0.4);
+	font-size: 0.9em;
+}
+#page div.table_droits table tbody tr:nth-child(2n+1) {
+	background-color: rgba(133,194,194,0.2);
+}
+#page div.table_droits table tbody tr td {
+	padding:5px 7px;
+}
+#page div.table_droits table tbody tr td div#ok {
+	display: block;
+	height: 15px;
+	width: 15px;
+	margin: 0 auto;
+	background: url('../images/ok.png');
+}
+#page div.table_droits table tbody tr td div#not-ok {
+	display:block;
+	height:15px;
+	width:15px;
+	margin:0 auto;
+	background: url('../images/not-ok2.png');
+}
+
+
+/*************************************************************************************************************************** Modifier listes/items *********/
+.modifieritem  {
+	font-family: "Trebuchet MS";
+}
+.modifieritem form {
+	width: auto;
+}
+.modifieritem div#table_items {
+	padding:20px 40px 50px 40px;
+	width:auto;
+}
+.modifieritem div#table_items table {
+	border-collapse: collapse;
+	margin-bottom: 15px;
+	width: 100%;
+}
+.modifieritem div#table_items table tbody tr td {
+	font-size: 0.9em;
+	padding: 5px 15px;
+}
+.modifieritem div#table_items table tbody tr td#titre {
+	border-right: 3px solid white;
+	vertical-align: top;
+	font-size: 1.2em;
+	padding: 15px 10px 15px 20px;
+	font-weight: normal;
+	width: 250px;
+	background: rgba(133,194,194,0.8);
+}
+.modifieritem div#table_items table tbody tr td#titre a{
+	color: white;
+}
+.modifieritem div#table_items table tbody tr td#td2,
+.modifieritem div#table_items table tbody tr td#td3 {
+	width:100px;
+}
+.modifieritem div#table_items table tbody tr td#vide {
+	width: 0px;
+	height: 0px;
+	display:none;
+}
+.modifieritem div#table_items table tbody tr#trn2 { 
+	border-top:1px solid white;
+}
+.modifieritem div#table_items table tbody tr#trimpair {
+	background-color: #afd6d6;
+}
+.modifieritem div#table_items table tbody tr {
+	background-color: #ddeded;
+}
+.modifieritem a {
+	color : #54AAA9;
+}
+.modifieritem a:hover {
+	color : #444444;
+}
+
+/*************************************************************************************/
+#page.ajouterutilisateur {
+	margin: 0px;
+	border: none;
+}
+#page.ajouterutilisateur form.ajouterutilisateur table#global {
+	width: 1000px;
+}
+#page.ajouterutilisateur form.ajouterutilisateur table#global tbody tr td#label {
+	width: 250px;
+}
+
+
+/*************************************************************************************************************************** Modifier application **********/
+form.modifierappli {
+	z-index: 50;
+	margin-top: 0px;
+}
+.modifierappli ul.accordion {
+	margin-top: 0px;
+}
+.modifierappli ul.accordion li div.content table {
+	border-collapse:collapse;
+	width:1100px;
+	border:none;
+}
+.modifierappli ul.accordion li h2 {
+	padding-left: 10px;
+	margin:0;
+	display: block;
+	float: left;
+	width: 1139px;
+}
+.consulterappli ul#accordion_qualif.accordion li a#statut_accordion_moins.icone,
+.consulterappli ul.accordion li a.icone, 
+.modifierappli ul.accordion li a.icone {
+	background: #444444;
+	display: block;
+	margin: 0;
+	margin-top: 2px;
+	padding: 10px 8px 6px 13px;
+	float:left;
+}
+.consulterappli ul.accordion li#li1 a.icone {
+	margin-top: 0;
+}
+.modifierappli ul.accordion li div.content {
+	padding:19px 10px 15px 10px;
+margin-top: 10px;
+	background-color: #ddeded;
+	border-top:2px solid white;
+}
+.modifierappli ul#accordion_appli.accordion li h2 a#requis_accordion_moins,
+.modifierappli ul#accordion_appli.accordion li h2 a#requis_accordion_plus {
+
+	font-weight: bold;
+}
+.modifierappli ul.accordion li div.content table tbody tr td {
+	font-size:0.9em;
+	font-family:"Trebuchet MS";
+}
+.modifierappli ul#accordion_appli.accordion li div#installation.content table tbody tr td#error ul li {
+	color: red;
+}
+.modifierappli ul.accordion li div.content table tbody tr td#label{
+	padding:5px 15px 5px 15px;
+}
+.modifierappli ul.accordion li div.content table tbody tr td#read_only input{
+	width:350px;
+	background-color:#dddddd;
+	border:1px solid #bbbbbb;
+	border-radius:2px 2px 2px 2px;
+}
+.modifierappli ul.accordion li div.content table tbody tr td select {
+	font-family: "Trebuchet MS";
+}
+.modifierappli ul.accordion li div.content table tbody tr td#text input,
+.modifierappli ul.accordion li div.content table tbody tr td#text select,
+.modifierappli ul.accordion li div.content table tbody tr td textarea{
+	width:300px;
+	font-family:"Trebuchet MS";
+}
+.modifierappli ul.accordion li div.content table#appliweb_fixe,
+.modifierappli ul.accordion li div.content table#clientserveur_fixe,
+.modifierappli ul.accordion li div.content table#office_fixe {
+	margin-bottom:0;
+	padding-bottom:0;
+}
+.modifierappli ul.accordion li div.content table#clientserveur_fixe,
+.modifierappli ul.accordion li div.content table#office_fixe,
+.modifierappli ul.accordion li div.content table#fixe {
+	padding-top:0;
+}
+.modifierappli ul.accordion li h2 a:hover,
+#page div#content ul.accordion li h2 a:hover {
+  cursor: pointer;
+}
+.modifierappli u.accordion li div#architecture.content table#office_cond tbody tr td div#baquaras_testbundle_application_architecture_liaisonOffice input,
+.modifierappli ul.accordion li div#architecture.content table#fixe tbody tr td div#baquaras_testbundle_application_architecture_briques input {
+	display:inline-block;
+}
+.modifierappli ul.accordion li div#architecture.content table tbody tr td div#baquaras_testbundle_application_architecture_liaisonOffice label,
+.modifierappli ul.accordion li div#architecture.content table#fixe tbody tr td div#baquaras_testbundle_application_architecture_briques label {
+	display:inline;
+}
+.modifierappli #boutons  a {
+	text-decoration: none;
+}
+.modifierappli #boutons a input{
+	display: block;
+	font-family: "Trebuchet MS", "robotolight";
+	padding:4px 6px;
+	float:left;
+	margin:15px 15px 25px 280px;
+}
+.modifierappli button#baquaras_testbundle_application_save,
+.modifierappli button#baquaras_testbundle_application_modifStatutQualif {
+	float:left;
+	margin-right: 15px;
+}
+.modifierappli #clear {
+	clear:both;
+}
+.modifierappli ul#accordion_appli.accordion li div#architecture.content table#office_cond tbody tr td div#baquaras_testbundle_application_architecture_liaisonsOffice input {
+	clear:both;
+	display:block;
+	float:left;
+}
+.modifierappli ul#accordion_appli.accordion li div#architecture.content table#office_cond tbody tr td div#baquaras_testbundle_application_architecture_liaisonsOffice label {
+	float:left;
+	width:500px;
+	margin-left:8px;
+}
+.modifierappli ul.accordion li .content a {
+	color: #54aaa9;
+}
+.modifierappli ul#accordion_package.accordion li div#scripts.content div.lien a,
+.modifierappli ul#accordion_appli.accordion li div#requis div.content div.lien a {
+	font-size: 0.9em;
+}
+.modifierappli ul#accordion_appli.accordion li div#prerequis.content table#prerequis_liste,
+.modifierappli ul#accordion_appli.accordion li div#nonrequis.content table#nonrequis_liste,
+.modifierappli ul#accordion_appli.accordion li div#autresprerequis.content table#autreprerequis_liste,
+.modifierappli ul#accordion_package.accordion li div#scripts.content table#scripts_liste,
+.modifierappli ul#accordion_maj.accordion li div#maj.content table#maj_liste {
+	width:1150px;
+	margin-left:10px;
+	margin-bottom: 10px;
+}
+.modifierappli ul#accordion_appli.accordion li div#prerequis.content table#prerequis_liste tbody tr th,
+.modifierappli ul#accordion_appli.accordion li div#nonrequis.content table#nonrequis_liste tbody tr th,
+.modifierappli ul#accordion_appli.accordion li div#autresprerequis.content table#autreprerequis_liste tbody tr th,
+.modifierappli ul#accordion_package.accordion li div#scripts.content table#scripts_liste tbody tr th,
+.modifierappli ul#accordion_maj.accordion li div#maj.content table#maj_liste tbody tr th {
+	font-size:0.9em;
+	background-color: #54aaa9;
+	border:1px solid #cccccc;
+	text-align: left;
+	padding: 5px;
+	padding-left: 10px;
+	color: white;
+}
+.modifierappli ul#accordion_appli.accordion li div#prerequis.content table#prerequis_liste tbody tr td,
+.modifierappli ul#accordion_appli.accordion li div#nonrequis.content table#nonrequis_liste tbody tr td,
+.modifierappli ul#accordion_appli.accordion li div#autresprerequis.content table#autreprerequis_liste tbody tr td,
+.modifierappli ul#accordion_package.accordion li div#scripts.content table#scripts_liste tbody tr td,
+.modifierappli ul#accordion_maj.accordion li div#maj.content table#maj_liste tbody tr td {
+	font-size:0.9em;
+	border:1px solid #cccccc;
+	background-color:white;
+	padding: 5px 10px 5px 10px;
+}
+
+/*********************************************************************************************************************************** Ajouter Utilisateur ******/
+.ajouterutilisateur table tbody tr td#text table {
+	width:500px;
+	font-size: 0.9em;
+	border: 1px dashed #444444;
+	padding: 5px 10px;
+	margin: 10px;
+	margin-left: 0px;
+}
+.ajouterutilisateur table tbody tr td#text table tbody tr td.label {
+	text-align: right;
+	width: 100px;
+}
+.ajouterutilisateur table tbody tr td#text a {
+	font-size: 0.9em;
+	color: #54aaa9;
+}
+.ajouterutilisateur table tbody tr td#text div#form_profil {
+	font-size: 0.9em;
+}
+.ajouterutilisateur table tbody tr td#text div#form_profil input {
+	clear: both;
+	width: auto;
+	margin-right: 5px;
+	float: left;
+	margin-bottom : 3px;
+}
+.ajouterutilisateur table tbody tr td#text div#form_profil label {
+	float: left;
+	margin-bottom : 3px;
+}
+
+/******************************************************************************************************************************* Rechercher User Harpe ********/
+#rechercherUserHarpe form.rechercher {
+	padding: 0;
+	margin: 20px 0 40px 0;
+}
+#rechercherUserHarpe .rechercher table#recherche {
+	width: 540px;
+	margin-left: 40px;
+}
+#rechercherUserHarpe .rechercher table#recherche tbody tr td#explic {
+	padding-bottom: 8px;
+	font-size: 0.8em;
+}
+#rechercherUserHarpe .rechercher table#recherche tbody tr td#text input#form_champRecherche {
+	width: 350px;
+	height: 25px;
+	padding-left: 6px;
+}
+#rechercherUserHarpe .rechercher table#recherche tbody tr td button#form_save {
+	margin: auto;
+}
+#rechercherUserHarpe h2 {
+	font-size: 1.1em;
+	margin-left: 40px;
+	font-family: "roboto";
+}
+#rechercherUserHarpe table#resultats {
+	width: 540px;
+	margin-left: 40px;
+}
+#rechercherUserHarpe table#resultats tbody tr td a {
+	font-size: 0.8em;
+	color: #058282;
+	
+}
+
+/******************************************************************************************************************************* Rechercher User Harpe ********/
+#rechercheGroupeAD {
+	padding:0;
+	margin:0;
+	font-family: 'Trebuchet MS';
+	border: none;
+	border-top:2px solid #54AAA9;
+}
+#rechercheGroupeAD h1 {
+	font-family: 'roboto';
+	font-size: 1.1em;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+	border: none;
+}
+#rechercheGroupeAD form.rechercher {
+	width:550px;
+	margin: 0px auto 0px auto;
+}
+#rechercheGroupeAD form.rechercher {
+	padding: 0;
+	margin: 20px 0 40px 0;
+}
+#rechercheGroupeAD .rechercher table#recherche,
+#rechercheGroupeAD .rechercher table#zoneForm {
+	width: 540px;
+	margin-left: 40px;
+}
+#rechercheGroupeAD .rechercher table#recherche tbody tr td#explic label {
+	padding-bottom: 5px;
+	font-size: 0.9em;
+}
+#rechercheGroupeAD .rechercher table#recherche tbody tr td#text input#form_champRecherche {
+	width: 350px;
+	height: 30px;
+	padding-left: 6px;
+	font-size: 0.9em;
+	font-family: "Trebuchet MS";
+	padding-left: 4px;
+	text-align: left;
+}
+#rechercheGroupeAD .rechercher table#recherche tbody tr td button#form_save {
+	display: block;
+	margin:15px auto; 
+	font-family: "Trebuchet MS", "robotolight";
+	padding:4px 6px;
+}
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td#selectG,
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td#selectD {
+	margin : 0;
+	padding: 0;
+	width: 300px;
+	height: 250px;
+}
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td select#form_leftValues,
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td select#form_rightValues {
+	width: 300px;
+	height: 250px;
+}
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td button#btnRight,
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td button#btnLeft {
+	display: block;
+	margin: 5px 15px; 
+	font-family: "Trebuchet MS", "robotolight";
+	padding:4px 6px;
+}
+#rechercheGroupeAD form.rechercher table#zoneForm tbody tr td button#form_enregistrer {
+	display: block;
+	margin:15px auto; 
+	font-family: "Trebuchet MS", "robotolight";
+	padding:4px 6px;
+	float: right;
+}
+#rechercherUserHarpe table#resultats tbody tr td a {
+	font-size: 0.8em;
+	color: #058282;
+	
+}
+
+/************************************************************************************************************************************ Bulles d'aide ***********/
+.label {
+	float:left;
+}
+.bulle {
+	width: 15px;
+	height: 15px;
+	display: block;
+	float:left;
+	position: relative;
+	margin-left: 10px;
+	background: url('../images/help.gif') no-repeat center center;
+}
+.bulle_contenu {
+	display: none;
+	position: absolute;
+	top: -50px;
+	width: 200px;
+	border: 2px solid #dddddd;
+	border-radius: 10px;
+	background-color: rgba(255,255,255,0.8);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	padding:10px;
+}
+.bulle_contenu h4, .bulle_contenu p {
+	margin: 0px
+}
+
+/************************************************************************************************************************** Ajouter une mise à jour **********/
+.ajoutermaj table tbody tr td a {
+	color: #54aaa9;
+	font-size: 0.9em;
+}
+.ajoutermaj table tbody tr td#text input#baquaras_testbundle_miseajour_documentationTechnique {
+	font-family: "Trebuchet MS";
+	font-size: 0.9em;
+}
+
+/*************************************************************************************************************************** Modifier Mode opératoire ********/
+#page form.modifiermodeop {
+	width:1200px;
+}
+#page form.modifiermodeop div table tbody tr td#label {
+	float:left;
+	text-align:left;
+	font-size:1.1em;
+	border-bottom:1px solid #444444;
+	margin:10px 0 5px 0;
+}
+#page form.modifiermodeop div table tbody tr td#cke {
+	float:left;
+	width:1200px;
+}
+
+
+/***********************************************************************************************************************************************************/
+.rechercheHarpe {
+	padding:0;
+	margin:0;
+	font-family: 'Trebuchet MS';
+	border: none;
+	border-top:2px solid #54AAA9;
+}
+.rechercheHarpe h1 {
+	font-family: 'roboto';
+	font-size: 1.1em;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+	border: none;
+}
+.rechercheHarpe form.rechercherHarpe {
+	width:550px;
+	margin: 0px auto 0px auto;
+}
+.rechercheHarpe form.rechercherHarpe div.container table {
+	width: 550px;
+	margin-bottom: 10px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(1){
+	width: 105px;
+	font-size: 0.9em;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(2){
+	width: 275px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td#text input#form_recherche {
+	width: 275px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td button#form_save1 {
+	font-family: "Trebuchet MS";
+	width: 150px;
+	margin-left: 8px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(1),
+.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(3) {
+	width: 210px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#leftValues,
+.rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#form_rightValues {
+	height:250px;
+	width: 210px;
+	font-family: "Trebuchet MS";
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnLeft {
+	display: block;
+	float: left;
+	margin-left: 12px;
+}
+.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnRight {
+	display: block;
+	float: left;
+	margin-left: 12px;
+}
+
+
+#ajouterDepartement {
+	padding:0;
+	margin:0;
+	font-family: 'Trebuchet MS';
+	border: none;
+	border-top:2px solid #54AAA9;
+}
+#ajouterDepartement h1 {
+	font-family: 'roboto';
+	font-size: 1.1em;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+	border: none;
+}
+#ajouterDepartement form#ajouterDpt {
+	width:800px;
+	margin: 15px auto 0px auto;
+}
+#ajouterDepartement form#ajouterDpt div.container table {
+	width: 800px;
+	margin-bottom: 10px;
+	border-collapse: collapse;
+}
+#ajouterDepartement form#ajouterDpt table tbody tr td {
+	width: 200px;
+	margin: 0px;
+	padding: 0px;
+}
+#ajouterDepartement form#ajouterDpt div.container table#form_left tbody tr td.label {
+	font-size:0.9em;
+	padding:5px 10px 5px 5px;
+	text-align:right;
+}
+#ajouterDepartement form#ajouterDpt div.container table#form_left tbody tr td.buttons {
+	padding: 10px;
+	width: 80px;
+}
+#ajouterDepartement form#ajouterDpt div.container table#form_left tbody tr td select#form_selectDpt {
+	width: 300px;
+}
+#ajouterDepartement form table tbody tr td.text input,
+#ajouterDepartement form table tbody tr td.text select,
+#ajouterDepartement form table tbody tr td.text textarea {
+	width:200px;
+	font-size:0.9em;
+	font-family:"Trebuchet MS";
+}
+#ajouterDepartement form table tbody tr td textarea {
+	width:200px;
+	font-size:0.9em;
+	font-family:"Trebuchet MS";
+}
+
+#ajouterDepartement form.rechercherHarpe div.container table tbody tr td select#form_selectDpt,
+#ajouterDepartement form table tbody tr td div select {
+	font-family:"Trebuchet MS";
+	width: 200px;
+}
+/*SELECT, INPUT[type="text"] {
+    width: 160px;
+    box-sizing: border-box;
+}
+SECTION {
+    padding: 8px;
+    background-color: #f0f0f0;
+    overflow: auto;
+}
+SECTION > DIV {
+    float: left;
+    padding: 4px;
+}
+SECTION > DIV + DIV {
+    width: 40px;
+    text-align: center;
+}
+/***************************************************************************************************************************************/
+.modifappliqualif div#content {
+	padding: 20px;
+	padding-top: 0px;
+}
+.modifappliqualif div#content h2 {
+	font-size: 1.2em;
+	margin-left: 80px;
+}
+.modifappliqualif div#content h3 {
+	font-size: 1em;
+	margin-left: 110px;
+	margin-top: 30px;
+}
+.modifappliqualif div#content table#descriptif {
+	width: 1300px;
+	margin: 0 auto;
+	font-size: 0.9em;
+	margin-bottom: 20px;
+}
+.modifappliqualif div#content table#descriptif tbody tr td:nth-child(1) {
+	width: 200px;
+	padding: 10px 20px 10px 0;
+}
+.modifappliqualif div#content table#statut {
+	width: 1300px;
+	margin: 0 auto;
+	font-size: 0.9em;
+}
+.modifappliqualif div#content form.modifStatutQualif table {
+	width: 1300px;
+}
+.modifappliqualif div#content form.modifStatutQualif table tr td{
+	font-size: 0.9em;
+}
+.modifappliqualif div#content form.modifStatutQualif table tr td:nth-child(1) {
+	width:300px;
+	text-align: right;
+	padding: 10px 20px 10px 0;
+}
+.modifappliqualif div#content form.modifStatutQualif table tbody tr td div#form_statutQualif input {
+	clear:both;
+	display:block;
+	float:left;
+}
+.modifappliqualif div#content form.modifStatutQualif table tbody tr td div#form_statutQualif label {
+	float:left;
+	width:700px;
+	margin-left:8px;
+}
+.modifappliqualif div#content form.modifStatutQualif table tbody tr td input#form_lotNumero,
+.modifappliqualif div#content form.modifStatutQualif table tbody tr td textarea#form_commentaire {
+	width: 300px;
+}	
+.modifappliqualif div#content form.modifStatutQualif button#form_cancel {
+	float: right;
+}
+.modifappliqualif div#content form.modifStatutQualif button#form_save {
+	float: left;
+}
+/*********************************************************************/
+/*form table tbody tr td.annuler a button {
+	display: block;
+	float: right;
+	cursor: pointer;
+	
+}
+form table tbody tr td.annuler a {
+	text-decoration: none;
+	display:block;
+	cursor:pointer;
+	margin: 0;
+	margin-top: 10px;
+
+}
+form table tbody tr td.valider,
+form table tbody tr td.annuler {
+	padding: 0;
+margin: 0;
+}
+form table tbody tr td.valider button#baquaras_testbundle_application_save {
+	text-decoration: none;
+	margin: 0;
+	margin-left: 15px;
+	display: block;
+	float:left;
+	cursor: pointer;
+}
+form table tbody tr td.valider button#baquaras_testbundle_prerequis_save,
+form table tbody tr td.valider button#baquaras_testbundle_nonrequis_save,
+form table tbody tr td.valider button#baquaras_testbundle_autreprerequis_save {
+	text-decoration: none;
+	margin-left: 15px;
+	display: block;
+	float:left;
+}*/
+
+/************************************************************************************************************************** Modifier statut ******************/
+#page form.ajouterappli table tbody tr#siera {
+	display:none;
+}
+
+/*************** Onglets ******************/
+div#onglet {
+	width: 1200px;
+	margin: 10px auto 0px auto;
+	font-size:0.9em;
+	font-family:"roboto";
+	z-index:0;
+}
+div#onglet div#infos_appli,
+div#onglet div#infos_package,
+div#onglet div#infos_qualif,
+div#onglet div#infos_maj,
+div#onglet div#infos_hdm {
+	display:inline;
+	float:left;
+	margin: 0;
+	padding: 0;
+	baackground: #ddeded;
+	/*background: #cccccc;
+	width: 215px;
+	padding: 10px;
+	margin: 0 5px 0 0;
+	font-size:1.1em;
+	border-radius: 5px 5px 0 0;*/
+}
+div#onglet div a {
+	display: block;
+	width: 211px;
+	padding: 10px 10px 10px 15px;
+	color: #444444;
+	background: rgba(133, 194, 194, 0.2);
+	margin-right: 5px;
+	font-size:1.1em;
+	font-family: "roboto";
+	border-radius: 5px 5px 0 0;
+	z-index: 0;
+}
+html body div#page div#onglet div#infos_hdm a#infos_hdm_onglet {
+	margin-right: 0;
+}
+div#onglet a:hover {
+	color: #444444;
+	cursor: pointer;
+	
+}

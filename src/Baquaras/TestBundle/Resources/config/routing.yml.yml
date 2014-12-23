@@ -1,0 +1,92 @@
+
+
+pagetest:
+    path:     /page-test
+    defaults: {_controller:BaquarasTestBundle:Blog:index}
+
+accueil:
+    path: /accueil
+    defaults: {_controller:BaquarasTestBundle:Blog:accueil}
+
+## UTILISATEURS
+# Formulaire pour ajouter un utilisateur
+ajouteruser:
+    path:  /utilisateur/ajouter
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajouteruser}
+
+# Formulaire pour ajouter un groupe d'utilisateur
+ajoutergroupeuser:
+    path:  /groupeutilisateur/ajouter
+    defaults: {_controller:BaquarasTestBundle:Groupe:ajoutergroupeuser}
+
+## APPLICATIONS
+# liste des applications qualifiées
+listerappli:
+    path: /application/lister
+    defaults: {_controller:BaquarasTestBundle:Appli:listerappli}
+
+# formulaire pour créer une application
+ajouterappli:
+    path:  /application/ajouter
+    defaults: {_controller:BaquarasTestBundle:Appli:ajouterappli}
+
+# Formulaire pour renseigner/modifier toutes les informations relatives à une application
+modifierappli:
+    path: /application/modifier
+    defaults: {_controller:BaquarasTestBundle:Appli:modifierappli}
+
+# Formulaire pour renseigner/modifier toutes les informations relatives à un package
+modifierpackage:
+   path: /package/modifier
+   defaults: {_controller:BaquarasTestBundle:Appli:modifierpackage}
+
+# Page affichant les caractéristiques d'une application 
+consulterappli:
+   path: /application/{id}
+   defaults: {_controller:BaquarasTestBundle:Appli:consulterappli}   
+   
+## RECHERCHE
+# Formulaire de recherche
+recherche:
+   path: /recherche
+   defaults: {_controller:BaquarasTestBundle:Baquaras:recherche}
+   
+## MISE A JOUR
+#  Formulaire  pour  ajouter  une  mise à jour
+ajoutermiseajour:
+   path:    /miseajour/ajouter
+   defaults:  {_controller:BaquarasTestBundle:MiseAJour:ajoutermiseajour}
+
+## LISTES/ITEMS
+# Liste des items des listes déroulantes
+listeritem:
+   path:  /liste-items/lister
+   defaults: {_controller:BaquarasTestBundle:Liste:listeritem}
+
+# Formulaire de modification des items des listes déroulantes
+modifieritem:
+   path:  /liste-items/modifier
+   defaults: {_controller:BaquarasTestBundle:Liste:modifieritem}
+   
+   # Formulaire de modification des droits
+modifierdroits:
+   path:  /gestionutilisateursapplication/modifier
+   defaults: {_controller:BaquarasTestBundle:GestionDroitsApplication:modifierdroits}
+   
+   # Formulaire de modification des droits
+modifierdroitspage:
+   path:  /gestiondroitspage/modifier
+   defaults: {_controller:BaquarasTestBundle:GestionDroitsPage:modifierdroitspage} 
+   
+
+   
+   # Formulaire de modification des droits
+modifierdroits:
+   path:  /gestionutilisateursapplication/modifier
+   defaults: {_controller:BaquarasTestBundle:GestionDroitsApplication:modifierdroits}
+   
+   # Formulaire de modification des droits
+modifierdroitspage:
+   path:  /gestiondroitspage/modifier
+   defaults: {_controller:BaquarasTestBundle:GestionDroitsPage:modifierdroitspage} 
+   

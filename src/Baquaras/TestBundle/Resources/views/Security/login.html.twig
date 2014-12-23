@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<head>
+		<title> Suivi des qualifications </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+
+	<body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 	
+
+		<div id="page">
+					
+			<h1> Suivi des qualifications </h1>
+			
+			{% if error %}
+				<div>{{ error.message }}</div>
+			{% endif %}
+
+			<form action="{{ path('login_check') }}" method="post">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="_username" />
+	
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="_password" />
+
+				<input type="hidden" name="_target_path" value="account" />
+
+				<input type="submit" name="login" />
+			</form>
+		
+		</div>
+		
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Ajout d'un non-requis </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+    
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+			
+		<div id="page">
+		
+			<h1> Ajouter un non-requis </h1>
+		
+			<form  action="{{ path('ajouterNonRequis', {'applicationId': application.id }) }}" method="post" {{ form_enctype(form) }} class="ajouternonrequis" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			<table>
+				
+				<tr> 
+					<td id="errors"> {{ form_errors(form) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.libelle) }} </td>
+					<td id="text"> {{ form_widget(form.libelle) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.libelle) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.modeGestion) }} </td>
+					<td id="text"> {{ form_widget(form.modeGestion) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.modeGestion) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.oscible) }} </td>
+					<td id="text"> {{ form_widget(form.oscible) }} </td> </tr> <tr> <td>  </td>
+					<td id="errors"> {{ form_errors(form.oscible) }} </td>
+				</tr>					
+				<tr> 
+					<td class="annuler"> <a href="{{path('modifierApplication', {'id': application.id }) }}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
+					<td class="valider"> {{ form_widget(form.save) }} </td> 
+				</tr>
+				<tr> <td colspan="2"> {{ form_rest(form) }} </td> </tr>
+			
+			</table>			
+			
+			{{ form_end(form) }}
+
+			</form>
+		
+		</div>
+		
+    </body>
+</html>

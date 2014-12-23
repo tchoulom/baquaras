@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	
+	<head>
+		<title> Ajout d'un nouvel utilisateur </title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+		{% endblock %} 
+	</head>
+    
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+			
+		<div id="page">
+		<div id="rechercherUserHarpe">
+	
+			<h1> Ajout d'un nouvel utilisateur </h1>
+
+			<form action="{{ path('rechercherUserHarpe') }}" method="post" {{ form_enctype(form) }} class="rechercher" novalidate="novalidate">
+		
+				{{ form_start(form) }}
+				
+				{{ form_errors(form) }}
+				
+				<table id="recherche">
+					<tr>
+						<td id="explic" colspan=2>
+							La recherche porte sur le début du nom ou du prénom ou du compte matriculaire des agents.<br/>
+							La casse n'est pas prise en compte.
+						</td>
+					</tr>
+					<tr>
+						{#<td id="label"> {{ form_label(form.champRecherche) }} </td>#}
+						<td id="text"> {{ form_widget(form.champRecherche) }} </td> 
+						<td> {{ form_widget(form.save) }} </td> </tr> <tr>
+						<td id="error" colspan="2"> {{ form_errors(form.champRecherche) }} </td>
+					</tr>						
+				</table>				
+			
+				{{ form_rest(form) }}
+				
+				{{ form_end(form) }}
+
+			</form>
+			
+			{% if resultats is not empty %}
+				<h2> Résultats de la recherche : {{count}} résultat(s) </h2> 
+				
+				<table id="resultats">
+					{% for key,value in resultats %}
+						<tr>
+							{% set cpteMatriculaire = cpteMatriculaires[key] %}
+							<td> {{ value }} {{ cpteMatriculaires[key] }} <a href="{{path('ajouterUser', {'cpteMatriculaire' : cpteMatriculaire }) }}"> > Ajouter cet utilisateur </a> </td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% endif %}
+			
+		</div>
+		</div>
+    </body>
+</html>

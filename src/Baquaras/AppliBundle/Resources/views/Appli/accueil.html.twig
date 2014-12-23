@@ -1,0 +1,110 @@
+{% extends "::base.html.twig" %}
+
+{% block titreFenetre %}
+    Accueil
+{% endblock %}
+
+{% block titre %}
+    <h1>Accueil</h1>
+{% endblock %}
+
+{% block body %}
+<section>
+    <h2>Tests sur la gestion des droits utilisateur</h2>
+
+    <p><a href="{{ path('_adminPage') }}">Oh Administrateur tout puissant clique ici</a></p>
+
+    <p><a href="{{ path('_userPage') }}">Cette page est faite pour toi simple Utilisateur</a></p>
+
+    <p><a href="{{ path('_anonymousPage') }}">Pas de bol Anonymous tu ne peux aller qu'ici</a></p>
+</section>
+<section>
+    <h2>Lipsum niveau 2</h2>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dictum tincidunt turpis, ac molestie risus
+        pellentesque sed. In pharetra mollis nisi ac dictum. Phasellus rutrum nisl eu magna convallis ut rutrum mauris
+        condimentum. Praesent a ante sem. Donec dignissim mattis gravida. Donec faucibus libero ut erat consectetur
+        ullamcorper posuere magna rutrum. Etiam imperdiet vestibulum tellus sed accumsan. Curabitur volutpat posuere
+        nulla, in luctus mi porttitor sed. Phasellus egestas viverra dui non molestie. Integer ac turpis ligula, eu
+        malesuada augue. Ut non neque metus, sit amet pulvinar quam. Praesent sollicitudin mollis nisi, a hendrerit nibh
+        porttitor sed. Proin pellentesque condimentum libero eu feugiat. Curabitur sagittis ultrices leo.</p>
+</section>
+<section>
+
+    <h2>Formulaire factice</h2>
+
+
+    <form action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Valider" />
+        </div>
+    </form>
+
+    {# Fin Formulaire #}
+</section>
+
+
+<section>
+    <h3>Niveau 3</h3>
+    <table class="bordered-table zebra-striped" summary="">
+
+        <caption>Présentation de quelques articles publiés sur OpenWeb</caption>
+
+        <thead>
+        <tr>
+            <th>Type du Message</th>
+            <th>De</th>
+            <th>Objet</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>message</td>
+            <td>COTTEREAU Laurent</td>
+            <td>Demandes diverses relatives à un problème pour l'exemple d'un titre de message long qui puisse faire
+                aller à la ligne
+            </td>
+            <td>12/12/2009 15h45</td>
+        </tr>
+        <tr>
+            <td>message</td>
+            <td>LUCAS Eric</td>
+            <td>Sans objet</td>
+            <td>01/03/2009 10h13</td>
+        </tr>
+        <tr>
+            <td>message</td>
+            <td>GILET Vincent</td>
+            <td>Demande</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Notification Interne</td>
+            <td>LUCAS Eric (admin)</td>
+            <td>Alerte !</td>
+            <td>10/01/2010 14h45</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Dernier niveau 2</h2>
+
+    <p>Praesent sit amet congue felis. Cras consequat, orci a ornare malesuada, libero justo egestas metus, quis
+        eleifend mauris urna vitae tortor. Nunc at nulla mauris. Maecenas vel purus metus, sed convallis mi. Ut lectus
+        elit, viverra id fermentum adipiscing, condimentum in massa. In sagittis, augue sit amet bibendum mattis, arcu
+        ante vulputate dui, vel ullamcorper eros velit vitae ipsum. Integer volutpat leo vel metus condimentum in
+        posuere felis dignissim. Donec ipsum nulla, dictum eget luctus vehicula, porta id est. Fusce semper, justo ut
+        facilisis ornare, urna magna gravida dolor, vitae lobortis magna erat eu mi. Quisque dignissim mollis hendrerit.
+        Aenean purus dui, commodo at mollis sed, fringilla nec ipsum. Donec lacinia dui eget felis iaculis sollicitudin.
+        Maecenas sed sem at ligula cursus sodales. Maecenas sagittis turpis vel leo porta iaculis. Aenean at dolor mi.
+        Suspendisse potenti. Proin placerat ullamcorper vulputate. Class aptent taciti sociosqu ad litora torquent per
+        conubia nostra, per inceptos himenaeos. Phasellus sollicitudin, leo et feugiat auctor, leo nulla fermentum
+        velit, a ornare lectus magna vel leo. Praesent hendrerit elementum elit, sed molestie tellus euismod nec.</p>
+</section>
+        {% endblock %}

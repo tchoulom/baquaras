@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Liste des applications qualifiées </title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+		{% endblock %} 
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+
+		<div id="page">
+		
+			<h1> Liste des applications qualifiées </h1>
+		
+			<div id="listerappli">
+			
+				{### Zone d'affichage des messages/annotations ###}
+				<div id="flashbag"> 
+					{% for flashMessage in app.session.flashbag.get('notice') %}
+						<div id="img"> </div>
+						<div id="texte"> {{ flashMessage }} </div> <br/>
+					{% endfor %}
+				</div>
+			
+				{### Pagination alphabétique ###}
+				<div id="pagination_alphab"> 
+					{#<div class='position_link'>
+						<a href="{{ path('listerApplications', {'triSuiviQualif': 'Toutes', 'page': pagination.page}) }}">Toutes</a>&nbsp;
+						<a href="{{ path('listerApplications', {'triSuiviQualif': '@', 'page': pagination.page}) }}">@</a>&nbsp;
+						{% for lettre in 'A'..'Z' %}
+							<a href="{{ path('listerApplications',{'triSuiviQualif': lettre, 'page': pagination.page})}}">{{ lettre|upper }}</a>&nbsp;
+						{% endfor %}
+					</div>#}
+				</div>
+				<table id="boutons">
+					<tr>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParSousCompte'}) }}"> {{ form_widget(form.sousCompte ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParPostesWSUS'}) }}"> {{ form_widget(form.postesWSUS ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParInstallationAD'}) }}"> {{ form_widget(form.installable ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParMiseAJour'}) }}"> {{ form_widget(form.miseAJour ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParReboot'}) }}"> {{ form_widget(form.reboot ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParPreRequisManuel'}) }}"> {{ form_widget(form.preRequisManuel ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParNonRequis'}) }}"> {{ form_widget(form.nonRequis ) }} </a> </td>
+						<td> <a href="{{path('listerApplications', {'action' : 'triParPopulationCible'}) }}"> {{ form_widget(form.populationCible ) }} </a> </td>
+					</tr>
+				</table>
+				<table id="liste">
+					<tr>
+						<td> Nom </td>
+						<td> Version </td>
+						<td> Correctif Qualif </td>
+						<td> Description </td>
+						<td> Installable par </td>
+						<td> Installable &agrave; distance </td>
+						<td> Mode Op&eacute;ratoire </td>
+						<td> Statut </td>
+						{% if action == 'triParSousCompte' %}
+							<td> Sous compte </td>
+						{% endif %}
+						{% if action == 'triParPostesWSUS' %}
+							<td> Postes WSUS </td>
+						{% endif %}
+						{% if action == 'triParMiseAJour' %}
+							<td> Mises à jour </td>
+						{% endif %}
+						{% if action == 'triParPreRequisManuel' %}
+							<td> Pré requis </td>
+						{% endif %}
+						{% if action == 'triParNonRequis' %}
+							<td> Non requis </td>
+						{% endif %}
+						{% if action == 'triParPopulationCible' %}
+							<td> Population cible </td>
+						{% endif %}
+						<td> Actions </td>
+					</tr>
+	
+					{% for application in applications %}
+					<tr>
+						<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','resizable=yes,top=0,left=0,width=1300,height=900,scrollbars=yes'); return false;"> {{ application.nom }} </a> </td>
+						<td> {{ application.version }} </td>
+						<td> {{ application.correctifQualif }} </td>
+						<td> {{ application.description }} </td>
+						<td> 
+							{% set i = 0 %}
+							{% for agent in application.agents %}
+								{% if agent.role == "personnes" %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ agent.libelle }} 
+								{% endif %}
+							 {% endfor %} 
+						</td>
+						<td> 
+							{% if application.installation.installationADistance is defined %}
+								{% if application.installation.installationADistance is not null %}
+									{% if application.installation.installationADistance %} Oui {% else %} Non {% endif %}
+								{% endif %}
+							{% endif %}
+						</td>
+						<td>
+							{% for package in application.packages %}
+								{% if package.modeOperatoire is defined %}
+									{% if package.modeOperatoire is not null %}
+										<a href="{{path('voirModeOperatoire', {'packageId' : package.id }) }}" onClick="window.open(this.href,'','scrollbars=yes, width=900'); return false;"> Mode opératoire {{ package.paliersTechniques }} </a>
+										{{ package.modeOperatoire.libelle }}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td> 
+							{% for package in application.packages %}
+								{% if package.statutQualif.libelle is defined %}
+									{% if package.statutQualif.libelle is not null %}
+										{{ package.statutQualif.libelle }}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						</td>
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParSousCompte' %}
+							<td>
+								{% set i = 0 %}
+								{% for package in application.packages %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ package.qualification.sousCompte }} 
+								{% endfor %}
+							</td>
+						{% endif %}
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParPostesWSUS' %}
+							<td> {{ application.gestion.postesPilotesWSUS }} </td>
+						{% endif %}
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParMiseAJour' %}
+							<td>
+								{% set i = 0 %}
+								{% for miseAJour in application.misesajour %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ miseAJour.description }} 
+								 {% endfor %}
+							</td>
+						{% endif %}
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParPreRequisManuel' %}
+							<td>
+								{% set i = 0 %}
+								{% for preRequis in application.preRequis %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ preRequis.libelle }} 
+								{% endfor %}
+							</td>
+						{% endif %}
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParNonRequis' %}
+							<td>
+								{% set i = 0 %}
+								{% for nonRequis in application.nonRequis %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ nonRequis.libelle }} 
+								{% endfor %}
+							</td>
+						{% endif %}
+						{# affichage de la colonne selon le critère de tri demandé #}
+						{% if action == 'triParPopulationCible' %}
+							<td>
+								{% set i = 0 %}
+								{% for cible in application.populationCible %}
+									{# compteur pour faire un retour à la ligne #}
+									{% set i = i + 1 %}
+									{% if i >= 2 %}
+										</br>
+									{% endif %}
+									{{ cible.libelle }} 
+								{% endfor %}
+							</td>
+						{% endif %}
+						<td>
+							<a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','width=1300,height=2000,scrollbars=yes'); return false;"> Détails </a> <br/>
+							<a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+							<a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>
+							<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
+						</td>
+					</tr>
+					{% endfor %}				
+					
+				</table>
+				
+				<div id="export">
+					<a href="{{path('listerApplications', {'action' : action, 'export' : true}) }}"> > Exporter sous Excel </a>
+				</div>
+			
+				{### Pagination numérique ###}
+				<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>
+
+			</div>
+		</div>
+	</body>
+</html>

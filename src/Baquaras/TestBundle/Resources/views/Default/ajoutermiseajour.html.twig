@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	
+	<head>
+		<title> Ajout d'une mise à jour pour l'application {{application.nom}} </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+
+	<body>
+		
+		<div id="page-sans-menu">
+		
+			<h1> Ajouter une mise à jour </h1>
+		
+			<form  action="{{ path('ajouterMAJ', {'id' : application.id }) }}"  method="post"  {{ form_enctype(form) }} novalidate="novalidate" class="ajoutermaj">
+
+				{{ form_start(form) }}
+			
+			    {{ form_errors(form) }}
+				
+				<table>		
+					
+					<tr>
+						<td id="label"> {{ form_label(form.type) }} </td>
+						<td id="text"> {{ form_widget(form.type) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.type) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.version) }} </td>
+						<td id="text"> {{ form_widget(form.version) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.version) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.indice) }} </td>
+						<td id="text"> {{ form_widget(form.indice) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.indice) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.oscible) }} </td>
+						<td id="text"> {{ form_widget(form.oscible) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.oscible) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.statutPatch) }} </td>
+						<td id="text"> {{ form_widget(form.statutPatch) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.statutPatch) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.description) }} </td>
+						<td id="text"> {{ form_widget(form.description) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.description) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.documentationTechnique) }} </td>
+						<td id="text"> {{ form_widget(form.documentationTechnique) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.documentationTechnique) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.commentaire) }} </td>
+						<td id="text"> {{ form_widget(form.commentaire) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.commentaire) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.dateMiseEnProdMAJ) }} </td>
+						<td> {{ form_widget(form.dateMiseEnProdMAJ) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.dateMiseEnProdMAJ) }} </td>
+					</tr>
+
+					<tr>
+						<td id="label"> {{ form_label(form.nomPublicationPatch) }} </td>
+						<td id="text"> {{ form_widget(form.nomPublicationPatch) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.nomPublicationPatch) }} </td>
+					</tr>
+
+					<tr>
+						<td id="label"> {{ form_label(form.ligneCommandePatchTeledistribution) }} </td>
+						<td id="text"> {{ form_widget(form.ligneCommandePatchTeledistribution) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.ligneCommandePatchTeledistribution) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.ligneCommandePatchPublication) }} </td>
+						<td id="text"> {{ form_widget(form.ligneCommandePatchPublication) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.ligneCommandePatchPublication) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.cheminPatch) }} </td>
+						<td id="text"> {{ form_widget(form.cheminPatch) }} </td> </tr> <tr>
+						<td di="errors"> {{ form_errors(form.cheminPatch) }} </td>
+					</tr>
+					
+					<tr>
+						<td id="label"> {{ form_label(form.personneChargeeMAJ) }} </td>
+						<td id="read_only"> 
+							{{ form_widget(form.personneChargeeMAJ) }} 
+							<a href="{{path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : 'chargeMAJ'}) }}" onClick="window.open(this.href,'','scrollbars=yes'); return false;"> > Ajouter un utilisateur </a>
+						</td> </tr> <tr>
+						<td id="errors"> {{ form_errors(form.personneChargeeMAJ) }} </td>
+					</tr>
+					<tr>
+						<td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
+						<td class="valider"> {{ form_widget(form.save) }} </td>
+					</tr>
+				
+				</table>			
+								
+				{{ form_end(form) }}
+				
+			</form>
+			
+		</div> 
+	</body>
+</html>

@@ -1,0 +1,18 @@
+/*** accueil.css ***/
+
+#page div#content {
+	padding: 30px;
+}
+#page div#content div#logo_accueil {
+	display: block;
+	width: 800px;
+	height: 300px;
+	margin: 0 auto;
+	background: url('../images/titre6.jpg') no-repeat center;
+}
+
+#page div#content div#msg_accueil {
+	font-size: 1em;
+	width: 950px;
+	margin: 15px auto 10px auto;
+}

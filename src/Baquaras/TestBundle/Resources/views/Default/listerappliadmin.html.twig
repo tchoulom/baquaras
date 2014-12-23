@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<head>
+		<title> Liste des applications qualifiées </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+	
+	<body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+	
+		<div id="page">
+		
+			<h1> Liste des applications qualifiées </h1>
+			
+			<div class="listerappli">
+		
+				{### Zone d'affichage des messages/annotations ###}
+				<div id="flashbag"> 
+					{% for flashMessage in app.session.flashbag.get('notice') %}
+						<div id="img"> </div>
+						<div id="texte"> {{ flashMessage }} </div> <br/>
+					{% endfor %}
+				</div>
+			
+				<div id="pagination_alphab">
+					{#<a href="{{path('listerApplicationsLettre') }}"> A </a>#}	
+				</div>		
+
+			<table>
+				<tr>
+					{#<td> Id </td>#}
+					<td> Nom </td>
+					<td> Version </td>
+					<td> Description </td>
+					<td> Installable par </td>
+					<td> Installable &agrave; distance </td>
+					<td> Mode Op&eacute;ratoire </td>
+					<td> Statut </td>
+					<td> Actions </td>
+				</tr>
+	
+
+				{% for application in applications %}
+				<tr>
+					{#<td> {{ application.id }} </td>#}
+					<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" target="_blank"> {{ application.nom }} </a> </td>
+					<td> {{ application.version }} </td>
+					<td> {{ application.description }} </td>
+					<td> {{ application.habilitesinstall }} </td>
+					<td> 
+						{% if application.installation.installationADistance is defined %}
+							{% if application.installation.installationADistance is not null %}
+								{% if application.installation.installationADistance %} Oui {% else %} Non {% endif %}
+							{% endif %}
+						{% endif %}
+					</td>
+					
+					<td>
+						{% for package in application.packages %}
+							{% if package.modeOperatoire is defined %}
+								{% if package.modeOperatoire is not null %}
+									{{ package.modeOperatoire.libelle }}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td> 
+						{% for package in application.packages %}
+							{% if package.statutQualif.libelle is defined %}
+								{% if package.statutQualif.libelle is not null %}
+									{{ package.statutQualif.libelle }}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						<a href="{{path('consulterApplication', {'id': application.id }) }}" target="_blank"> D&eacute;tails </a> <br/>
+						<a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+						<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
+						<a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise &agrave; jour </a>
+						<a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'Mode opératoire','width=600,scrollbars=yes'); return false;"> click </div>
+					</td>
+				</tr>
+								
+				{% endfor %}
+				
+			</table>
+			
+			<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>
+		</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title> Ajout d'une application </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+
+    <body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+			
+		<div id="page">
+		
+			<h1> Ajouter une application </h1>
+		
+			<form  action="{{ path('ajouterApplication') }}" method="post" {{ form_enctype(form) }} class="ajouterappli" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			<table>
+				
+				<tr> 
+					<td id="errors"> {{ form_errors(form) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.nom) }} </td>
+					<td  id="text"> {{ form_widget(form.nom) }} </td> </tr> <tr> <td> </td> 
+					<td id="errors"> {{ form_errors(form.nom) }} </td>
+				</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.version) }} </td>
+						<td id="text"> {{ form_widget(form.version) }} </td> </tr> <tr> <td> </td> 
+						<td id="errors"> {{ form_errors(form.version) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.description) }} </td>
+						<td id="text"> {{ form_widget(form.description) }} </td> </tr> <tr> <td> </td> 
+						<td id="errors"> {{ form_errors(form.description) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.type) }} </td>
+						<td id="text"> {{ form_widget(form.type) }} </td> </tr> <tr> <td> </td> 
+						<td id="errors"> {{ form_errors(form.type) }} </td>
+					</tr>					
+					<tr>
+						<td id="label"> {{ form_label(form.appliReferenceeSIERA) }} </td>
+						<td> {{ form_widget(form.appliReferenceeSIERA) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.appliReferenceeSIERA) }} </td>
+					</tr>
+					<tr> </tr>
+					
+						{% block jquery_ajouter %}
+							<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"> </script>
+							<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"> </script>
+							<script>
+								$(document).ready(function(){
+									$("#baquaras_testbundle_application_appliReferenceeSIERA").click(function(){
+										$("#siera").toggle();
+									});
+								});
+							</script>
+						{% endblock %}
+					
+					<tr id="siera">
+						<td id="label"> {{ form_label(form.nomApplicationSIERA) }} </td>
+						<td id="text"> {{ form_widget(form.nomApplicationSIERA) }} </td> </tr> <tr> <td> </td> 
+						<td id="errors"> {{ form_errors(form.nomApplicationSIERA) }} </td>
+					</tr>
+					<tr>
+						<td class="annuler"> <a href="{{path('accueil')}}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
+						<td class="valider"> {{ form_widget(form.save) }} </td>
+					</tr>
+			
+				</table>
+			
+				
+				
+				{{ form_rest(form) }}
+			
+			{{ form_end(form) }}
+
+			</form>
+		
+		</div>
+		
+    </body>
+</html>

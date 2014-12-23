@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Ajout/Suppression d'utilisateurs </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+		<style>
+			#zoneBouton {
+				 margin-top : -100px; 
+				 margin-left : 190px;
+				 position : relative;
+			}
+			#zoneForm {
+				position : relative;
+				margin-top : 30px; 
+			}
+			#form_leftValues {
+				margin-left : 15px; 
+				width:150px;
+				height:150px;
+			}
+			#form_rightValues {
+				margin-left : 85px; 
+				width:150px;
+				height:150px;
+			}
+			#form_enregistrer {
+				position : relative;
+				margin-top : 100px;
+			}
+		</style>
+	</head>
+
+    <body>
+					
+		<div class="rechercheHarpe">
+		
+			<h1> Ajout/Suppression d'utilisateurs </h1>
+		
+			<form  action="{{ path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : action}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+				<div class="container">
+							
+					<table id="tab1">
+						<tr> 
+							<td id="errors"> {{ form_errors(form) }} </td>
+						</tr>
+						<tr>
+							<td id="label"> {{ form_label(form.recherche) }} </td>
+							<td  id="text"> {{ form_widget(form.recherche) }} </td> 
+							<td> {{ form_widget(form.save) }} </ </td>
+						</tr> 
+					</table>
+				
+					<table id="zoneForm">
+						<tr>
+							<td>
+								<select id="form_leftValues" name="leftValues[]" multiple>
+									{% if agents is defined %}
+										{% for agent in agents %}
+											<option> {{ agent.prenom }} {{ agent.nom }} </option>
+										{% endfor %}
+									{% endif %}
+								</select>
+							</td>
+							<td>
+								<button id="btnLeft" type="button" name=">>"> >> </button> <br/>
+								<button id="btnRight" type="button" name="<<"> << </button> 
+							</td>
+							<td>
+								<select id="form_rightValues" name="rightValues[]" multiple>
+									{% if rightValues is defined %}
+										{% for agent in rightValues %}
+											<option> {{ agent }} </option>
+										{% endfor %}
+									{% endif %}
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
+							</td>
+						</tr>
+					</table>
+						
+					{{ form_rest(form) }}
+					
+					{{ form_end(form) }}
+				
+				</div>
+				
+			</form>
+
+			
+		{% block javascripts %}
+			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+		
+			<script>
+				$("#btnLeft").click(function () {
+					document.getElementById("form_recherche").disabled = true;
+					document.getElementById("form_save").disabled = true;
+					var selectedItem = $("#form_leftValues option:selected");
+					$("#form_rightValues").append(selectedItem);
+				});
+
+				$("#btnRight").click(function () {
+					document.getElementById("form_recherche").disabled = true;
+					document.getElementById("form_save").disabled = true;
+					var selectedItem = $("#form_rightValues option:selected");
+					$("#form_leftValues").append(selectedItem);
+				});
+			</script>
+		{% endblock %}
+			
+		</div>
+    </body>
+</html>

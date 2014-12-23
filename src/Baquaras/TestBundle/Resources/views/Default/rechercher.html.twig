@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Recherche </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+
+    <body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+			
+		<div id="page">
+		
+			<h1> Recherche </h1>
+		
+			<form  action="{{ path('rechercher') }}" method="post" {{ form_enctype(form) }} class="rechercher" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			<div id="simple">
+				<h2> Recherche simple </h2>
+				<table>
+					<tr> 
+						<td id="errors"> {{ form_errors(form) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.nomListe) }} </td>
+						<td  id="text"> {{ form_widget(form.nomListe) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.nomListe) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.nomPosition) }} </td>
+						<td id="choice"> {{ form_widget(form.nomPosition) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.nomPosition) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.nomPartie) }} </td>
+						<td id="text"> {{ form_widget(form.nomPartie) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.nomPartie) }} </td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="avancee">
+				<h2> Recherche avancée </h2>
+				<table>
+					<tr>
+						<td id="label"> {{ form_label(form.productCode) }} </td>
+						<td id="choice"> {{ form_widget(form.productCode) }} </td> </tr> <tr>
+						<td id="errors"> {{ form_errors(form.productCode) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.type) }} </td>
+						<td id="choice"> {{ form_widget(form.type) }} </td> </tr> <tr>
+						<td id="errors"> {{ form_errors(form.type) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.palierTechnique) }} </td>
+						<td id="choice"> {{ form_widget(form.palierTechnique) }} </td>
+						<td id="errors"> {{ form_errors(form.palierTechnique) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.appliWeb) }} </td>
+						<td id="choice"> {{ form_widget(form.appliWeb) }} </td>
+						<td id="errors"> {{ form_errors(form.appliWeb) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.appliClientServeur) }} </td>
+						<td id="choice"> {{ form_widget(form.appliClientServeur) }} </td>
+						<td id="errors"> {{ form_errors(form.appliClientServeur) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.statut) }} </td>
+						<td id="choice"> {{ form_widget(form.statut) }} </td>
+						<td id="errors"> {{ form_errors(form.statut) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.preRequis) }} </td>
+						<td id="choice"> {{ form_widget(form.preRequis) }} </td>
+						<td id="errors"> {{ form_errors(form.preRequis) }} </td>
+					</tr>
+					
+				</table>
+			</div>
+					
+					{#<tr> <td> {{ form_rest(form) }} </td> </tr>#}
+			
+
+				{{ form_widget(form.save) }}
+			
+				{{ form_end(form) }}
+
+			</form>
+			
+			{% if applications is not empty %}
+			<div class="rechercher">
+				<h2> Résultat(s) de la recherche </h2>
+					<div id="resultat">
+						<table>
+							<tr>
+								<th> Nom </th>
+								<th> Version </th>
+								<th> Description </th>
+								<th> Installable par </th>
+								<th> Installable à distance </th>
+								<th> Mode opératoire </th>
+								<th> Statut </th>
+								<th> Actions </th>
+							</tr>
+					
+							{% for application in applications %}
+								<tr>
+									<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'{{application.id}} {{application.version}}','width=1200,scrollbars=yes'); return false;"> {{ application.nom }} </a> </td>
+									<td> {{ application.version }} </td>
+									<td> {{ application.description }} </td>
+									<td> 
+										{% set i = 0 %}
+										{% for agent in application.agents %}
+											{% if agent.role == "personnes" %}
+												{# compteur pour faire un retour à la ligne par agent #}
+												{% set i = i + 1 %}
+												{% if i >= 2 %}
+													</br>
+												{% endif %}
+												{{ agent.libelle }} 
+											{% endif %}
+										 {% endfor %} 
+									</td>
+									<td> 
+										{% if application.installation.installationADistance is defined %}
+											{% if application.installation.installationADistance is not null %}
+												{% if application.installation.installationADistance %} Oui {% else %} Non {% endif %}
+											{% endif %}
+										{% endif %}
+									</td>
+									<td>
+										{% for package in application.packages %}
+											{% if package.modeOperatoire is defined %}
+												{% if package.modeOperatoire is not null %}
+													<a href="{{path('voirModeOperatoire', {'packageId' : package.id }) }}" onClick="window.open(this.href,'Mode opératoire d\'installation de logiciel qualifié','scrollbars=yes'); return false;"> Mode opératoire {{ package.paliersTechniques }} </a>
+													{{ package.modeOperatoire.libelle }}
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									</td>
+									<td> 
+										{% for package in application.packages %}
+											{% if package.statutQualif.libelle is defined %}
+												{% if package.statutQualif.libelle is not null %}
+													{{ package.statutQualif.libelle }}
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									</td>
+									<td>
+										<a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,"{{application.id}} {{application.version}}",'width=1200,scrollbars=yes'); return false;"> Détails </a> <br/>
+										<a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+										<a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a>
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		
+
+		
+    </body>
+</html>

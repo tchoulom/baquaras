@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	
+	<head>
+		<title> Ajout d'un nouvel utilisateur </title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+		{% endblock %} 
+	</head>
+    
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+			
+		<div id="page">
+	
+			<h1> Ajout d'un nouvel utilisateur </h1>
+
+			<form action="{{ path('ajouterUser', {'cpteMatriculaire' : cpteMatriculaire}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
+		
+				{{ form_start(form) }}
+				
+				<table>
+					<tr>
+						<td> {{ form_errors(form) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.nom) }} </td> 
+						<td id="text"> {{ form_widget(form.nom) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.nom) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.prenom) }} </td> 
+						<td id="text"> {{ form_widget(form.prenom) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.prenom) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.cpteMatriculaire) }} </td> 
+						<td id="text"> {{ form_widget(form.cpteMatriculaire) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.cpteMatriculaire) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.telephone) }} </td> 
+						<td id="text"> {{ form_widget(form.telephone) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.telephone) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.mail) }} </td> 
+						<td id="text"> {{ form_widget(form.mail) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.mail) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.profil1) }} </td> 
+						<td id="text"> {{ form_widget(form.profil1) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.profil1) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.profil2) }} </td> 
+						<td id="text"> {{ form_widget(form.profil2) }} </td> <tr> </tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.profil2) }} </td>
+					</tr>
+					<tr>
+						<td> <a href="{{ path('rechercherUserHarpe') }}"> {{ form_widget(form.cancel) }} </a> </td>
+						<td> {{ form_widget(form.save) }} </td>
+					</tr>
+
+				</table>
+		
+
+			
+				{{ form_rest(form) }}
+				
+				{{ form_end(form) }}
+
+			</form>
+			
+		
+		</div>
+    </body>
+</html>

@@ -1,0 +1,234 @@
+# Security layer routes
+# No controller needed as the Security Layer will handle requests on those urls
+_LogoutLink:
+    pattern:   /secured/logout
+
+_LoginLink:
+    pattern:   /secured/login
+    defaults: { _controller: "BaquarasTestBundle:Security:login" }
+
+login_check:
+    path: /login_check
+
+accueil:
+    path: /accueil
+    defaults: {_controller:BaquarasTestBundle:Default:accueil}
+
+# UTILISATEURS
+rechercherHarpe:
+    path: /utilisateurs/{champ}/{applicationId}/{action}
+    defaults: {_controller:BaquarasTestBundle:Harpe:rechercherHarpe}
+
+ajouterDepartement:
+    path: /departement/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:Harpe:ajouterDepartement}
+
+gestionUtilisateur:
+    path: /utilisateurs/{champ}/{applicationId}/{resultats}
+    defaults: {_controller:BaquarasTestBundle:Harpe:gestionUtilisateur}
+
+ajouterUtilisateur:
+    path: /utilisateur/new/{champ}/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:Harpe:rechercherHarpe}
+ 
+
+
+
+ajouterGroupeUserHarpe:
+    path: /departement/search
+    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUserHarpe}
+
+ajouterGroupeUser:
+    path: /groupe/add/{id}
+    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUser}
+
+#----------------------------------------
+# UTILISATEURS/ GROUPES / DEPARTEMENTS
+#----------------------------------------
+
+rechercherUserHarpe:
+   path: /utilisateur/search
+   defaults: {_controller:BaquarasTestBundle:Utilisateur:rechercherUserHarpe}
+
+ajouterUser:
+    path: /utilisateur/add/{cpteMatriculaire}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajouterUser}
+
+modifierUser:
+    path: /utilisateur/edit/{userId}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:modifierUser}
+
+supprimerUser:
+    path: /utilisateur/delete/{userId}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:supprimerUser}
+
+rechercherGroupeAD:
+    path: /groupe/search/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:Groupe:rechercherGroupeAD}
+
+ajouterGroupeAD:
+    path: /groupe/add/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeAD}
+
+listerUsers:
+    path: /utilisateurs
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:listerUsers}
+
+#----------------
+# APPLICATIONS
+#----------------
+
+listerApplications:
+    path: /applications/{action}/{page}/{export}
+    defaults: {_controller:BaquarasTestBundle:Appli:listerApplications,action:'lister',page:1, export:false}
+    requirements:
+        page:  \d+
+
+listerApplicationsLettre:
+    path: /applications/lettre
+    defaults: {_controller:BaquarasTestBundle:Appli:listerApplicationsLettre}
+
+ajouterApplication:
+    path:  /application/new
+    defaults: {_controller:BaquarasTestBundle:Appli:ajouterApplication}
+
+modifierApplication:
+   path: /application/edit/{id}
+   defaults: {_controller:BaquarasTestBundle:Appli:modifierApplication}
+
+consulterApplication:
+   path: /application/{id}
+   defaults: {_controller:BaquarasTestBundle:Appli:consulterApplication}   
+
+supprimerApplication:
+   path: /application/suppression/{id}
+   defaults: {_controller:BaquarasTestBundle:Appli:supprimerApplication}
+
+   
+
+consulterFichier:
+    path: /fichier/{id}
+    defaults: {_controller:BaquarasTestBundle:Appli:consulterFichier, id:1 }
+
+initialiser:
+   path: /init/
+   defaults: {_controller:BaquarasTestBundle:Appli:initialiser}
+
+## SCRIPTS
+ajouterScript:
+    path: /script/new/{packageId}
+    defaults: {_controller:BaquarasTestBundle:Script:ajouterScript}
+
+modifierScript:
+    path: /script/edit/{scriptId}
+    defaults: {_controller:BaquarasTestBundle:Script:modifierScript}
+
+supprimerScript:
+    path: /script/delete/{scriptId}
+    defaults: {_controller:BaquarasTestBundle:Script:supprimerScript}
+
+## PRE-REQUIS
+ajouterPreRequis:
+    path: /prerequis/new/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:PreRequis:ajouterPreRequis}
+
+modifierPreRequis:
+    path: /prerequis/edit/{preRequisId}
+    defaults: {_controller:BaquarasTestBundle:PreRequis:modifierPreRequis}
+
+supprimerPreRequis:
+    path: /prerequis/delete/{preRequisId}
+    defaults: {_controller:BaquarasTestBundle:PreRequis:supprimerPreRequis}
+
+## NON-REQUIS
+ajouterNonRequis:
+    path: /nonrequis/new/{applicationId}
+    defaults: {_controller:BaquarasTestBundle:NonRequis:ajouterNonRequis}
+
+modifierNonRequis:
+    path: /nonrequis/edit/{nonRequisId}
+    defaults: {_controller:BaquarasTestBundle:NonRequis:modifierNonRequis}
+
+supprimerNonRequis:
+    path: /nonrequis/delete/{nonRequisId}
+    defaults: {_controller:BaquarasTestBundle:NonRequis:supprimerNonRequis}
+
+## AUTRE PRE-REQUIS
+ajouterAutrePreRequis:
+   path: /autreprerequis/new/{applicationId}
+   defaults: {_controller:BaquarasTestBundle:AutrePreRequis:ajouterAutrePreRequis}
+
+modifierAutrePreRequis:
+    path: /autreprerequis/edit/{autrePreRequisId}
+    defaults: {_controller:BaquarasTestBundle:AutrePreRequis:modifierAutrePreRequis}
+
+supprimerAutrePreRequis:
+    path: /autreprerequis/delete/{autrePreRequisId}
+    defaults: {_controller:BaquarasTestBundle:AutrePreRequis:supprimerAutrePreRequis}
+
+# RECHERCHE
+rechercher:
+   path: /recherche
+   defaults: {_controller:BaquarasTestBundle:Appli:rechercher}
+   
+#----------------------
+#    MISES A JOUR
+#----------------------
+ajouterMAJ:
+    path: /{id}/maj/new
+    defaults: {_controller:BaquarasTestBundle:MiseAJour:ajouterMAJ}
+
+modifierMAJ:
+    path: /{majId}/maj/edit/
+    defaults: {_controller:BaquarasTestBundle:MiseAJour:modifierMAJ}
+
+supprimerMAJ:
+    path: /{majId}/maj/delete
+    defaults: {_controller:BaquarasTestBundle:MiseAJour:supprimerMAJ}
+
+# LISTES/ITEMS
+listerItem:
+   path:  /items
+   defaults: {_controller:BaquarasTestBundle:Item:listerItem}
+
+modifierItem:
+   path: /item/edit/{itemId}
+   defaults: {_controller:BaquarasTestBundle:Item:modifierItem}
+
+supprimerItem:
+   path:  /items/delete/{itemId}
+   defaults: {_controller:BaquarasTestBundle:Item:supprimerItem}
+
+supprimerListe:
+   path:  /items/delete/{listeId}
+   defaults: {_controller:BaquarasTestBundle:Item:supprimerListe}
+
+# DROITS
+droitsWorkflow:
+   path:  /admin/droits/workflow
+   defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsWorkflow}
+   
+droitsPage:
+   path:  /admin/droits/acces
+   defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsPage} 
+
+# MODE OPERATOIRE
+genererModeOperatoire:
+   path: /modeoperatoire/new/{packageId}
+   defaults: {_controller:BaquarasTestBundle:ModeOperatoire:genererModeOperatoire}
+   
+modifierModeOperatoire:
+   path:  /modeoperatoire/edit/{packageId}
+   defaults: {_controller:BaquarasTestBundle:ModeOperatoire:modifierModeOperatoire}   
+
+voirModeOperatoire:
+   path: /modeoperatoire/{packageId}
+   defaults: {_controller:BaquarasTestBundle:ModeOperatoire:voirModeOperatoire}
+
+voirSuiviQualif:
+   path:    /suiviqualif/{page}/{triSuiviQualif}/{idPackage}
+   defaults: {_controller:BaquarasTestBundle:Appli:voirSuiviQualif,page:1,triSuiviQualif:null,idPackage:null}
+
+modifStatutQualif:
+    path:    /modifStatutQualif/{id}
+    defaults: {_controller:BaquarasTestBundle:Appli:modifStatutQualif,id:null}

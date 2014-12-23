@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+			
+		<div id="page">
+		
+			<head>
+				<h1> Ajouter un autre pré-requis </h1>
+				{% block stylesheets %}
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
+					<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+				{% endblock %} 
+			</head>
+		
+			<form  action="{{ path('ajouterAutrePreRequis', {'applicationId': application.id }) }}" method="post" {{ form_enctype(form) }} class="ajouterautreprerequis" novalidate="novalidate">
+		
+			{{ form_start(form) }}
+			
+			<table>
+				
+				<tr> 
+					<td> </td>
+					<td id="errors"> {{ form_errors(form) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.libelle) }} </td>
+					<td id="text"> {{ form_widget(form.libelle) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.libelle) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.commentaire) }} </td>
+					<td id="text"> {{ form_widget(form.commentaire) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.commentaire) }} </td>
+				</tr>
+				<tr>
+					<td id="label"> {{ form_label(form.oscible) }} </td>
+					<td id="text"> {{ form_widget(form.oscible) }} </td> </tr> <tr> <td> </td>
+					<td id="errors"> {{ form_errors(form.oscible) }} </td>
+				</tr>					
+				<tr> 
+					<td class="annuler"> <a href="{{path('modifierApplication', {'id': application.id }) }}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
+					<td class="valider"> {{ form_widget(form.save) }} </td> 
+				</tr>
+				<tr> 
+					<td colspan="2"> {{ form_rest(form) }} </td>
+				</tr>
+			
+			</table>
+			
+			{{ form_end(form) }}
+
+			</form>
+		
+		</div>
+		
+    </body>
+</html>

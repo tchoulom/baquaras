@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+				
+	<head>
+		<title> Visualiser un mode opératoire </title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/fenetre.css') }}" type="text/css"/>
+		{% endblock %}
+	</head>
+	
+	<body>
+
+		<div id="page">
+
+			<div>
+				<table id="entete">
+					<tr id="entete">
+						<td> 
+							<div id="logo"> </div>
+							<div id="services"> SIT </div>
+						</td>
+						<td>
+							<div> {{ application.nom }} version {{ application.version }} pour {{ package.paliersTechniques }} </div> 
+							<div id="desc"> {{ application.description }} </div>
+							<div id="titre"> Mode Opératoire d'installation de logiciel qualifié </div>
+						</td>
+					</tr>
+				</table>
+				
+				<h3> Précautions avant intervention </h3>
+					<div> {{ modeOperatoire.precautions|raw }} </div>
+				
+					<h4> Pré-requis/Non-requis matériels et logiciels </h3>
+						<p> Taille de l'application (Mo) : {{ package.espaceDisqueInstalle }} </p>
+					
+						<h5> > Pré-requis </h4>
+							{% if application.packagesPreRequis is defined %}
+								{% if application.packagesPreRequis is null %}
+									<p> Sans objet </p>
+								{% else %}
+									<table id="prerequis">
+										<tr> 
+											<th width="50%"> Nom du pré-requis </th>
+											<th> Version </th>
+											<th> Installation </th>
+											<th> Taille </th>
+										</tr>
+								
+										{% for prerequis in application.packagesPreRequis %}
+											<tr>
+												<td> {% if prerequis.nom is not null %} {{ prerequis.nom }} {% else %} - {% endif %} </td>
+												<td> {% if prerequis.version is not null %} {{ prerequis.version }} {% else %} - {% endif %} </td>
+												<td>  </td>
+												<td> {% if prerequis.espaceDisqueInstalle is not null %} {{ prerequis.espaceDisqueInstalle }} {% else %} - {% endif %} </td>
+											</tr>
+										{% endfor %}
+									</table>
+								{% endif %}
+							{% else %}
+								<p> Sans objet </p>
+							{% endif %}
+							
+						<h5> > Non Requis </h4>
+							{% if application.packagesNonRequis is defined %}
+								{% if application.packagesNonRequis is not null %}
+									<table>
+										<tr> 
+											<th> Nom du non-requis </th>
+											<th> Version </th>
+											<th> Installation </th>
+											<th> Taille </th>
+										</tr>
+								
+										{% for nonrequis in application.packagesNonRequis %}
+											<tr>
+												<td> {% if nonrequis.nom is not null %} {{ nonrequis.nom }} {% else %} - {% endif %} </td>
+												<td> {% if nonrequis.version is not null %} {{ nonrequis.version }} {% else %} - {% endif %} </td>
+												<td>  </td>
+												<td> {% if nonrequis.espaceDisqueInstalle is not null %} {{ nonrequis.espaceDisqueInstalle }} {% else %} - {% endif %} </td>
+											</tr>
+										{% endfor %}
+									</table>
+								{% else %}
+									<div> Sans objet </div>
+								{% endif %}
+							{% else %}
+								<div> Sans objet </div>
+							{% endif %}
+						
+						<h5> > Autre pré-requis </h4>
+							{% if application.autresPreRequis is defined %}
+								{% if application.autresPreRequis is not null %}
+									<table>
+										<tr> 
+											<th> Autres pré-requis </th>
+											<th> Commentaire </th>
+											<th> OS </th>
+										</tr>
+								
+										{% for prerequis in application.autresPreRequis %}
+											<tr>
+												<td> {% if prerequis.nom is not null %} {{ prerequis.nom }} {% else %} - {% endif %} </td>
+												<td> {% if prerequis.commentaire is not null %} {{ prerequis.commentaire }} {% else %} - {% endif %} </td>
+												<td> {% if prerequis.oscible is not null %} {{ prerequis.oscible }} {% else %} - {% endif %} </td>
+											</tr>
+										{% endfor %}
+									</table>
+								{% else %}
+									<div> Sans objet </div>
+								{% endif %}
+							{% else %}
+								<div> Sans objet </div>
+							{% endif %}
+				
+					<h4> Pré-requis connections et services </h3>
+			
+				
+				<h3> Installation du logiciel </h3>
+				
+					<h4> Préliminaires </h4>
+					<div> {{ modeOperatoire.preliminaire|raw }} </div>
+					
+					<h4> Installation </h4>
+					<div> {{ modeOperatoire.installation|raw }} </div>
+				
+					<h4> Test </h4>
+					<div> {{ modeOperatoire.test|raw }} </div>
+					
+					<h4> Reprise de l'existant </h4>
+					<div> {{ modeOperatoire.repriseexistant|raw }} </div>
+				
+				<h3> Annexes </h3>
+				
+					<h4> Arborescence créée </h4>
+					<div> {{ modeOperatoire.arborescence|raw }} </div> 
+					
+					<h4> Fichiers paramètres </h4>
+					<div> {{ modeOperatoire.parameters|raw }} </div>
+					
+
+		    </div>			
+    </body>
+</html>

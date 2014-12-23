@@ -1,0 +1,3 @@
+baquaras_test:
+    resource: "@BaquarasTestBundle/Resources/config/routing.yml"
+    prefix:   /

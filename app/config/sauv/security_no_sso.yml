@@ -1,0 +1,30 @@
+security:
+    encoders:
+        Baquaras\AppliBundle\Entity\AppliUser:
+          id: baquaras.security.dummy_encoder
+
+    access_denied_url: /foo/error403
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        main:
+            entity: { class: Baquaras\AppliBundle\Entity\AppliUser, property: username }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        my_firewall:
+            logout:
+                path:   /secured/logout
+                target: /
+            pattern: ^/
+            anonymous: ~
+            http_basic:
+                realm: "Dummy password accepted!"
+
+    access_control:
+        - { path: ^/secured/, roles: ROLE_ADMIN }

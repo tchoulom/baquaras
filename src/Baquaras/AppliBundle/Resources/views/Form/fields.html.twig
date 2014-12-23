@@ -1,0 +1,16 @@
+{% block datepicker_widget %}
+    {% spaceless %}
+        {{ block('field_widget') }}
+        &nbsp;
+        <img src="{{ asset('/bundles/baquarasappli/images/calendar.gif') }}" title="Sélectionner une date" alt="Sélectionner une date" id="{{ id }}_trigger" />
+    {% endspaceless %}
+
+    <script type="text/javascript">
+    Calendar.setup({
+        inputField : "{{ id }}",
+        button : "{{ id }}_trigger",
+        ifFormat : "%d/%m/%Y",
+        timeFormat : 24
+    })
+    </script>
+{% endblock %}

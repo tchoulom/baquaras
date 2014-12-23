@@ -1,0 +1,12 @@
+parameters:
+#    ratp_exemple.example.class: Baquaras\AppliBundle\Example
+
+services:
+    form.type.datepicker:
+        class: Baquaras\AppliBundle\Form\Type\DatePickerType
+        tags:
+            - { name: form.type, alias: datepicker}
+
+    be_simple.sso_auth.client:
+        class: Baquaras\AppliBundle\Buzz\SsoCertClient
+        arguments:    [%certificate_path%]

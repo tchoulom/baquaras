@@ -1,0 +1,118 @@
+<html>
+
+	<head>
+		<title> Suivi des qualifications </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
+	</head>
+
+	<body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %}
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
+		
+		<div id="page">
+					
+			<h1> Modification du statut </h1>
+			
+			<div class="modifappliqualif">
+		    
+			<div id="content">
+		    	
+		    	<h2> {{ 'Application : ' ~ package.application.nom }} </h2>
+		    	
+				<table id="descriptif">
+					<tr>
+				    	<td> Description </td>
+						<td> {{ package.application.description }} </td>
+			    	</tr>
+			    	<tr>
+				    	<td> Version </td>
+						<td> {{ package.application.version }} </td>
+			    	</tr>
+					<tr> 
+				</table>
+				
+				<table id="statut">
+					<tr>
+						<td> Actuellement l'application est dans le statut : {{ package.statutQualif.libelle }} </td>
+					</tr>
+		    	</table>
+			
+
+				<h3> Avancement de la qualification </h3>
+			
+				<form  action="{{ path('modifStatutQualif', {'id': package.id}) }}" method="post" {{ form_enctype(form) }} class='modifStatutQualif'  novalidate="novalidate">
+		
+					{{ form_start(form) }}
+				
+					<table>
+						<tr> 
+							<td> {{ form_label(form.statutQualif) }} </td>
+							<td> {{ form_widget(form.statutQualif) }} </td> </tr> <tr>
+							<td> {{ form_errors(form.statutQualif) }} </td>
+						</tr>
+						<tr>
+							<td> Qualificateur </td>
+							<td> </td>
+						</tr>	
+						<tr>
+							<td> {{ form_label(form.lotNumero) }} </td>
+							<td> {{ form_widget(form.lotNumero) }} </td>
+							<td> {{ form_errors(form.lotNumero) }} </td>
+						</tr>
+						<tr>
+							<td> Commentaire </td>
+							<td> {{ form_widget(form.commentaire) }} </td>
+						</tr>
+						<tr>
+							<td> {{ form_widget(form.cancel) }} </td>
+							<td> {{ form_widget(form.save) }} </td>
+						</tr>
+					</table>
+					
+					{{ form_end(form) }}
+					
+				</form>	
+					
+				{#
+				<div>
+					{{ form_label(form.packageActif) }}
+					{{ form_widget(form.packageActif) }}</br>{{ '(Un package actif est un package visible pour les lecteurs dans la liste des applications)' }}</p>
+					{{ form_errors(form.packageActif) }}</br>
+				</div>
+				<div>
+					<div>
+						{{ 'Mail de notification' }}
+					</div>
+					<div>
+						{{ form_label(form.envoyerMail) }}
+						{{ form_widget(form.envoyerMail) }}
+						{{ form_errors(form.envoyerMail) }}</br>
+				</div>
+				
+					<div>
+						{{ form_label(form.ajouterCommentaire) }}
+						{{ form_widget(form.ajouterCommentaire) }}
+						{{ form_errors(form.ajouterCommentaire) }}</br>
+					</div>
+				
+					<div>
+						<span>{{ 'Pièces jointes'}}</span> <span>{{ 'La taille maximale autorisée d\'une pièce jointe est de 2 mo' }}</span>
+					</div>
+				#}
+
+	
+			{#<div>
+				<img alt="Important ! " src="{{asset('bundles/baquaras/images/idea.jpg')}}"/>
+				 {{ 'Gestion de l\'envoi des mails lors de la gestion de l\'avancement d\'une qualification</br>
+				- Si vous changez de statut pendant le processus de qualification (> Planifié)</br>
+				  Un mail de suivi est envoyé au(x) MOEI de l\'application. L\'envoi de ce mail et du commentaire associé est paramétrable.</br>
+				- Si vous restez dans le même statut (refus ou modification d\'informations) "Planifié" ou "Pré qualification"</br>
+				  Un mail de suivi est envoyé au(x) MOEI de l\'application. L\'envoi de ce mail et du commentaire associé est paramétrable.</br>
+				- Si vous restez dans le même statut (refus ou modification d\'informations) or "Planifié" ou "Pré qualification"</br>
+				  Aucun mail n\'est envoyé.'  }}
+			 </div>#}
+		</div>
+	   
+	</body>
+</html>

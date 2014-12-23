@@ -1,0 +1,49 @@
+/*** page.css ***/
+
+html head  {
+	display:none;
+}
+body {
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+
+html body div#page {
+	font-family: 'Trebuchet MS';
+	border:2px solid #54aaa9;
+	margin: 0 50px 20px 50px;
+	padding-bottom : 20px;
+}
+html body div#page-sans-menu {
+	font-family: 'Trebuchet MS';
+	border: none;
+	margin: 0;
+	padding-bottom : 0px;
+
+}
+html body div#page-sans-menu h1 {
+	font-family: 'roboto';
+	font-size: 1.1em;
+	//background-color: #085252;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+}
+html body div#page h1 { /* Titre page */
+	font-family: 'roboto';
+	font-size: 1.1em;
+	//background-color: #085252;
+	background: url('../images/fond-titre3.jpg') no-repeat;
+	padding: 5px 0 0 10px;
+	color: white;
+	height: 42px;
+	margin: 0;
+	font-weight: normal;
+}
+html body div#page-sans-menu form {
+	margin: 10px 25px 25px 25px;	
+}

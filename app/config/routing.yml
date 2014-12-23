@@ -1,0 +1,11 @@
+baquaras_test:
+    resource: "@BaquarasTestBundle/Resources/config/routing.yml"
+    prefix:   /
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /secured/admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /secured/admin

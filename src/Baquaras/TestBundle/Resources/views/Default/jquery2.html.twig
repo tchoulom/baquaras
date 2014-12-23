@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+	
+	
+	{% block jquery2 %}
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"> </script>
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"> </script>
+		<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.corner.js') }}"> </script>
+
+		<script>
+			$(document).ready(function(){
+				$("#menu div#menu-principal ul li:nth-child(1)").attr('id','menu1');
+				$("#menu div#menu-principal ul li:nth-child(2)").attr('id','menu2');
+				$("#menu div#menu-principal ul li:nth-child(3)").attr('id','menu3');
+				$("#menu div#menu-principal ul li:nth-child(4)").attr('id','menu4');
+				$("#menu div#menu-principal ul li:nth-child(1) ul li:nth-child(1)").attr('id','menu11');
+				$("#menu div#menu-principal ul li:nth-child(1) ul li:nth-child(2)").attr('id','menu12');
+				$("#menu div#menu-principal ul li:nth-child(4) ul li:nth-child(1)").attr('id','menu41');
+				$("#menu div#menu-principal ul li:nth-child(4) ul li:nth-child(2)").attr('id','menu42');
+				$("#menu div#menu-principal ul li:nth-child(4) ul li:nth-child(3)").attr('id','menu43');
+				$("#menu div#menu-principal ul li:nth-child(4) ul li:nth-child(4)").attr('id','menu44');
+				$("#menu div#menu-principal ul li:nth-child(4) ul li:nth-child(5)").attr('id','menu45');
+				$("#listerappli table#liste tbody tr:nth-child(2n)").attr('id', 'trpair');
+				$("#listerappli table#liste tbody tr:nth-child(2n+1)").attr('id', 'trimpair');
+				$("#listerappli table#liste tbody tr:nth-child(1)").attr('id', 'tr1');
+				
+				$("#listerappliqualif div#content table#liste tbody tr:nth-child(2n)").attr('id', 'trpair');
+				$("#listerappliqualif div#content table#liste tbody tr:nth-child(2n+1)").attr('id', 'trimpair');
+				$("#listerappliqualif div#content table#liste tbody tr:nth-child(1)").attr('id', 'tr1');
+				$("#listerappliqualif div#content table#liste tbody tr td:nth-child(6)").attr('id', 'td6');
+				
+				$(".rechercher div#resultats table tbody tr:nth-child(2n+1)").attr('id', 'trimpair');
+				$(".rechercher div#resultats table tbody tr:nth-child(n+2)").attr('id', 'trin2');
+				$(".rechercher div#resultats table tbody tr:nth-child(1)").attr('id', 'tr1');
+				
+				$(".modifieritem div#table_items table tbody tr td:nth-child(2)").attr('id', 'td2');
+				$(".modifieritem div#table_items table tbody tr td:nth-child(3)").attr('id', 'td3');
+				$(".modifieritem div#table_items table tbody tr:nth-child(n+2)").attr('id', 'trn2');
+				$(".modifieritem div#table_items table tbody tr:nth-child(2n+1)").attr('id', 'trimpair');
+
+				
+				$(".consulterappli ul.accordion li:nth-child(1)").attr('id','li1');
+				$(".consulterappli ul.accordion li div.content table tbody tr:nth-child(n+2)").attr('id','trn2');
+				$(".consulterappli ul.accordion li table tr:nth-child(2n+1)").attr('id','tr2n1');
+				$("#infos_appli_onglet").corner("top");
+				$("#infos_package_onglet").corner("top");
+				$("#infos_qualif_onglet").corner("top");
+				$("#infos_maj_onglet").corner("top");
+				$("#infos_hdm_onglet").corner("top");
+
+				
+				$(".modifierappli ul.accordion li:nth-child(1)").attr('id','li1');
+				$(this).corner("bottom");
+
+
+				
+				$("#listerUsers table#liste tbody tr:nth-child(2n)").attr('id', 'trpair');
+				$("#listerUsers table#liste tbody tr:nth-child(2n+1)").attr('id', 'trimpair');
+				$("#listerUsers table#liste tbody tr:nth-child(1)").attr('id', 'tr1');
+				$("#listerUsers table#liste tbody tr td:nth-child(7)").attr('id', 'td7');
+
+				$("#page table#resultats tbody tr:nth-child(2n)").attr('id','tr2n');
+				$("#page table#resultats tbody tr:nth-child(2n+1)").attr('id','tr2n1');
+				
+				
+				
+
+				
+				
+				{###### INFOS GENERALES ######}
+				$("#infogenerales_accordion_plus").hide();
+				
+				$("#infogenerales_accordion_plus").click(function(){
+					$("#infogenerales").toggle();
+					$("#infogenerales_accordion_moins").show();
+					$("#infogenerales_accordion_plus").hide();
+				});
+				$("#infogenerales_accordion_moins").click(function(){
+					$("#infogenerales").toggle();
+					$("#infogenerales_accordion_moins").hide();
+					$("#infogenerales_accordion_plus").show();
+				});
+	
+			{###### PRE-REQUIS / NON-REQUIS ######}
+				$("#requis").hide();
+				$("#requis_accordion_moins").hide();
+				
+				$("#requis_accordion_plus").click(function(){
+					$("#requis").toggle();
+					$("#requis_accordion_moins").show();
+					$("#requis_accordion_plus").hide();
+				});
+				$("#requis_accordion_moins").click(function(){
+					$("#requis").toggle();
+					$("#requis_accordion_moins").hide();
+					$("#requis_accordion_plus").show();
+				});
+	
+				$("#prerequis_accordion").click(function(){
+					$("#prerequis_liste").toggle();
+				});
+	
+				$("#nonrequis_accordion").click(function(){
+					$("#nonrequis_liste").toggle();
+				});
+	
+				$("#autreprerequis_accordion").click(function(){
+					$("#autreprerequis_liste").toggle();
+				});
+				
+			{###### ARCHITECTURE #####}
+				$("#architecture").hide();
+				$("#architecture_accordion_moins").hide();
+								
+				$("#architecture_accordion_plus").click(function(){
+					$("#architecture").toggle();
+					$("#architecture_accordion_moins").show();
+					$("#architecture_accordion_plus").hide();
+				});
+				$("#architecture_accordion_moins").click(function(){
+					$("#architecture").toggle();
+					$("#architecture_accordion_moins").hide();
+					$("#architecture_accordion_plus").show();
+				});
+				
+			{###### GESTION ######}
+				$("#gestion").hide();
+				$("#gestion_accordion_moins").hide();
+				
+				$("#gestion_accordion_plus").click(function(){
+					$("#gestion").toggle();
+					$("#gestion_accordion_moins").show();
+					$("#gestion_accordion_plus").hide();
+				});
+				$("#gestion_accordion_moins").click(function(){
+					$("#gestion").toggle();
+					$("#gestion_accordion_moins").hide();
+					$("#gestion_accordion_plus").show();
+				});
+				
+			{##### INSTALLATION #####}
+				$("#installation").hide();
+				$("#installation_accordion_moins").hide();
+				
+				$("#installation_accordion_plus").click(function(){
+					$("#installation").toggle();
+					$("#installation_accordion_moins").show();
+					$("#installation_accordion_plus").hide();
+				});
+				$("#installation_accordion_moins").click(function(){
+					$("#installation").toggle();
+					$("#installation_accordion_moins").hide();
+					$("#installation_accordion_plus").show();
+				});
+				
+			{###### DEVELOPPEMENT #####}
+				$("#developpement").hide();
+				$("#developpement_accordion_moins").hide();				
+				
+				$("#developpement_accordion_plus").click(function(){
+					$("#developpement").toggle();
+					$("#developpement_accordion_moins").show();
+					$("#developpement_accordion_plus").hide();
+				});
+				$("#developpement_accordion_moins").click(function(){
+					$("#developpement").toggle();
+					$("#developpement_accordion_moins").hide();
+					$("#developpement_accordion_plus").show();
+				});
+					
+				
+			{##### CATALOGUE ######}
+				$("#catalogue").hide();
+				$("#catalogue_accordion_moins").hide();
+				
+				$("#catalogue_accordion_plus").click(function(){
+					$("#catalogue").toggle();
+					$("#catalogue_accordion_moins").show();
+					$("#catalogue_accordion_plus").hide();
+				});
+				$("#catalogue_accordion_moins").click(function(){
+					$("#catalogue").toggle();
+					$("#catalogue_accordion_moins").hide();
+					$("#catalogue_accordion_plus").show();
+				});
+				
+			{##### INFO PACKAGE ######}
+				$("#infogenerales_package_accordion_plus").hide();
+				
+				$("#infogenerales_package_accordion_plus").click(function(){
+					$("#infogenerales_package").toggle();
+					$("#infogenerales_package_accordion_moins").show();
+					$("#infogenerales_package_accordion_plus").hide();
+				});
+				$("#infogenerales_package_accordion_moins").click(function(){
+					$("#infogenerales_package").toggle();
+					$("#infogenerales_package_accordion_moins").hide();
+					$("#infogenerales_package_accordion_plus").show();
+				});
+				
+			{###### SCRIPTS ######}
+				$("#scripts").hide();
+				$("#scripts_accordion_moins").hide();
+				
+				$("#scripts_accordion_plus").click(function(){
+					$("#scripts").toggle();
+					$("#scripts_accordion_moins").show();
+					$("#scripts_accordion_plus").hide();
+				});
+				$("#scripts_accordion_moins").click(function(){
+					$("#scripts").toggle();
+					$("#scripts_accordion_moins").hide();
+					$("#scripts_accordion_plus").show();
+				});
+
+				
+			{###### INFO QUALIF ######}
+				$("#infogenerales_qualif_plus").hide();
+				
+				$("#infogenerales_qualif_plus").click(function(){
+					$("#infogenerales_qualif").toggle();
+					$("#infogenerales_qualif_moins").show();
+					$("#infogenerales_qualif_plus").hide();
+				});
+				$("#infogenerales_qualif_moins").click(function(){
+					$("#infogenerales_qualif").toggle();
+					$("#infogenerales_qualif_moins").hide();
+					$("#infogenerales_qualif_plus").show();
+				});
+				
+			{###### STATUT ######}
+				$("#statut").hide();
+				$("#statut_accordion_moins").hide();
+
+				$("#statut_accordion_plus").click(function(){
+					$("#statut").toggle();
+					$("#statut_accordion_moins").show();
+					$("#statut_accordion_plus").hide();
+				});
+				$("#statut_accordion_moins").click(function(){
+					$("#statut").toggle();
+					$("#statut_accordion_moins").hide();
+					$("#statut_accordion_plus").show();
+				});
+									
+			{##### HISTO QUALIF #####}
+				$("#histo_qualif_plus").hide();
+				
+				$("#histo_qualif_plus").click(function(){
+					$("#histo_qualif").toggle();
+					$("#histo_qualif_moins").show();
+					$("#histo_qualif_plus").hide();
+				});
+				$("#histo_qualif_moins").click(function(){
+					$("#histo_qualif").toggle();
+					$("#histo_qualif_moins").hide();
+					$("#histo_qualif_plus").show();
+				});
+									
+									
+			{###### HISTO MAJ ######}
+				$("#maj_accordion_plus").hide();
+				
+				$("#maj_accordion_plus").click(function(){
+					$("#maj").toggle();
+					$("#maj_accordion_plus").hide();
+					$("#maj_accordion_moins").show();
+				});
+				$("#maj_accordion_moins").click(function(){
+					$("#maj").toggle();
+					$("#maj_accordion_moins").hide();
+					$("#maj_accordion_plus").show();
+				});
+	
+		
+			{###### MAJ ######}
+				{#$("#maj_accordion{{miseajour.id}}").click(function(){
+					$("#maj{{miseajour.id}}").toggle();
+				});#}
+
+			{###### HISTO MODIF ######}	
+				$("#hdm_accordion_plus").hide();
+				
+				$("#hdm_accordion_plus").click(function(){
+					$("#hdm").toggle();
+					$("#hdm_accordion_plus").hide();
+					$("#hdm_accordion_moins").show();
+				});
+				$("#hdm_accordion_moins").click(function(){
+					$("#hdm").toggle();
+					$("#hdm_accordion_moins").hide();
+					$("#hdm_accordion_plus").show();
+				});
+				
+			});
+
+		</script>
+	{%  endblock %}

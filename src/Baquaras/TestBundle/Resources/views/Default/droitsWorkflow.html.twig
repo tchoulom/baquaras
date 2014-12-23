@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+			
+	<head>
+		<title> Gestion des droits </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+	
+	<body>
+		
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+		
+		<div id="page">
+		
+			<h1> Gestion des droits accès au workflow </h1>
+ 
+			{### Zone d'affichage des messages/annotations ###}
+			<div id="flashbag"> 
+				{% for flashMessage in app.session.flashbag.get('notice') %}
+					<div id="img"> </div>
+					<div id="texte"> {{ flashMessage }} </div> <br/>
+				{% endfor %}
+			</div>		
+	
+			<form action="{{ path('droitsWorkflow') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" id="gestiondroits">
+		
+			{{ form_start(form) }}
+			
+			{{ form_errors(form) }}
+		 
+			<div>
+				<table>
+					<tr>
+						<td id="label"> {{ form_label(form.profil) }} </td>
+						<td id="text"> {{ form_widget(form.profil) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.profil) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.statut) }} </td>
+						<td id="text"> {{ form_widget(form.statut) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.statut) }} </td>
+					</tr>
+					<tr>
+						<td id="label"> {{ form_label(form.acces) }} </td>
+						<td id="text"> {{ form_widget(form.acces) }} </td> </tr> <tr> <td> </td>
+						<td id="errors"> {{ form_errors(form.acces) }} </td>
+					</tr>
+				</table>
+					
+				{{ form_widget(form.save) }}
+					
+		    </div>
+			
+			{{ form_end(form) }}
+		
+			</form>	
+				
+			<div class="table_droits">
+				
+				<table>
+					<tr>
+						<th> </th>
+						{% for  statut in statuts %}
+							<th> {{ statut.libelle }} </th>
+						{% endfor %}
+					</tr>
+					
+					{% for profil in profils %}
+					<tr>
+						<td>  {{ profil.libelle }} </td>
+						
+						{% for statut in statuts %}
+							<td> 
+								{% for droit in droits %}
+									{% if droit.profil.libelle == profil.libelle %} 
+										{% if droit.statut.libelle == statut.libelle %}
+											{{ droit.acces.libelle }}
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</table>
+			
+			</div>
+				
+
+
+    </body>
+</html>
