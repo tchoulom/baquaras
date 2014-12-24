@@ -16,6 +16,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * 		fields={"cpteMatriculaire"},
  * 		message="Cet utilisateur a déjà été ajouté"
  *		)
+ * @UniqueEntity(
+ * 		fields={"nom","prenom","email"},
+ * 		message="Cet utilisateur a déjà été ajouté"
+ *		)
  */
 class Utilisateur
 {
