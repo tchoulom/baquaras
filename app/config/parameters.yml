@@ -16,7 +16,7 @@ parameters:
     debug_redirects: false
     use_assetic_controller: true
     be_simple.sso_auth.client.option.curlopt_ssl_verifypeer.value : false
-    sso_login_url : https://zu6int.info.ratp/websso/login
-    sso_logout_url : https://zu6int.info.ratp/websso/logout
+    sso_login_url : https://t-sahara.info.ratp/websso/login
+    sso_logout_url : https://t-sahara.info.ratp/websso/logout
     sso_logout_target : /
-    sso_validate_url : https://zu6int.info.ratp/websso/serviceValidate
+    sso_validate_url : https://t-sahara.info.ratp/websso/serviceValidate
