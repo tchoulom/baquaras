@@ -15,7 +15,7 @@ class UtilisateurController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		// On charge le fichier xml
-		$xml = simplexml_load_file("/appli/u07/comp/html/Symfony/src/Baquaras/TestBundle/Entity/personnes_Full.xml");
+		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$resultats = array();
 		$cpteMatriculaires = array();
 		$count = 0;

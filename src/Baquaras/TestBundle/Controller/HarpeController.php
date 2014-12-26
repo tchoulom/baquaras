@@ -21,7 +21,7 @@ class HarpeController extends Controller
 	public function rechercherHarpeAction(Request $request, Application $application, $champ, $action)
     {
 		$em = $this->getDoctrine()->getManager();
-		$xml=simplexml_load_file("/appli/u07/comp/html/Symfony/src/Baquaras/TestBundle/Entity/personnes_Full.xml");
+		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$rightValues = array();
 		
 		$defaultData = array('message' => 'Message');

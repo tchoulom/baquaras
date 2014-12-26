@@ -9,13 +9,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class createUsersCommand extends ContainerAwareCommand
+class CreateUsersCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
         ->setName('create:users')
-        ->setDescription('inserer des utilisateur dans la base de données');
+        ->setDescription('insérer des utilisateurs dans la base de données');
     }
     
     /*
