@@ -50,9 +50,9 @@ class Builder extends ContainerAware
 			->addChild('Gestion des listes déroulantes', array(
 				'route' => 'listerItem'
 				))->getParent()
-			->addChild('Ajouter un utilisateur', array(
+			/*->addChild('Ajouter un utilisateur', array(
 				'route' => 'rechercherUserHarpe'
-				))->getParent()
+				))->getParent()*/
 			/*->addChild('Ajouter un groupe d\'utilisateurs', array(
 				'route' => 'ajouterGroupeUserHarpe'
 				))->getParent()*/
