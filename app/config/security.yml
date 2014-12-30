@@ -4,7 +4,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     providers:
         main:
@@ -15,20 +15,21 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         my_firewall:
-            pattern: ^/.*$
-            anonymous: ~
-            logout:
-                path:   /secured/logout
-                target: /
+            pattern:    ^/.*$
+            anonymous: true
             trusted_sso:
                 manager: websso
                 login_action: false
                 logout_action: false
                 login_path: /secured/login
                 check_path: /accueil
-                always_use_default_target_path : false
-                default_target_path : /accueil
+                always_use_default_target_path : true
+                default_target_path : /secured/login
                 failure_path: /secured/logout
 
-    #access_control:
-        #- { path: ^/admin, roles: ROLE_ADMIN }
+    access_control:
+        - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/.*$, roles: ROLE_ADMIN }
+

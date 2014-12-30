@@ -7,12 +7,14 @@ _LoginLink:
     pattern:   /secured/login
     defaults: { _controller: "BaquarasTestBundle:Security:login" }
 
-login_check:
-    path: /login_check
+
 
 accueil:
     path: /accueil
     defaults: {_controller:BaquarasTestBundle:Default:accueil}
+
+login_check:
+    path: /accueil
 
 # UTILISATEURS
 rechercherHarpe:
