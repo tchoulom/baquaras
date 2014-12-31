@@ -33,13 +33,13 @@ class GroupeController extends Controller
 			
 		$form->handleRequest($request);
 		if ($form->isValid()) {
-			// Récupération du champ recherche
+			// Rï¿½cupï¿½ration du champ recherche
 			$recherche = $form['champRecherche']->getData();
 			/*$i = 0;
 			
 			foreach($xml->Groupe[0]->children() as $personne) {
-				// Parcours du fichier personnes pour trouver une correspondance sur le nom ou le prénom
-				// La chaîne de caractères entrées est recherchée en début, milieu et fin de chaîne
+				// Parcours du fichier personnes pour trouver une correspondance sur le nom ou le prï¿½nom
+				// La chaï¿½ne de caractï¿½res entrï¿½es est recherchï¿½e en dï¿½but, milieu et fin de chaï¿½ne
 				$test = preg_match('#'.$recherche.'#', $personne->Generique['prenom'].' ');
 				$test2 = preg_match('#'.$recherche.'#', $personne->Generique['nom'].' ');
 				

@@ -71,7 +71,7 @@ class DroitController extends Controller
 		  
 		$profils = $this->getDoctrine()->getRepository('BaquarasTestBundle:Profil')->findAll();
 		$acces = $this->getDoctrine()->getRepository('BaquarasTestBundle:Acces')->findAll();
-		$statuts = $this->getDoctrine()->getRepository('BaquarasTestBundle:Statut')->findAll();//By(array('liste' => 20));
+		$statuts = $this->getDoctrine()->getRepository('BaquarasTestBundle:Statut')->getStatNotSuspends();//By(array('liste' => 20));
 		$droits = $this->getDoctrine()->getRepository('BaquarasTestBundle:DroitWorkflow')->findAll();
 
 		$request = $this->get('request');
