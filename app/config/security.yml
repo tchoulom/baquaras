@@ -27,9 +27,9 @@ security:
                 default_target_path : /secured/login
                 failure_path: /secured/logout
 
-    access_control:
-        - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/.*$, roles: ROLE_ADMIN }
+ #   access_control:
+ #       - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+ #       - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+ #       - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+ #       - { path: ^/.*$, roles: ROLE_ADMIN }
 

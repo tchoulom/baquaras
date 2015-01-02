@@ -5,6 +5,9 @@
 		<title> Ajout/Suppression d'utilisateurs </title>
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+                <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/jquery-ui.css') }}" type="text/css"/>
+                <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
 		<style>
 			#zoneBouton {
 				 margin-top : -100px; 
@@ -50,7 +53,19 @@
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.recherche) }} </td>
-							<td  id="text"> {{ form_widget(form.recherche) }} </td> 
+							<td  id="text"> {{ form_widget(form.recherche, {
+                                                                                'label': 'Recherche', 
+                                                                                'attr' : {
+                                                                                        'id' : 'autocomplete',
+                                                                                        'class' : 'ui-autocomplete-input'
+                                                                                          
+                                                                                        'onKeyUp' = 'autocomplet()'   
+                                                                                        
+
+                                                                                }} ) 
+                                                                        }}
+
+                                                        </td> 
 							<td> {{ form_widget(form.save) }} </ </td>
 						</tr> 
 					</table>
@@ -97,8 +112,7 @@
 
 			
 		{% block javascripts %}
-			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
-		
+			
 			<script>
 				$("#btnLeft").click(function () {
 					document.getElementById("form_recherche").disabled = true;
@@ -113,6 +127,38 @@
 					var selectedItem = $("#form_rightValues option:selected");
 					$("#form_leftValues").append(selectedItem);
 				});
+                               
+                                var liste = [
+                                    "Draggable",
+                                    "Droppable",
+                                    "Resizable",
+                                    "Selectable",
+                                    "Sortable"
+                                ];
+                                /*
+                                $("#form_recherche").autocomplete({
+                                    source : liste
+                                });
+                                document.getElementById("form_save").disabled = false;
+                                
+                                */
+                                function autocomplet() {
+                                    var min_length = 0; // min caracters to display the autocomplete
+                                    var keyword = $('#autocomplete').val();
+                                    if (keyword.length >= min_length) {
+                                            $.ajax({
+                                                    source : liste,
+                                                    type: 'POST',
+                                                    data: {keyword:keyword},
+                                                    success:function(data){
+                                                            $('#form_leftValues').show();
+                                                            $('#form_leftValues').html(data);
+                                                    }
+                                                });
+                                        } else {
+                                                $('#form_leftValues').hide();
+                                        }
+                                }
 			</script>
 		{% endblock %}
 			
