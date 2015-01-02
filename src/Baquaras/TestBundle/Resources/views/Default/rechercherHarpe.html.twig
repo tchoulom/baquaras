@@ -57,10 +57,8 @@
                                                                                 'label': 'Recherche', 
                                                                                 'attr' : {
                                                                                         'id' : 'autocomplete',
-                                                                                        'class' : 'ui-autocomplete-input'
-                                                                                          
-                                                                                        'onKeyUp' = 'autocomplet()'   
-                                                                                        
+                                                                                        'class' : 'ui-autocomplete-input',
+                                                                                        'onkeyup' : "autocomplet()"   
 
                                                                                 }} ) 
                                                                         }}
@@ -144,10 +142,13 @@
                                 */
                                 function autocomplet() {
                                     var min_length = 0; // min caracters to display the autocomplete
-                                    var keyword = $('#autocomplete').val();
+                                    var keyword = $('#form_recherche').val();
                                     if (keyword.length >= min_length) {
                                             $.ajax({
-                                                    source : liste,
+                                                    source: function( request, response ) {
+                                                        jQuery.ajax({
+                                                            url: "/Symfony/web/app_dev.php/shtumi_ajaxautocomplete",
+                                                            dataType: "json",
                                                     type: 'POST',
                                                     data: {keyword:keyword},
                                                     success:function(data){
@@ -159,6 +160,13 @@
                                                 $('#form_leftValues').hide();
                                         }
                                 }
+                                
+                                function set_item(item) {
+                                    // change input value
+                                    $('#form_recherche').val(item);
+                                    // hide proposition list
+                                    $('#form_leftValues').hide();
+}
 			</script>
 		{% endblock %}
 			
