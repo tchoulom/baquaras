@@ -6,6 +6,11 @@ _LogoutLink:
 _LoginLink:
     pattern:   /secured/login
     defaults: { _controller: "BaquarasTestBundle:Security:login" }
+    
+login:
+    pattern: /login
+logout:
+    pattern: /logout
 
 login_check:
     path: /login_check
