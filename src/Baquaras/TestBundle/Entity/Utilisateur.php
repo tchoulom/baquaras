@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Utilisateur
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\UtilisateurRepository")
+ * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Security\User\UtilisateurRepository")
  * @UniqueEntity(
  * 		fields={"cpteMatriculaire"},
  * 		message="Cet utilisateur a déjà été ajouté"

@@ -8,7 +8,8 @@ _LoginLink:
     defaults: { _controller: "BaquarasTestBundle:Security:login" }
     
 login:
-    pattern: /login
+    pattern:   /secured/login
+    defaults: { _controller: "BaquarasTestBundle:Security:login" }
 logout:
     pattern: /logout
 

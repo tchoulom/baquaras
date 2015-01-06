@@ -46,6 +46,7 @@ use Baquaras\TestBundle\Form\PreRequisType;
 
 use Baquaras\TestBundle\Entity\ItemRepository;
 use Baquaras\TestBundle\Entity\EvolutionStatut;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class AppliController extends Controller
 {
@@ -186,6 +187,9 @@ class AppliController extends Controller
 	}  
 	
 
+        /**
+         * @Secure(roles="ROLE_INTEGRATEUR, ROLE_USER")
+        */
 	public function rechercherAction(Request $request)
 	// Fonction permettant de rechercher une application
 	{
