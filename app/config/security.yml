@@ -1,14 +1,14 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Baquaras\TestBundle\Security\User: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN: [ROLE_USER, ROLE_INTEGRATEUR, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     providers:
         main:
-            entity: { class: Baquaras\TestBundle\Entity\Utilisateur, property: username }
+            id: user_provider
 
     firewalls:
         dev:
@@ -24,22 +24,16 @@ security:
             trusted_sso:
                 manager: websso
                 login_action: false
-                logout_action: false #BeSimpleSsoAuthBundle:TrustedSso:logout
+                logout_action: false
                 login_path: /secured/login
                 check_path: /login_check
-                create_users: false
-                default_target_path: accueil
-            logout:
-                invalidate_session: true
-                path:   /logout
-                target: /acceuil
+                #create_users: false
 
     access_control:
-        - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+     #   - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
         - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/secured/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/*, roles: ROLE_ADMIN }
-
+        #- { path: ^/*, roles: ROLE_SUPER_ADMIN }
