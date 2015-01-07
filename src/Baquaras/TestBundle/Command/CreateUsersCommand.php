@@ -24,10 +24,15 @@ class CreateUsersCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        set_time_limit(6000); 
+        ini_set("memory_limit", -1);
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $batchSize = 20;
+        $i=1;
         try {
-            $em = $this->getContainer()->get('doctrine')->getManager();
             $users = simplexml_load_file($this->getContainer()->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
             foreach ($users->Personnes[0]->children() as $user) {
+                $profil1 = $em->getRepository('BaquarasTestBundle:Profil')->find(1);
                 $person = new Utilisateur();
                 $person->setPrenom($user->Generique['prenom']);
                 $person->setNom($user->Generique['nom']);
@@ -36,15 +41,24 @@ class CreateUsersCommand extends ContainerAwareCommand
                 $person->setCivilite($user->Generique['civilite']);
                 $person->setTelephone($user->Contact['tel']);
                 $person->setMail($user->Contact['mail']);
+                $person->setProfil1($profil1);
                 $validator = $this->getContainer()->get('validator');
                 $errors = $validator->validate($person);
                 if (count($errors) > 0) {
-                    $output->writeln($errors);
+                    foreach($errors as $error) {
+                       $output->writeln($error->getMessage());
+                    }
+                    } else {
+                        $em->persist($person);
+                        if (($i % $batchSize) == 0) {
+                             $em->flush();
+                             $em->clear();
                 }
-                $em->persist($user);
                 $output->writeln($user->Generique['prenom'].' '.$user->Generique['nom'].' a été ajouté');
+                $output->writeln($i);
             }
-            $em->flush();
+                    $i++;
+            }
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }

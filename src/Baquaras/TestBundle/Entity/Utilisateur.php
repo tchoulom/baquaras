@@ -11,13 +11,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Utilisateur
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\UtilisateurRepository")
+ * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Security\User\UtilisateurRepository")
  * @UniqueEntity(
  * 		fields={"cpteMatriculaire"},
  * 		message="Cet utilisateur a déjà été ajouté"
  *		)
  * @UniqueEntity(
- * 		fields={"nom","prenom","email"},
+ * 		fields={"nom","prenom","mail"},
  * 		message="Cet utilisateur a déjà été ajouté"
  *		)
  */
@@ -74,10 +74,10 @@ class Utilisateur
      */
     private $matricule;
 	
-	/**
+    /**
      * @var string
-     *
      * @ORM\Column(name="Mail", type="string", length=255, nullable=true)
+     * @Assert\Email()
      */
     private $mail;
 	

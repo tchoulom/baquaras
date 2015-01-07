@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 namespace Baquaras\TestBundle\Security\User;
 
@@ -73,4 +74,3 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
     
     
 }
-

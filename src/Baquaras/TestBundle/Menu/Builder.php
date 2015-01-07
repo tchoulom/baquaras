@@ -50,9 +50,9 @@ class Builder extends ContainerAware
 			->addChild('Gestion des listes déroulantes', array(
 				'route' => 'listerItem'
 				))->getParent()
-			->addChild('Ajouter un utilisateur', array(
+			/*->addChild('Ajouter un utilisateur', array(
 				'route' => 'rechercherUserHarpe'
-				))->getParent()
+				))->getParent()*/
 			/*->addChild('Ajouter un groupe d\'utilisateurs', array(
 				'route' => 'ajouterGroupeUserHarpe'
 				))->getParent()*/
@@ -82,36 +82,36 @@ class Builder extends ContainerAware
 		
 		// Connexion
 		$menu->addChild('Déconnexion', array(
-			'route' => 'accueil'
+			'route' => 'logout'
 			));
 		
         return $menu;
 	}
 	
 	
-	public function breadCrumb(FactoryInterface $factory, array $options)
-{
-    $menu = $this->mainMenu($factory, $options);
+    public function breadCrumb(FactoryInterface $factory, array $options)
+    {
+        $menu = $this->mainMenu($factory, $options);
 
-    /* @var $matcher \Knp\Menu\Matcher\Matcher */
-    $matcher = $this->container->get('knp_menu.matcher');
+        /* @var $matcher \Knp\Menu\Matcher\Matcher */
+        $matcher = $this->container->get('knp_menu.matcher');
 
-    $treeIterator = new \RecursiveIteratorIterator(
-            new RecursiveItemIterator(
-            new \ArrayIterator(array($menu))
-            ), \RecursiveIteratorIterator::SELF_FIRST
-    );
+        $treeIterator = new \RecursiveIteratorIterator(
+                new RecursiveItemIterator(
+                new \ArrayIterator(array($menu))
+                ), \RecursiveIteratorIterator::SELF_FIRST
+        );
 
-    $iterator = new CurrentItemFilterIterator($treeIterator, $matcher);
+        $iterator = new CurrentItemFilterIterator($treeIterator, $matcher);
 
-    // Set Current as an empty Item in order to avoid exceptions on knp_menu_get
-    $current = new MenuItem('', $factory);
+        // Set Current as an empty Item in order to avoid exceptions on knp_menu_get
+        $current = new MenuItem('', $factory);
 
-    foreach ($iterator as $item) {
-        $item->setCurrent(true);
-        $current = $item;
-        break;
-    }
+        foreach ($iterator as $item) {
+            $item->setCurrent(true);
+            $current = $item;
+            break;
+        }
 
     return $current;
 }
