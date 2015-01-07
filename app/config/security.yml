@@ -3,7 +3,8 @@ security:
         Baquaras\TestBundle\Security\User: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER, ROLE_INTEGRATEUR, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ]
+        ROLE_INTEGRATEUR: ROLE_INTEGRATEUR
+        ROLE_ADMIN: [ROLE_USER, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     providers:
@@ -17,23 +18,24 @@ security:
         my_firewall:
             pattern:    ^/.*$
             security: true
-            switch_user: true
-            provider : main
-            logout:       true
-            anonymous:    true
+            provider : main 
+            anonymous: ~
             trusted_sso:
                 manager: websso
                 login_action: false
-                logout_action: false
+                logout_action: BeSimpleSsoAuthBundle:TrustedSso:logout
                 login_path: /secured/login
                 check_path: /login_check
-                #create_users: false
+                failure_path: /accueil
+            
+            
+                
 
     access_control:
-     #   - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/secured/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        #- { path: ^/*, roles: ROLE_SUPER_ADMIN }
+       # - { path: ^/*, roles: ROLE_INTEGRATEUR }
