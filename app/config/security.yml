@@ -15,19 +15,27 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        login_firewall:
+            pattern:    ^/login$
+            anonymous:  ~
         my_firewall:
             pattern:    ^/.*$
             security: true
             provider : main 
             anonymous: ~
+            logout:     true
             trusted_sso:
                 manager: websso
                 login_action: false
-                logout_action: BeSimpleSsoAuthBundle:TrustedSso:logout
+                logout_action: false
                 login_path: /secured/login
                 check_path: /login_check
+                default_target_path: /accueil
                 failure_path: /accueil
-            
+                failure_forward: true
+            logout:
+                path:   /logout
+                target: /
             
                 
 
