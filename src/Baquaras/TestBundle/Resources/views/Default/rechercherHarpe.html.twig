@@ -5,7 +5,7 @@
 		<title> Ajout/Suppression d'utilisateurs </title>
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
-                <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/jquery-ui.css') }}" type="text/css"/>
+                <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
                 <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
 		<style>
@@ -58,7 +58,7 @@
                                                                                 'attr' : {
                                                                                         'id' : 'autocomplete',
                                                                                         'class' : 'ui-autocomplete-input',
-                                                                                        'onkeyup' : "autocomplet()"   
+                                                                                         
 
                                                                                 }} ) 
                                                                         }}
@@ -127,19 +127,18 @@
 				});
                                
                                 var liste = [
-                                    "Draggable",
-                                    "Droppable",
-                                    "Resizable",
-                                    "Selectable",
-                                    "Sortable"
+                                    "Yamine",
+                                    "Rachid",
+                                    "Daniel",
+                                    "Amira"
                                 ];
-                                /*
+                                
                                 $("#form_recherche").autocomplete({
-                                    source : liste
+                                    source : liste//"./../Entity/UtilisateurRepository.php"
                                 });
                                 document.getElementById("form_save").disabled = false;
                                 
-                                */
+                                /*
                                 function autocomplet() {
                                     var min_length = 0; // min caracters to display the autocomplete
                                     var keyword = $('#form_recherche').val();
@@ -147,7 +146,7 @@
                                             $.ajax({
                                                     source: function( request, response ) {
                                                         jQuery.ajax({
-                                                            url: "/Symfony/web/app_dev.php/shtumi_ajaxautocomplete",
+                                                            url: "../Entity",
                                                             dataType: "json",
                                                     type: 'POST',
                                                     data: {keyword:keyword},
@@ -166,7 +165,8 @@
                                     $('#form_recherche').val(item);
                                     // hide proposition list
                                     $('#form_leftValues').hide();
-}
+                                }
+                                */
 			</script>
 		{% endblock %}
 			

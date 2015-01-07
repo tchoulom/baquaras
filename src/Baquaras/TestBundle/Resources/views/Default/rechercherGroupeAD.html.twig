@@ -3,8 +3,11 @@
 
 	<head>
 		<title> Ajouter un groupe d'utilisateurs </title>
-		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+                <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
+                <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
 	</head>
 	
 	<body>
@@ -24,7 +27,16 @@
 						<td id="explic" colspan="2"> {{ form_label(form.champRecherche) }} </td>
 					</tr>
 					<tr>
-						<td id="text"> {{ form_widget(form.champRecherche) }} </td>
+						<td id="text"> {{ form_widget(form.champRecherche, {
+                                                                                'label': 'Recherche', 
+                                                                                'attr' : {
+                                                                                        'id' : 'autocomplete',
+                                                                                        'class' : 'ui-autocomplete-input',
+                                                                                         
+
+                                                                                }} ) 
+                                                                }} 
+                                                </td>
 						<td> <button type="submit" name="submitAction"  value="rechercher"  class="btn btn-primary">Rechercher</button> 
 {#{{ form_widget(form.save) }}#} </td>
 					</tr>
@@ -87,6 +99,18 @@
 					var selectedItem = $("#form_rightValues option:selected");
 					$("#form_leftValues").append(selectedItem);
 				});
+                                
+                                var liste = [
+                                    "Yamine",
+                                    "Rachid",
+                                    "Daniel",
+                                    "Amira"
+                                ];
+                                
+                                $("#form_recherche").autocomplete({
+                                    source : liste//"./../Entity/UtilisateurRepository.php"
+                                });
+                                document.getElementById("form_save").disabled = false;
 			</script>
 		{% endblock %}
 			
