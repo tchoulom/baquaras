@@ -15,9 +15,6 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        login_firewall:
-            pattern:    ^/login$
-            anonymous:  ~
         my_firewall:
             pattern:    ^/.*$
             security: true
@@ -38,6 +35,7 @@ security:
                 target: /
             
                 
+
 
     access_control:
         - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY }

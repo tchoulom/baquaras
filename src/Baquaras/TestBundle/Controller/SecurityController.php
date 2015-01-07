@@ -9,8 +9,13 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class SecurityController extends Controller
 {
-    public function loginAction() {
-        $request = $this->getRequest();
+    public function loginAction(Request $request) {
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+        
         $session = $request->getSession();
         // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {

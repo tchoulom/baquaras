@@ -21,40 +21,40 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
     
     public function loadUserByUsername($username)
     {
-        $role = null;
+        $role = array();
         $utilisateur = $this->findOneBy(array('cpteMatriculaire'=>$username));
         if(empty($utilisateur) ) {
              throw new UsernameNotFoundException(sprintf('Unable to find an user  in Baquaras with the compte matruclaire "%s".', $username));
         }
         switch ($utilisateur->getCpteMatriculaire()) {
             case 'Utilisateur non connecté':
-                $role = 'ROLE_USER';
+                $role = array('ROLE_USER');
                 breack;
-            case 'Utilisateur non connecté':
-                $role = 'ROLE_INTEGRATEUR';
+            case 'Intégrateur':
+                $role = array('ROLE_INTEGRATEUR');
                 breack;
             case 'Lecteur avancé':
-                $role = 'ROLE_LECTEUR';
+                $role = array('ROLE_LECTEUR');
                 breack;
             case 'Technicien support':
-                $role = 'ROLE_TECHNICIEN';
+                $role = array('ROLE_TECHNICIEN');
                 breack;
             case 'Qualificateur':
-                $role = 'ROLE_QUALIFICATEUR';
+                $role = array('ROLE_QUALIFICATEUR');
                 breack;
             case 'Chef de produit':
-                $role = 'ROLE_CHEF_PRODUIT';
+                $role = array('ROLE_CHEF_PRODUIT');
                 breack;
             case 'Responsable qualification':
-                $role = 'ROLE_RESPONSABLE_QUALIF';
+                $role = array('ROLE_RESPONSABLE_QUALIF');
                 breack;
             case 'Administrateur':
-                $role = 'ROLE_SUPER_ADMIN';
+                $role = array('ROLE_SUPER_ADMIN');
                 breack;
         }
+        //var_dump($role); die('test');
+        return new User($username, '', '', array('ROLE_INTEGRATEUR'));
         
-        return new User($username, 'test', 'test', array($role));
-
     }
 
     public function refreshUser(UserInterface $user)
@@ -73,3 +73,4 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
     
     
 }
+
