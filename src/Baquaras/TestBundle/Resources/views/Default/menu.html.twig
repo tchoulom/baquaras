@@ -5,7 +5,9 @@
 		<div id="menu">
 			
 			<div id="connexion"> {# Lien connexion/déconnexion utilisateur #}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				{{ knp_menu_render('BaquarasTestBundle:Builder:connexionMenu') }}
+                            {%endif%}
 			</div>
 			
 			<div id="accueil" title="Retour accueil"> {# Logo Baquaras : Lien vers page accueil #}

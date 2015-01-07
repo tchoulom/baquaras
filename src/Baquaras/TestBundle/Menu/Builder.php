@@ -82,7 +82,7 @@ class Builder extends ContainerAware
 		
 		// Connexion
 		$menu->addChild('Déconnexion', array(
-			'route' => '_LogoutLink'
+			'route' => 'logout'
 			));
 		
         return $menu;

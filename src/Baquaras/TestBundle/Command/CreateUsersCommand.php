@@ -31,8 +31,8 @@ class CreateUsersCommand extends ContainerAwareCommand
         $i=1;
         try {
             $users = simplexml_load_file($this->getContainer()->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
-            $profil1 = $em->getRepository('BaquarasTestBundle:Profil')->find(1);
             foreach ($users->Personnes[0]->children() as $user) {
+                $profil1 = $em->getRepository('BaquarasTestBundle:Profil')->find(1);
                 $person = new Utilisateur();
                 $person->setPrenom($user->Generique['prenom']);
                 $person->setNom($user->Generique['nom']);

@@ -47,10 +47,15 @@ use Baquaras\TestBundle\Form\PreRequisType;
 use Baquaras\TestBundle\Entity\ItemRepository;
 use Baquaras\TestBundle\Entity\EvolutionStatut;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AppliController extends Controller
 {
 
+        /**
+         * @Security("has_role('ROLE_INTEGRATEUR')")
+         */
 	public function listerApplicationsAction($action, $page, $export)
 	// Fonction listant les applications qualifiées
 	{
@@ -188,11 +193,15 @@ class AppliController extends Controller
 	
 
         /**
-         * @Secure(roles="ROLE_INTEGRATEUR, ROLE_USER")
-        */
+         * @Security("has_role('ROLE_INTEGRATEUR')")
+         */
 	public function rechercherAction(Request $request)
 	// Fonction permettant de rechercher une application
 	{
+           /* if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+                die('yes');
+                throw new AccessDeniedException();
+            }*/
 		$defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('nomListe', 'entity', array('label' => 'Nom de l\'application', 'empty_value' => 'Sélectionner une application', 'class' => 'BaquarasTestBundle:Application',	'property' => 'NomAndVersion'))
