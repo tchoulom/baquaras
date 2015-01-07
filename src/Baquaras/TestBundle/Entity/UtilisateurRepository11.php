@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class UtilisateurRepository extends EntityRepository
 {
+    /**
+     *
+     * @return array(Utilisateur)
+     */
+     public function findUser() {
+         return $this->getEntityManager()
+         ->createQuery( 'SELECT u FROM BaquarasTestBundle:Utilisateur u  WHERE  u.nom LIKE :term')
+         ->getResult();
+}
 }

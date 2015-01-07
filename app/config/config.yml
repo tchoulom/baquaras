@@ -116,4 +116,3 @@ be_simple_sso_auth:
             login_url: https://t-sahara.info.ratp/websso/login
             logout_url: https://t-sahara.info.ratp/websso/logout
             validation_url: https://t-sahara.info.ratp/websso/serviceValidate
-            

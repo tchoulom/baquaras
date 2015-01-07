@@ -76,7 +76,7 @@ class Builder extends ContainerAware
         return $menu;
 	}
 	
-	public function connexionMenu(FactoryInterface $factory, array $options)
+    public function connexionMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
 		
