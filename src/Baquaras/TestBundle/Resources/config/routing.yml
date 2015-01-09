@@ -175,7 +175,7 @@ supprimerAutrePreRequis:
     defaults: {_controller:BaquarasTestBundle:AutrePreRequis:supprimerAutrePreRequis}
 
 # RECHERCHE
-rechercher:
+recherche:
    path: /recherche
    defaults: {_controller:BaquarasTestBundle:Appli:rechercher}
    

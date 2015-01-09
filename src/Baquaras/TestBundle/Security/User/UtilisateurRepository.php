@@ -52,11 +52,14 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
                 $role = array('ROLE_SUPER_ADMIN');
                 breack;
         }
-        //var_dump($role); die('test');
+        
         return new User($username, '', '', array('ROLE_INTEGRATEUR'));
         
     }
 
+    /*
+     * FROM websso
+     */
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
@@ -65,6 +68,7 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
 
         return $this->loadUserByUsername($user->getUsername());
     }
+    
 
     public function supportsClass($class)
     {

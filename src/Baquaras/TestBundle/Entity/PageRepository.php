@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageRepository extends EntityRepository
 {
+    /*
+     * get page by link
+     */
+    public function getPageByRoute($route)
+    {
+        $route = strtolower(trim($route));
+        $q = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where("TRIM(LOWER(p.libelle)) LIKE :pattern")
+            ->setParameter('pattern', '%'.$route.'%')
+            ->getQuery();
+        return $q->getSingleResult(); 
+        
+    }
 }

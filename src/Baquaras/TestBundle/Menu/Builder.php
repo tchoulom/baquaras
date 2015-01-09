@@ -26,7 +26,7 @@ class Builder extends ContainerAware
         ;
 		
 		// Recherche
-		$menu->addChild('Recherche', array('route' => 'rechercher'));
+		$menu->addChild('Recherche', array('route' => 'recherche'));
 		
 		// Suivi des qualifications
 		$menu->addChild('Suivi des qualifications', array('route'=> 'voirSuiviQualif'/*'accueil'*/));

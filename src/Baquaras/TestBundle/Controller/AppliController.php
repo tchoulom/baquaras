@@ -34,6 +34,7 @@ use Baquaras\TestBundle\Entity\Qualification;
 use Baquaras\TestBundle\Entity\Script;
 use Baquaras\TestBundle\Entity\Statut;
 use Baquaras\TestBundle\Entity\Utilisateur;
+use Baquaras\TestBundle\Entity\PageRepository;
 
 use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Form\ApplicationAjoutType;
@@ -59,31 +60,32 @@ class AppliController extends Controller
 	public function listerApplicationsAction($action, $page, $export)
 	// Fonction listant les applications qualifiées
 	{
-		$maxApplications = 6; // nombre d'applications affichées par page
-		$repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application');
-		$applications_count = $repository->countApplications();
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                throw new AccessDeniedException('Accès limité');
+            }
+            $maxApplications = 6; // nombre d'applications affichées par page
+            $repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application');
+            $applications_count = $repository->countApplications();
 		
-		$pagination = array(
+            $pagination = array(
             'page' => $page,
             'route' => 'listerApplications',
             'pages_count' => ceil($applications_count / $maxApplications),
             'route_params' => array()
         );
 
-		//var_dump($pagination);
-		$applications = $repository->getListe($page, $maxApplications);
-		
-		$defaultData = array('message' => 'Message');
-		$form = $this->createFormBuilder($defaultData)
-			->add('sousCompte', 'button', array('label' => 'Sous compte'))
-			->add('postesWSUS', 'button', array('label' => 'Postes WSUS'))
-			->add('installable', 'button', array('label' => 'Non installable par un groupe AD'))
-			->add('miseAJour', 'button', array('label' => 'Mise à jour mineure'))
-			->add('reboot', 'button', array('label' => 'Reboot'))
-			->add('preRequisManuel', 'button', array('label' => 'Pré requis manuel'))
-			->add('nonRequis', 'button', array('label' => 'Non requis'))
-			->add('populationCible', 'button', array('label' => 'Population cible'))
-			->getForm();
+            $applications = $repository->getListe($page, $maxApplications);
+            $defaultData = array('message' => 'Message');
+            $form = $this->createFormBuilder($defaultData)
+                ->add('sousCompte', 'button', array('label' => 'Sous compte'))
+                ->add('postesWSUS', 'button', array('label' => 'Postes WSUS'))
+                ->add('installable', 'button', array('label' => 'Non installable par un groupe AD'))
+                ->add('miseAJour', 'button', array('label' => 'Mise à jour mineure'))
+                ->add('reboot', 'button', array('label' => 'Reboot'))
+                ->add('preRequisManuel', 'button', array('label' => 'Pré requis manuel'))
+                ->add('nonRequis', 'button', array('label' => 'Non requis'))
+                ->add('populationCible', 'button', array('label' => 'Population cible'))
+                ->getForm();
 			
 			switch($action) {
 				case 'triParSousCompte' :
@@ -193,16 +195,15 @@ class AppliController extends Controller
 	
 
         /**
+         * Fonction permettant de rechercher une application
          * @Security("has_role('ROLE_INTEGRATEUR')")
          */
 	public function rechercherAction(Request $request)
-	// Fonction permettant de rechercher une application
 	{
-           /* if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-                die('yes');
-                throw new AccessDeniedException();
-            }*/
-		$defaultData = array('message' => 'Message');
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
+            $defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('nomListe', 'entity', array('label' => 'Nom de l\'application', 'empty_value' => 'Sélectionner une application', 'class' => 'BaquarasTestBundle:Application',	'property' => 'NomAndVersion'))
 			->add('nomPosition', 'choice', array('label' => 'Indiquer une partie du nom de l\'application', 'choices' => array('D' => 'Commence par', 'M' => 'Composé de', 'F' => 'Fini par'), 'multiple' => false, 'expanded' => true))
@@ -618,7 +619,10 @@ class AppliController extends Controller
 	
 	public function ajouterApplicationAction(Request $request)
 	// Fonction permettant d'ajouter/créer une application
-	{			
+	{	
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 		$em = $this->getDoctrine()->getManager();
 		
 		/* Application */
@@ -698,6 +702,9 @@ class AppliController extends Controller
 	public function modifierApplicationAction(Application $application)
 	// Fonction permettant la modification d'une application
 	{
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 		$em = $this->getDoctrine()->getManager();
 
 		$pck = $application->getPackages()->first();
@@ -733,6 +740,9 @@ class AppliController extends Controller
 	 */
 	public function supprimerApplicationAction(Application $application)
 	{
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 		$em = $this->getDoctrine()->getManager();
 		
 		/* Installation */

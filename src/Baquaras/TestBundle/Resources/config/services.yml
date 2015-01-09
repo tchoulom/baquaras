@@ -11,4 +11,5 @@ services:
 
     management_roles:
         class: "%management_roles.class%"
-        factory_service: doctrine.orm.default_entity_manager
+        calls:
+            - [ setContainer, [ @service_container ] ]
