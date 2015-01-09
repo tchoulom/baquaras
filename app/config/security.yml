@@ -27,9 +27,9 @@ security:
                 logout_action: false
                 login_path: /secured/login
                 check_path: /login_check
-                default_target_path: /accueil
-                failure_path: /accueil
-                failure_forward: true
+                #default_target_path: /accueil
+                #failure_path: /accueil
+                #failure_forward: true
             logout:
                 path:   /logout
                 target: /
