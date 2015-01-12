@@ -20,19 +20,16 @@ security:
             security: true
             provider : main 
             anonymous: ~
-            logout:     true
+            logout:
+                path:   /secured/logout
+                target: /
             trusted_sso:
                 manager: websso
                 login_action: false
                 logout_action: false
                 login_path: /secured/login
                 check_path: /login_check
-                #default_target_path: /accueil
-                #failure_path: /accueil
-                #failure_forward: true
-            logout:
-                path:   /logout
-                target: /
+            
             
                 
 
@@ -44,4 +41,4 @@ security:
         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/secured/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-       # - { path: ^/*, roles: ROLE_INTEGRATEUR }
+        - { path: ^/authentificate, roles: ROLE_INTEGRATEUR }
