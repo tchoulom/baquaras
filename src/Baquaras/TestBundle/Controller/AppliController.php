@@ -729,7 +729,7 @@ class AppliController extends Controller
 	public function consulterApplicationAction(Application $application)
 	// Fonction permettant la consultation d'une application
 	{
-            if(!$this->container->get('management_roles')->RoleVerified('consulter les détails d\'une application')) {
+            if(!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
                 throw new AccessDeniedException('Accès limité');
             }
 		return $this->render('BaquarasTestBundle:Default:consulterappli.html.twig', array('application' => $application,));
