@@ -513,11 +513,13 @@ class AppliController extends Controller
 			->setCellValue('B' .$i, $appli->getVersion())
 			->setCellValue('C' .$i, $appli->getCorrectifQualif())
 			->setCellValue('D' .$i, $appli->getDescription())
-			->setCellValue('E' .$i, $appli->getHabilitesinstall())
+                            ->setCellValue('E' .$i, $appli->getGroupesInstall())
 			->setCellValue('F' .$i, $appli->getInstallation()->getInstallationADistance());
 			foreach($appli->getPackages() as $package) {
+                            if($package->getModeOperatoire()) {
 				$phpExcelObject->setActiveSheetIndex(0)
 					->setCellValue('G' .$i, $package->getModeOperatoire()->getLibelle());
+                            }
 				
 				$nMAJ = 0;
 				$nPR = 0;
@@ -598,7 +600,6 @@ class AppliController extends Controller
 			}
 		$i++;
 		}
-		
 		$phpExcelObject->getActiveSheet()->setTitle('Simple');
 		// setActiveSheet définit la page sur laquelle Excel s'ouvre
 		$phpExcelObject->setActiveSheetIndex(0);
@@ -610,14 +611,13 @@ class AppliController extends Controller
 		$response->headers->set('Content-Disposition', 'attachment;filename=' .$action. '.xls');
 		$response->headers->set('Pragma', 'public');
 		$response->headers->set('Cache-Control', 'maxage=1');
-
         return $response;
 	}
 	
 	public function ajouterApplicationAction(Request $request)
 	// Fonction permettant d'ajouter/créer une application
 	{	
-            if($this->container->get('management_roles')->RoleVerified() === false) {
+            if($this->container->get('management_roles')->RoleVerified('ajouter une application') === false) {
                  throw new AccessDeniedException('Accès limité');
             }
 		$em = $this->getDoctrine()->getManager();
