@@ -5,8 +5,14 @@
 		<div id="menu">
 			
 			<div id="connexion"> {# Lien connexion/déconnexion utilisateur #}
+                            
+			    {{ knp_menu_render('BaquarasTestBundle:Builder:connexionMenu') }}
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				{{ knp_menu_render('BaquarasTestBundle:Builder:connexionMenu') }}
+                                <div style="float:right;overflow: hidden; padding-top:20px; border: none; ">
+                                {% if app.session and app.session%}
+                                    Bonjour {{ app.session.get('nom') }} {{ app.session.get('prenom') }}
+                                {%endif%}
+                                </div>
                             {%endif%}
 			</div>
 			

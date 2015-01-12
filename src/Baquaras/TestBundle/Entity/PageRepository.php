@@ -22,8 +22,9 @@ class PageRepository extends EntityRepository
             ->select('p')
             ->where("TRIM(LOWER(p.libelle)) LIKE :pattern")
             ->setParameter('pattern', '%'.$route.'%')
+            ->setMaxResults(1)
             ->getQuery();
-        return $q->getSingleResult(); 
+        return $q->getOneOrNullResult(); 
         
     }
 }

@@ -54,13 +54,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AppliController extends Controller
 {
 
-        /**
-         * @Security("has_role('ROLE_INTEGRATEUR')")
-         */
 	public function listerApplicationsAction($action, $page, $export)
 	// Fonction listant les applications qualifiées
 	{
-            if($this->container->get('management_roles')->RoleVerified() === false) {
+            if($this->container->get('management_roles')->RoleVerified('Liste des applications') === false) {
                 throw new AccessDeniedException('Accès limité');
             }
             $maxApplications = 6; // nombre d'applications affichées par page
@@ -196,12 +193,12 @@ class AppliController extends Controller
 
         /**
          * Fonction permettant de rechercher une application
-         * @Security("has_role('ROLE_INTEGRATEUR')")
          */
+        
 	public function rechercherAction(Request $request)
 	{
-            if($this->container->get('management_roles')->RoleVerified() === false) {
-                 throw new AccessDeniedException('Accès limité');
+            if(!$this->container->get('management_roles')->RoleVerified('recherche')) {
+                throw new AccessDeniedException('Accès limité');
             }
             $defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
@@ -702,8 +699,8 @@ class AppliController extends Controller
 	public function modifierApplicationAction(Application $application)
 	// Fonction permettant la modification d'une application
 	{
-            if($this->container->get('management_roles')->RoleVerified() === false) {
-                 throw new AccessDeniedException('Accès limité');
+            if(!$this->container->get('management_roles')->RoleVerified('modifier une application')) {
+                throw new AccessDeniedException('Accès limité');
             }
 		$em = $this->getDoctrine()->getManager();
 
@@ -732,6 +729,9 @@ class AppliController extends Controller
 	public function consulterApplicationAction(Application $application)
 	// Fonction permettant la consultation d'une application
 	{
+            if(!$this->container->get('management_roles')->RoleVerified('consulter les détails d\'une application')) {
+                throw new AccessDeniedException('Accès limité');
+            }
 		return $this->render('BaquarasTestBundle:Default:consulterappli.html.twig', array('application' => $application,));
 	}   
 	
@@ -740,6 +740,9 @@ class AppliController extends Controller
 	 */
 	public function supprimerApplicationAction(Application $application)
 	{
+            if(!$this->container->get('management_roles')->RoleVerified('supprimer une application')) {
+                throw new AccessDeniedException('Accès limité');
+            }
             if($this->container->get('management_roles')->RoleVerified() === false) {
                  throw new AccessDeniedException('Accès limité');
             }

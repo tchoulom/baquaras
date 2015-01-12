@@ -9,13 +9,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class SecurityController extends Controller
 {
-    public function loginAction(Request $request) {
-        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            
-            return $this->redirect($this->generateUrl('accueil'));
-        }
-        
+    public function loginAction(Request $request) 
+    {
         $session = $request->getSession();
         // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
@@ -36,6 +31,20 @@ class SecurityController extends Controller
           'error'         => $error,
         ));
      }
+    
+    public function authentificateAction(Request $request)
+    {
+        $session = $request->getSession();
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            $username = $this->container->get('security.context')->getToken()->getUser()->getUsername();
+            $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
+            $session->set('nom', $user->getNom());
+            $session->set('prenom', $user->getPrenom());
+        }
+        
+        return $this->redirect($this->generateUrl('accueil'));
+        
+    }
      
     public function logoutAction(Request $request) {
         //do whatever you want here 

@@ -41,18 +41,6 @@
 						{% endfor %}
 					</div>#}
 				</div>
-				<table id="boutons">
-					<tr>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParSousCompte'}) }}"> {{ form_widget(form.sousCompte ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPostesWSUS'}) }}"> {{ form_widget(form.postesWSUS ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParInstallationAD'}) }}"> {{ form_widget(form.installable ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParMiseAJour'}) }}"> {{ form_widget(form.miseAJour ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParReboot'}) }}"> {{ form_widget(form.reboot ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPreRequisManuel'}) }}"> {{ form_widget(form.preRequisManuel ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParNonRequis'}) }}"> {{ form_widget(form.nonRequis ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPopulationCible'}) }}"> {{ form_widget(form.populationCible ) }} </a> </td>
-					</tr>
-				</table>
 				<table id="liste">
 					<tr>
 						<td> Nom </td>

@@ -9,15 +9,18 @@
     
 login:
     pattern:   /secured/login
-    defaults: { _controller: "BaquarasTestBundle:Security:login" }
+    defaults: { _controller: "BaquarasTestBundle:TrustedSso:login" }
 
 logout:
-    pattern:  /logout
-    defaults: { _controller: "BaquarasTestBundle:Security:logout" }
+    pattern:  /secured/logout
 
 login_check:
     path: /login_check
 
+authentificate:
+    pattern:   /authentificate
+    defaults: { _controller: "BaquarasTestBundle:Security:authentificate" }
+    
 accueil:
     path: /accueil
     defaults: {_controller:BaquarasTestBundle:Default:accueil}
