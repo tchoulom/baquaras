@@ -29,7 +29,7 @@
 							<td class="text">
 								<select id="departement">
 									{% for dpt in listDpt %}
-										<option value={{ dpt.id }}> {{ dpt.libelle }} </option>
+										<option value={{ dpt.id }}> {{ dpt.nom }} </option>
 									{% endfor %}
 								</select>
 							</td>
@@ -43,7 +43,7 @@
 							<td rowspan="3">
 								<select id="form_selectDpt" name="selectDpt[]" multiple>
 									{% for pop in application.populationCible %}
-										<option> {{ pop.libelle }} </option>
+										<option> {{ pop.nom }} </option>
 									{% endfor %}
 								</select>
 							</td>
@@ -125,7 +125,7 @@
 									liste = reponse[i];
 									$.each(liste, function(index, element) {
 										if(element.nom != null)
-											$('#' + selecteur).append('<option value="'+ element.id +'" selected="selected"> '+ element.libelle +' </option>');
+											$('#' + selecteur).append('<option value="'+ element.id +'" selected="selected"> '+ element.nom +' </option>');
 									});            
 								}				  
 								if (selecteur == 'ud') {

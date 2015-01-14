@@ -14,7 +14,6 @@ class DefaultController extends Controller
 
 	public function accueilAction()
 	{
-            $token = $this->get('security.context')->getToken();
             return $this->render('BaquarasTestBundle:Default:accueil.html.twig');
 	}
 	
