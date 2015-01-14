@@ -132,9 +132,23 @@
                                     "Daniel",
                                     "Amira"
                                 ];
-                                
+                                //
+                                //var getUsers = Routing.generate('rechercherUserHarpe');
                                 $("#form_recherche").autocomplete({
-                                    source : liste//"./../Entity/UtilisateurRepository.php"
+                                   // source : liste//"./../Entity/UtilisateurRepository.php"
+                                    source: function( request, response ) {
+                                    $.ajax({
+                                        url: "{{ path('rechercherUserHarpe')}},
+                                        dataType: "jsonp",
+                                        success: function( data ) {
+                                            console.log(data);
+                                        },
+                                        error: function (xhr, ajaxOptions, thrownError) {
+                                            console.log(xhr.status);
+                                            console.log(thrownError);
+                                        }
+                                    });
+                                }
                                 });
                                 document.getElementById("form_save").disabled = false;
                                 

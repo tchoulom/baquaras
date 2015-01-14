@@ -15,8 +15,12 @@ class UtilisateurController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		// On charge le fichier xml
-		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
-		$resultats = array();
+		//$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
+		//$users = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findUser();
+               $users = array('amira','rachid','daniel');
+               
+                return  json_encode($users);
+                /* $resultats = array();
 		$cpteMatriculaires = array();
 		$count = 0;
 		
@@ -32,7 +36,9 @@ class UtilisateurController extends Controller
 		if ($form->isValid()) {
 			// Récupération du champ recherche
 			$recherche = $form['champRecherche']->getData();
-			$i = 0;			
+			/*
+                        $i = 0;			
+                        
 			
 			foreach($xml->Personnes[0]->children() as $personne) {
 				// Parcours du fichier personnes pour trouver une correspondance sur le nom ou le prénom
@@ -48,8 +54,10 @@ class UtilisateurController extends Controller
 				}
 				$i++;
 			}
-		}
-		return $this->render('BaquarasTestBundle:Default:rechercherUserHarpe.html.twig', array('form' => $form->createView(), 'resultats' => $resultats, 'count' => $count, 'cpteMatriculaires' => $cpteMatriculaires));
+                        
+                        */
+		/*}
+		return $this->render('BaquarasTestBundle:Default:rechercherUserHarpe.html.twig', array('form' => $form->createView(), 'resultats' => $resultats, 'count' => $count, 'cpteMatriculaires' => $cpteMatriculaires));*/
 	}	
 	
 	public function ajouterUserAction($cpteMatriculaire) 
