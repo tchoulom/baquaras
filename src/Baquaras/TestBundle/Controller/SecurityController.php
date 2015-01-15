@@ -24,7 +24,6 @@ class SecurityController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-
         return $this->render('BaquarasTestBundle:Security:login.html.twig', array(
           // Valeur du précédent nom d'utilisateur entré par l'internaute
           'last_username' => $session->get(SecurityContext::LAST_USERNAME),
@@ -40,17 +39,18 @@ class SecurityController extends Controller
             $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
             $session->set('nom', $user->getNom());
             $session->set('prenom', $user->getPrenom());
+            $session->set('role', $user->getProfil1()->getLibelle());
         }
         
         return $this->redirect($this->generateUrl('accueil'));
         
     }
      
-    public function logoutAction(Request $request) {
+   /* public function logoutAction(Request $request) {
         //do whatever you want here 
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
         return $this->redirect($this->generateUrl('accueil'));
-     }
+     }*/
      
 }

@@ -220,7 +220,11 @@ droitsWorkflow:
    defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsWorkflow}
    
 droitsPage:
-   path:  /admin/droits/acces
+   path:  /admin/droits/acces/{type}
+   defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsPage}
+
+droitsPackage:
+   path:  /admin/droits/acces/{type}
    defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsPage} 
 
 # MODE OPERATOIRE

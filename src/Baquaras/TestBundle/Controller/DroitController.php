@@ -22,7 +22,7 @@ use Baquaras\TestBundle\Form\DroitWorkflowType;
 
 class DroitController extends Controller
 {
-	public function modifierDroitsPageAction(Request $request) 
+	public function modifierDroitsPageAction(Request $request, $type) 
 	// Fonction permettant d'éditer les droits utilisateurs relatifs à l'accès aux pages
 	{
 		$em = $this->getDoctrine()->getManager();
@@ -31,7 +31,7 @@ class DroitController extends Controller
 		$form = $this->createForm(new DroitType(), $droit);
 		
 		$profils = $this->getDoctrine()->getRepository('BaquarasTestBundle:Profil')->findAll();
-		$pages = $this->getDoctrine()->getRepository('BaquarasTestBundle:Page')->findAll();
+		$pages = $this->getDoctrine()->getRepository('BaquarasTestBundle:Page')->findBy(array('type' => $type));
 		$droits = $this->getDoctrine()->getRepository('BaquarasTestBundle:Droit')->findAll();
 
 		$request = $this->get('request');
@@ -58,7 +58,7 @@ class DroitController extends Controller
 				return $this->redirect($this->generateUrl('droitsPage'));
 			}
 		}
-		return $this->render('BaquarasTestBundle:Default:droitsPage.html.twig', array('form' => $form->createView(), 'profils' => $profils, 'pages' => $pages, 'droits' => $droits));	
+		return $this->render('BaquarasTestBundle:Default:droitsPage.html.twig', array('form' => $form->createView(), 'profils' => $profils, 'pages' => $pages, 'droits' => $droits, 'type' => $type));	
 	}   
 	
 	

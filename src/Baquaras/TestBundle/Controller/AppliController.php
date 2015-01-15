@@ -177,7 +177,7 @@ class AppliController extends Controller
 			}
 
 			if($export)
-				return $this->forward('BaquarasTestBundle:Appli:exporter', array('applications' => $applications, 'action' => $action));
+                            return $this->forward('BaquarasTestBundle:Appli:exporter', array('applications' => $applications, 'action' => $action));
 			return $this->render('BaquarasTestBundle:Default:listerappli.html.twig', array('form' => $form->createView(),'applications' => $applications, 'pagination' => $pagination, 'action' => $action));
 	}
 	
@@ -699,7 +699,7 @@ class AppliController extends Controller
 	public function modifierApplicationAction(Application $application)
 	// Fonction permettant la modification d'une application
 	{
-            if(!$this->container->get('management_roles')->RoleVerified('modifier une application')) {
+            if($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
                 throw new AccessDeniedException('Accès limité');
             }
 		$em = $this->getDoctrine()->getManager();

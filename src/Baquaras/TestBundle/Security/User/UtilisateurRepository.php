@@ -26,34 +26,33 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
         if(empty($utilisateur) ) {
              throw new UsernameNotFoundException(sprintf('Unable to find an user  in Baquaras with the compte matruclaire "%s".', $username));
         }
-        switch ($utilisateur->getCpteMatriculaire()) {
+        switch ($utilisateur->getProfil1()->getLibelle()) {
             case 'Utilisateur non connecté':
                 $role = array('ROLE_USER');
-                breack;
+                break;
             case 'Intégrateur':
                 $role = array('ROLE_INTEGRATEUR');
-                breack;
+                break;
             case 'Lecteur avancé':
                 $role = array('ROLE_LECTEUR');
-                breack;
+                break;
             case 'Technicien support':
                 $role = array('ROLE_TECHNICIEN');
-                breack;
+                break;
             case 'Qualificateur':
                 $role = array('ROLE_QUALIFICATEUR');
-                breack;
+                break;
             case 'Chef de produit':
                 $role = array('ROLE_CHEF_PRODUIT');
-                breack;
+                break;
             case 'Responsable qualification':
                 $role = array('ROLE_RESPONSABLE_QUALIF');
-                breack;
+                break;
             case 'Administrateur':
                 $role = array('ROLE_SUPER_ADMIN');
-                breack;
+                break;
         }
-        
-        return new User($username, '', '', array('ROLE_INTEGRATEUR'));
+        return new User($username, '', '', $role);
         
     }
 

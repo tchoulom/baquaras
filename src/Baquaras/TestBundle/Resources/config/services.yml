@@ -1,6 +1,7 @@
 parameters:
     user_provider.class: Baquaras\TestBundle\Security\User\UtilisateurRepository
     management_roles.class: Baquaras\TestBundle\Services\ManagementRoles
+    authorisation_extension.class: Baquaras\TestBundle\Twig\AuthorisationExtension
 
 services:
     user_provider:
@@ -13,3 +14,10 @@ services:
         class: "%management_roles.class%"
         calls:
             - [ setContainer, [ @service_container ] ]
+    
+    authorisation_extension:
+        class: "%authorisation_extension.class%"
+        calls:
+            - [ setManagementRoles, [ @management_roles ] ]
+        tags:
+            -  { name: twig.extension }
