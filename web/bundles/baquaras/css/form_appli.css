@@ -883,12 +883,12 @@ margin-top: 10px;
 	width: 80px;
 }
 #ajouterDepartement form#ajouterDpt div.container table#form_left tbody tr td select#form_selectDpt {
-	width: 300px;
+	width: 150px;
 }
 #ajouterDepartement form table tbody tr td.text input,
 #ajouterDepartement form table tbody tr td.text select,
 #ajouterDepartement form table tbody tr td.text textarea {
-	width:200px;
+	width:150px;
 	font-size:0.9em;
 	font-family:"Trebuchet MS";
 }

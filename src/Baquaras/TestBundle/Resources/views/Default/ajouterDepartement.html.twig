@@ -48,7 +48,7 @@
 								</select>
 							</td>
 						</tr>
-						<tr>
+						<tr id="unite_departementale">
 							<td class="label"> Unité départementale </td>
 							<td class="text">
 								<select id="ud">
@@ -58,7 +58,7 @@
 								<button type="button" id="btnLeftUD"> >> </button>
 							</td>
 						</tr>
-						<tr>
+						<tr id="unite_locale">
 							<td class="label"> Unité locale </td>
 							<td class="text">
 								<select id="ul">
@@ -134,6 +134,25 @@
 							}
 						});
 					}
+                                        /*
+                                            $('select#departement').change(function() {
+
+                                                switch($('option:selected').val()){
+                                                    case 'value':
+                                                        if($('#ud:visible')){
+                                                            $('#ud').hide().find('label').removeClass('required');
+                                                        }
+                                                        $('#ul').slideDown().find('label').addClass('required');
+                                                    break;
+                                                    
+                                                    default:
+                                                        $('#unite_departementale, #unite_locale').slideUp().find('label').removeClass('required');
+                                                }
+
+                                            }); 
+                                            
+                                        */
+                                            
 				});
 			</script>
 		{% endblock %}
