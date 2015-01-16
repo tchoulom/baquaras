@@ -26,14 +26,12 @@ class DroitController extends Controller
 	// Fonction permettant d'éditer les droits utilisateurs relatifs à l'accès aux pages
 	{
 		$em = $this->getDoctrine()->getManager();
-		
 		$droit = new Droit();
-		$form = $this->createForm(new DroitType(), $droit);
+		$form = $this->createForm(new DroitType(), $droit, array('intention' => $type));
 		
 		$profils = $this->getDoctrine()->getRepository('BaquarasTestBundle:Profil')->findAll();
 		$pages = $this->getDoctrine()->getRepository('BaquarasTestBundle:Page')->findBy(array('type' => $type));
 		$droits = $this->getDoctrine()->getRepository('BaquarasTestBundle:Droit')->findAll();
-
 		$request = $this->get('request');
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
@@ -55,7 +53,7 @@ class DroitController extends Controller
 				$em->flush();
 				$this->get('session')->getFlashBag()->add('notice', 'Droits utilisateurs mis à jour');
 				
-				return $this->redirect($this->generateUrl('droitsPage'));
+				return $this->redirect($this->generateUrl('droitsAccess', array('type' => $type)));
 			}
 		}
 		return $this->render('BaquarasTestBundle:Default:droitsPage.html.twig', array('form' => $form->createView(), 'profils' => $profils, 'pages' => $pages, 'droits' => $droits, 'type' => $type));	

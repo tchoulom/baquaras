@@ -2,6 +2,7 @@ parameters:
     user_provider.class: Baquaras\TestBundle\Security\User\UtilisateurRepository
     management_roles.class: Baquaras\TestBundle\Services\ManagementRoles
     authorisation_extension.class: Baquaras\TestBundle\Twig\AuthorisationExtension
+    baquaras.security.logout_success_handler.class: Baquaras\TestBundle\Services\LogoutSuccess
 
 services:
     user_provider:
@@ -21,3 +22,5 @@ services:
             - [ setManagementRoles, [ @management_roles ] ]
         tags:
             -  { name: twig.extension }
+    baquaras.security.logout_success_handler:
+        class: "%baquaras.security.logout_success_handler.class%"

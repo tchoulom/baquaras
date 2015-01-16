@@ -46,11 +46,11 @@ class SecurityController extends Controller
         
     }
      
-   /* public function logoutAction(Request $request) {
+   public function checkAction(Request $request) {
         //do whatever you want here 
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
         return $this->redirect($this->generateUrl('accueil'));
-     }*/
+     }
      
 }
