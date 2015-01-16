@@ -25,13 +25,13 @@ security:
                 login_action: false
                 logout_action: false
                 login_path: /secured/login
-                #check_path: /login_check
+                check_path: /login_check
                 failure_path: /accueil
             logout:
                 path : /logout
                 #success_handler: baquaras.security.logout_success_handler
                 target: /accueil
-                invalidate_session: false
+                #invalidate_session: false
 
 
     access_control:
