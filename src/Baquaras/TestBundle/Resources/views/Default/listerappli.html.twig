@@ -9,18 +9,34 @@
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
-                        <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/jquery.dataTables.css') }}" type="text/css"/>
+                        <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/theme.default.css') }}" type="text/css"/>
 		{% endblock %} 
-                <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.dataTables.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.dataTables.columnFilter.js') }}"></script>   
+      
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.2.6.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.widgets.min.js') }}"></script>
+                <script>
+                $(function(){
+                        $('table').tablesorter({
+                                widgets        : ['zebra', 'columns', 'headerTitles'],
+                                usNumberFormat : false,
+                                sortReset      : true,
+                                sortRestart    : true,
+                                // starting sort direction "asc" or "desc"
+                                sortInitialOrder: "asc",
+                                widgetOptions: {
+                                headerTitle_useAria  : true
+                                }
+                                
+                        });
+                });
+                </script>
 	</head>
 	
 	<body>
 		
 		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
-		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+		
 
 		<div id="page">
 		
@@ -46,9 +62,10 @@
 						{% endfor %}
 					</div>#}
 				</div>
-				<table id="liste" class="display">
-					<tr>
-						<th> Nom </th>
+				<table id="liste" class="tablesorter">
+					<thead>
+                                            <tr>
+						<td> Nom </td>
 						<td> Version </td>
 						<td> Correctif Qualif </td>
 						<td> Description </td>
@@ -75,8 +92,9 @@
 							<td> Population cible </td>
 						{% endif %}
 						<td> Actions </td>
-					</tr>
-	
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 					{% for application in applications %}
 					<tr>
 						<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','resizable=yes,top=0,left=0,width=1300,height=900,scrollbars=yes'); return false;"> {{ application.nom }} </a> </td>
@@ -203,6 +221,7 @@
 							<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
 						</td>
 					</tr>
+                                        </tbody>
 					{% endfor %}				
 					
 				</table>
@@ -217,12 +236,6 @@
 			</div>
 
 		</div>
-                <script charset="utf-8" type="text/javascript" class="init">
-                    $(document).ready(function() {
-                        $('#liste').dataTable( {
-                                "order": [[ 3, "desc" ]]
-                        } );
-                } );
-                </script>
+               
 	</body>
 </html>
