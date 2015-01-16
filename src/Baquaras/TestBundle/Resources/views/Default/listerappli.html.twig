@@ -12,25 +12,10 @@
                         <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/theme.default.css') }}" type="text/css"/>
 		{% endblock %} 
       
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.2.6.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.3.1.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.widgets.min.js') }}"></script>
-                <script>
-                $(function(){
-                        $('table').tablesorter({
-                                widgets        : ['zebra', 'columns', 'headerTitles'],
-                                usNumberFormat : false,
-                                sortReset      : true,
-                                sortRestart    : true,
-                                // starting sort direction "asc" or "desc"
-                                sortInitialOrder: "asc",
-                                widgetOptions: {
-                                headerTitle_useAria  : true
-                                }
-                                
-                        });
-                });
-                </script>
+
 	</head>
 	
 	<body>
@@ -221,8 +206,9 @@
 							<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
 						</td>
 					</tr>
+                                        
+					{% endfor %}
                                         </tbody>
-					{% endfor %}				
 					
 				</table>
 				
@@ -236,6 +222,16 @@
 			</div>
 
 		</div>
+                <script>
+                $(function(){
+                    $('#liste').tablesorter({
+                       widgets : ['zebra', 'columns'],
+                       sortInitialOrder: "asc",
+                       
+                        });
+                });
+                debug: true;
+                </script>
                
 	</body>
 </html>
