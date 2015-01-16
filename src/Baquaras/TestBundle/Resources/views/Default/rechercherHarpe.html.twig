@@ -5,6 +5,8 @@
 		<title> Ajout/Suppression d'utilisateurs </title>
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
+                {% include 'BaquarasTestBundle:Default:menu.html.twig' %}
+                
                 <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
                 <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
@@ -36,140 +38,142 @@
 	</head>
 
     <body>
-					
-		<div class="rechercheHarpe">
-		
-			<h1> Ajout/Suppression d'utilisateurs </h1>
-		
-			<form  action="{{ path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : action}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
-		
-			{{ form_start(form) }}
-			
-				<div class="container">
-							
-					<table id="tab1">
-						<tr> 
-							<td id="errors"> {{ form_errors(form) }} </td>
-						</tr>
-						<tr>
-							<td id="label"> {{ form_label(form.recherche) }} </td>
-							<td  id="text"> {{ form_widget(form.recherche, {
-                                                                                'label': 'Recherche', 
-                                                                                'attr' : {
-                                                                                        'id' : 'autocomplete',
-                                                                                        'class' : 'ui-autocomplete-input',
-                                                                                         
+                <div id="page">	
+                    
+                        <div id="rechercheHarpe">
 
-                                                                                }} ) 
-                                                                        }}
+                                <h1> Ajout/Suppression d'utilisateurs </h1>
 
-                                                        </td> 
-							<td> {{ form_widget(form.save) }} </ </td>
-						</tr> 
-					</table>
-				
-					<table id="zoneForm">
-						<tr>
-							<td>
-								<select id="form_leftValues" name="leftValues[]" multiple>
-									{% if agents is defined %}
-										{% for agent in agents %}
-											<option> {{ agent.prenom }} {{ agent.nom }} </option>
-										{% endfor %}
-									{% endif %}
-								</select>
-							</td>
-							<td>
-								<button id="btnLeft" type="button" name=">>"> >> </button> <br/>
-								<button id="btnRight" type="button" name="<<"> << </button> 
-							</td>
-							<td>
-								<select id="form_rightValues" name="rightValues[]" multiple>
-									{% if rightValues is defined %}
-										{% for agent in rightValues %}
-											<option> {{ agent }} </option>
-										{% endfor %}
-									{% endif %}
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
-							</td>
-						</tr>
-					</table>
-						
-					{{ form_rest(form) }}
-					
-					{{ form_end(form) }}
-				
-				</div>
-				
-			</form>
+                                <form  action="{{ path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : action}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
 
-			
-		{% block javascripts %}
-			
-			<script>
-				$("#btnLeft").click(function () {
-					document.getElementById("form_recherche").disabled = true;
-					document.getElementById("form_save").disabled = true;
-					var selectedItem = $("#form_leftValues option:selected");
-					$("#form_rightValues").append(selectedItem);
-				});
+                                {{ form_start(form) }}
 
-				$("#btnRight").click(function () {
-					document.getElementById("form_recherche").disabled = true;
-					document.getElementById("form_save").disabled = true;
-					var selectedItem = $("#form_rightValues option:selected");
-					$("#form_leftValues").append(selectedItem);
-				});
-                               
-                                var liste = [
-                                    "Yamine",
-                                    "Rachid",
-                                    "Daniel",
-                                    "Amira"
-                                ];
-                                
-                                $("#form_recherche").autocomplete({
-                                    source : liste//"./../Entity/UtilisateurRepository.php"
-                                });
-                                document.getElementById("form_save").disabled = false;
-                                
-                                /*
-                                function autocomplet() {
-                                    var min_length = 0; // min caracters to display the autocomplete
-                                    var keyword = $('#form_recherche').val();
-                                    if (keyword.length >= min_length) {
-                                            $.ajax({
-                                                    source: function( request, response ) {
-                                                        jQuery.ajax({
-                                                            url: "../Entity",
-                                                            dataType: "json",
-                                                    type: 'POST',
-                                                    data: {keyword:keyword},
-                                                    success:function(data){
-                                                            $('#form_leftValues').show();
-                                                            $('#form_leftValues').html(data);
-                                                    }
-                                                });
-                                        } else {
-                                                $('#form_leftValues').hide();
+                                        <div class="container">
+
+                                                <table id="tab1">
+                                                        <tr> 
+                                                                <td id="errors"> {{ form_errors(form) }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td id="label"> {{ form_label(form.recherche) }} </td>
+                                                                <td  id="text"> {{ form_widget(form.recherche, {
+                                                                                        'label': 'Recherche', 
+                                                                                        'attr' : {
+                                                                                                'id' : 'autocomplete',
+                                                                                                'class' : 'ui-autocomplete-input',
+
+
+                                                                                        }} ) 
+                                                                                }}
+
+                                                                </td> 
+                                                                <td> {{ form_widget(form.save) }} </ </td>
+                                                        </tr> 
+                                                </table>
+
+                                                <table id="zoneForm">
+                                                        <tr>
+                                                                <td>
+                                                                        <select id="form_leftValues" name="leftValues[]" multiple>
+                                                                                {% if agents is defined %}
+                                                                                        {% for agent in agents %}
+                                                                                                <option> {{ agent.prenom }} {{ agent.nom }} </option>
+                                                                                        {% endfor %}
+                                                                                {% endif %}
+                                                                        </select>
+                                                                </td>
+                                                                <td>
+                                                                        <button id="btnLeft" type="button" name=">>"> >> </button> <br/>
+                                                                        <button id="btnRight" type="button" name="<<"> << </button> 
+                                                                </td>
+                                                                <td>
+                                                                        <select id="form_rightValues" name="rightValues[]" multiple>
+                                                                                {% if rightValues is defined %}
+                                                                                        {% for agent in rightValues %}
+                                                                                                <option> {{ agent }} </option>
+                                                                                        {% endfor %}
+                                                                                {% endif %}
+                                                                        </select>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td colspan="3">
+                                                                        <button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
+                                                                </td>
+                                                        </tr>
+                                                </table>
+
+                                                {{ form_rest(form) }}
+
+                                                {{ form_end(form) }}
+
+                                        </div>
+
+                                </form>
+
+
+                        {% block javascripts %}
+
+                                <script>
+                                        $("#btnLeft").click(function () {
+                                                document.getElementById("form_recherche").disabled = true;
+                                                document.getElementById("form_save").disabled = true;
+                                                var selectedItem = $("#form_leftValues option:selected");
+                                                $("#form_rightValues").append(selectedItem);
+                                        });
+
+                                        $("#btnRight").click(function () {
+                                                document.getElementById("form_recherche").disabled = true;
+                                                document.getElementById("form_save").disabled = true;
+                                                var selectedItem = $("#form_rightValues option:selected");
+                                                $("#form_leftValues").append(selectedItem);
+                                        });
+
+                                        var liste = [
+                                            "Yamine",
+                                            "Rachid",
+                                            "Daniel",
+                                            "Amira"
+                                        ];
+
+                                        $("#form_recherche").autocomplete({
+                                            source : liste//"./../Entity/UtilisateurRepository.php"
+                                        });
+                                        document.getElementById("form_save").disabled = false;
+
+                                        /*
+                                        function autocomplet() {
+                                            var min_length = 0; // min caracters to display the autocomplete
+                                            var keyword = $('#form_recherche').val();
+                                            if (keyword.length >= min_length) {
+                                                    $.ajax({
+                                                            source: function( request, response ) {
+                                                                jQuery.ajax({
+                                                                    url: "../Entity",
+                                                                    dataType: "json",
+                                                            type: 'POST',
+                                                            data: {keyword:keyword},
+                                                            success:function(data){
+                                                                    $('#form_leftValues').show();
+                                                                    $('#form_leftValues').html(data);
+                                                            }
+                                                        });
+                                                } else {
+                                                        $('#form_leftValues').hide();
+                                                }
                                         }
-                                }
-                                
-                                function set_item(item) {
-                                    // change input value
-                                    $('#form_recherche').val(item);
-                                    // hide proposition list
-                                    $('#form_leftValues').hide();
-                                }
-                                */
-			</script>
-		{% endblock %}
-			
-		</div>
+
+                                        function set_item(item) {
+                                            // change input value
+                                            $('#form_recherche').val(item);
+                                            // hide proposition list
+                                            $('#form_leftValues').hide();
+                                        }
+                                        */
+                                </script>
+                        {% endblock %}
+
+                        </div>
+                </div>	
     </body>
 </html>

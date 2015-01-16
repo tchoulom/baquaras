@@ -5,6 +5,12 @@
 		<title> Population Cible </title>
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %} 
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %} 
+                {% include 'BaquarasTestBundle:Default:menu.html.twig' %}
+		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+                
+                <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
+                <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
 		<style>
 			#form_selectDpt {
 				width:150px;
@@ -15,149 +21,174 @@
 
     <body>
 		
-		<div id="ajouterDepartement">
-		
-			<h1> Population Cible </h1>
-		
-			<form  action="{{ path('ajouterDepartement', {'applicationId' : application.id}) }}" method="post" id="ajouterDpt" novalidate="novalidate">
-				
-				<div class="container">
-						
-					<table id="form_left">
-						<tr>
-							<td class="label"> Département </td>
-							<td class="text">
-								<select id="departement">
-									{% for dpt in listDpt %}
-										<option value={{ dpt.id }}> {{ dpt.nom }} </option>
-									{% endfor %}
-								</select>
-							</td>
-							<td class="buttons">
-								<button type="button" id="btnLeftDpt"> >> </button>
+                <div id="page">
+                    
+                    <div id="ajouterDepartement">
 
-							</td>
-							<td rowspan="3">
-								<button type="button" id="btnRight"> << </button>
-							</td>
-							<td rowspan="3">
-								<select id="form_selectDpt" name="selectDpt[]" multiple>
-									{% for pop in application.populationCible %}
-										<option> {{ pop.nom }} </option>
-									{% endfor %}
-								</select>
-							</td>
-						</tr>
-						<tr id="unite_departementale">
-							<td class="label"> Unité départementale </td>
-							<td class="text">
-								<select id="ud">
-								</select>
-							</td>
-							<td class="buttons">
-								<button type="button" id="btnLeftUD"> >> </button>
-							</td>
-						</tr>
-						<tr id="unite_locale">
-							<td class="label"> Unité locale </td>
-							<td class="text">
-								<select id="ul">
-								</select>
-							</td>
-							<td class="buttons">
-								<button type="button" id="btnLeftUL"> >> </button>
-								{#<button type="button" id="btnRight"> << </button>#}
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4"> <button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button> </td>
-						</tr>
-					</table>						
-				</div>
-				
-			</form>	
-				
+                            <h1>Modifier les départements : population cible </h1>
 
-		{% block javascripts1 %}
-			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
-			<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.chained.min.js') }}"></script>
-			<script>
-				$(document).ready(function(){
-					$("#btnLeftDpt").click(function () {
-						var selectedItem = $("#departement option:selected");
-						$("#form_selectDpt").append(selectedItem);
-					});
-					$("#btnLeftUD").click(function () {
-						var selectedItem = $("#ud option:selected");
-						$("#form_selectDpt").append(selectedItem);
-					});
-					$("#btnLeftUL").click(function () {
-						var selectedItem = $("#ul option:selected");
-						$("#form_selectDpt").append(selectedItem);
-					});
-					$("#btnRight").click(function () {
-						var selectedItem = $("#form_selectDpt option:selected");
-						$("#ul").append(selectedItem);
-					});  
-					$("#departement").change(function() {
-						mafonctionchange('ud','departement');
-					}).trigger('change');
-			 
-					$("#ud").change(function() {
-						mafonctionchange('ul','ud');;
-					});
-							 
-					function mafonctionchange(selecteur,selecteurparent)
-					{         
-						$('#'+selecteur).empty(); 
-						$.ajax({
-							url: "{{ path('ajouterDepartement', {'applicationId' : application.id})}}",
-							type: 'POST',
-							data:
-							{
-								id : $("#"+selecteurparent+" option:selected").val(),
-								select : selecteur
-							},
-							dataType: 'json',
-							success: function(reponse) {
-								var liste;
-								for(i in reponse) {	
-									liste = reponse[i];
-									$.each(liste, function(index, element) {
-										if(element.nom != null)
-											$('#' + selecteur).append('<option value="'+ element.id +'" selected="selected"> '+ element.nom +' </option>');
-									});            
-								}				  
-								if (selecteur == 'ud') {
-									mafonctionchange('ul','ud');
-								}
-							}
-						});
-					}
-                                        /*
-                                            $('select#departement').change(function() {
+                            <form  action="{{ path('ajouterDepartement', {'applicationId' : application.id}) }}" method="post" id="ajouterDpt" novalidate="novalidate">
 
-                                                switch($('option:selected').val()){
-                                                    case 'value':
-                                                        if($('#ud:visible')){
-                                                            $('#ud').hide().find('label').removeClass('required');
-                                                        }
-                                                        $('#ul').slideDown().find('label').addClass('required');
-                                                    break;
-                                                    
-                                                    default:
-                                                        $('#unite_departementale, #unite_locale').slideUp().find('label').removeClass('required');
-                                                }
+                                    <div class="container">
 
-                                            }); 
+                                            <table id="form_left">
+                                                    <tr>
+                                                            <td class="label"> Département </td>
+                                                            <td class="text">
+                                                                    <select id="departement">
+                                                                            {% for dpt in listDpt %}
+                                                                                    <option value={{ dpt.id }}> {{ dpt.nom }} </option>
+                                                                            {% endfor %}
+                                                                    </select>
+                                                            </td>
+                                                            <td class="buttons">
+                                                                    <button type="button" id="btnLeftDpt"> >> </button>
+
+                                                            </td>
+                                                            <td rowspan="3">
+                                                                    <button type="button" id="btnRight"> << </button>
+                                                            </td>
+                                                            <td rowspan="3">
+                                                                    <select id="form_selectDpt" name="selectDpt[]" multiple>
+                                                                            {% for pop in application.populationCible %}
+                                                                                    <option> {{ pop.nom }} </option>
+                                                                            {% endfor %}
+                                                                    </select>
+                                                            </td>
+                                                    </tr>
+                                                    <tr id="unite_departementale">
+                                                            <td class="label"> Unité départementale </td>
+                                                            <td class="text">
+                                                                    <select id="ud">
+                                                                    </select>
+                                                            </td>
+                                                            <td class="buttons">
+                                                                    <button type="button" id="btnLeftUD"> >> </button>
+                                                            </td>
+                                                    </tr>
+                                                    <tr id="unite_locale">
+                                                            <td class="label"> Unité locale </td>
+                                                            <td class="text">
+                                                                    <select id="ul">
+                                                                    </select>
+                                                            </td>
+                                                            <td class="buttons">
+                                                                    <button type="button" id="btnLeftUL"> >> </button>
+                                                                    {#<button type="button" id="btnRight"> << </button>#}
+                                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td colspan="4"> <button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button> </td>
+                                                    </tr>
+                                            </table>						
+                                    </div>
+
+                            </form>	
+
+
+                    {% block javascripts1 %}
+                            <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                            <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.chained.min.js') }}"></script>
+                            <script>
+                                    $(document).ready(function(){
+                                            $("#btnLeftDpt").click(function () {
+                                                    var selectedItem = $("#departement option:selected");
+                                                    $("#form_selectDpt").append(selectedItem);
+                                            });
+                                            $("#btnLeftUD").click(function () {
+                                                    var selectedItem = $("#ud option:selected");
+                                                    $("#form_selectDpt").append(selectedItem);
+                                            });
+                                            $("#btnLeftUL").click(function () {
+                                                    var selectedItem = $("#ul option:selected");
+                                                    $("#form_selectDpt").append(selectedItem);
+                                            });
+                                            $("#btnRight").click(function () {
+                                                    var selectedItem = $("#form_selectDpt option:selected");
+                                                    $("#ul").append(selectedItem);
+                                            });  
+                                            $("#departement").change(function() {
+                                                    mafonctionchange('ud','departement');
+                                            }).trigger('change');
+
+                                            $("#ud").change(function() {
+                                                    mafonctionchange('ul','ud');;
+                                            });
+
+                                            function mafonctionchange(selecteur,selecteurparent)
+                                            {         
+                                                    $('#'+selecteur).empty(); 
+                                                    $.ajax({
+                                                            url: "{{ path('ajouterDepartement', {'applicationId' : application.id})}}",
+                                                            type: 'POST',
+                                                            data:
+                                                            {
+                                                                    id : $("#"+selecteurparent+" option:selected").val(),
+                                                                    select : selecteur
+                                                            },
+                                                            dataType: 'json',
+                                                            success: function(reponse) {
+                                                                    var liste;
+                                                                    for(i in reponse) {	
+                                                                            liste = reponse[i];
+                                                                            $.each(liste, function(index, element) {
+                                                                                    if(element.nom != null)
+                                                                                            $('#' + selecteur).append('<option value="'+ element.id +'" selected="selected"> '+ element.nom +' </option>');
+                                                                            });            
+                                                                    }				  
+                                                                    if (selecteur == 'ud') {
+                                                                            mafonctionchange('ul','ud');
+                                                                    }
+                                                            }
+                                                    });
+                                            }
+                                            /*
+                                            //////////////////////////////////////////////////////////////
+                                                $('select#departement').change(function() {
+
+                                                    switch($('option:selected').val()){
+                                                        case 'value':
+                                                            if($('#ud:visible')){
+                                                                $('#ud').hide().find('label').removeClass('required');
+                                                            }
+                                                            $('#ul').slideDown().find('label').addClass('required');
+                                                        break;
+
+                                                        default:
+                                                            $('#unite_departementale, #unite_locale').slideUp().find('label').removeClass('required');
+                                                    }
+
+                                                }); 
+
                                             
+                                            
+                                            
+                                        jQuery(document).ready(function($) {
+                                           $('#departement, #ud, #ul').autocomplete({
+                                              source: function(req,res){
+                                                $.ajax({
+                                                  url:'/../src/Baquaras/TestBundle/Entity/structuresMetier_Full.xml',
+                                                  dataType: 'json',
+                                                  data: { 
+                                                    term  : $(this).val(),
+                                                    id: this.id,
+                                                  },
+                                                  success: function(data){
+                                                    alert(data);
+                                                  }
+                                              },
+                                              minLength: 2
+                                           });
+                                        });
                                         */
-                                            
-				});
-			</script>
-		{% endblock %}
+                                    });
+                                    
+                            </script>
+                    {% endblock %}
 
-			
-		</div>
+
+                    </div>
+                
+                </div>
     </body>
 </html>

@@ -778,14 +778,13 @@ margin-top: 10px;
 
 
 /***********************************************************************************************************************************************************/
-.rechercheHarpe {
+#rechercheHarpe {
 	padding:0;
 	margin:0;
 	font-family: 'Trebuchet MS';
 	border: none;
-	border-top:2px solid #54AAA9;
 }
-.rechercheHarpe h1 {
+#rechercheHarpe h1 {
 	font-family: 'roboto';
 	font-size: 1.1em;
 	background: url('../images/fond-titre3.jpg') no-repeat;
@@ -796,45 +795,45 @@ margin-top: 10px;
 	font-weight: normal;
 	border: none;
 }
-.rechercheHarpe form.rechercherHarpe {
-	width:550px;
+#rechercheHarpe form.rechercherHarpe {
+	width:550px !important;
 	margin: 0px auto 0px auto;
 }
-.rechercheHarpe form.rechercherHarpe div.container table {
+#rechercheHarpe form.rechercherHarpe div.container table {
 	width: 550px;
 	margin-bottom: 10px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(1){
+#rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(1){
 	width: 105px;
 	font-size: 0.9em;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(2){
+#rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td:nth-child(2){
 	width: 275px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td#text input#form_recherche {
+#rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td#text input#form_recherche {
 	width: 275px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td button#form_save1 {
+#rechercheHarpe form.rechercherHarpe div.container table#tab1 tbody tr td button#form_save1 {
 	font-family: "Trebuchet MS";
 	width: 150px;
 	margin-left: 8px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(1),
-.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(3) {
+#rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(1),
+#rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td:nth-child(3) {
 	width: 210px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#leftValues,
-.rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#form_rightValues {
+#rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#leftValues,
+#rechercheHarpe form.rechercherHarpe div.container table tbody tr td select#form_rightValues {
 	height:250px;
 	width: 210px;
 	font-family: "Trebuchet MS";
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnLeft {
+#rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnLeft {
 	display: block;
 	float: left;
 	margin-left: 12px;
 }
-.rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnRight {
+#rechercheHarpe form.rechercherHarpe div.container table#tab2 tbody tr td button#btnRight {
 	display: block;
 	float: left;
 	margin-left: 12px;
@@ -846,7 +845,7 @@ margin-top: 10px;
 	margin:0;
 	font-family: 'Trebuchet MS';
 	border: none;
-	border-top:2px solid #54AAA9;
+	background-color: #fffff;
 }
 #ajouterDepartement h1 {
 	font-family: 'roboto';
