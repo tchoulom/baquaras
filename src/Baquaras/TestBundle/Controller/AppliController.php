@@ -672,8 +672,14 @@ class AppliController extends Controller
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
+				foreach($application->getUtilisateur() as $utilisateur) {
+					$utilisateur->addApplication($application);
+					$em->persist($utilisateur);
+				}
 				$em = $this->getDoctrine()->getManager();
+
 				$em->persist($application);
+
 				$em->persist($installation);
 				$em->persist($gestion);
 				$em->persist($architecture);
@@ -699,9 +705,9 @@ class AppliController extends Controller
 	public function modifierApplicationAction(Application $application)
 	// Fonction permettant la modification d'une application
 	{
-            if($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
-                throw new AccessDeniedException('Accès limité');
-            }
+		if($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
+			throw new AccessDeniedException('Accès limité');
+		}
 		$em = $this->getDoctrine()->getManager();
 
 		$pck = $application->getPackages()->first();
