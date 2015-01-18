@@ -39,6 +39,7 @@ class SecurityController extends Controller
             $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
             $session->set('nom', $user->getNom());
             $session->set('prenom', $user->getPrenom());
+            $session->set('iduser', $user->getId());
             $session->set('role', $user->getProfil1()->getLibelle());
         }
         
