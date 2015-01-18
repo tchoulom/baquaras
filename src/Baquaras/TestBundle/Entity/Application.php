@@ -207,7 +207,7 @@ class Application
      */
     private $utilisateur;
 	/**
-     * @ORM\ManyToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
      *
      **/
     private $groupeApplications;
