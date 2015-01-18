@@ -16,6 +16,7 @@ class AuthorisationExtension extends \Twig_Extension
     {
         return array(
                 'getAuthorisation' => new \Twig_Function_Method($this, 'getAuthorisation'),
+                'getAuthorisationChefProject' => new \Twig_Function_Method($this, 'getAuthorisationChefProject')
         );
     }
     
@@ -25,6 +26,17 @@ class AuthorisationExtension extends \Twig_Extension
     {
         
         return $this->managementRoles->RoleVerified($route);
+    }
+
+    public function getAuthorisationChefProject($userId, $application)
+    {
+        foreach($application->getUtilisateur() as $utilisateur) {
+            if($utilisateur->getId() == $userId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getName()
