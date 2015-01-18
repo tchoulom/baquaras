@@ -200,9 +200,15 @@ class Application
      * @ORM\OneToMany(targetEntity="Agents", mappedBy="application")
      **/
     private $agents;
-	
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="application")
+     */
+    private $utilisateur;
 	/**
-     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application")
+     * @ORM\ManyToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
+     *
      **/
     private $groupeApplications;
 	
@@ -224,6 +230,7 @@ class Application
         $this->misesajour = new \Doctrine\Common\Collections\ArrayCollection();
         $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
     }
 	
 	public function __toString()
@@ -1018,4 +1025,39 @@ class Application
     {
         return $this->groupeApplications;
     }
+    
+    /**
+     * Add utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     * @return Application
+     */
+    public function addUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur[] = $utilisateur;
+        //$this->utilisateur->setApplication($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+   
 }
