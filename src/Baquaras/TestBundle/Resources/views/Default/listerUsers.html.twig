@@ -52,7 +52,16 @@
 					{% endfor %}
 					
 				</table>
-			
+				{% if pager.haveToPaginate %}
+
+					<div id="pagination" id="pagination">
+						<ul class="pagination">
+
+							{{ pagerfanta(pager, 'default_translated') }}
+
+						</ul>
+					</div>
+				{% endif %}
 				{### Pagination numérique ###}
 				{#<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>#}
 
