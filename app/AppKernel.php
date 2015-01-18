@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Baquaras\TestBundle\BaquarasTestBundle(),
             new Baquaras\AppliBundle\BaquarasAppliBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
 
         );
 
