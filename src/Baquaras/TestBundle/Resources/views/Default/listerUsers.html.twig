@@ -54,10 +54,12 @@
 				</table>
 				{% if pager.haveToPaginate %}
 
-					<div id="pagination" id="pagination">
-						<ul class="pagination">
-
-							{{ pagerfanta(pager, 'default_translated') }}
+					<div class="pagination pagination-centered">
+						<ul>
+                                                    <li>
+                                                        {{ pagerfanta(pager, 'default_translated') }}
+                                                    </li>
+                                                    
 
 						</ul>
 					</div>
