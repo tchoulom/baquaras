@@ -1,20 +1,30 @@
 # Security layer routes
 # No controller needed as the Security Layer will handle requests on those urls
-_LogoutLink:
-    pattern:   /secured/logout
+#_LogoutLink:
+#    pattern:   /secured/logout
 
-_LoginLink:
+#_LoginLink:
+#    pattern:   /secured/login
+ #   defaults: { _controller: "BaquarasTestBundle:Security:login" }
+    
+login:
     pattern:   /secured/login
-    defaults: { _controller: "BaquarasTestBundle:Security:login" }
+    defaults: { _controller: "BaquarasTestBundle:TrustedSso:login" }
 
+logout:
+    pattern:  /logout
 
+login_check:
+    path: /login_check
+    defaults: { _controller: "BaquarasTestBundle:Security:check" }
 
+authentificate:
+    pattern:   /authentificate
+    defaults: { _controller: "BaquarasTestBundle:Security:authentificate" }
+    
 accueil:
     path: /accueil
     defaults: {_controller:BaquarasTestBundle:Default:accueil}
-
-login_check:
-    path: /accueil
 
 # UTILISATEURS
 rechercherHarpe:
@@ -169,7 +179,7 @@ supprimerAutrePreRequis:
     defaults: {_controller:BaquarasTestBundle:AutrePreRequis:supprimerAutrePreRequis}
 
 # RECHERCHE
-rechercher:
+recherche:
    path: /recherche
    defaults: {_controller:BaquarasTestBundle:Appli:rechercher}
    
@@ -210,9 +220,9 @@ droitsWorkflow:
    path:  /admin/droits/workflow
    defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsWorkflow}
    
-droitsPage:
-   path:  /admin/droits/acces
-   defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsPage} 
+droitsAccess:
+   path:  /admin/droits/acces/{type}
+   defaults: {_controller:BaquarasTestBundle:Droit:modifierDroitsPage}
 
 # MODE OPERATOIRE
 genererModeOperatoire:

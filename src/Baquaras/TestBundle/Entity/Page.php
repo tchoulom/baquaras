@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Page
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\ActionRepository")
+ * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\PageRepository")
  */
 class Page
 {
@@ -32,6 +32,13 @@ class Page
      * @ORM\OneToMany(targetEntity="Droit", mappedBy="page")
      */
     private $droits;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true)
+     */
+    private $type;
 	
     /**
      * Get id
@@ -73,6 +80,28 @@ class Page
         return $this->libelle;
     }
 
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
     /**
      * Add droits
      *

@@ -16,8 +16,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Baquaras\TestBundle\BaquarasTestBundle(),
-            new Baquaras\AppliBundle\BaquarasAppliBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Cnerta\BreadcrumbBundle\CnertaBreadcrumbBundle(),
             new BeSimple\SsoAuthBundle\BeSimpleSsoAuthBundle(), 
@@ -30,9 +28,14 @@ class AppKernel extends Kernel
             new Sonata\BlockBundle\SonataBlockBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new JMS\AopBundle\JMSAopBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Baquaras\TestBundle\BaquarasTestBundle(),
+            new Baquaras\AppliBundle\BaquarasAppliBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+
         );
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), array('dev', 'prod', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

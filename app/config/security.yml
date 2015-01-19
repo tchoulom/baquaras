@@ -1,14 +1,15 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Baquaras\TestBundle\Security\User: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_INTEGRATEUR: ROLE_INTEGRATEUR
+        ROLE_ADMIN: [ROLE_USER, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     providers:
         main:
-            entity: { class: Baquaras\AppliBundle\Entity\AppliUser, property: username }
+            id: user_provider
 
     firewalls:
         dev:
@@ -16,20 +17,26 @@ security:
             security: false
         my_firewall:
             pattern:    ^/.*$
-            anonymous: true
+            security: true
+            provider : main 
+            anonymous: ~
             trusted_sso:
                 manager: websso
                 login_action: false
                 logout_action: false
                 login_path: /secured/login
-                check_path: /accueil
-                always_use_default_target_path : true
-                default_target_path : /secured/login
-                failure_path: /secured/logout
+                check_path: /login_check
+                failure_path: /accueil
+            logout:
+                path : /logout
+                #success_handler: baquaras.security.logout_success_handler
+                target: /accueil
+                #invalidate_session: false
 
- #   access_control:
- #       - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
- #       - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
- #       - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
- #       - { path: ^/.*$, roles: ROLE_ADMIN }
 
+    access_control:
+        - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/authentificate, roles: [ROLE_USER, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ] }

@@ -26,7 +26,7 @@
 				</div>
 			
 				<table id="liste">
-					<tr>
+					<tr id="tr1">
 						<td> Prénom </td>
 						<td> Nom </td>
 						<td> Compte matriculaire </td>
@@ -37,7 +37,7 @@
 					</tr>
 	
 					{% for utilisateur in utilisateurs %}
-					<tr>
+					<tr id="trimpair">
 						<td> {{ utilisateur.prenom }} </td>
 						<td> {{ utilisateur.nom }} </td>
 						<td> {{ utilisateur.cpteMatriculaire }} </td>
@@ -52,7 +52,18 @@
 					{% endfor %}
 					
 				</table>
-			
+				{% if pager.haveToPaginate %}
+
+					<div class="pagination pagination-centered">
+						<ul>
+                                                    <li>
+                                                        {{ pagerfanta(pager, 'default_translated') }}
+                                                    </li>
+                                                    
+
+						</ul>
+					</div>
+				{% endif %}
 				{### Pagination numérique ###}
 				{#<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>#}
 

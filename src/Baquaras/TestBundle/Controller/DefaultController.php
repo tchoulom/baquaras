@@ -3,6 +3,7 @@
 namespace Baquaras\TestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -10,10 +11,11 @@ class DefaultController extends Controller
 	{
 	    return new Response("Bienvenue sur Baquaras");
 	}
-	
+
 	public function accueilAction()
 	{
-		return $this->render('BaquarasTestBundle:Default:accueil.html.twig');
+            $token = $this->get('security.context')->getToken();
+            return $this->render('BaquarasTestBundle:Default:accueil.html.twig');
 	}
 	
 	

@@ -34,6 +34,7 @@ use Baquaras\TestBundle\Entity\Qualification;
 use Baquaras\TestBundle\Entity\Script;
 use Baquaras\TestBundle\Entity\Statut;
 use Baquaras\TestBundle\Entity\Utilisateur;
+use Baquaras\TestBundle\Entity\PageRepository;
 
 use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Form\ApplicationAjoutType;
@@ -46,6 +47,9 @@ use Baquaras\TestBundle\Form\PreRequisType;
 
 use Baquaras\TestBundle\Entity\ItemRepository;
 use Baquaras\TestBundle\Entity\EvolutionStatut;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AppliController extends Controller
 {
@@ -53,31 +57,32 @@ class AppliController extends Controller
 	public function listerApplicationsAction($action, $page, $export)
 	// Fonction listant les applications qualifiées
 	{
-		$maxApplications = 6; // nombre d'applications affichées par page
-		$repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application');
-		$applications_count = $repository->countApplications();
+            if($this->container->get('management_roles')->RoleVerified('Liste des applications') === false) {
+                throw new AccessDeniedException('Accès limité');
+            }
+            $maxApplications = 6; // nombre d'applications affichées par page
+            $repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application');
+            $applications_count = $repository->countApplications();
 		
-		$pagination = array(
+            $pagination = array(
             'page' => $page,
             'route' => 'listerApplications',
             'pages_count' => ceil($applications_count / $maxApplications),
             'route_params' => array()
         );
 
-		//var_dump($pagination);
-		$applications = $repository->getListe($page, $maxApplications);
-		
-		$defaultData = array('message' => 'Message');
-		$form = $this->createFormBuilder($defaultData)
-			->add('sousCompte', 'button', array('label' => 'Sous compte'))
-			->add('postesWSUS', 'button', array('label' => 'Postes WSUS'))
-			->add('installable', 'button', array('label' => 'Non installable par un groupe AD'))
-			->add('miseAJour', 'button', array('label' => 'Mise à jour mineure'))
-			->add('reboot', 'button', array('label' => 'Reboot'))
-			->add('preRequisManuel', 'button', array('label' => 'Pré requis manuel'))
-			->add('nonRequis', 'button', array('label' => 'Non requis'))
-			->add('populationCible', 'button', array('label' => 'Population cible'))
-			->getForm();
+            $applications = $repository->getListe($page, $maxApplications);
+            $defaultData = array('message' => 'Message');
+            $form = $this->createFormBuilder($defaultData)
+                ->add('sousCompte', 'button', array('label' => 'Sous compte'))
+                ->add('postesWSUS', 'button', array('label' => 'Postes WSUS'))
+                ->add('installable', 'button', array('label' => 'Non installable par un groupe AD'))
+                ->add('miseAJour', 'button', array('label' => 'Mise à jour mineure'))
+                ->add('reboot', 'button', array('label' => 'Reboot'))
+                ->add('preRequisManuel', 'button', array('label' => 'Pré requis manuel'))
+                ->add('nonRequis', 'button', array('label' => 'Non requis'))
+                ->add('populationCible', 'button', array('label' => 'Population cible'))
+                ->getForm();
 			
 			switch($action) {
 				case 'triParSousCompte' :
@@ -172,7 +177,7 @@ class AppliController extends Controller
 			}
 
 			if($export)
-				return $this->forward('BaquarasTestBundle:Appli:exporter', array('applications' => $applications, 'action' => $action));
+                            return $this->forward('BaquarasTestBundle:Appli:exporter', array('applications' => $applications, 'action' => $action));
 			return $this->render('BaquarasTestBundle:Default:listerappli.html.twig', array('form' => $form->createView(),'applications' => $applications, 'pagination' => $pagination, 'action' => $action));
 	}
 	
@@ -186,10 +191,16 @@ class AppliController extends Controller
 	}  
 	
 
+        /**
+         * Fonction permettant de rechercher une application
+         */
+        
 	public function rechercherAction(Request $request)
-	// Fonction permettant de rechercher une application
 	{
-		$defaultData = array('message' => 'Message');
+            if(!$this->container->get('management_roles')->RoleVerified('recherche')) {
+                throw new AccessDeniedException('Accès limité');
+            }
+            $defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('nomListe', 'entity', array('label' => 'Nom de l\'application', 'empty_value' => 'Sélectionner une application', 'class' => 'BaquarasTestBundle:Application',	'property' => 'NomAndVersion'))
 			->add('nomPosition', 'choice', array('label' => 'Indiquer une partie du nom de l\'application', 'choices' => array('D' => 'Commence par', 'M' => 'Composé de', 'F' => 'Fini par'), 'multiple' => false, 'expanded' => true))
@@ -502,11 +513,13 @@ class AppliController extends Controller
 			->setCellValue('B' .$i, $appli->getVersion())
 			->setCellValue('C' .$i, $appli->getCorrectifQualif())
 			->setCellValue('D' .$i, $appli->getDescription())
-			->setCellValue('E' .$i, $appli->getHabilitesinstall())
+                            ->setCellValue('E' .$i, $appli->getGroupesInstall())
 			->setCellValue('F' .$i, $appli->getInstallation()->getInstallationADistance());
 			foreach($appli->getPackages() as $package) {
+                            if($package->getModeOperatoire()) {
 				$phpExcelObject->setActiveSheetIndex(0)
 					->setCellValue('G' .$i, $package->getModeOperatoire()->getLibelle());
+                            }
 				
 				$nMAJ = 0;
 				$nPR = 0;
@@ -587,7 +600,6 @@ class AppliController extends Controller
 			}
 		$i++;
 		}
-		
 		$phpExcelObject->getActiveSheet()->setTitle('Simple');
 		// setActiveSheet définit la page sur laquelle Excel s'ouvre
 		$phpExcelObject->setActiveSheetIndex(0);
@@ -599,13 +611,15 @@ class AppliController extends Controller
 		$response->headers->set('Content-Disposition', 'attachment;filename=' .$action. '.xls');
 		$response->headers->set('Pragma', 'public');
 		$response->headers->set('Cache-Control', 'maxage=1');
-
         return $response;
 	}
 	
 	public function ajouterApplicationAction(Request $request)
 	// Fonction permettant d'ajouter/créer une application
-	{			
+	{	
+            if($this->container->get('management_roles')->RoleVerified('ajouter une application') === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 		$em = $this->getDoctrine()->getManager();
 		
 		/* Application */
@@ -658,8 +672,14 @@ class AppliController extends Controller
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
+				foreach($application->getUtilisateur() as $utilisateur) {
+					$utilisateur->addApplication($application);
+					$em->persist($utilisateur);
+				}
 				$em = $this->getDoctrine()->getManager();
+
 				$em->persist($application);
+
 				$em->persist($installation);
 				$em->persist($gestion);
 				$em->persist($architecture);
@@ -685,6 +705,9 @@ class AppliController extends Controller
 	public function modifierApplicationAction(Application $application)
 	// Fonction permettant la modification d'une application
 	{
+		if($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
+			throw new AccessDeniedException('Accès limité');
+		}
 		$em = $this->getDoctrine()->getManager();
 
 		$pck = $application->getPackages()->first();
@@ -712,6 +735,9 @@ class AppliController extends Controller
 	public function consulterApplicationAction(Application $application)
 	// Fonction permettant la consultation d'une application
 	{
+            if(!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
+                throw new AccessDeniedException('Accès limité');
+            }
 		return $this->render('BaquarasTestBundle:Default:consulterappli.html.twig', array('application' => $application,));
 	}   
 	
@@ -720,6 +746,12 @@ class AppliController extends Controller
 	 */
 	public function supprimerApplicationAction(Application $application)
 	{
+            if(!$this->container->get('management_roles')->RoleVerified('supprimer une application')) {
+                throw new AccessDeniedException('Accès limité');
+            }
+            if($this->container->get('management_roles')->RoleVerified() === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 		$em = $this->getDoctrine()->getManager();
 		
 		/* Installation */

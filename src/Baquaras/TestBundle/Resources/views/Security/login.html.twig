@@ -2,7 +2,7 @@
 <html>
 
 	<head>
-		<title> Suivi des qualifications </title>
+		<title> Login </title>
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
 	</head>
 
@@ -17,19 +17,7 @@
 			{% if error %}
 				<div>{{ error.message }}</div>
 			{% endif %}
-
-			<form action="{{ path('login_check') }}" method="post">
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="_username" />
-	
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="_password" />
-
-				<input type="hidden" name="_target_path" value="account" />
-
-				<input type="submit" name="login" />
-			</form>
-		
+                        
 		</div>
 		
     </body>

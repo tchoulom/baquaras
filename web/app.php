@@ -13,11 +13,11 @@ $apcLoader = new ApcClassLoader('sf2', $loader);
 $loader->unregister();
 $apcLoader->register(true);
 */
-
+die('laa');
 require_once __DIR__.'/../app/AppKernel.php';
 //require_once __DIR__.'/../app/AppCache.php';
 
-$kernel = new AppKernel('prod', false);
+$kernel = new AppKernel('prod', true);
 $kernel->loadClassCache();
 //$kernel = new AppCache($kernel);
 

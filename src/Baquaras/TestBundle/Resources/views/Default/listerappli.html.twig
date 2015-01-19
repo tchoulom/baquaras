@@ -41,18 +41,6 @@
 						{% endfor %}
 					</div>#}
 				</div>
-				<table id="boutons">
-					<tr>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParSousCompte'}) }}"> {{ form_widget(form.sousCompte ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPostesWSUS'}) }}"> {{ form_widget(form.postesWSUS ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParInstallationAD'}) }}"> {{ form_widget(form.installable ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParMiseAJour'}) }}"> {{ form_widget(form.miseAJour ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParReboot'}) }}"> {{ form_widget(form.reboot ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPreRequisManuel'}) }}"> {{ form_widget(form.preRequisManuel ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParNonRequis'}) }}"> {{ form_widget(form.nonRequis ) }} </a> </td>
-						<td> <a href="{{path('listerApplications', {'action' : 'triParPopulationCible'}) }}"> {{ form_widget(form.populationCible ) }} </a> </td>
-					</tr>
-				</table>
 				<table id="liste">
 					<tr>
 						<td> Nom </td>
@@ -81,13 +69,20 @@
 						{% if action == 'triParPopulationCible' %}
 							<td> Population cible </td>
 						{% endif %}
-						<td> Actions </td>
+                                                {% if(getAuthorisation('ajouter une mise') == true or getAuthorisation('modifier une application') == true  or getAuthorisation('supprimer une application') == true) %}
+                                                    <td> Actions </td>
+                                                {%endif%}
 					</tr>
 	
 					{% for application in applications %}
 					<tr>
+                                            
+                                            {% if(getAuthorisation('consulter les d') == true) %}
 						<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','resizable=yes,top=0,left=0,width=1300,height=900,scrollbars=yes'); return false;"> {{ application.nom }} </a> </td>
-						<td> {{ application.version }} </td>
+				            {% else %}
+                                                <td>{{ application.nom }}</td>
+                                            {% endif %}
+                                                <td> {{ application.version }} </td>
 						<td> {{ application.correctifQualif }} </td>
 						<td> {{ application.description }} </td>
 						<td> 
@@ -203,12 +198,19 @@
 								{% endfor %}
 							</td>
 						{% endif %}
-						<td>
-							<a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','width=1300,height=2000,scrollbars=yes'); return false;"> Détails </a> <br/>
-							<a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
-							<a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>
-							<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
-						</td>
+                                                {#% if is_granted('IS_AUTHENTICATED_FULLY') %#}
+                                                    <td>
+                                                        {% if(getAuthorisation('modifier une application')) == true %}
+                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                        {% endif %}
+                                                        {% if(getAuthorisation('ajouter une mise')) == true %}
+                                                            <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>
+                                                        {% endif %}
+                                                        {% if(getAuthorisation('supprimer une application')) == true %}
+                                                            <a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
+                                                        {% endif %}
+                                                    </td>
+                                                {#%endif%#}
 					</tr>
 					{% endfor %}				
 					
