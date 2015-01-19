@@ -8,6 +8,8 @@
                 <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
                 <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
+                <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 		<style>
 			#zoneBouton {
 				 margin-top : -100px; 
@@ -132,13 +134,15 @@
                                     "Daniel",
                                     "Amira"
                                 ];
-                                //
-                                //var getUsers = Routing.generate('rechercherUserHarpe');
+                                
+                                
+                                var getUsers = Routing.generate('ajoutUtilisateur');
+                                
                                 $("#form_recherche").autocomplete({
                                    // source : liste//"./../Entity/UtilisateurRepository.php"
                                     source: function( request, response ) {
                                     $.ajax({
-                                        url: "{{ path('rechercherUserHarpe')}},
+                                        url: "{{ path('getUsers')}},
                                         dataType: "jsonp",
                                         success: function( data ) {
                                             console.log(data);

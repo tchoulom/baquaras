@@ -107,6 +107,14 @@ class UtilisateurController extends Controller
 		}
 		return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
 	}
+        
+        public function ajoutUtilisateurAction($term)
+        {
+            $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($term);
+            
+            return $user;
+        }
+        
 	
 	public function modifierUserAction($userId) 
 	{

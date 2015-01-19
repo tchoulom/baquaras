@@ -244,3 +244,8 @@ voirSuiviQualif:
 modifStatutQualif:
     path:    /modifStatutQualif/{id}
     defaults: {_controller:BaquarasTestBundle:Appli:modifStatutQualif,id:null}
+
+getUsers:
+    path: /getUsers
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
+    
