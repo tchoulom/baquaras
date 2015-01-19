@@ -143,7 +143,7 @@ class UtilisateurController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		set_time_limit(0);
 		ini_set("memory_limit", -1);
-		$page = $request->get('page');
+		$page = $request->get('page')?$request->get('page'):1;
 		$query = $em->createQuery('select u from BaquarasTestBundle:Utilisateur u');
 		$adapter = new DoctrineORMAdapter($query);
 		$pagerfanta = new Pagerfanta($adapter);
