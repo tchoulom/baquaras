@@ -142,8 +142,11 @@
                                    // source : liste//"./../Entity/UtilisateurRepository.php"
                                     source: function( request, response ) {
                                     $.ajax({
-                                        url: "{{ path('getUsers')}},
+                                        url: "{{ path('getUsers/term')}},
                                         dataType: "jsonp",
+                                        data: {
+                                            u: request.term
+                                        },
                                         success: function( data ) {
                                             console.log(data);
                                         },

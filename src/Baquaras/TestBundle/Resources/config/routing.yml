@@ -246,6 +246,7 @@ modifStatutQualif:
     defaults: {_controller:BaquarasTestBundle:Appli:modifStatutQualif,id:null}
 
 getUsers:
-    path: /getUsers
+    path: /getUsers/{term}
     defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
-    
+    options:
+        expose: true
