@@ -65,27 +65,25 @@
                                             </tr>
                                             <tr>
                                                 <td id="label"> {{ form_label(form.editeur) }} </td>
-                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification',
-                                                                                                    'Qualificateur',
-                                                                                                    'Chef de produit'
-                                                                                                ] %}
-
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                         <td id="text"> {{ form_widget(form.editeur) }} </td>
                                                     {% else %}
-                                                        <td id="text"> {{ form_widget(form.editeur, { 'attr':{'disabled':'disabled'} }) }} </td>
-s                                                {% endif %}
+                                                        <td id="text"> {{ form_widget(form.editeur, { 'attr':{'disabled':'disabled'} }) }} </td>                                               {% endif %}
                                             </tr> 
                                             <tr>
                                                     <td id="error"> {{ form_errors(form.editeur) }} </td> 							
                                             </tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.version) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                                'Responsable qualification',
-                                                                                                'Qualificateur',
-                                                                                                'Chef de produit'
-                                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.version) }} </td>
                                                         {% else %}
                                                             <td id="text"> {{ form_widget(form.version, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -96,11 +94,11 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.type) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                                'Responsable qualification',
-                                                                                                'Qualificateur',
-                                                                                                'Chef de produit'
-                                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.type) }} </td>
                                                     {% else %}
                                                             <td id="text"> {{ form_widget(form.type, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -111,11 +109,11 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.description) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                                'Responsable qualification',
-                                                                                                'Qualificateur',
-                                                                                                'Chef de produit'
-                                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.description) }} </td>
                                                         {% else %}
                                                             <td id="text"> {{ form_widget(form.description, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -127,11 +125,11 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.correctifQualif) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                            'Responsable qualification',
-                                                                                            'Qualificateur',
-                                                                                            'Chef de produit'
-                                                                                        ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.correctifQualif) }} </td>
                                                         {% else %}
                                                             <td id="text"> {{ form_widget(form.correctifQualif, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -143,11 +141,11 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.codeConvergence) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                        'Responsable qualification',
-                                                                                        'Qualificateur',
-                                                                                        'Chef de produit'
-                                                                                    ] %}
+                                                       {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.codeConvergence) }} </td>
                                                     {% else %}
                                                             <td id="text"> {{ form_widget(form.codeConvergence, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -158,11 +156,11 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.codeECAR) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                    'Responsable qualification',
-                                                                                    'Qualificateur',
-                                                                                    'Chef de produit'
-                                                                                ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.codeECAR) }} </td>
                                                     {% else %}
                                                             <td id="text"> {{ form_widget(form.codeECAR, { 'attr':{'disabled':'disabled'} }) }} </td>
@@ -173,14 +171,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.appliReferenceeSIERA) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                    'Responsable qualification',
-                                                                                    'Qualificateur',
-                                                                                    'Chef de produit'
-                                                                                ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td> {{ form_widget(form.appliReferenceeSIERA) }} </td>
                                                     {% else %}
-                                                            <td id="text"> {{ form_widget(form.appliReferenceeSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td > {{ form_widget(form.appliReferenceeSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                     {% endif %}
                                                 </tr> 
                                                 <tr>
@@ -188,14 +186,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.codeSIERA) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                'Responsable qualification',
-                                                                                'Qualificateur',
-                                                                                'Chef de produit'
-                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.codeSIERA) }} </td>
                                                     {% else %}
-                                                            <td id="text"> {{ form_widget(form.codeSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td> {{ form_widget(form.codeSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                     {% endif %}
                                                 </tr> 
                                                 <tr>
@@ -203,14 +201,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.nomApplicationSIERA) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                'Responsable qualification',
-                                                                                'Qualificateur',
-                                                                                'Chef de produit'
-                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.nomApplicationSIERA) }} </td>
                                                     {% else %}
-                                                            <td id="text"> {{ form_widget(form.nomApplicationSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td > {{ form_widget(form.nomApplicationSIERA, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                     {% endif %}
                                                 </tr> 
                                                 <tr>
@@ -218,14 +216,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.appliSousGouvernance) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                'Responsable qualification',
-                                                                                'Qualificateur',
-                                                                                'Chef de produit'
-                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td> {{ form_widget(form.appliSousGouvernance) }} </td>
                                                     {% else %}
-                                                            <td id="text"> {{ form_widget(form.appliSousGouvernance, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td> {{ form_widget(form.appliSousGouvernance, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         
                                                     {% endif %}
                                                 </tr> 
@@ -234,14 +232,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.dansCatalogueSIT) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                'Responsable qualification',
-                                                                                'Qualificateur',
-                                                                                'Chef de produit'
-                                                                            ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td> {{ form_widget(form.dansCatalogueSIT) }} </td>
                                                             {% else %}
-                                                            <td id="text"> {{ form_widget(form.dansCatalogueSIT, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td> {{ form_widget(form.dansCatalogueSIT, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                     {% endif %}
                                                 </tr> 
                                                 <tr>
@@ -259,14 +257,14 @@ s                                                {% endif %}
 						</tr>
 						<tr>
                                                     <td id="label"> {{ form_label(form.oscible) }} </td>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                            'Responsable qualification',
-                                                                            'Qualificateur',
-                                                                            'Chef de produit'
-                                                                        ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                             <td id="text"> {{ form_widget(form.oscible) }} </td>
                                                     {% else %}
-                                                        <td id="text"> {{ form_widget(form.oscible, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        <td> {{ form_widget(form.oscible, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                     {% endif %}
                                                 </tr> <tr>
 							<td id="error"> {{ form_errors(form.oscible) }} </td>
@@ -279,22 +277,22 @@ s                                                {% endif %}
 										<option> {{ pop.libelle }} </option>
 									{% endfor %}
 								</select>
-                                                                    {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                                'Responsable qualification',
-                                                                                'Qualificateur',
-                                                                                'Chef de produit'
-                                                                            ] %}
+                                                                    {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                                         <a href="{{path('ajouterDepartement', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Population cible','width=1200,scrollbars=yes'); return false;"> > Modifier les départements </a>
                                                         {% endif %}
                                                                 </td>
 						<tr>
-                                                        {% if app.session and app.session.get('role') in ['Administrateur',
-                                                                            'Responsable qualification',
-                                                                            'Qualificateur',
-                                                                            'Chef de produit',
-                                                                            'Intégrateur',
-                                                                            'Technicien support'
-                                                                        ] %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                    'Technicien support'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
 							<td id="label"> Assistance </td>
 							<td id="text"> 
 								<select id="listAssistance" multiple>
@@ -385,10 +383,17 @@ s                                                {% endif %}
 									<td> {{ preRequis.libelle }} </td>
 									<td> {{ preRequis.modeGestion }} </td>
 									<td> {{ preRequis.oscible }} </td>
-									<td>
-										<a href="{{path('modifierPreRequis', {'preRequisId' : preRequis.id }) }}"> Modifier</a>&nbsp;
-										<a href="{{path('supprimerPreRequis', {'preRequisId' : preRequis.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pré-requis ?')"> Supprimer </a>
-									</td>
+                                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                            <td>
+                                                                                    <a href="{{path('modifierPreRequis', {'preRequisId' : preRequis.id }) }}"> Modifier</a>&nbsp;
+                                                                                    <a href="{{path('supprimerPreRequis', {'preRequisId' : preRequis.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pré-requis ?')"> Supprimer </a>
+                                                                            </td>
+                                                                        {% endif %}
 								</tr>
 							
 							{% endfor %}
@@ -399,8 +404,14 @@ s                                                {% endif %}
 						</div>
 					
 						<div class="content" id="nonrequis">
-							<div class="lien"> <a href="{{path('ajouterNonRequis', {'applicationId' : application.id }) }}"> > Ajouter un non-requis </a> </div>
-							
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <div class="lien"> <a href="{{path('ajouterNonRequis', {'applicationId' : application.id }) }}"> > Ajouter un non-requis </a> </div>
+                                                    {% endif %}
 							{% if application.nonRequis is not empty %}
 							
 								<h3> Liste des non-requis </h3>
@@ -419,10 +430,17 @@ s                                                {% endif %}
 											<td> {{ nonRequis.libelle }} </td>
 											<td> {{ nonRequis.modeGestion }} </td>
 											<td> {{ nonRequis.oscible }} </td>
-											<td>
-												<a href="{{path('modifierNonRequis', {'nonRequisId' : nonRequis.id }) }}"> Modifier </a> &nbsp;
-												<a href="{{path('supprimerNonRequis', {'nonRequisId' : nonRequis.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce non-requis ?')"> Supprimer </a>
-											</td>
+                                                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                                            <td>
+                                                                                                    <a href="{{path('modifierNonRequis', {'nonRequisId' : nonRequis.id }) }}"> Modifier </a> &nbsp;
+                                                                                                    <a href="{{path('supprimerNonRequis', {'nonRequisId' : nonRequis.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce non-requis ?')"> Supprimer </a>
+                                                                                            </td>
+                                                                                        {% endif %}
 										</tr>
 									</table>
 								{% endfor %}
@@ -448,10 +466,17 @@ s                                                {% endif %}
 										<td> {{ autrePreRequis.libelle }} </td>
 										<td> {{ autrePreRequis.commentaire }} </td>
 										<td> {{ autrePreRequis.oscible }} </td>
+                                                                                {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
 										<td>
 											<a href="{{path('modifierAutrePreRequis', {'autrePreRequisId' : autrePreRequis.id }) }}"> Modifier </a>&nbsp;&nbsp;
 											<a href="{{path('supprimerAutrePreRequis', {'autrePreRequisId' : autrePreRequis.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet autre pré-requis ?')"> Supprimer </a>
 										</td>
+                                                                                {% endif %}
 									</tr>
 									{% endfor %}
 								</table>
@@ -468,47 +493,129 @@ s                                                {% endif %}
 					
 					<div class="content" id="architecture">
 					<table id="appliweb_fixe">    					
-						<tr> 
+						<tr>
 							<td id="label"> {{ form_label(form.architecture.appliWeb) }} </td>
-							<td> {{ form_widget(form.architecture.appliWeb) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                <td> {{ form_widget(form.architecture.appliWeb) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.appliWeb, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                </tr> 
+                                                <tr>
 							<td id="error"> {{ form_errors(form.architecture.appliWeb) }} </td>
-						</tr>  
+						</tr>
 					</table>
 							
 					<table id="appliweb_cond">		
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.urlExtranet) }} </td>
-							<td id="text"> {{ form_widget(form.architecture.urlExtranet) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                <td id="text"> {{ form_widget(form.architecture.urlExtranet) }} </td>
+                                                            {% else %}
+                                                                <td id="text"> {{ form_widget(form.architecture.urlExtranet, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.urlExtranet) }} </td>
 						</tr>		
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.urlIntranet) }} </td>
-							<td id="text"> {{ form_widget(form.architecture.urlIntranet) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td id="text"> {{ form_widget(form.architecture.urlIntranet) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.architecture.urlIntranet, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.urlIntranet) }} </td>
 						</tr>							
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.appliIntraOuInternet) }} </td>
-							<td> {{ form_widget(form.architecture.appliIntraOuInternet) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.appliIntraOuInternet) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.appliIntraOuInternet, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.appliIntraOuInternet) }} </td>
 						</tr>					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationActiveX) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationActiveX) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.utilisationActiveX) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.utilisationActiveX, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationActiveX) }} </td>
 						</tr>					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationCertificats) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationCertificats) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.utilisationCertificats) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.utilisationCertificats, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationCertificats) }} </td>
 						</tr>					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationJRE) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationJRE) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+							<td> {{ form_widget(form.architecture.utilisationJRE) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.utilisationJRE, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationJRE) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationSSO) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationSSO) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.utilisationSSO) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.utilisationSSO, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationSSO) }} </td>
 						</tr>
 					</table>
@@ -516,7 +623,17 @@ s                                                {% endif %}
 					<table id="clientserveur_fixe">
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.appliClientServeur) }} </td>
-							<td> {{ form_widget(form.architecture.appliClientServeur) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                <td> {{ form_widget(form.architecture.appliClientServeur) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.appliClientServeur, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif%}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.appliClientServeur) }} </td>
 						</tr>	
 					</table>
@@ -524,13 +641,33 @@ s                                                {% endif %}
 					<table id="clientserveur_cond">
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.appliInfocentre) }} </td>
-							<td> {{ form_widget(form.architecture.appliInfocentre) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+							<td> {{ form_widget(form.architecture.appliInfocentre) }} </td>
+                                                        {% else %}
+                                                           <td> {{ form_widget(form.architecture.appliInfocentre, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.appliInfocentre) }} </td>
 						</tr>	
 						
-						<tr> 
+						<tr>
 							<td id="label"> {{ form_label(form.architecture.baseDeDonnees) }} </td>
-							<td> {{ form_widget(form.architecture.baseDeDonnees) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.baseDeDonnees) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.baseDeDonnees, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.baseDeDonnees) }} </td>
 						</tr>	
 					</table>
@@ -538,12 +675,32 @@ s                                                {% endif %}
 					<table id="office_fixe">
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.commentaire) }} </td>
-							<td> {{ form_widget(form.architecture.commentaire) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                <td> {{ form_widget(form.architecture.commentaire) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.commentaire, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.commentaire) }} </td>
 						</tr>					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationOffice) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationOffice) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.utilisationOffice) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.utilisationOffice, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationOffice) }} </td>
 						</tr>	
 					</table>
@@ -551,7 +708,17 @@ s                                                {% endif %}
 					<table id="office_cond">
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.liaisonsOffice) }} </td>
-							<td> {{ form_widget(form.architecture.liaisonsOffice) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.liaisonsOffice) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.liaisonsOffice, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.liaisonsOffice) }} </td>
 						</tr>
 					</table>
@@ -559,24 +726,64 @@ s                                                {% endif %}
 					<table id="fixe">					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.liaisonAccess) }} </td>
-							<td> {{ form_widget(form.architecture.liaisonAccess) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.liaisonAccess) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.liaisonAccess, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.liaisonAccess) }} </td>
 						</tr>
 					
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.stockeDonneesUser) }} </td>
-							<td> {{ form_widget(form.architecture.stockeDonneesUser) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.stockeDonneesUser) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.stockeDonneesUser, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.stockeDonneesUser) }} </td>
 						</tr>
 						
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.utilisationMaterielPeripherique) }} </td>
-							<td> {{ form_widget(form.architecture.utilisationMaterielPeripherique) }} </td> </tr> <tr>
+							{% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.utilisationMaterielPeripherique) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.architecture.utilisationMaterielPeripherique, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.utilisationMaterielPeripherique) }} </td>
 						</tr>	
 						<tr> 
 							<td id="label"> {{ form_label(form.architecture.briques) }} </td>
-							<td> {{ form_widget(form.architecture.briques) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.architecture.briques) }} </td>
+                                                            {% else %}
+                                                                <td> {{ form_widget(form.architecture.briques, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.architecture.briques) }} </td>
 						</tr>							
 					</table>
@@ -600,7 +807,14 @@ s                                                {% endif %}
 										{% endif %}
 									{% endfor %}
 								</select>
-								<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" onClick="window.open(this.href,'MOE','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur'
+                                                                                                ] 
+                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" onClick="window.open(this.href,'MOE','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                {% endif %}
 							</td>
 						</tr>					
 						<tr>
@@ -613,17 +827,46 @@ s                                                {% endif %}
 										{% endif %}
 									{% endfor %}
 								</select>
-								<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moa'}) }}" onClick="window.open(this.href,'MOA','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
-							</td>
+                                                                {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur'
+                                                                                                ] 
+                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}             
+                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moa'}) }}" onClick="window.open(this.href,'MOA','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
+							        {% endif %}
+                                                        </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.gestion.listePostesInstalles) }} </td>
-							<td id="text"> {{ form_widget(form.gestion.listePostesInstalles) }} </td> </tr> <tr>
-							<td id="error"> {{ form_errors(form.gestion.listePostesInstalles) }} </td>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                    'Technicien support'
+                                                                                                ] 
+                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td id="text"> {{ form_widget(form.gestion.listePostesInstalles) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.gestion.listePostesInstalles, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> 
+                                                <tr>
+                                                    <td id="error"> {{ form_errors(form.gestion.listePostesInstalles) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.gestion.postesPilotesWSUS) }} </td>
-							<td id="text"> {{ form_widget(form.gestion.postesPilotesWSUS) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                <td id="text"> {{ form_widget(form.gestion.postesPilotesWSUS) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.gestion.postesPilotesWSUS, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.gestion.postesPilotesWSUS) }} </td>
 						</tr>					
 					</table>	
@@ -639,28 +882,80 @@ s                                                {% endif %}
 					<table>					
 						<tr> 
 							<td id="label"> {{ form_label(form.installation.comptabilisationLicense) }} </td>
-							<td> {{ form_widget(form.installation.comptabilisationLicense) }} </td> </tr> <tr> 
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.installation.comptabilisationLicense) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.installation.comptabilisationLicense, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr> 
 							<td id="error"> {{ form_errors(form.installation.comptabilisationLicense) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.installation.nombreLicenses) }} </td>
-							<td id="text"> {{ form_widget(form.installation.nombreLicenses) }} </td> </tr> <tr> 
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                <td id="text"> {{ form_widget(form.installation.nombreLicenses) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.installation.nombreLicenses, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr> 
 							<td id="error"> {{ form_errors(form.installation.nombreLicenses) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.installation.modaliteAcquisition) }} </td>
-							<td id="text"> {{ form_widget(form.installation.modaliteAcquisition) }} </td> </tr> <tr> 
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}                               
+                                                            <td id="text"> {{ form_widget(form.installation.modaliteAcquisition) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.installation.modaliteAcquisition, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif%}
+                                                </tr> <tr> 
 							<td id="error"> {{ form_errors(form.installation.modaliteAcquisition) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.installation.modeInstallationSouhaitee) }} </td>
-							<td id="text"> {{ form_widget(form.installation.modeInstallationSouhaitee) }} </td> </tr> <tr> 
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}                                                      
+                                                            <td id="text"> {{ form_widget(form.installation.modeInstallationSouhaitee) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.installation.modeInstallationSouhaitee, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                
+                                                </tr> <tr> 
 							<td id="error"> {{ form_errors(form.installation.modeInstallationSouhaitee) }} </td>
 						</tr>
 						
 						<tr>
 							<td id="label"> {{ form_label(form.installation.installationADistance) }} </td>
-							<td> {{ form_widget(form.installation.installationADistance) }} </td> </tr> <tr> 
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}                  
+                                                            <td> {{ form_widget(form.installation.installationADistance) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.installation.installationADistance, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr> 
 							<td id="error"> {{ form_errors(form.installation.installationADistance) }} </td>
 						</tr>						
 					</table>
@@ -679,27 +974,75 @@ s                                                {% endif %}
 					
 						<tr> 
 							<td id="label"> {{ form_label(form.developpement.developpementSpecifique) }} </td>
-							<td> {{ form_widget(form.developpement.developpementSpecifique) }} </td> </tr> <tr>
-							<td id="error"> {{ form_errors(form.developpement.developpementSpecifique) }} </td>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}              
+                                                            <td> {{ form_widget(form.developpement.developpementSpecifique) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.developpement.developpementSpecifique, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>							
+                                                            <td id="error"> {{ form_errors(form.developpement.developpementSpecifique) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.developpement.appliAvecTMA) }} </td>
-							<td> {{ form_widget(form.developpement.appliAvecTMA) }} </td> </tr> <tr>
-							<td id="error"> {{ form_errors(form.developpement.appliAvecTMA) }} </td>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                <td> {{ form_widget(form.developpement.appliAvecTMA) }} </td>
+                                                        {% else %}
+                                                                <td> {{ form_widget(form.developpement.appliAvecTMA, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                                </tr> <tr>
+                                                            <td id="error"> {{ form_errors(form.developpement.appliAvecTMA) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.developpement.outilDeveloppement) }} </td>
-							<td id="text"> {{ form_widget(form.developpement.outilDeveloppement) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                     
+                                                                <td id="text"> {{ form_widget(form.developpement.outilDeveloppement) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.developpement.outilDeveloppement, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.developpement.outilDeveloppement) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.developpement.loginCompteTest) }} </td>
-							<td id="text"> {{ form_widget(form.developpement.loginCompteTest) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                     
+                                                            <td id="text"> {{ form_widget(form.developpement.loginCompteTest) }} </td> 
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.developpement.loginCompteTest, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(form.developpement.loginCompteTest) }} </td>
 						</tr>
 						<tr> 
 							<td id="label"> {{ form_label(form.developpement.passwordCompteTest) }} </td>
-							<td id="text"> {{ form_widget(form.developpement.passwordCompteTest) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td id="text"> {{ form_widget(form.developpement.passwordCompteTest) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.developpement.passwordCompteTest, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.developpement.passwordCompteTest) }} </td>
 						</tr>
 					
@@ -717,37 +1060,95 @@ s                                                {% endif %}
 					<table>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.referenceApplication) }} </td>
-							<td id="text"> {{ form_widget(form.refCatalogue.referenceApplication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                                <td id="text"> {{ form_widget(form.refCatalogue.referenceApplication) }} </td>
+                                                            {% else %}
+                                                                <td id="text"> {{ form_widget(form.refCatalogue.referenceApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            {% endif %}
+                                                
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.referenceApplication) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.usageApplication) }} </td>
-							<td id="text"> {{ form_widget(form.refCatalogue.usageApplication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.usageApplication) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.usageApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.usageApplication) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
-							<td> {{ form_widget(form.refCatalogue.dateMiseEnLigneApplication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}                               
+                                                            <td> {{ form_widget(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.refCatalogue.dateMiseEnLigneApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.dateFinDeVieApplication) }} </td>
-							<td> {{ form_widget(form.refCatalogue.dateFinDeVieApplication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td> {{ form_widget(form.refCatalogue.dateFinDeVieApplication) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.refCatalogue.dateFinDeVieApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.dateFinDeVieApplication) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.typeCatalogue) }} </td>
-							<td id="text"> {{ form_widget(form.refCatalogue.typeCatalogue) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.typeCatalogue) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.typeCatalogue, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.typeCatalogue) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.versionPayee) }} </td>
-							<td id="text"> {{ form_widget(form.refCatalogue.versionPayee) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.versionPayee) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.versionPayee, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.versionPayee) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(form.refCatalogue.cout) }} </td>
-							<td id="text"> {{ form_widget(form.refCatalogue.cout) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                            or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.cout) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(form.refCatalogue.cout, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.refCatalogue.cout) }} </td>
 						</tr>
 						<tr>
@@ -756,7 +1157,14 @@ s                                                {% endif %}
 								{% if application.refCatalogue.docInfoComplementaire.url is defined %}
 									{{ application.refCatalogue.docInfoComplementaire.url }} 
 								{% endif %}
-								{{ form_widget(form.refCatalogue.docInfoComplementaire.fichier) }} 
+                                                                {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification'
+                                                                                                ] 
+                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                    {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier) }}
+                                                               {% else %}
+                                                                   {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }}
+                                                               {% endif %}
 							</td> 
 						</tr> 
 						<tr> 
@@ -781,12 +1189,28 @@ s                                                {% endif %}
 						{% for package in form.packages %}
 						<tr>
 							<td id="label"> {{ form_label(package.nom) }} </td>
-							<td id="text"> {{ form_widget(package.nom) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.nom) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.nom, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.nom) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.nomPublication) }} </td>
-							<td id="text"> {{ form_widget(package.nomPublication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.nomPublication) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.nomPublication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.nomPublication) }} </td>
 						</tr>
 						{#<tr>
@@ -801,203 +1225,427 @@ s                                                {% endif %}
 						</tr>#}
 						<tr>
 							<td id="label"> {{ form_label(package.type) }} </td>
-							<td id="text"> {{ form_widget(package.type) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.type) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.type, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.type) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.taille) }} </td>
-							<td id="text"> {{ form_widget(package.taille) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.taille) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.taille, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.taille) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.chemin) }} </td>
-							<td id="text"> {{ form_widget(package.chemin) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.chemin) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.chemin, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.chemin) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.paliersTechniques) }} </td>
-							<td id="text"> {{ form_widget(package.paliersTechniques) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.paliersTechniques) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.paliersTechniques, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.paliersTechniques) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.espaceDisqueInstalle) }} </td>
-							<td id="text"> {{ form_widget(package.espaceDisqueInstalle) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.espaceDisqueInstalle) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.espaceDisqueInstalle, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.espaceDisqueInstalle) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.portsOuvertsLocaux) }} </td>
-							<td id="text"> {{ form_widget(package.installation.portsOuvertsLocaux) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ])%}
+                                                            <td id="text"> {{ form_widget(package.installation.portsOuvertsLocaux) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.portsOuvertsLocaux, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.portsOuvertsLocaux) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.portsOuvertsDistants) }} </td>
-							<td id="text"> {{ form_widget(package.installation.portsOuvertsDistants) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.installation.portsOuvertsDistants) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.portsOuvertsDistants, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.portsOuvertsDistants) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.versionOutilPackaging) }} </td>
-							<td id="text"> {{ form_widget(package.versionOutilPackaging) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.versionOutilPackaging) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.versionOutilPackaging, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.versionOutilPackaging) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.versionTemplate) }} </td>
-							<td id="text"> {{ form_widget(package.versionTemplate) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.versionTemplate) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.versionTemplate, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.versionTemplate) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.productCode) }} </td>
-							<td id="text"> {{ form_widget(package.productCode) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.productCode) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.productCode, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.productCode) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.ligneCommandePublication) }} </td>
-							<td id="text"> {{ form_widget(package.ligneCommandePublication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Qualificateur',
+                                                                                                        'Intégrateur'
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.ligneCommandePublication) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.ligneCommandePublication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.ligneCommandePublication) }} </td>
 						</tr>
 						<tr>							
 							<td id="label"> {{ form_label(package.ligneCommandeTeledistribution) }} </td>
-							<td id="text"> {{ form_widget(package.ligneCommandeTeledistribution) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur'
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.ligneCommandeTeledistribution) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.ligneCommandeTeledistribution, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.ligneCommandeTeledistribution) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.packageVirtualise) }} </td>
-							<td> {{ form_widget(package.installation.packageVirtualise) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.installation.packageVirtualise) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.installation.packageVirtualise, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.packageVirtualise) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.versionAppVXP) }} </td>
-							<td id="text"> {{ form_widget(package.installation.versionAppVXP) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.installation.versionAppVXP) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.versionAppVXP, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.versionAppVXP) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.versionAppVW7) }} </td>
-							<td id="text"> {{ form_widget(package.installation.versionAppVW7) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.installation.versionAppVW7) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.versionAppVW7, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.versionAppVW7) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.connectionGroup) }} </td>
-							<td> {{ form_widget(package.installation.connectionGroup) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.installation.connectionGroup) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.installation.connectionGroup, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.connectionGroup) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.activeSetup) }} </td>
-							<td> {{ form_widget(package.activeSetup) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.activeSetup) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.activeSetup, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.activeSetup) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.redemarrageRequis) }} </td>
-							<td> {{ form_widget(package.redemarrageRequis) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Qualificateur',
+                                                                                                        'Intégrateur'
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.redemarrageRequis) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.redemarrageRequis, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.redemarrageRequis) }} </td>
 						</tr>												
 						<tr>
 							<td id="label"> {{ form_label(package.redemarrageOutilDeveloppement) }} </td>
-							<td> {{ form_widget(package.redemarrageOutilDeveloppement) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Qualificateur',
+                                                                                                        'Intégrateur'
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.redemarrageOutilDeveloppement) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.redemarrageOutilDeveloppement, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.redemarrageOutilDeveloppement) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.tNSNAMES) }} </td>
-							<td> {{ form_widget(package.tNSNAMES) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.tNSNAMES) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.tNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.tNSNAMES) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.nomEntreeTNSNAMES) }} </td>
-							<td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td> </tr> <tr>
-							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES) }} </td>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
+							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.dossierTechnique) }} </td>
-							<td id="text"> {{ form_widget(package.dossierTechnique) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.dossierTechnique) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.dossierTechnique, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.dossierTechnique) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> Mode opératoire </td>
-							{#<td id="read_only"> {{ form_widget(package.modeOperatoire.libelle) }} </td>#}
-							{% if pck.modeOperatoire is not null %}
-								<td id="text"> 
-									<a href="{{path('modifierModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Modifier le mode opératoire','scrollbars=yes, width=900'); return false;"> Modifier le mode opératoire </a> <br/>
-									{#<a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" target="_blank"> Visualiser le mode opératoire </a> <br/>#}
-									<a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Visualiser le mode opératoire','scrollbars=yes, width=900'); return false;"> Visualiser le mode opératoire </a>								
-								</td>
-							{% else %}
-								<td id="text"> <a href="{{path('genererModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','scrollbars=yes, width=900'); return false;"> Générer un mode opératoire </a> </td>
-							{% endif %}
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Qualificateur',
+                                                                                                        'Intégrateur'
+                                                                                                ]) %}
+                                                            {#<td id="read_only"> {{ form_widget(package.modeOperatoire.libelle) }} </td>#}
+                                                            {% if pck.modeOperatoire is not null %}
+                                                                    <td id="text"> 
+                                                                            <a href="{{path('modifierModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Modifier le mode opératoire','scrollbars=yes, width=900'); return false;"> Modifier le mode opératoire </a> <br/>
+                                                                            {#<a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" target="_blank"> Visualiser le mode opératoire </a> <br/>#}
+                                                                            <a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Visualiser le mode opératoire','scrollbars=yes, width=900'); return false;"> Visualiser le mode opératoire </a>								
+                                                                    </td>
+                                                            {% else %}
+                                                                    <td id="text"> <a href="{{path('genererModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','scrollbars=yes, width=900'); return false;"> Générer un mode opératoire </a> </td>
+                                                            {% endif %}
+                                                        {% endif %}
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.commentaire) }} </td>
-							<td id="text"> {{ form_widget(package.commentaire) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.commentaire) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.commentaire, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.commentaire) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.repertoireInstallationApplication) }} </td>
-							<td id="text"> {{ form_widget(package.installation.repertoireInstallationApplication) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.installation.repertoireInstallationApplication) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.repertoireInstallationApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.repertoireInstallationApplication) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.installation.repertoireInstallationDonnees) }} </td>
-							<td id="text"> {{ form_widget(package.installation.repertoireInstallationDonnees) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td id="text"> {{ form_widget(package.installation.repertoireInstallationDonnees) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.installation.repertoireInstallationDonnees, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.installation.repertoireInstallationDonnees) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.creationCustomActions) }} </td>
-							<td> {{ form_widget(package.creationCustomActions) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                ]) %}
+                                                            <td> {{ form_widget(package.creationCustomActions) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.creationCustomActions, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.creationCustomActions) }} </td>
 						</tr>
 
 					{% endfor %}
 					</table>
 				</li>
+                                {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                    'Chef de produit'
+                                                                                                ]) %}
+                                    <li> {#%################################################### SCRIPTS #######################################################%#}
+                                            <a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                            <a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                            <h2> Scripts </h2>
 
-				<li> {#%################################################### SCRIPTS #######################################################%#}
-					<a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Scripts </h2>
+                                            <div class="content" id="scripts">
+                                            <div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','menubar=no,height=500,width=760,resizable=yes'); return false;"> > Ajouter un script </a> </div>
 
-					<div class="content" id="scripts">
-					<div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','menubar=no,height=500,width=760,resizable=yes'); return false;"> > Ajouter un script </a> </div>
-						
-						{% for package in application.packages %}
-							{% if package.scripts is not empty %}
-							
-							<h3> Liste des scripts </h3>
-							
-							<table id="scripts_liste">
-								<tr>
-									<th> Nom </th>
-									<th> Fonction </th>
-									<th> Type </th>
-									<th> Technologie </th>
-									<th> OS </th>
-									<th> Condition d'exécution </th>
-									<th> Condition de lancement </th>
-									<th> Actions </th>
-								</tr>
-							
-							{% for script in package.scripts %}
+                                                    {% for package in application.packages %}
+                                                            {% if package.scripts is not empty %}
 
-								<tr>
-									<td> {{ script.nom }} </td>
-									<td> {{ script.fonction }} </td>
-									<td> {{ script.type }} </td>
-									<td> {{ script.techno }} </td>
-									<td> {{ script.oscible }} </td>
-									<td> {{ script.conditionExecution }} </td>
-									<td> {{ script.conditionLancement }} </td>
-									<td>
-										<a href="{{path('modifierScript', {'scriptId' : script.id }) }}" onClick="window.open(this.href,'','height=500,width=760,resizable=yes'); return false;"> Modifier</a>&nbsp;
-										<a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce script ?')"> Supprimer </a>
-									</td>
-								</tr>
-							
-							{% endfor %}
-							
-							</table>
-						
-						{% endif %}
-					{% endfor %}
-						
-					</div>
+                                                            <h3> Liste des scripts </h3>
 
-				</li>
+                                                            <table id="scripts_liste">
+                                                                    <tr>
+                                                                            <th> Nom </th>
+                                                                            <th> Fonction </th>
+                                                                            <th> Type </th>
+                                                                            <th> Technologie </th>
+                                                                            <th> OS </th>
+                                                                            <th> Condition d'exécution </th>
+                                                                            <th> Condition de lancement </th>
+                                                                            <th> Actions </th>
+                                                                    </tr>
+
+                                                            {% for script in package.scripts %}
+
+                                                                    <tr>
+                                                                            <td> {{ script.nom }} </td>
+                                                                            <td> {{ script.fonction }} </td>
+                                                                            <td> {{ script.type }} </td>
+                                                                            <td> {{ script.techno }} </td>
+                                                                            <td> {{ script.oscible }} </td>
+                                                                            <td> {{ script.conditionExecution }} </td>
+                                                                            <td> {{ script.conditionLancement }} </td>
+                                                                            {% if app.session.get('role') in ['Administrateur','Responsable qualification','Qualificateur'] %}
+                                                                                <td>
+                                                                                        <a href="{{path('modifierScript', {'scriptId' : script.id }) }}" onClick="window.open(this.href,'','height=500,width=760,resizable=yes'); return false;"> Modifier</a>&nbsp;
+                                                                                        <a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce script ?')"> Supprimer </a>
+                                                                                </td>
+                                                                            {% endif %}
+                                                                    </tr>
+                                                            {% endfor %}
+
+                                                            </table>
+
+                                                    {% endif %}
+                                            {% endfor %}
+
+                                            </div>
+
+                                    </li>
+                               {% endif %}
 			</ul>
 			
 			
@@ -1013,80 +1661,154 @@ s                                                {% endif %}
 					<table>
 					{% for package in form.packages %}
 						<tr>
-							<td id="label"> {{ form_label(package.qualification.type) }} </td>
-							<td id="text"> {{ form_widget(package.qualification.type) }} </td> </tr> <tr>
+                                                    <td id="label"> {{ form_label(package.qualification.type) }} </td>
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                        <td id="text"> {{ form_widget(package.qualification.type) }} </td>
+                                                    {% else %}
+                                                        <td id="text"> {{ form_widget(package.qualification.type, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                    {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.type) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(package.qualification.numeroLot) }} </td>
-							<td id="text"> {{ form_widget(package.qualification.numeroLot) }} </td> </tr> <tr>
+                                                    <td id="label"> {{ form_label(package.qualification.numeroLot) }} </td>
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                        <td id="text"> {{ form_widget(package.qualification.numeroLot) }} </td>
+                                                    {% else %}
+                                                        <td id="text"> {{ form_widget(package.qualification.numeroLot, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                    {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.numeroLot) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(package.qualification.dateDemarragePackaging) }} </td>
-							<td> {{ form_widget(package.qualification.dateDemarragePackaging) }} </td> </tr> <tr>
+                                                    <td id="label"> {{ form_label(package.qualification.dateDemarragePackaging) }} </td>
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                        <td> {{ form_widget(package.qualification.dateDemarragePackaging) }} </td>
+                                                    {% else %}
+                                                        <td> {{ form_widget(package.qualification.dateDemarragePackaging, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                    {% endif %}
+                                               </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.dateDemarragePackaging) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(package.qualification.dateRecetteStandardisation) }} </td>
-							<td> {{ form_widget(package.qualification.dateRecetteStandardisation) }} </td> </tr> <tr>
-							<td id="error"> {{ form_errors(package.qualification.dateRecetteStandardisation) }} </td>
+                                                    <td id="label"> {{ form_label(package.qualification.dateRecetteStandardisation) }} </td>
+                                                    {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                        <td> {{ form_widget(package.qualification.dateRecetteStandardisation) }} </td>
+                                                    {% else %}
+                                                         <td> {{ form_widget(package.qualification.dateRecetteStandardisation, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                    {% endif %}
+                                                    </tr> <tr>
+                                                    <td id="error"> {{ form_errors(package.qualification.dateRecetteStandardisation) }} </td>
 						</tr>	
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.dateRecetteConformite) }} </td>
-							<td> {{ form_widget(package.qualification.dateRecetteConformite) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.dateRecetteConformite) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.dateRecetteConformite, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.dateRecetteConformite) }} </td>
 						</tr>						
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.dateMiseEnServiceSouhaitee) }} </td>
-							<td> {{ form_widget(package.qualification.dateMiseEnServiceSouhaitee) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+							<td> {{ form_widget(package.qualification.dateMiseEnServiceSouhaitee) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.dateMiseEnServiceSouhaitee, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.dateMiseEnServiceSouhaitee) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.dateProductionQualification) }} </td>
-							<td> {{ form_widget(package.qualification.dateProductionQualification) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.dateProductionQualification) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.dateProductionQualification, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif%}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.dateProductionQualification) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.pVPrequalification) }} </td>
-							<td> {{ form_widget(package.qualification.pVPrequalification) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.pVPrequalification) }} </td> 
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.pVPrequalification, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.pVPrequalification) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.agentPreQualif) }} </td>
-							<td id="text"> 
-								{{ form_widget(package.qualification.agentPreQualif) }} 
-								<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
-							</td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td id="text"> 
+                                                                    {{ form_widget(package.qualification.agentPreQualif) }} 
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                            </td> 
+                                                        {% else %}
+                                                            <td id="text"> 
+                                                                    {{ form_widget(package.qualification.agentPreQualif, { 'attr':{'disabled':'disabled'} }) }} 
+                                                            </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.agentPreQualif) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.datePVQualification) }} </td>
-							<td> {{ form_widget(package.qualification.datePVQualification) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.datePVQualification) }} </td> 
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.datePVQualification, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.datePVQualification) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.pVQualification) }} </td>
-							<td> {{ form_widget(package.qualification.pVQualification) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.pVQualification) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.pVQualification, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.pVQualification) }} </td>
 						</tr>
 
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.agentQualif) }} </td>
-							<td id="text"> 
-								{{ form_widget(package.qualification.agentQualif) }} 
-								<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
-							</td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td id="text"> 
+                                                                    {{ form_widget(package.qualification.agentQualif) }} 
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                            </td>
+                                                        {% else %}
+                                                            <td id="text"> 
+                                                                    {{ form_widget(package.qualification.agentQualif, { 'attr':{'disabled':'disabled'} }) }} 
+                                                            </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.agentQualif) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.sousCompte) }} </td>
-							<td id="text"> {{ form_widget(package.qualification.sousCompte) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td id="text"> {{ form_widget(package.qualification.sousCompte) }} </td>
+                                                        {% else %}
+                                                            <td id="text"> {{ form_widget(package.qualification.sousCompte, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.sousCompte) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.qualification.commentaire) }} </td>
-							<td> {{ form_widget(package.qualification.commentaire) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
+                                                            <td> {{ form_widget(package.qualification.commentaire) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(package.qualification.commentaire, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                        </tr> <tr>
 							<td id="error"> {{ form_errors(package.qualification.commentaire) }} </td>
 						</tr>
 						{% endfor %}
