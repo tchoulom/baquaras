@@ -44,11 +44,17 @@ class Builder extends ContainerAware
                 /*->addChild('Liste des utilisateurs', array(
                     'route' => 'listeruser'
                     ))->getParent()*/
-                ->addChild('Droits d\'accès au workflow', array(
-                        'route' => 'droitsWorkflow'
+                ->addChild('Gestion d\'accès aux pages', array(
+                        'route' => 'droitsAccess',
+                        'routeParameters' => array('type' => 1)
                         ))->getParent()
-                ->addChild('Droits d\'accès aux pages', array(
-                        'route' => 'droitsPage'
+                ->addChild('Gestion  d\'accès des ongles', array(
+                        'route' => 'droitsAccess',
+                        'routeParameters' => array('type' => 2)
+                        ))->getParent()
+                ->addChild('Gestion d\'accès aux items', array(
+                        'route' => 'droitsAccess',
+                        'routeParameters' => array('type' => 3)
                         ))->getParent()
                 /*->addChild('Gestion des applications', array(
                     'route' => 'listerApplicationsAdmin'

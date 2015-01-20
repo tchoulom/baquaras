@@ -28,8 +28,11 @@ class AppKernel extends Kernel
             new Sonata\BlockBundle\SonataBlockBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new JMS\AopBundle\JMSAopBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Baquaras\TestBundle\BaquarasTestBundle(),
             new Baquaras\AppliBundle\BaquarasAppliBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'prod', 'test'))) {

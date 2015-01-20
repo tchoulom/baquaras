@@ -23,7 +23,7 @@
 				{% endfor %}
 			</div>
 	
-			<form action="{{ path('droitsPage') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" id="gestiondroits">
+			<form action="{{ path('droitsAccess', {type:type}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" id="gestiondroits">
 		
 			{{ form_start(form) }}
 			

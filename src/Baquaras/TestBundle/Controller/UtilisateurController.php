@@ -7,6 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Baquaras\TestBundle\Entity\Utilisateur;
 use Baquaras\TestBundle\Form\UtilisateurType;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use	Pagerfanta\Exception\NotValidCurrentPageException;
+use Exporter\Writer\CsvWriter ;
+use Exporter\Handler;
+use Exporter\Source\DoctrineORMQuerySourceIterator;//   \Writer\Exporter\CsvWriter;
+use Exporter\Source\PDOStatementSourceIterator;
 
 class UtilisateurController extends Controller
 {
@@ -130,12 +138,22 @@ class UtilisateurController extends Controller
 		//return $this->render('BaquarasTestBundle:Default:listerUsers.html.twig', array('utilisateurs' => $utilisateurs));
 	}
 	
-	public function listerUsersAction() 
+	public function listerUsersAction(Request $request)
 	{
-		$repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur');
-		$utilisateurs = $repository->findAll();
+		$em = $this->getDoctrine()->getManager();
+		set_time_limit(0);
+		ini_set("memory_limit", -1);
+		$page = $request->get('page')?$request->get('page'):1;
+		$query = $em->createQuery('select u from BaquarasTestBundle:Utilisateur u');
+		$adapter = new DoctrineORMAdapter($query);
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(50);
+		$pagerfanta->setCurrentPage($page);
+		$entities = $pagerfanta->getCurrentPageResults();
+
+
 		
-		return $this->render('BaquarasTestBundle:Default:listerUsers.html.twig', array('utilisateurs' => $utilisateurs));
+		return $this->render('BaquarasTestBundle:Default:listerUsers.html.twig', array('utilisateurs' => $entities,'pager' => $pagerfanta,));
 	}
 
 }

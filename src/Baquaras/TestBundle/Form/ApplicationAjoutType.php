@@ -2,6 +2,7 @@
 
 namespace Baquaras\TestBundle\Form;
 
+use Baquaras\TestBundle\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -34,6 +35,17 @@ class ApplicationAjoutType extends AbstractType
 					},
 				'label'=>'Type de l\'application *',
 				'empty_value' => 'Sélectionner un type d\'application'))
+			->add('utilisateur', 'entity', array(
+				'class' => 'BaquarasTestBundle:Utilisateur',
+				'property' =>'getCompleteName',
+				'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) {
+					return $er->createQueryBuilder('u')
+						->where('u.profil1 = :profil')
+						->setParameter('profil', 3);
+				},
+				'label'=>'Chef de produit',
+				'multiple' => true,
+				'empty_value' => 'Sélectionner un ou plusieurs chefs de produit'))
 			->add('appliReferenceeSIERA', 'checkbox', array(
 				'label'=>'Référencée dans SIERA'))
 			->add('nomApplicationSIERA', 'text', array(
