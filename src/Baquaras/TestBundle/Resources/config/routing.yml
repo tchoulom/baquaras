@@ -83,8 +83,10 @@ ajouterGroupeAD:
     defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeAD}
 
 listerUsers:
-    path: /utilisateurs
-    defaults: {_controller:BaquarasTestBundle:Utilisateur:listerUsers}
+    path: /utilisateurs/{sort}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:listerUsers, sort:null }
+    options:
+        expose: true
 
 #----------------
 # APPLICATIONS

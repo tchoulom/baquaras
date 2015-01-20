@@ -9,12 +9,8 @@ use Baquaras\TestBundle\Entity\Utilisateur;
 use Baquaras\TestBundle\Form\UtilisateurType;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
-use	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use	Pagerfanta\Exception\NotValidCurrentPageException;
-use Exporter\Writer\CsvWriter ;
-use Exporter\Handler;
-use Exporter\Source\DoctrineORMQuerySourceIterator;//   \Writer\Exporter\CsvWriter;
-use Exporter\Source\PDOStatementSourceIterator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 
 class UtilisateurController extends Controller
 {
@@ -63,7 +59,7 @@ class UtilisateurController extends Controller
 	public function ajouterUserAction($cpteMatriculaire) 
 	/* Affiche le formulaire pour ajouter un utilisateur */
 	{		
-		$xml = simplexml_load_file("/appli/u07/comp/html/Symfony/src/Baquaras/TestBundle/Entity/personnes_Full.xml");
+	/*	$xml = simplexml_load_file("/appli/u07/comp/html/Symfony/src/Baquaras/TestBundle/Entity/personnes_Full.xml");
 		$utilisateur = new Utilisateur();		
 		
 		foreach($xml->Personnes[0]->children() as $personne) {
@@ -82,29 +78,32 @@ class UtilisateurController extends Controller
 				$utilisateur->setTelephone($telephone);
 				$utilisateur->setMail($mail);
 			}
-		}
-		$form = $this->createForm(new UtilisateurType, $utilisateur);
-		
-		$request = $this->get('request');	
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($utilisateur);
-				$em->flush();
-				$this->get('session')->getFlashBag()->add('notice', 'Utilisateur ajouté');
+		}*/
+            $utilisateur = new Utilisateur();
+            $form = $this->createForm(new UtilisateurType, $utilisateur);
 
-				return $this->redirect($this->generateUrl('listerUsers'));
-			}
-		}
-		return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
+            $request = $this->get('request');	
+            if ($request->getMethod() == 'POST') {
+                    $form->bind($request);
+                    if ($form->isValid()) {
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($utilisateur);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('notice', 'Utilisateur ajouté');
+
+                            return $this->redirect($this->generateUrl('listerUsers'));
+                    }
+            }
+            return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
 	}
 	
 	public function modifierUserAction($userId) 
 	{
 		$user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($userId);
-		$cpteMatriculaire = $user->getCpteMatriculaire();
 
+                if(!$user) {
+                    throw new \Exception(' cet utilisateur n\'existe pas');
+                }
 		$em = $this->getDoctrine()->getManager();
 		$form = $this->createForm(new UtilisateurType(), $user);
 
@@ -120,7 +119,7 @@ class UtilisateurController extends Controller
 			return $this->redirect($this->generateUrl('listerUsers'));
 		}
 
-		return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
+		return $this->render('BaquarasTestBundle:Default:edituser.html.twig', array('form' => $form->createView(), 'user' => $user));
 	}
 	
 	public function supprimerUserAction($userId) 
@@ -138,19 +137,25 @@ class UtilisateurController extends Controller
 		//return $this->render('BaquarasTestBundle:Default:listerUsers.html.twig', array('utilisateurs' => $utilisateurs));
 	}
 	
-	public function listerUsersAction(Request $request)
+	public function listerUsersAction( Request $request, $sort=null)
 	{
 		$em = $this->getDoctrine()->getManager();
 		set_time_limit(0);
 		ini_set("memory_limit", -1);
 		$page = $request->get('page')?$request->get('page'):1;
-		$query = $em->createQuery('select u from BaquarasTestBundle:Utilisateur u');
+                if(!$sort) {
+                    $query = $em->createQuery('select u from BaquarasTestBundle:Utilisateur u');
+                } else {
+                    $query = $em->createQuery('select u from BaquarasTestBundle:Utilisateur u where u.profil1 = 8');
+                }
 		$adapter = new DoctrineORMAdapter($query);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setMaxPerPage(50);
 		$pagerfanta->setCurrentPage($page);
 		$entities = $pagerfanta->getCurrentPageResults();
-
+                if ($this->container->get('request')->isXmlHttpRequest()) {
+                    return array('utilisateurs' => $entities,'pager' => $pagerfanta);
+                }
 
 		
 		return $this->render('BaquarasTestBundle:Default:listerUsers.html.twig', array('utilisateurs' => $entities,'pager' => $pagerfanta,));

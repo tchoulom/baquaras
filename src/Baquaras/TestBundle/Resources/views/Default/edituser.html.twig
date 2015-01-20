@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title> Ajout d'un nouvel utilisateur </title>
+        <title> Modifier un utilisateur </title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
             <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
@@ -18,10 +18,9 @@
         {% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
 
         <div id="page">
-
             <h1> Ajout d'un nouvel utilisateur </h1>
 
-            <form action="{{ path('ajouterUser', {'cpteMatriculaire' : cpteMatriculaire}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
+            <form action="{{ path('modifierUser', {'userId' : user.id}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
 
                 {{ form_start(form) }}
 

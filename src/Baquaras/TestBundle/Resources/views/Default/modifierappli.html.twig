@@ -980,6 +980,8 @@
                                                                                                 ] 
                                                             or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}              
                                                             <td> {{ form_widget(form.developpement.developpementSpecifique) }} </td>
+                                                        {% elseif app.session and app.session.get('role') %}
+                                                            <td> {{ form_widget(form.developpement.developpementSpecifique, { 'attr':{'disabled':'disabled'} }) }}
                                                         {% else %}
                                                             <td> {{ form_widget(form.developpement.developpementSpecifique, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
