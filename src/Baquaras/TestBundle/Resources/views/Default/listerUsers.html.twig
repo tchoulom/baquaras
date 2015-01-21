@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
     <head>
         <title> Liste des utilisateurs </title>
         {% include 'BaquarasTestBundle:Default:css.html.twig' %}
@@ -15,14 +14,17 @@
             <h1> Liste des utilisateurs </h1>
                <div class="sortlist">
                     <ul id="usersfilter">
-                        <li><a  href="#" data-filter="admin" >Administrateur</a></li>
-                        <li><a href="#" data-filter="Chef de produit" title="Chef de produit">Chef Produit</a></li>
-                        <li><a  href="#" title="" data-filter="Qualificateur">Qualificateur</a></li>
+                        <li><a id="8" href="#" data-filter="admin" >Administrateur</a></li>
+                        <li><a id="7" href="#" data-filter="admin" >Responsable qualification</a></li>
+                        <li><a id="5" href="#" data-filter="Chef de produit" title="Chef de produit">Chef Produit</a></li>
+                        <li><a id="6" href="#" title="" data-filter="Qualificateur">Qualificateur</a></li>
+                        <li><a id="4" href="#" data-filter="admin" >Intégrateur</a></li>
+                        <li><a id="3" href="#" data-filter="Chef de produit" title="Chef de produit">Technicien support</a></li>
+                        <li><a id="2" href="#" title="" data-filter="Qualificateur">Lecteur avancé</a></li>
+                        <li><a id="1" href="#" title="" data-filter="Qualificateur">Utilisateur non connecté</a></li>
                     </ul>
                 </div>
             <div id="listerUsers">
-                
-				
                 {### Zone d'affichage des messages/annotations ###}
                 <div id="flashbag"> 
                     {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -30,65 +32,25 @@
                         <div id="texte"> {{ flashMessage }} </div> <br/>
                     {% endfor %}
                 </div>
-
-                <table id="liste">
-                    <tr id="tr1">
-                        <td> Prénom </td>
-                        <td> Nom </td>
-                        <td> Compte matriculaire </td>
-                        <td> Téléphone </td>
-                        <td> Mail </td>
-                        <td> Profil(s) </td>
-                        <td> Actions </td>
-                    </tr>
-
-                    {% for utilisateur in utilisateurs %}
-                        <tr id="trimpair">
-                            <td> {{ utilisateur.prenom }} </td>
-                            <td> {{ utilisateur.nom }} </td>
-                            <td> {{ utilisateur.cpteMatriculaire }} </td>
-                            <td> {{ utilisateur.telephone }} </td>
-                            <td> {{ utilisateur.mail }} </td>
-                            <td> {{ utilisateur.profil1 }} {% if utilisateur.profil2 is not null %}, {{ utilisateur.profil2 }} {% endif %} </td>
-                            <td> 
-                                <a href="{{path('modifierUser', {'userId': utilisateur.id }) }}"> Modifier cet utilisateur </a> <br/>
-                                <a href="{{path('supprimerUser', {'userId': utilisateur.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pré-requis ?')"> Supprimer cet utilisateur </a>
-                            </td>
-                        </tr>	
-                    {% endfor %}
-
-                </table>
-                {% if pager.haveToPaginate %}
-
-                    <div class="pagination pagination-centered">
-                        <ul>
-                            <li>
-                                {{ pagerfanta(pager, 'default_translated') }}
-                            </li>
-
-
-                        </ul>
-                    </div>
-                {% endif %}
-                {### Pagination numérique ###}
-                {#<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>#}
+                <div id="tableauUsers">
+                    {% include 'BaquarasTestBundle:Default:listuser.html.twig' with {'utilisateurs': utilisateurs, 'pager': pager} %}
+                </div>
 
             </div>
         </div>
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     <script type="text/javascript">
         $( "#usersfilter a" ).on( "click", function( event ) {
-        /*    $.ajax({
+            var elem = $(this);
+            $.ajax({
                 type: "POST",
-                url: "{{path('listerUsers', {sort: 8}) }}",
+                url: Routing.generate('listerUsers', {sort: elem.attr('id')}),
                 dataType: "html",
                 success: function(data){
-                 $('#listerUsers').html(data);
-        },
-        error: function() {
-            alert('non');
-        }*/
-        
-    });
+                    $('#tableauUsers').html(data);
+                }
+            });
         });
     </script>
     </body>

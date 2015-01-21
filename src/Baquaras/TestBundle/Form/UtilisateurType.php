@@ -41,8 +41,6 @@ class UtilisateurType extends AbstractType
                 'property' => 'libelle',
                 'empty_value' => 'Sélectionner un profil additionnel',
                 'expanded' => false))
-            ->add('cancel', 'button', array(
-                'label' => 'Annuler'))
             ->add('save', 'submit', array(
                 'label' => 'Enregistrer'))
         ;
