@@ -252,7 +252,17 @@
 						</tr>#}
 						<tr>
 							<td id="label"> {{ form_label(form.inscriteRevuePerformance) }} </td>
-							<td> {{ form_widget(form.inscriteRevuePerformance) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.inscriteRevuePerformance) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.inscriteRevuePerformance, {'attr':{ 'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.inscriteRevuePerformance) }} </td>
 						</tr>
 						<tr>
@@ -1497,10 +1507,10 @@
                                                                                                 ]) %}
                                                             <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
                                                         {% else %}
-                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
+                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
+							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.dossierTechnique) }} </td>
