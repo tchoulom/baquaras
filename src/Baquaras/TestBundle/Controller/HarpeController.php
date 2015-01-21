@@ -135,20 +135,21 @@ class HarpeController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		
-		$xml = simplexml_load_file("/appli/u07/comp/html/Symfony/src/Baquaras/TestBundle/Entity/structuresMetier_Full.xml");
+		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/structuresMetier_Full.xml');
 		
 		// Liste des départements
-		$listDpt[] = array('id' => 0, 'libelle' => 'Tous'); 
+		$listDpt[] = array('id' => 0, 'nom' => 'Tous'); 
+                
 		foreach ($xml->Groupe[0]->children() as $entreprise) {
 			foreach ($entreprise->children() as $departement) {
 				$doublon = false;
 				// on vérifie si on va crée un doublon
 				foreach($application->getPopulationCible() as $dpt) {
-					if($dpt == $departement['libelle'])
+					if($dpt == $departement['nom'])
 						$doublon = true;
 				}
 				if(!$doublon)
-					$listDpt[] = array('id' => $departement['id'], 'libelle' => $departement['libelle']); 
+					$listDpt[] = array('id' => $departement['id'], 'nom' => $departement['nom']); 
 			}
 		}
 		
@@ -156,7 +157,7 @@ class HarpeController extends Controller
 		{
 			$id = $request->request->get('id');
 			$selecteur = $request->request->get('select');
-
+                        
 			if ($id != null)
 			{  
 				if($selecteur == 'ud') {
@@ -167,7 +168,7 @@ class HarpeController extends Controller
 									$doublon = false;
 									// on vérifie si on va crée un doublon
 									foreach($application->getPopulationCible() as $dpt) {
-										if($dpt == $unite['libelle'])
+										if($dpt == $unite['nom'])
 											$doublon = true;
 									}
 									if(!$doublon)
@@ -186,7 +187,7 @@ class HarpeController extends Controller
 										$doublon = false;
 										// on vérifie si on va crée un doublon
 										foreach($application->getPopulationCible() as $dpt) {
-											if($dpt == $entite['libelle'])
+											if($dpt == $entite['nom'])
 												$doublon = true;
 										}
 										if(!$doublon)
@@ -207,23 +208,23 @@ class HarpeController extends Controller
 			$pop = $request->request->get('selectDpt');
 			foreach($pop as $dpt) {
 				$cible = new PopulationCible();
-				// on donne le bon libelle
+				// on donne le bon nom
 				foreach ($xml->Groupe[0]->children() as $entreprise) {
 					foreach ($entreprise->children() as $departement) {
 						if($dpt == $departement['id']) {
-							$cible->setLibelle($departement['libelle']);
+							$cible->setLibelle($departement['nom']);
 							$cible->setPopulation('departement');
 							break;
 						}
 						foreach ($departement->children() as $unite) {
 							if($dpt == $unite['id']) {
-								$cible->setLibelle($unite['libelle']);
+								$cible->setLibelle($unite['nom']);
 								$cible->setPopulation('ud');
 								break;
 							}
 							foreach ($unite->{"Entite"} as $entite) {
 								if($dpt == $entite['id']) {
-									$cible->setLibelle($entite['libelle']);
+									$cible->setLibelle($entite['nom']);
 									$cible->setPopulation('ul');
 									break;
 								}

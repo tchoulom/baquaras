@@ -9,13 +9,19 @@
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+                        <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/theme.default.css') }}" type="text/css"/>
 		{% endblock %} 
+      
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.3.1.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.widgets.min.js') }}"></script>
+
 	</head>
 	
 	<body>
 		
 		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
-		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+		
 
 		<div id="page">
 		
@@ -41,8 +47,9 @@
 						{% endfor %}
 					</div>#}
 				</div>
-				<table id="liste">
-					<tr>
+				<table id="liste" class="tablesorter">
+					<thead>
+                                            <tr>
 						<td> Nom </td>
 						<td> Version </td>
 						<td> Correctif Qualif </td>
@@ -69,11 +76,16 @@
 						{% if action == 'triParPopulationCible' %}
 							<td> Population cible </td>
 						{% endif %}
-                                                {% if(getAuthorisation('ajouter une mise') == true or getAuthorisation('modifier une application') == true  or getAuthorisation('supprimer une application') == true) %}
+
+						 {% if(getAuthorisation('ajouter une mise') == true or getAuthorisation('modifier une application') == true  or getAuthorisation('supprimer une application') == true) %}
                                                     <td> Actions </td>
                                                 {%endif%}
 					</tr>
-	
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
 					{% for application in applications %}
 					<tr>
                                             
@@ -212,7 +224,9 @@
                                                     </td>
                                                 {#%endif%#}
 					</tr>
-					{% endfor %}				
+                                        
+					{% endfor %}
+                                        </tbody>
 					
 				</table>
 				
@@ -224,6 +238,18 @@
 				<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>
 
 			</div>
+
 		</div>
+                <script>
+                $(function(){
+                    $('#liste').tablesorter({
+                       widgets : ['zebra', 'columns'],
+                       sortInitialOrder: "asc",
+                       
+                        });
+                });
+                debug: true;
+                </script>
+               
 	</body>
 </html>
