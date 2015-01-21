@@ -132,17 +132,14 @@ div#menu {
 	background-color: #444444;
 	border-right: 1px dashed #AED6D6;
 }
-#menu div#menu-principal ul li#menu2,
-#menu div#menu-principal ul li#menu3 {
+#menu div#menu-principal ul li#menu2/*,
+#menu div#menu-principal ul li#menu3*/ {
 	padding: 0;
 	margin: 0;
 	height: 43px;
 }
-#menu div#menu-principal ul li#menu3 {
-	width: 200px;
-}
-#menu div#menu-principal ul li#menu2 a,
-#menu div#menu-principal ul li#menu3 a {
+#menu div#menu-principal ul li#menu2 a
+/* #menu div#menu-principal ul li#menu3 a */{
 	display:block;
 	color:white;
 	text-decoration:none;
@@ -153,16 +150,20 @@ div#menu {
 	border-right:1px dashed #AED6D6;
 	border: none;
 }
+/*
 #menu div#menu-principal ul li#menu1 {
 	width:120px;
 }
 #menu div#menu-principal ul li#menu2 {
 	width:120px;
 }
+#menu div#menu-principal ul li#menu3 {
+	width: 200px;
+}/*
 #menu div#menu-principal ul li#menu4 {
-	width:140px;
+	width:180px;
 	border:none;
-}
+}*/
 #menu div#menu-principal ul li a {
 	text-decoration: none;
 	color: white;
@@ -177,8 +178,8 @@ div#menu {
 	background-color: #444444;
 	border: none;
 	border-top: 1px solid #AED6D6;
-	height: 30px;
-	width: 175px;
+	height: auto;
+	width: 190px;
 }
 #menu div#menu-principal ul li ul li a {
 	font-size: 0.8em;
@@ -192,8 +193,8 @@ div#menu {
 #menu div#menu-principal ul li:hover ul {
 	display: block;
 }
-#menu div#menu-principal ul li#menu2 a:hover,
-#menu div#menu-principal ul li#menu3 a:hover,
+/* #menu div#menu-principal ul li#menu2 a:hover,
+#menu div#menu-principal ul li#menu3 a:hover,*/
 #menu div#menu-principal ul li:hover {
 	color: #AED6D6;
 }
