@@ -9,13 +9,19 @@
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_anonyme.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/menu_connecte.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
+                        <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/theme.default.css') }}" type="text/css"/>
 		{% endblock %} 
+      
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.3.1.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.widgets.min.js') }}"></script>
+
 	</head>
 	
 	<body>
 		
 		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
-		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+		
 
 		<div id="page">
 		
@@ -41,8 +47,9 @@
 						{% endfor %}
 					</div>#}
 				</div>
-				<table id="liste">
-					<tr>
+				<table id="liste" class="tablesorter">
+					<thead>
+                                            <tr>
 						<td> Nom </td>
 						<td> Version </td>
 						<td> Correctif Qualif </td>
@@ -69,13 +76,25 @@
 						{% if action == 'triParPopulationCible' %}
 							<td> Population cible </td>
 						{% endif %}
-						<td> Actions </td>
+
+						 {% if(getAuthorisation('ajouter une mise') == true or getAuthorisation('modifier une application') == true  or getAuthorisation('supprimer une application') == true) %}
+                                                    <td> Actions </td>
+                                                {%endif%}
 					</tr>
-	
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
 					{% for application in applications %}
 					<tr>
+                                            
+                                            {% if(getAuthorisation('consulter les d') == true) %}
 						<td> <a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','resizable=yes,top=0,left=0,width=1300,height=900,scrollbars=yes'); return false;"> {{ application.nom }} </a> </td>
-						<td> {{ application.version }} </td>
+				            {% else %}
+                                                <td>{{ application.nom }}</td>
+                                            {% endif %}
+                                                <td> {{ application.version }} </td>
 						<td> {{ application.correctifQualif }} </td>
 						<td> {{ application.description }} </td>
 						<td> 
@@ -191,14 +210,23 @@
 								{% endfor %}
 							</td>
 						{% endif %}
-						<td>
-							<a href="{{path('consulterApplication', {'id': application.id }) }}" onClick="window.open(this.href,'','width=1300,height=2000,scrollbars=yes'); return false;"> Détails </a> <br/>
-							<a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
-							<a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>
-							<a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
-						</td>
+                                                {#% if is_granted('IS_AUTHENTICATED_FULLY') %#}
+                                                    <td>
+                                                        {% if(getAuthorisation('modifier une application')) == true %}
+                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                        {% endif %}
+                                                        {% if(getAuthorisation('ajouter une mise')) == true %}
+                                                            <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>
+                                                        {% endif %}
+                                                        {% if(getAuthorisation('supprimer une application')) == true %}
+                                                            <a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
+                                                        {% endif %}
+                                                    </td>
+                                                {#%endif%#}
 					</tr>
-					{% endfor %}				
+                                        
+					{% endfor %}
+                                        </tbody>
 					
 				</table>
 				
@@ -210,6 +238,18 @@
 				<div id="pagin"> {% include 'BaquarasTestBundle:Default:pagination.html.twig' %} </div>
 
 			</div>
+
 		</div>
+                <script>
+                $(function(){
+                    $('#liste').tablesorter({
+                       widgets : ['zebra', 'columns'],
+                       sortInitialOrder: "asc",
+                       
+                        });
+                });
+                debug: true;
+                </script>
+               
 	</body>
 </html>

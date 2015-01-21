@@ -37,6 +37,12 @@ class ManagementRoles
     private function verifeAccess($page, $username)
     {
         $profil = 1;
+        // if autoriser pour un profile non connecte donc autorisé pour tout les autres profiles.
+        $droitNotAuthentificated = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Droit')->findOneBy(array('profil' => 1,'page' =>$page));
+        if($droitNotAuthentificated && $droitNotAuthentificated->getAcces() === true) {
+            
+            return true;
+        }
         if($username) {
             $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username)); 
             if($user && $user->getProfil1()->getId() == 8) {
@@ -45,6 +51,7 @@ class ManagementRoles
                 $profil = $user->getProfil1()->getId();
             }
         }
+        
         $droit = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Droit')->findOneBy(array('profil' => $profil,'page' =>$page));
         if($droit && $droit->getAcces() === false) {
             
@@ -53,6 +60,7 @@ class ManagementRoles
 
             return true;
         }
+        // if non indiqué return false
         else {
             return false;
         } 

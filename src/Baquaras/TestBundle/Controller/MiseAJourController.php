@@ -15,13 +15,18 @@ use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Form\ApplicationType1;
 use Baquaras\TestBundle\Form\UtilisateurType;
 use Baquaras\TestBundle\Form\MiseAJourType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MiseAJourController extends Controller
 {
 	/**
 	 * @ParamConverter("application", options={"mapping": {"id": "id"}})
 	 */
-	public  function  ajouterMAJAction(Request  $request, Application $application) {
+	public  function  ajouterMAJAction(Request  $request, Application $application) 
+        {
+            if($this->container->get('management_roles')->RoleVerified('ajouter une mise') === false) {
+                 throw new AccessDeniedException('Accès limité');
+            }
 	/*  Affiche  le  formulaire  de  création  d'une  mise  à jour  */
 		$miseajour = new MiseAJour();
 		$application->addMisesajour($miseajour);

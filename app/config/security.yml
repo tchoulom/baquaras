@@ -20,25 +20,23 @@ security:
             security: true
             provider : main 
             anonymous: ~
-            logout:
-                path:   /secured/logout
-                target: /
             trusted_sso:
                 manager: websso
                 login_action: false
                 logout_action: false
                 login_path: /secured/login
                 check_path: /login_check
-            
-            
-                
+                failure_path: /accueil
+            logout:
+                path : /logout
+                #success_handler: baquaras.security.logout_success_handler
+                target: /accueil
+                #invalidate_session: false
 
 
     access_control:
         - { path: ^/accueil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/secured/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
         - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/secured/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
-        - { path: ^/authentificate, roles: ROLE_INTEGRATEUR }
+        - { path: ^/authentificate, roles: [ROLE_USER, ROLE_LECTEUR, ROLE_TECHNICIEN, ROLE_QUALIFICATEUR, ROLE_CHEF_PRODUIT,ROLE_RESPONSABLE_QUALIF ] }

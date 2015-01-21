@@ -24,7 +24,7 @@ class CreateUsersCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        set_time_limit(6000); 
+        set_time_limit(0); 
         ini_set("memory_limit", -1);
         $em = $this->getContainer()->get('doctrine')->getManager();
         $batchSize = 20;

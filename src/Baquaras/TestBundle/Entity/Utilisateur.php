@@ -110,6 +110,12 @@ class Utilisateur
      * @ORM\OneToMany(targetEntity="ModificationApplication", mappedBy="utilisateur")
      **/
     private $modifsApplication;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="utilisateur", cascade={"persist"})
+     * @ORM\JoinTable(name="utilisateur_application")
+     **/
+    private $application;
 	
     /**
      * Get id
@@ -362,6 +368,7 @@ class Utilisateur
     {
         $this->evolutionsStatut = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifsApplication = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->application = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -423,10 +430,49 @@ class Utilisateur
     /**
      * Get modifsApplication
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModifsApplication()
     {
         return $this->modifsApplication;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $application
+    public function setApplication(\Baquaras\TestBundle\Entity\Application $application = null)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Baquaras\TestBundle\Entity\Application
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
+     * Add Application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $Application
+     * @return Utilisateur
+     */
+    public function addApplication(\Baquaras\TestBundle\Entity\Application $Application)
+    {
+        $this->application[] = $Application;
+
+        return $this;
+    }
+
+    public function getCompleteName()
+    {
+        return sprintf('%s - %s', $this->nom, $this->prenom);
     }
 }

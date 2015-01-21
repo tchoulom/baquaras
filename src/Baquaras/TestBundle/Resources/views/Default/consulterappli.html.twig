@@ -16,904 +16,1028 @@
 		
 		<div class="consulterappli">
 
-				<h1> Caractéristiques d'une application </h1>
-				
-				<div id="onglet">
-					<div id="infos_appli"> <a id="infos_appli_onglet"> Application </a> </div>
-					<div id="infos_package"> <a id="infos_package_onglet"> Package </a> </div>
-					<div id="infos_qualif"> <a id="infos_qualif_onglet"> Qualification </a> </div>
-					<div id="infos_maj"> <a id="infos_maj_onglet"> Mises à jour </a> </div>
-					{#<div id="infos_hdm"> <a id="infos_hdm_onglet" > Historique de Modification </a> </div>#}
-				</div>
-			
-				<ul id="accordion_appli" class="accordion">
-					<li>
-						<a id="infogenerales_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-						<a id="infogenerales_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-						<h2> Informations sur l'application </h2>
-				
-						<div class="content" id="infogenerales">
-						<table>
-							<tr>	
-							<td id="label"> <div class="label"> Nom </div>
-								<a title="Nom usuel de l'application" href="#"> <div class="bulle"> </div> </a>
-							</td>
- 							<td id="text"> {{ application.nom }} </td>
-							</tr>
-							<tr>
-							<td id="label"> <div class="label"> Editeur </div>
-								<a title="Nom de l'éditeur s'il s'agit d'un progiciel" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> {{ application.editeur }} </td>
-							</tr>
-							<tr> 
-							<td id="label"> Version </td>
-							<td id="text"> {{ application.version }} </td>
-							</tr>
-							<tr> 
-							<td id="label"> Type de l'application </td>
-							<td id="text">
-								{{ application.type }}
-							</td>
-							</tr>
-							<tr> 
-								<td id="label"> <div class="label"> Description </div>
-									<a title="Description succincte de l'application" href="#"> <div class="bulle"> </div> </a>
-								</td> 
-							<td id="text"> {{ application.description }} </td>
-							</tr>
-							<tr> 
-							<td id="label"> Correctif Qualif </td> 
-							<td id="text"> {{ application.correctifQualif }} </td>
-							</tr>
-							<tr>
-							<td id="label"> <div class="label"> Code Convergence </div> 
-								<a title="Code de l'application interne SIT" href="#"> <div class="bulle"> </div> </a>
-							</td>
-							<td id="text"> {{ application.codeConvergence }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Code ECAR </td>	
-							<td id="text"> {{ application.codeECAR }} </td>
-						</tr>
-						<tr> 
-							<td id="label"> Référencée dans SIERA </td> 
-							<td id="text"> 
-								{% if application.appliReferenceeSIERA is not null %}
-									{% if application.appliReferenceeSIERA==1 %} Oui {% endif %}
-									{% if application.appliReferenceeSIERA==0 %} Non {% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Code SIERA </td>
-							<td id="text"> {{ application.codeSIERA }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Nom de l'application dans SIERA </td>
-							<td id="text"> {{ application.nomApplicationSIERA }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Application sous gouvernance </td> <td id="text"> 
-								{% if application.appliSousGouvernance %} Oui {% else %} Non {% endif %} 
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Inscrite au catalogue SIT </td>
-							<td id="text"> 
-								{% if application.dansCatalogueSIT %} Oui {% else %} Non {% endif %} 
-							</td>
-						</tr>
-						{#<tr>
-							<td id="label"> RefCatalogue </td>
-							<td id="text">
-								{{ application.refCatalogue.id }}
-							</td>
-						</tr>#}
-						<tr>
-							<td id="label"> Inscrite en revue de performance </td>
-							<td id="text"> 
-								{% if application.inscriteRevuePerformance %} Oui {% else %} Non {%endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> OS cible </td>
-							<td> 
-								{{ application.oscible }}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Départements cibles </td>
-							<td id="read_only"> 
-								{% set i = 0 %}
-								{% for departement in application.populationCible %}
-									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
-									{% if i >= 2 %}
-										</br>
-									{% endif %}
-									{{ departement.libelle }}
-								{% endfor %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Assistance </td>
-							<td id="read_only">
-								{% set i = 0 %}
-								{% for agent in application.agents %}
-									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
-									{% if i >= 2 %}
-										</br>
-									{% endif %}
-									{% if agent.role == 'assistance' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Droits application </td> 
-							<td id="read_only"> 
-								{% set i = 0 %}
-								{% for agent in application.agents %}
-									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
-									{% if i >= 2 %}
-										</br>
-									{% endif %}
-									{% if agent.role == 'ayantDroit' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td> 
-						</tr>
-						<tr> 
-							<td id="label"> Personnes habilitées pour l'installation </td>
-							<td> 
-								{% set i = 0 %}
-								{% for agent in application.agents %}
-									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
-									{% if i >= 2 %}
-										</br>
-									{% endif %}
-									{% if agent.role == 'personnes' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Groupes habilités pour l'installation</td>
-							<td> 
-								{% set i = 0 %}
-								{% for agent in application.agents %}
-									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
-									{% if i >= 2 %}
-										</br>
-									{% endif %}
-									{% if agent.role == 'groupes' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-					</table>
-					</div>
-				</li>
-				<li>
-					<a id="requis_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="requis_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a> 
-					<h2> Pré-Requis/Non-Requis/Autres pré-requis </h2>
-					
-					<div id="requis">
-						<div class="content" id="prerequis">
-							{% if application.preRequis is empty %}
-								<div class="text"> Pas de pré-requis </td>
-							{% endif %}
-							
-							{% if application.preRequis is not empty %}
-							
-								<h3> Liste des pré-requis </h3>
-							
-								<table id="prerequis_liste">
-									<tr>
-										<th> Nom </th>
-										<th> Mode de gestion </th>
-										<th> OS </th>
-									</tr>
-							
-									{% for preRequis in application.preRequis %}
+                    <h1> Caractéristiques d'une application </h1>
 
-										<tr>
-											<td> {{ preRequis.libelle }} </td>
-											<td> {{ preRequis.modeGestion }} </td>
-											<td> {{ preRequis.oscible }} </td>
-										</tr>
-							
-									{% endfor %}
-							
-								</table>
-						
-							{% endif %}
-						</div>
-					
-						<div class="content" id="nonrequis">
-							{% if application.nonRequis is empty %}
-								<div class="text"> Pas de non-requis </div>							
-							{% endif %}
-							
-							{% if application.nonRequis is not empty %}
-						
-								<h3> Liste des non-Requis </h3>
-						
-								<table id="nonrequis_liste">
-									<tr>
-										<th> Nom </th>
-										<th> Mode de gestion </th>
-										<th> OS </th>
-									</tr>
-							
-									{% for nonRequis in application.nonRequis %}						
-										<tr>
-											<td> {{ nonRequis.libelle }} </td>
-											<td> {{ nonRequis.modeGestion }} </td>
-											<td> {{ nonRequis.oscible }} </td>
-										</tr>
-									{% endfor %}
-								</table>
-								
-							{% endif %}
-						</div>
-						
-						<div class="content" id="autreprerequis">
-							{% if application.autresPreRequis is empty %}
-								<div class="text"> Pas d'autres pré-requis </td>
-							{% endif %}
-							
-							{% if application.autresPreRequis is not empty %}
-								
-								<h3> Liste des autres pré-requis </h3>
-								
-								<table id="autreprerequis_liste">
-									<tr>
-										<th> Libellé </th>
-										<th> Commentaire </th>
-										<th> OS </th>
-									</tr>
-									
-									{% for autresPreRequis in application.autresPreRequis %}
-										<tr>
-											<td> {{ autresPreRequis.libelle }} </td>
-											<td> {{ autresPreRequis.commentaire }} </td>
-											<td> {{ autresPreRequis.oscible }} </td>
-										</tr>
-									{% endfor  %}
-								</table>
-							
-							{% endif %}
-						</div>
-					</div>
-						
+                    <div id="onglet">
+                        {% if(getAuthorisation('onglet application')) == true %}
+                            <div id="infos_appli"> <a id="infos_appli_onglet"> Application </a> </div>
+                        {% endif %}
+                        {% if(getAuthorisation('onglet package')) == true %}
+                            <div id="infos_package"> <a id="infos_package_onglet"> Package </a> </div>
+                        {% endif %}
+                        {% if(getAuthorisation('onglet qualification')) == true %}
+                            <div id="infos_qualif"> <a id="infos_qualif_onglet"> Qualification </a> </div>
+                        {% endif %}
+                        {% if(getAuthorisation('onglet mise a jour')) == true %}
+                            <div id="infos_maj"> <a id="infos_maj_onglet"> Mises à jour </a> </div>
+                        {% endif %}
+                    </div>
+			{#% debut application %#}
+                        {% if(getAuthorisation('onglet application')) == true %}
+                            <ul id="accordion_appli" class="accordion">
+                                {% if(getAuthorisation('Informations sur l\'application')) == true %}
+                                    <li>
+                                            <a id="infogenerales_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                            <a id="infogenerales_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                            <h2> Informations sur l'application </h2>
+                                            <div class="content" id="infogenerales">
+                                            <table>
+                                                    <tr>	
+                                                    <td id="label"> <div class="label"> Nom </div>
+                                                            <a title="Nom usuel de l'application" href="#"> <div class="bulle"> </div> </a>
+                                                    </td>
+                                                    <td id="text"> {{ application.nom }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td id="label"> <div class="label"> Editeur </div>
+                                                            <a title="Nom de l'éditeur s'il s'agit d'un progiciel" href="#"> <div class="bulle"> </div> </a>
+                                                    </td> 
+                                                    <td id="text"> {{ application.editeur }} </td>
+                                                    </tr>
+                                                    <tr> 
+                                                    <td id="label"> Version </td>
+                                                    <td id="text"> {{ application.version }} </td>
+                                                    </tr>
+                                                    <tr> 
+                                                    <td id="label"> Type de l'application </td>
+                                                    <td id="text">
+                                                            {{ application.type }}
+                                                    </td>
+                                                    </tr>
+                                                    <tr> 
+                                                            <td id="label"> <div class="label"> Description </div>
+                                                                    <a title="Description succincte de l'application" href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                    <td id="text"> {{ application.description }} </td>
+                                                    </tr>
+                                                    <tr> 
+                                                    <td id="label"> Correctif Qualif </td> 
+                                                    <td id="text"> {{ application.correctifQualif }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td id="label"> <div class="label"> Code Convergence </div> 
+                                                            <a title="Code de l'application interne SIT" href="#"> <div class="bulle"> </div> </a>
+                                                    </td>
+                                                    <td id="text"> {{ application.codeConvergence }} </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> Code ECAR </td>	
+                                                    <td id="text"> {{ application.codeECAR }} </td>
+                                            </tr>
+                                            <tr> 
+                                                    <td id="label"> Référencée dans SIERA </td> 
+                                                    <td id="text"> 
+                                                            {% if application.appliReferenceeSIERA is not null %}
+                                                                    {% if application.appliReferenceeSIERA==1 %} Oui {% endif %}
+                                                                    {% if application.appliReferenceeSIERA==0 %} Non {% endif %}
+                                                            {% endif %}
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> Code SIERA </td>
+                                                    <td id="text"> {{ application.codeSIERA }} </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> Nom de l'application dans SIERA </td>
+                                                    <td id="text"> {{ application.nomApplicationSIERA }} </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> Application sous gouvernance </td> <td id="text"> 
+                                                            {% if application.appliSousGouvernance %} Oui {% else %} Non {% endif %} 
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> Inscrite au catalogue SIT </td>
+                                                    <td id="text"> 
+                                                            {% if application.dansCatalogueSIT %} Oui {% else %} Non {% endif %} 
+                                                    </td>
+                                            </tr>
+                                            {#<tr>
+                                                    <td id="label"> RefCatalogue </td>
+                                                    <td id="text">
+                                                            {{ application.refCatalogue.id }}
+                                                    </td>
+                                            </tr>#}
+                                            <tr>
+                                                    <td id="label"> Inscrite en revue de performance </td>
+                                                    <td id="text"> 
+                                                            {% if application.inscriteRevuePerformance %} Oui {% else %} Non {%endif %}
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td id="label"> OS cible </td>
+                                                    <td> 
+                                                            {{ application.oscible }}
+                                                    </td>
+                                            </tr>
+                                            <tr> 
+                                                    <td id="label"> Départements cibles </td>
+                                                    <td id="read_only"> 
+                                                            {% set i = 0 %}
+                                                            {% for departement in application.populationCible %}
+                                                                    {# compteur pour faire un retour à la ligne #}
+                                                                    {% set i = i + 1 %}
+                                                                    {% if i >= 2 %}
+                                                                            </br>
+                                                                    {% endif %}
+                                                                    {{ departement.libelle }}
+                                                            {% endfor %}
+                                                    </td>
+                                            </tr>
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Qualificateur',
+                                                                                                        'Intégrateur',
+                                                                                                        'Technicien support',
+                                                                                                        'Chef de produit'
+                                                                                                    ] %}
+                                                    <tr>
+                                                        <td id="label"> Assistance </td>
+                                                        <td id="read_only">
+                                                                {% set i = 0 %}
+                                                                {% for agent in application.agents %}
+                                                                        {# compteur pour faire un retour à la ligne #}
+                                                                        {% set i = i + 1 %}
+                                                                        {% if i >= 2 %}
+                                                                                </br>
+                                                                        {% endif %}
+                                                                        {% if agent.role == 'assistance' %}
+                                                                                {{ agent.libelle }}
+                                                                        {% endif %}
+                                                                {% endfor %}
+                                                        </td>
+                                                    </tr>
+                                                    <tr> 
+                                                        <td id="label"> Droits application </td> 
+                                                        <td id="read_only"> 
+                                                                {% set i = 0 %}
+                                                                {% for agent in application.agents %}
+                                                                        {# compteur pour faire un retour à la ligne #}
+                                                                        {% set i = i + 1 %}
+                                                                        {% if i >= 2 %}
+                                                                                </br>
+                                                                        {% endif %}
+                                                                        {% if agent.role == 'ayantDroit' %}
+                                                                                {{ agent.libelle }}
+                                                                        {% endif %}
+                                                                {% endfor %}
+                                                        </td> 
+                                                    </tr>
+                                                    <tr> 
+                                                        <td id="label"> Personnes habilitées pour l'installation </td>
+                                                        <td> 
+                                                            {% set i = 0 %}
+                                                            {% for agent in application.agents %}
+                                                                {# compteur pour faire un retour à la ligne #}
+                                                                {% set i = i + 1 %}
+                                                                {% if i >= 2 %}
+                                                                        </br>
+                                                                {% endif %}
+                                                                {% if agent.role == 'personnes' %}
+                                                                        {{ agent.libelle }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                    </tr>
+                                                    <tr> 
+                                                        <td id="label"> Groupes habilités pour l'installation</td>
+                                                        <td> 
+                                                            {% set i = 0 %}
+                                                            {% for agent in application.agents %}
+                                                                {# compteur pour faire un retour à la ligne #}
+                                                                {% set i = i + 1 %}
+                                                                {% if i >= 2 %}
+                                                                        </br>
+                                                                {% endif %}
+                                                                {% if agent.role == 'groupes' %}
+                                                                        {{ agent.libelle }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                    </table>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            {% if(getAuthorisation('Pre-Requis/Non-Requis/Autres pre-requis ')) == true %}
+                            <li>
+                                    <a id="requis_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                    <a id="requis_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a> 
+                                    <h2> Pré-Requis/Non-Requis/Autres pré-requis </h2>
 
-				</li>
-				
-				<li>
-					<a id="architecture_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="architecture_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Architecture </h2>
-					
-					<div class="content" id="architecture">
-					<table>    					
-						<tr> 
-							<td id="label"> <div class="label"> Application web </div>
-								<a title="L'applicatione est-elle accessible au travers d'un navigateur internet ?" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text">
-								{% if application.architecture.appliWeb is defined %}
-									{% if application.architecture.appliWeb is not null %}
-										{% if application.architecture.appliWeb %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr> 
-						
-						{% if application.architecture.appliWeb %}						
-						<tr> 
-							<td id="label"> URL Extranet </td>
-							<td id="text"> 
-								{% if application.architecture.urlExtranet is defined %}
-									{{ application.architecture.urlExtranet }}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr> 
-							<td id="label"> URL Intranet </td>
-							<td id="text"> 
-								{% if application.architecture.urlIntranet is defined %}
-									{{ application.architecture.urlIntranet }}
-								{% endif %}
-							</td>
-						</tr>						
-						<tr> 
-							<td id="label"> Application intranet ou internet </td>
-							<td> 
-								{% if application.architecture.appliIntraOuInternet is defined %} 
-									{{ application.architecture.appliIntraOuInternet }}
-								{% endif %}
-							</td>
-						</tr>					
-						<tr> 
-							<td id="label"> Utilisation d'ActiveX </td>
-							<td>
-								{% if application.architecture.utilisationActiveX is defined %}
-									{% if application.architecture.utilisationActiveX is not null %}
-										{% if application.architecture.utilisationActiveX %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td> 
-						</tr>					
-						<tr> 
-							<td id="label"> Utilisation de certificats </td>
-							<td> 
-								{% if application.architecture.utilisationCertificats is defined %}
-									{% if application.architecture.utilisationCertificats is not null %}
-										{% if application.architecture.utilisationCertificats %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>					
-						<tr> 
-							<td id="label"> Utilisation JRE </td>
-							<td> 
-								{% if application.architecture.utilisationJRE is defined %}
-									{% if application.architecture.utilisationJRE is not null %}
-										{% if application.architecture.utilisationJRE %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Utilisation SSO </td>
-							<td> 
-								{% if application.architecture.utilisationSSO is defined %}
-									{% if application.architecture.utilisationSSO is not null %}
-										{% if application.architecture.utilisationSSO %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						{% endif %}
-						<tr> 
-							<td id="label"> <div class="label"> Application Client/Serveur </div>
-								<a title="Application nécessitant des interactions avec un(des) serveur(s)" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td> 
-								{% if application.architecture.appliClientServeur is defined %}
-									{% if application.architecture.appliClientServeur is not null %}
-										{% if application.architecture.appliClientServeur %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr> 
-							<td id="label"> Application infocentre </td>
-							<td>
-								{% if application.architecture.appliInfocentre is defined %}
-									{% if application.architecture.appliInfocentre  is not null %}
-										{% if application.architecture.appliInfocentre  %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr> 
-							<td id="label"> <div class="label"> Base de données </div>
-								<a title="Si l'application nécessite l'accès à des bases de données autres que Oracle, cliquer sur oui" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td>
-								{% if application.architecture.baseDeDonnees is defined %}
-									{% if application.architecture.baseDeDonnees is not null %}
-										{% if application.architecture.baseDeDonnees %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr> 
-							<td id="label"> <div class="label"> Commentaire </div>
-								<a title="Mentionner tout commentaire utile à la prise de connaissance de l'application" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td> 
-								{% if application.architecture.commentaire is defined %}
-									{{ application.architecture.commentaire }}
-								{% endif %}
-							</td>
-						</tr>					
-						<tr> 
-							<td id="label"> Utilisation Office </td>
-							<td>
-								{% if application.architecture.utilisationOffice is defined %}
-									{% if application.architecture.utilisationOffice is not null %}
-										{% if application.architecture.utilisationOffice %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}								
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Liaison Office </td>
-							<td> 
-								{% if application.architecture.liaisonsOffice is defined %}
-									{% for item in application.architecture.liaisonsOffice %}
-										{{ item.libelle }} <br/>
-									{% endfor %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Liaison Access </td>
-							<td> 
-								{% if application.architecture.liaisonAccess is defined %}
-									{{ application.architecture.liaisonAccess }} 
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Stocke les données utilisateurs </td>
-							<td>
-								{% if application.architecture.stockeDonneesUser is defined %}
-									{% if application.architecture.stockeDonneesUser is not null %}
-										{% if application.architecture.stockeDonneesUser %} Oui {% else %} Non {% endif %}
-									{% endif %}	
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Utilisation du matériel périphérique </td>
-							<td> 
-								{% if application.architecture.utilisationMaterielPeripherique is defined %}
-									{% if application.architecture.utilisationMaterielPeripherique is not null %}
-										{% if application.architecture.utilisationMaterielPeripherique %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr> 
-							<td id="label"> Briques </td>
-							<td> 
-								{% if application.architecture.briques is defined %}
-									{% if application.architecture.briques is not null %}
-										{% for brique in application.architecture.briques %}
-											{{ brique.libelle }}
-										{% endfor %}
-									{% endif %}
-								{% endif %}
-							</td> 
-						</tr>						
-					</table>
-					</div>
-				</li>
-				
-				<li>
-					<a id="gestion_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="gestion_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Gestion </h2>
-					
-					<div class="content" id="gestion">						
-					<table>						
-						<tr>
-							<td id="label"> MOE </td>
-							<td id="read_only"> 
-								{% for agent in application.agents %}
-									{% if agent.role == 'moe' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Département MOE </td>
-							<td id="read_only"> 
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> MOA </td>
-							<td id="read_only"> 
-								{% for agent in application.agents %}
-									{% if agent.role == 'moa' %}
-										{{ agent.libelle }}
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Département MOA </td>
-							<td id="read_only">	
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Liste des postes installés </td>
-							<td id="text"> {% if application.gestion.listePostesInstalles is defined %} {{ application.gestion.listePostesInstalles }} {% endif %} </td>
-						</tr>
-						<tr> 
-							<td id="label"> Postes pilotes WSUS </td>
-							<td id="text"> {% if application.gestion.postesPilotesWSUS is defined %} {{ application.gestion.postesPilotesWSUS }} {% endif %} </td>
-						</tr>					
-					</table>	
-					</div>
-				</li>	
-				
-				<li>
-					<a id="installation_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="installation_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Installation </h2> 
-					
-					<div class="content" id="installation">
-					<table>					
-						<tr> 
-							<td id="label"> <div class="label"> Comptabilisation license  </div>
-								<a title="Y'at-il un reporting de réalisé suite à l'installation de l'application ? " href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text">
-								{% if application.installation.comptabilisationLicense is defined %}
-									{% if application.installation.comptabilisationLicense is not null %}
-										{% if application.installation.comptabilisationLicense %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> <div class="label"> Nombre de licenses  </div>
-								<a title="Nombre de licenses disponibles " href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> 
-								{% if application.installation.nombreLicenses is defined %} 
-									{{ application.installation.nombreLicenses }} 
-								{% endif %} 
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> <div class="label"> Modalité d'acquisition  </div>
-								<a title="Procédure qui doit être utilisée pour faire la demande d'installation de l'application" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> 
-								{% if application.installation.modaliteAcquisition is defined %} 
-									{{ application.installation.modaliteAcquisition }} 
-								{% endif %} 
-							</td> 
-						</tr>
-						<tr>
-							<td id="label"> <div class="label"> Mode d'installation souhaitée  </div>
-								<a title="Une fois la qualification réalisée, plusieurs modes d'installation sont disponibles pour la déployer" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> {% if application.installation.modeInstallationSouhaitee is defined %} {{ application.installation.modeInstallationSouhaitee }} {% endif %} </td>
-						</tr>
-						<tr>
-							<td id="label"> Installation à distance </td>
-							<td id="text"> 
-								{% if application.installation.installationADistance is not null %}
-									{% if application.installation.installationADistance %} Oui {% else %} Non {% endif %}
-								{% endif %}
-							</td>
-						</tr>
-					</table>
-					</div>
-				</li>
-		
-				<li>
-					<a id="developpement_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="developpement_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>				
-					<h2> Développement </h2>
-						
-					<div class="content" id="developpement">
-					<table>
-						<tr> 
-							<td id="label"> Développement spécifique </td>
-							<td> 
-								{% if application.developpement.developpementSpecifique is defined %}
-									{% if application.developpement.developpementSpecifique is not null %}
-										{% if application.developpement.developpementSpecifique %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> Application avec TMA </td>
-							<td> 
-								{% if application.developpement.appliAvecTMA is defined %}
-									{% if application.developpement.appliAvecTMA is not null %}
-										{% if application.developpement.appliAvecTMA %} Oui {% else %} Non {% endif %}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr> 
-							<td id="label"> <div class="label"> Outil de développement  </div>
-								<a title="Produit(s) utilisé(s) pour la réalisation de l'application" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> {% if application.developpement.outilDeveloppement is defined %} {{ application.developpement.outilDeveloppement }} {% endif %} </td>
-						</tr>
-						<tr> 
-							<td id="label"> <div class="label"> Login du compte de test </div>
-								<a title="Compte de test de l'application (nécessaire en cas d'application nécessitant une identification)" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> {% if application.developpement.loginCompteTest is defined %} {{ application.developpement.loginCompteTest }} {% endif %} </td> 
-						</tr>
-						<tr> 
-							<td id="label"> Password du compte de test </td>
-							<td id="text"> {% if application.developpement.passwordCompteTest is defined %} {{ application.developpement.passwordCompteTest }} {% endif %} </td>
-						</tr>
-					</table>
-					</div>
-				</li>
-				
-				<li>
-					<a id="catalogue_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="catalogue_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>					
-					<h2> Catalogue SIT </h2>
-					
-					<div class="content" id="catalogue">
-					<table>
-						<tr>
-							<td id="label"> <div class="label"> Référence de l'application  </div>
-								<a title="Nom de l'application dans le catalogue SIT" href="#"> <div class="bulle"> </div> </a>
-							</td> 
-							<td id="text"> {{ application.refCatalogue.referenceApplication }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Usage application </td>
-							<td id="text"> {{ application.refCatalogue.usageApplication }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Date de mise en ligne de l'application </td>
-							<td> 
-								{% if application.refCatalogue.dateMiseEnLigneApplication is not null %}
-									{{ application.refCatalogue.dateMiseEnLigneApplication|date('d.m.Y') }} 
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Date de fin de vie de l'application </td>
-							<td>
-								{% if application.refCatalogue.dateFinDeVieApplication is not null %}
-									{{ application.refCatalogue.dateFinDeVieApplication|date('d.m.Y') }}
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Type du catalogue</td>
-							<td id="text"> {{ application.refCatalogue.typeCatalogue }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Version payée </td>
-							<td id="text"> {{ application.refCatalogue.versionPayee }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Coût </td>
-							<td id="text"> {{ application.refCatalogue.cout }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Documentation informations complémentaires </td>
-							<td id="text">
-								{% if application.refCatalogue.docInfoComplementaire is not empty %}
-									<a href = "{{path('consulterFichier', {'id' : application.refCatalogue.docInfoComplementaire.id }) }}"> {{ application.refCatalogue.docInfoComplementaire.url }} </a>
-								{% endif %}
-							</td>
-						</tr>					
-					</table>
-					</div>
-				
-				</li>
-			</ul>
+                                    <div id="requis">
+                                            <div class="content" id="prerequis">
+                                                    {% if application.preRequis is empty %}
+                                                            <div class="text"> Pas de pré-requis </td>
+                                                    {% endif %}
 
+                                                    {% if application.preRequis is not empty %}
 
-			{######################################################################################################################}
-			{############################################## PACKAGE ###############################################################}
-			{######################################################################################################################}			
+                                                            <h3> Liste des pré-requis </h3>
 
+                                                            <table id="prerequis_liste">
+                                                                    <tr>
+                                                                            <th> Nom </th>
+                                                                            <th> Mode de gestion </th>
+                                                                            <th> OS </th>
+                                                                    </tr>
+
+                                                                    {% for preRequis in application.preRequis %}
+
+                                                                            <tr>
+                                                                                    <td> {{ preRequis.libelle }} </td>
+                                                                                    <td> {{ preRequis.modeGestion }} </td>
+                                                                                    <td> {{ preRequis.oscible }} </td>
+                                                                            </tr>
+
+                                                                    {% endfor %}
+
+                                                            </table>
+
+                                                    {% endif %}
+                                            </div>
+
+                                            <div class="content" id="nonrequis">
+                                                    {% if application.nonRequis is empty %}
+                                                            <div class="text"> Pas de non-requis </div>							
+                                                    {% endif %}
+
+                                                    {% if application.nonRequis is not empty %}
+
+                                                            <h3> Liste des non-Requis </h3>
+
+                                                            <table id="nonrequis_liste">
+                                                                    <tr>
+                                                                            <th> Nom </th>
+                                                                            <th> Mode de gestion </th>
+                                                                            <th> OS </th>
+                                                                    </tr>
+
+                                                                    {% for nonRequis in application.nonRequis %}						
+                                                                            <tr>
+                                                                                    <td> {{ nonRequis.libelle }} </td>
+                                                                                    <td> {{ nonRequis.modeGestion }} </td>
+                                                                                    <td> {{ nonRequis.oscible }} </td>
+                                                                            </tr>
+                                                                    {% endfor %}
+                                                            </table>
+
+                                                    {% endif %}
+                                            </div>
+
+                                            <div class="content" id="autreprerequis">
+                                                    {% if application.autresPreRequis is empty %}
+                                                            <div class="text"> Pas d'autres pré-requis </td>
+                                                    {% endif %}
+
+                                                    {% if application.autresPreRequis is not empty %}
+
+                                                            <h3> Liste des autres pré-requis </h3>
+
+                                                            <table id="autreprerequis_liste">
+                                                                    <tr>
+                                                                            <th> Libellé </th>
+                                                                            <th> Commentaire </th>
+                                                                            <th> OS </th>
+                                                                    </tr>
+
+                                                                    {% for autresPreRequis in application.autresPreRequis %}
+                                                                            <tr>
+                                                                                    <td> {{ autresPreRequis.libelle }} </td>
+                                                                                    <td> {{ autresPreRequis.commentaire }} </td>
+                                                                                    <td> {{ autresPreRequis.oscible }} </td>
+                                                                            </tr>
+                                                                    {% endfor  %}
+                                                            </table>
+
+                                                    {% endif %}
+                                            </div>
+                                    </div>
+                            </li>
+                        {% endif %}
+                        {% if(getAuthorisation('Architecture')) == true %}
+                            <li>
+                                <a id="architecture_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                <a id="architecture_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                <h2> Architecture </h2>
+
+                                <div class="content" id="architecture">
+                                <table>    					
+                                        <tr> 
+                                                <td id="label"> <div class="label"> Application web </div>
+                                                        <a title="L'applicatione est-elle accessible au travers d'un navigateur internet ?" href="#"> <div class="bulle"> </div> </a>
+                                                </td> 
+                                                <td id="text">
+                                                        {% if application.architecture.appliWeb is defined %}
+                                                                {% if application.architecture.appliWeb is not null %}
+                                                                        {% if application.architecture.appliWeb %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr> 
+
+                                        {% if application.architecture.appliWeb %}						
+                                        <tr> 
+                                                <td id="label"> URL Extranet </td>
+                                                <td id="text"> 
+                                                        {% if application.architecture.urlExtranet is defined %}
+                                                                {{ application.architecture.urlExtranet }}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>	
+                                        <tr> 
+                                                <td id="label"> URL Intranet </td>
+                                                <td id="text"> 
+                                                        {% if application.architecture.urlIntranet is defined %}
+                                                                {{ application.architecture.urlIntranet }}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>						
+                                        <tr> 
+                                                <td id="label"> Application intranet ou internet </td>
+                                                <td> 
+                                                        {% if application.architecture.appliIntraOuInternet is defined %} 
+                                                                {{ application.architecture.appliIntraOuInternet }}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>					
+                                        <tr> 
+                                                <td id="label"> Utilisation d'ActiveX </td>
+                                                <td>
+                                                        {% if application.architecture.utilisationActiveX is defined %}
+                                                                {% if application.architecture.utilisationActiveX is not null %}
+                                                                        {% if application.architecture.utilisationActiveX %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td> 
+                                        </tr>					
+                                        <tr> 
+                                                <td id="label"> Utilisation de certificats </td>
+                                                <td> 
+                                                        {% if application.architecture.utilisationCertificats is defined %}
+                                                                {% if application.architecture.utilisationCertificats is not null %}
+                                                                        {% if application.architecture.utilisationCertificats %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>					
+                                        <tr> 
+                                                <td id="label"> Utilisation JRE </td>
+                                                <td> 
+                                                        {% if application.architecture.utilisationJRE is defined %}
+                                                                {% if application.architecture.utilisationJRE is not null %}
+                                                                        {% if application.architecture.utilisationJRE %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>
+                                        <tr> 
+                                                <td id="label"> Utilisation SSO </td>
+                                                <td> 
+                                                        {% if application.architecture.utilisationSSO is defined %}
+                                                                {% if application.architecture.utilisationSSO is not null %}
+                                                                        {% if application.architecture.utilisationSSO %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>
+                                        {% endif %}
+                                        <tr> 
+                                                <td id="label"> <div class="label"> Application Client/Serveur </div>
+                                                        <a title="Application nécessitant des interactions avec un(des) serveur(s)" href="#"> <div class="bulle"> </div> </a>
+                                                </td> 
+                                                <td> 
+                                                        {% if application.architecture.appliClientServeur is defined %}
+                                                                {% if application.architecture.appliClientServeur is not null %}
+                                                                        {% if application.architecture.appliClientServeur %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>	
+                                        <tr> 
+                                                <td id="label"> Application infocentre </td>
+                                                <td>
+                                                        {% if application.architecture.appliInfocentre is defined %}
+                                                                {% if application.architecture.appliInfocentre  is not null %}
+                                                                        {% if application.architecture.appliInfocentre  %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>	
+                                        <tr> 
+                                                <td id="label"> <div class="label"> Base de données </div>
+                                                        <a title="Si l'application nécessite l'accès à des bases de données autres que Oracle, cliquer sur oui" href="#"> <div class="bulle"> </div> </a>
+                                                </td> 
+                                                <td>
+                                                        {% if application.architecture.baseDeDonnees is defined %}
+                                                                {% if application.architecture.baseDeDonnees is not null %}
+                                                                        {% if application.architecture.baseDeDonnees %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>	
+                                        <tr> 
+                                                <td id="label"> <div class="label"> Commentaire </div>
+                                                        <a title="Mentionner tout commentaire utile à la prise de connaissance de l'application" href="#"> <div class="bulle"> </div> </a>
+                                                </td> 
+                                                <td> 
+                                                        {% if application.architecture.commentaire is defined %}
+                                                                {{ application.architecture.commentaire }}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>					
+                                        <tr> 
+                                                <td id="label"> Utilisation Office </td>
+                                                <td>
+                                                        {% if application.architecture.utilisationOffice is defined %}
+                                                                {% if application.architecture.utilisationOffice is not null %}
+                                                                        {% if application.architecture.utilisationOffice %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}								
+                                                </td>
+                                        </tr>
+                                        <tr> 
+                                                <td id="label"> Liaison Office </td>
+                                                <td> 
+                                                        {% if application.architecture.liaisonsOffice is defined %}
+                                                                {% for item in application.architecture.liaisonsOffice %}
+                                                                        {{ item.libelle }} <br/>
+                                                                {% endfor %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>
+                                        <tr> 
+                                                <td id="label"> Liaison Access </td>
+                                                <td> 
+                                                        {% if application.architecture.liaisonAccess is defined %}
+                                                                {{ application.architecture.liaisonAccess }} 
+                                                        {% endif %}
+                                                </td>
+                                        </tr>
+                                        <tr> 
+                                                <td id="label"> Stocke les données utilisateurs </td>
+                                                <td>
+                                                        {% if application.architecture.stockeDonneesUser is defined %}
+                                                                {% if application.architecture.stockeDonneesUser is not null %}
+                                                                        {% if application.architecture.stockeDonneesUser %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}	
+                                                        {% endif %}
+                                                </td>
+                                        </tr>
+                                        <tr> 
+                                                <td id="label"> Utilisation du matériel périphérique </td>
+                                                <td> 
+                                                        {% if application.architecture.utilisationMaterielPeripherique is defined %}
+                                                                {% if application.architecture.utilisationMaterielPeripherique is not null %}
+                                                                        {% if application.architecture.utilisationMaterielPeripherique %} Oui {% else %} Non {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td>
+                                        </tr>	
+                                        <tr> 
+                                                <td id="label"> Briques </td>
+                                                <td> 
+                                                        {% if application.architecture.briques is defined %}
+                                                                {% if application.architecture.briques is not null %}
+                                                                        {% for brique in application.architecture.briques %}
+                                                                                {{ brique.libelle }}
+                                                                        {% endfor %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                </td> 
+                                        </tr>						
+                                </table>
+                                </div>
+                        </li>
+                        {% endif %}
+                        {% if(getAuthorisation('Gestion')) == true %}
+                            <li>
+                                    <a id="gestion_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                    <a id="gestion_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                    <h2> Gestion </h2>
+
+                                    <div class="content" id="gestion">						
+                                    <table>	
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                            {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                'Responsable qualification',
+                                                                                                'Qualificateur',
+                                                                                                'Intégrateur',
+                                                                                                'Chef de produit'
+                                                                                            ] %}					
+                                                    <tr>
+                                                            <td id="label"> MOE </td>
+                                                            <td id="read_only"> 
+                                                                    {% for agent in application.agents %}
+                                                                            {% if agent.role == 'moe' %}
+                                                                                    {{ agent.libelle }}
+                                                                            {% endif %}
+                                                                    {% endfor %}
+                                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="label"> Département MOE </td>
+                                                        <td id="read_only"> 
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="label"> MOA </td>
+                                                        <td id="read_only"> 
+                                                                {% for agent in application.agents %}
+                                                                        {% if agent.role == 'moa' %}
+                                                                                {{ agent.libelle }}
+                                                                        {% endif %}
+                                                                {% endfor %}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="label"> Département MOA </td>
+                                                        <td id="read_only">	
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                'Responsable qualification',
+                                                                                                'Qualificateur',
+                                                                                                'Intégrateur',
+                                                                                                'Chef de produit',
+                                                                                                'Technicien support'
+                                                                                            ] %}
+                                                    <tr> 
+                                                        <td id="label"> Liste des postes installés </td>
+                                                        <td id="text"> {% if application.gestion.listePostesInstalles is defined %} {{ application.gestion.listePostesInstalles }} {% endif %} </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                'Responsable qualification',
+                                                                                                'Qualificateur',
+                                                                                                'Intégrateur',
+                                                                                                'Chef de produit',
+                                                                                            ] %}
+                                                    <tr> 
+                                                        <td id="label"> Postes pilotes WSUS </td>
+                                                        <td id="text"> {% if application.gestion.postesPilotesWSUS is defined %} {{ application.gestion.postesPilotesWSUS }} {% endif %} </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                    </table>	
+                                    </div>
+                            </li>	
+                            {% endif %}
+                            {% if(getAuthorisation('Installation')) == true %}
+                                <li>
+                                        <a id="installation_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                        <a id="installation_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                        <h2> Installation </h2> 
+
+                                        <div class="content" id="installation">
+                                        <table>	
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                    'Chef de produit',
+                                                                                                    'Technicien support'
+                                                                                                ] %}
+                                                    <tr> 
+                                                            <td id="label"> <div class="label"> Comptabilisation license  </div>
+                                                                    <a title="Y'at-il un reporting de réalisé suite à l'installation de l'application ? " href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text">
+                                                                    {% if application.installation.comptabilisationLicense is defined %}
+                                                                            {% if application.installation.comptabilisationLicense is not null %}
+                                                                                    {% if application.installation.comptabilisationLicense %} Oui {% else %} Non {% endif %}
+                                                                            {% endif %}
+                                                                    {% endif %}
+                                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td id="label"> <div class="label"> Nombre de licenses  </div>
+                                                                    <a title="Nombre de licenses disponibles " href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text"> 
+                                                                    {% if application.installation.nombreLicenses is defined %} 
+                                                                            {{ application.installation.nombreLicenses }} 
+                                                                    {% endif %} 
+                                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td id="label"> <div class="label"> Modalité d'acquisition  </div>
+                                                                    <a title="Procédure qui doit être utilisée pour faire la demande d'installation de l'application" href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text"> 
+                                                                    {% if application.installation.modaliteAcquisition is defined %} 
+                                                                            {{ application.installation.modaliteAcquisition }} 
+                                                                    {% endif %} 
+                                                            </td> 
+                                                    </tr>
+                                                    <tr>
+                                                            <td id="label"> <div class="label"> Mode d'installation souhaitée  </div>
+                                                                    <a title="Une fois la qualification réalisée, plusieurs modes d'installation sont disponibles pour la déployer" href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text"> {% if application.installation.modeInstallationSouhaitee is defined %} {{ application.installation.modeInstallationSouhaitee }} {% endif %} </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td id="label"> Installation à distance </td>
+                                                            <td id="text"> 
+                                                                    {% if application.installation.installationADistance is not null %}
+                                                                            {% if application.installation.installationADistance %} Oui {% else %} Non {% endif %}
+                                                                    {% endif %}
+                                                            </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                        </table>
+                                        </div>
+                                </li>
+                            {% endif %}
+                            {% if(getAuthorisation('Developpement')) == true %}
+                                <li>
+                                        <a id="developpement_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                        <a id="developpement_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>				
+                                        <h2> Développement </h2>
+
+                                        <div class="content" id="developpement">
+                                        <table>
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur',
+                                                                                                    'Intégrateur',
+                                                                                                    'Chef de produit',
+                                                                                                ] %}
+                                                    <tr> 
+                                                            <td id="label"> Développement spécifique </td>
+                                                            <td> 
+                                                                    {% if application.developpement.developpementSpecifique is defined %}
+                                                                            {% if application.developpement.developpementSpecifique is not null %}
+                                                                                    {% if application.developpement.developpementSpecifique %} Oui {% else %} Non {% endif %}
+                                                                            {% endif %}
+                                                                    {% endif %}
+                                                            </td>
+                                                    </tr>
+                                                    <tr> 
+                                                            <td id="label"> Application avec TMA </td>
+                                                            <td> 
+                                                                    {% if application.developpement.appliAvecTMA is defined %}
+                                                                            {% if application.developpement.appliAvecTMA is not null %}
+                                                                                    {% if application.developpement.appliAvecTMA %} Oui {% else %} Non {% endif %}
+                                                                            {% endif %}
+                                                                    {% endif %}
+                                                            </td>
+                                                    </tr>
+                                                    <tr> 
+                                                            <td id="label"> <div class="label"> Outil de développement  </div>
+                                                                    <a title="Produit(s) utilisé(s) pour la réalisation de l'application" href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text"> {% if application.developpement.outilDeveloppement is defined %} {{ application.developpement.outilDeveloppement }} {% endif %} </td>
+                                                    </tr>
+                                                    <tr> 
+                                                            <td id="label"> <div class="label"> Login du compte de test </div>
+                                                                    <a title="Compte de test de l'application (nécessaire en cas d'application nécessitant une identification)" href="#"> <div class="bulle"> </div> </a>
+                                                            </td> 
+                                                            <td id="text"> {% if application.developpement.loginCompteTest is defined %} {{ application.developpement.loginCompteTest }} {% endif %} </td> 
+                                                    </tr>
+                                                    <tr> 
+                                                            <td id="label"> Password du compte de test </td>
+                                                            <td id="text"> {% if application.developpement.passwordCompteTest is defined %} {{ application.developpement.passwordCompteTest }} {% endif %} </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                        </table>
+                                        </div>
+                                </li>
+                            {% endif %}
+                            {% if(getAuthorisation('Developpement')) == true %}
+                                <li>
+                                        <a id="catalogue_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                        <a id="catalogue_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>					
+                                        <h2> Catalogue SIT </h2>
+
+                                        <div class="content" id="catalogue">
+                                        <table>
+                                                <tr>
+                                                        <td id="label"> <div class="label"> Référence de l'application  </div>
+                                                                <a title="Nom de l'application dans le catalogue SIT" href="#"> <div class="bulle"> </div> </a>
+                                                        </td> 
+                                                        <td id="text"> {{ application.refCatalogue.referenceApplication }} </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Usage application </td>
+                                                        <td id="text"> {{ application.refCatalogue.usageApplication }} </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Date de mise en ligne de l'application </td>
+                                                        <td> 
+                                                                {% if application.refCatalogue.dateMiseEnLigneApplication is not null %}
+                                                                        {{ application.refCatalogue.dateMiseEnLigneApplication|date('d.m.Y') }} 
+                                                                {% endif %}
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Date de fin de vie de l'application </td>
+                                                        <td>
+                                                                {% if application.refCatalogue.dateFinDeVieApplication is not null %}
+                                                                        {{ application.refCatalogue.dateFinDeVieApplication|date('d.m.Y') }}
+                                                                {% endif %}
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Type du catalogue</td>
+                                                        <td id="text"> {{ application.refCatalogue.typeCatalogue }} </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Version payée </td>
+                                                        <td id="text"> {{ application.refCatalogue.versionPayee }} </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Coût </td>
+                                                        <td id="text"> {{ application.refCatalogue.cout }} </td>
+                                                </tr>
+                                                <tr>
+                                                        <td id="label"> Documentation informations complémentaires </td>
+                                                        <td id="text">
+                                                                {% if application.refCatalogue.docInfoComplementaire is not empty %}
+                                                                        <a href = "{{path('consulterFichier', {'id' : application.refCatalogue.docInfoComplementaire.id }) }}"> {{ application.refCatalogue.docInfoComplementaire.url }} </a>
+                                                                {% endif %}
+                                                        </td>
+                                                </tr>					
+                                        </table>
+                                        </div>
+                                </li>
+                            {% endif %}
+                    </ul>
+                {% endif %}
+                    {#% fin onglet application %#}
+                    
+                    {#% debut package onglet application %#}
+                    {% if(getAuthorisation('onglet package')) == true %}
 			<ul id="accordion_package" class="accordion">
-				<li>
-					<a id="infogenerales_package_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="infogenerales_package_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Informations sur le package </h2>
-				
-					<div class="content" id="infogenerales_package">
-					<table>
-						{% for package in application.packages %}
-						<tr>
-							<td id="label"> Nom du package </td>
-							<td id="text"> {{ package.nom }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Nom de publication </td>
-							<td id="text"> {{ package.nomPublication }} </td>
-						</tr>
-						{#<tr>
-							<td id="label"> Pré-qualificateur </td>
-							<td id="text"> {{ package.prequalificateur }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Qualificateur </td>
-							<td id="text"> {{ package.qualificateur }} </td>
-						</tr>#}
-						<tr>
-							<td id="label"> Type du package </td>
-							<td id="text"> {{ package.type }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Taille du package </td>
-							<td id="text"> {{ package.taille }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Chemin du package </td>
-							<td id="text"> {{ package.chemin }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Paliers techniques </td>
-							<td id="text"> {{ package.paliersTechniques }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Espace disque installé </td>
-							<td id="text"> {{ package.espaceDisqueInstalle }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Ports ouverts locaux </td>
-							<td id="text"> {{ package.installation.portsOuvertsLocaux }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Ports ouverts distants </td>
-							<td id="text"> {{ package.installation.portsOuvertsDistants }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Version Outil Packaging </td>
-							<td id="text"> {{ package.versionOutilPackaging }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Version Template </td>
-							<td id="text"> {{ package.versionTemplate }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Product Code </td>
-							<td id="text"> {{ package.productCode }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Ligne de commande publication </td>
-							<td id="text"> {{ package.ligneCommandePublication }} </td>
-						</tr>
-						<tr>							
-							<td id="label"> Ligne de commande télédistribution </td>
-							<td> {{ package.ligneCommandeTeledistribution }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Package virtualisé </td>
-							<td> {{ package.installation.packageVirtualise }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Version AppV XP </td>
-							<td id="text"> {{ package.installation.versionAppVXP }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Version AppV W7</td>
-							<td id="text"> {{ package.installation.versionAppVW7 }} </td>
-						</tr>
-						<tr>
-							<td id="label"> connectionGroup </td>
-							<td> {{ package.installation.connectionGroup }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Active Setup </td>
-							<td> {{ package.activeSetup }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Redémarrage requis </td>
-							<td> {{ package.redemarrageRequis }} </td>
-						</tr>												
-						<tr>
-							<td id="label"> Redémarrage par l'outil de déploiement </td>
-							<td> {{ package.redemarrageOutilDeveloppement }} </td>
-						</tr>
-						<tr>
-							<td id="label"> TNS NAMES </td>
-							<td> {{ package.tNSNAMES }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Nom d'entrée TNS NAMES </td>
-							<td id="text"> {{ package.nomEntreeTNSNAMES }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Dossier Technique </td>
-							<td id="text"> {{ package.dossierTechnique }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Mode opératoire </td>
-							<td id="text"> 
-								{% if package.modeOperatoire is defined %}
-									{% if package.modeOperatoire is not null %}
-										{{ package.modeOperatoire.libelle }}
-									{% endif %}
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Commentaire </td>
-							<td id="text"> {{ package.commentaire }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Répertoire d'installation de l'application </td>
-							<td id="text"> {{ package.installation.repertoireInstallationApplication }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Répertoire d'installation des données </td>
-							<td id="text"> {{ package.installation.repertoireInstallationDonnees }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Création de Custom Actions </td>
-							<td> {{ package.creationCustomActions }} </td>
-						</tr>
-						{% endfor %}	
-					</table>
-				</li>
-				
-				<li>
-					<a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
-					<h2> Scripts </h2>
-					
-					<div class="content" id="scripts">
-						<div class="text"> Pas de pré-requis </td>
-						{% for package in application.packages %}
-							{% if package.scripts is empty %}
-								<div class="text"> Pas de script </td>
-							{% endif %}
-							
-							{#<div id="lien"> <a href="{{path('ajouterScript', {'packageId' : package.id }) }}"> > Ajouter un script </a> </div>#}
-						
-							{% for script in package.scripts %}
-								<h3> <a id="script_accordion{{script.id}}"> + Script n° {{ script.id }} </a> </h3>
-						
-								<table id="script{{script.id}}" class="script">							
-									<tr>
-										<td id="label"> Nom du script </td>
-										<td> {{ script.nom }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Fonction du script </td>
-										<td> {{ script.fonction }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Type du script </td>
-										<td> {{ script.type }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Technologie </td>
-										<td> {{ script.techno }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Système d'exploitation </td>
-										<td> {{ script.oscible }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Condition d'exécution </td>
-										<td> {{ script.conditionExecution }} </td>
-									</tr>
-									<tr>
-										<td id="label"> Condition de lancement </td>
-										<td> {{ script.conditionLancement }} </td>
-									</tr>
-								</table>
-						
-							{% endfor %}
-						{% endfor %}
-					</div>
-				</li>
+                                {% if(getAuthorisation('Informations sur le package')) == true %}
+                                    <li>
+                                            <a id="infogenerales_package_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                            <a id="infogenerales_package_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                            <h2> Informations sur le package </h2>
+
+                                            <div class="content" id="infogenerales_package">
+                                            <table>                           	
+                                                    {% for package in application.packages %}
+                                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                            {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                    'Responsable qualification',
+                                                                                    'Qualificateur',
+                                                                                    'Intégrateur',
+                                                                                    'Technicien support',
+                                                                                    'Chef de produit'
+                                                                                ] %}
+                                                            {% if app.session and app.session.get('role') != 'Technicien support' %}	
+                                                            <tr>
+                                                                <td id="label"> Nom du package </td>
+                                                                <td id="text"> {{ package.nom }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="label"> Nom de publication </td>
+                                                                <td id="text"> {{ package.nomPublication }} </td>
+                                                            </tr>
+                                                            {#%<tr>
+                                                                <td id="label"> Qualificateur </td>
+                                                                <td id="text"> {{ package.qualificateur }} </td>
+                                                            </tr>%#}
+                                                            <tr>
+                                                                <td id="label"> Type du package </td>
+                                                                <td id="text"> {{ package.type }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="label"> Taille du package </td>
+                                                                <td id="text"> {{ package.taille }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="label"> Chemin du package </td>
+                                                                <td id="text"> {{ package.chemin }} </td>
+                                                            </tr>
+                                                        <tr>
+                                                            <td id="label"> Paliers techniques </td>
+                                                            <td id="text"> {{ package.paliersTechniques }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Espace disque installé </td>
+                                                            <td id="text"> {{ package.espaceDisqueInstalle }} </td>
+                                                        </tr>
+
+                                                    {%endif%}
+
+                                                    {#<tr>
+                                                            <td id="label"> Pré-qualificateur </td>
+                                                            <td id="text"> {{ package.prequalificateur }} </td>
+                                                    </tr>#}
+
+
+                                                    <tr>
+                                                        <td id="label"> Ports ouverts locaux </td>
+                                                        <td id="text"> {{ package.installation.portsOuvertsLocaux }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="label"> Ports ouverts distants </td>
+                                                        <td id="text"> {{ package.installation.portsOuvertsDistants }} </td>
+                                                    </tr>
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' %}
+                                                        <tr>
+                                                            <td id="label"> Version Outil Packaging </td>
+                                                            <td id="text"> {{ package.versionOutilPackaging }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Version Template </td>
+                                                            <td id="text"> {{ package.versionTemplate }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Product Code </td>
+                                                            <td id="text"> {{ package.productCode }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' and  app.session.get('role') != 'Intégrateur'%}
+                                                        <tr>
+                                                            <td id="label"> Ligne de commande publication </td>
+                                                            <td id="text"> {{ package.ligneCommandePublication }} </td>
+                                                        </tr>
+                                                        <tr>							
+                                                            <td id="label"> Ligne de commande télédistribution </td>
+                                                            <td> {{ package.ligneCommandeTeledistribution }} </td>
+                                                        </tr>
+                                                    {%endif%}
+                                                    <tr>
+                                                            <td id="label"> Package virtualisé </td>
+                                                            <td> {{ package.installation.packageVirtualise }} </td>
+                                                    </tr>
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' %}
+                                                        <tr>
+                                                            <td id="label"> Version AppV XP </td>
+                                                            <td id="text"> {{ package.installation.versionAppVXP }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Version AppV W7</td>
+                                                            <td id="text"> {{ package.installation.versionAppVW7 }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> connectionGroup </td>
+                                                            <td> {{ package.installation.connectionGroup }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Active Setup </td>
+                                                            <td> {{ package.activeSetup }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' and  app.session.get('role') != 'Intégrateur'%}
+                                                        <tr>
+                                                            <td id="label"> Redémarrage requis </td>
+                                                            <td> {{ package.redemarrageRequis }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Redémarrage par l'outil de déploiement </td>
+                                                            <td> {{ package.redemarrageOutilDeveloppement }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' %}
+                                                        <tr>
+                                                            <td id="label"> TNS NAMES </td>
+                                                            <td> {{ package.tNSNAMES }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Nom d'entrée TNS NAMES </td>
+                                                            <td id="text"> {{ package.nomEntreeTNSNAMES }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Dossier Technique </td>
+                                                            <td id="text"> {{ package.dossierTechnique }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                                    <tr>
+                                                            <td id="label"> Mode opératoire </td>
+                                                            <td id="text"> 
+                                                                    {% if package.modeOperatoire is defined %}
+                                                                            {% if package.modeOperatoire is not null %}
+                                                                                    {{ package.modeOperatoire.libelle }}
+                                                                            {% endif %}
+                                                                    {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                            {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                    'Responsable qualification',
+                                                                                    'Qualificateur',
+                                                                                    'Intégrateur',
+                                                                                    'Chef de produit'
+                                                                                ] %}
+                                                                <tr>
+                                                                    <td id="label"> Commentaire </td>
+                                                                    <td id="text"> {{ package.commentaire }} </td>
+                                                                </tr>
+                                                            {% endif %}
+                                                            {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                    'Responsable qualification',
+                                                                                    'Qualificateur',
+                                                                                    'Intégrateur',
+                                                                                    'Chef de produit',
+                                                                                    'Technicien support'
+                                                                                ] %}
+                                                                <tr>
+                                                                    <td id="label"> Répertoire d'installation de l'application </td>
+                                                                    <td id="text"> {{ package.installation.repertoireInstallationApplication }} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td id="label"> Répertoire d'installation des données </td>
+                                                                    <td id="text"> {{ package.installation.repertoireInstallationDonnees }} </td>
+                                                                </tr>
+                                                            {% endif %}
+                                                            {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                    'Responsable qualification',
+                                                                                    'Qualificateur',
+                                                                                    'Intégrateur',
+                                                                                    'Chef de produit',
+                                                                                ] %}
+                                                                <tr>
+                                                                    <td id="label"> Création de Custom Actions </td>
+                                                                    <td> {{ package.creationCustomActions }} </td>
+                                                                </tr>
+                                                            {% endif %}
+                                                    {% endif %}
+                                                    {% endfor %}	
+                                            </table>
+                                    </li>
+                                {% endif %}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                        'Responsable qualification',
+                                                                                        'Qualificateur',
+                                                                                        'Intégrateur',
+                                                                                        'Chef de produit',
+                                                                                    ] %}
+                                        {% if(getAuthorisation('Scripts')) == true %}
+                                            <li>
+                                                <a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                                <a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
+                                                <h2> Scripts </h2>
+                                                    <div class="content" id="scripts">
+                                                        <div class="text"> Pas de pré-requis </td>
+                                                            {% for package in application.packages %}
+                                                                {% if package.scripts is empty %}
+                                                                    <div class="text"> Pas de script </td>
+                                                                {% endif %}
+
+                                                                {#<div id="lien"> <a href="{{path('ajouterScript', {'packageId' : package.id }) }}"> > Ajouter un script </a> </div>#}
+
+                                                                {% for script in package.scripts %}
+                                                                    <h3> <a id="script_accordion{{script.id}}"> + Script n° {{ script.id }} </a> </h3>
+
+                                                                    <table id="script{{script.id}}" class="script">							
+                                                                            <tr>
+                                                                                    <td id="label"> Nom du script </td>
+                                                                                    <td> {{ script.nom }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                    <td id="label"> Fonction du script </td>
+                                                                                    <td> {{ script.fonction }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                    <td id="label"> Type du script </td>
+                                                                                    <td> {{ script.type }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                    <td id="label"> Technologie </td>
+                                                                                    <td> {{ script.techno }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                    <td id="label"> Système d'exploitation </td>
+                                                                                    <td> {{ script.oscible }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td id="label"> Condition d'exécution </td>
+                                                                                <td> {{ script.conditionExecution }} </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td id="label"> Condition de lancement </td>
+                                                                                <td> {{ script.conditionLancement }} </td>
+                                                                            </tr>
+                                                                    </table>
+                                                            {% endfor %}
+                                                    {% endfor %}
+                                                </div>
+                                            </li>
+                                            {% endif %}
+                                    {% endif %}
+                                {% endif %}
 			</ul>
-			
-			
-			{############################################################################################################################################}
-			{######################################################## QUALIFICATION #####################################################################}
-			{############################################################################################################################################}
-			
+                        {#% fin onglet package %#}
+                        {% endif %}
+			{#% debut onglet qualification %#}
+                        {% if(getAuthorisation('onglet qualification')) == true %}
 			<ul id="accordion_qualif" class="accordion">
+                            {% if(getAuthorisation('Informations sur la qualification ')) == true %}
 				<li>
 					<a id="infogenerales_qualif_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
 					<a id="infogenerales_qualif_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>					
@@ -926,86 +1050,135 @@
 							<td id="label"> Type de qualification </td>
 							<td id="text"> {{ package.qualification.type }} </td>
 						</tr>
-						<tr>
-							<td id="label"> Numéro de lot </td>
-							<td id="text"> {{ package.qualification.numeroLot }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Date de démarrage packaging </td>
-							<td>
-								{% if package.qualification.dateDemarragePackaging is not null %}
-									{{ package.qualification.dateDemarragePackaging|date('d.m.Y')  }} 
-								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> Date de recette standardisation </td>
-							<td>
-								{% if package.qualification.dateRecetteStandardisation is not null %}
-									{{ package.qualification.dateRecetteStandardisation|date('d.m.Y')  }}
-								{% endif %}
-							</td>
-						</tr>	
-						<tr>
-							<td id="label"> Date de recette conformité </td>
-							<td> 
-								{% if package.qualification.dateRecetteConformite is not null %}
-									{{ package.qualification.dateRecetteConformite|date('d.m.Y')  }} 
-								{% endif %}	
-							</td>
-						</tr>						
-						<tr>
-							<td id="label"> Date de mise en service souhaitée </td>
-							<td> 
-								{% if package.qualification.dateMiseEnServiceSouhaitee is not null %}
-									{{ package.qualification.dateMiseEnServiceSouhaitee|date('d.m.Y')  }} 
-								{% endif %}	
-							</td>
-						</tr>
+                                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> Numéro de lot </td>
+                                                            <td id="text"> {{ package.qualification.numeroLot }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                        'Responsable qualification',
+                                                                                        'Intégrateur'
+                                                                                    ]  %}
+                                                        <tr>
+                                                            <td id="label"> Date de démarrage packaging </td>
+                                                            <td>
+                                                                    {% if package.qualification.dateDemarragePackaging is not null %}
+                                                                        {{ package.qualification.dateDemarragePackaging|date('d.m.Y')  }} 
+                                                                    {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Date de recette standardisation </td>
+                                                            <td>
+                                                                {% if package.qualification.dateRecetteStandardisation is not null %}
+                                                                    {{ package.qualification.dateRecetteStandardisation|date('d.m.Y')  }}
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Date de recette conformité </td>
+                                                            <td> 
+                                                                    {% if package.qualification.dateRecetteConformite is not null %}
+                                                                        {{ package.qualification.dateRecetteConformite|date('d.m.Y')  }} 
+                                                                    {% endif %}	
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                        'Responsable qualification',
+                                                                                        'Intégrateur',
+                                                                                        'Chef de produit'
+                                                                                    ]  %}
+                                                        <tr>
+                                                            <td id="label"> Date de mise en service souhaitée </td>
+                                                            <td> 
+                                                                {% if package.qualification.dateMiseEnServiceSouhaitee is not null %}
+                                                                    {{ package.qualification.dateMiseEnServiceSouhaitee|date('d.m.Y')  }} 
+                                                                {% endif %}	
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endif %}							
+						
 						<tr>
 							<td id="label"> Date de mise en production </td>
 							<td> 
 								{% if package.qualification.dateProductionQualification is not null %}
-									{{ package.qualification.dateProductionQualification|date('d.m.Y')  }} 
+                                                                    {{ package.qualification.dateProductionQualification|date('d.m.Y')  }} 
 								{% endif %}	
 							</td>
 						</tr>
+                                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Intégrateur',
+                                                                                                        'Chef de produit'
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> PV de pré-qualification </td>
+                                                            <td> {{ package.qualification.pVPrequalification }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Intégrateur'
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> Agent chargé de la pré-qualification </td>
+                                                            <td> {{ package.qualification.agentPreQualif }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="label"> Date du PV de qualification </td>
+                                                            <td> 
+                                                                    {% if package.qualification.datePVQualification is not null %}
+                                                                            {{ package.qualification.datePVQualification|date('d.m.Y')  }} 
+                                                                    {% endif %}	
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Intégrateur',
+                                                                                                        'Chef de produit'
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> PV de qualification </td>
+                                                            <td> {{ package.qualification.pVQualification }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Intégrateur'
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> Agent chargé de la qualification </td>
+                                                            <td> {{ package.qualification.agentQualif }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                        'Responsable qualification',
+                                                                                                        'Intégrateur',
+                                                                                                        'Chef de produit'
+                                                                                                      ] %}
+                                                        <tr>
+                                                            <td id="label"> Sous-compte </td>
+                                                            <td id="text"> {{ package.qualification.sousCompte }} </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endif %}
 						<tr>
-							<td id="label"> PV de pré-qualification </td>
-							<td> {{ package.qualification.pVPrequalification }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Agent chargé de la pré-qualification </td>
-							<td> {{ package.qualification.agentPreQualif }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Date du PV de qualification </td>
-							<td> 
-								{% if package.qualification.datePVQualification is not null %}
-									{{ package.qualification.datePVQualification|date('d.m.Y')  }} 
-								{% endif %}	
-							</td>
-						</tr>
-						<tr>
-							<td id="label"> PV de qualification </td>
-							<td> {{ package.qualification.pVQualification }} </td>
-						</tr>
-
-						<tr>
-							<td id="label"> Agent chargé de la qualification </td>
-							<td> {{ package.qualification.agentQualif }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Sous-compte </td>
-							<td id="text"> {{ package.qualification.sousCompte }} </td>
-						</tr>
-						<tr>
-							<td id="label"> Commentaire </td>
-							<td> {{ package.qualification.commentaire }} </td>
+                                                    <td id="label"> Commentaire </td>
+                                                    <td> {{ package.qualification.commentaire }} </td>
 						</tr>
 					{% endfor %}
 					</table>
 				</li>
+                            {% endif %}
+                            {% if(getAuthorisation('avancement de la qualification')) == true %}
 				<li>
 					<a id="statut_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
 					<a id="statut_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
@@ -1018,102 +1191,112 @@
 							<td id="text"> {% for package in application.packages %} {{ package.statutQualif.libelle }} {% endfor %} </td>
 						</tr>
 					</table>
-				</li>				
+				</li>
+                            {% endif %}
 			</ul>
-			
-			
-			{############################################################################################################################################}
-			{################################################ MISES A JOUR ##############################################################################}
-			{############################################################################################################################################}
-			
-			<ul id="accordion_maj" class="accordion">
-				<li>
-					<a id="maj_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
-					<a id="maj_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>					
-					<h2> Mises à jour </h2>
-					
-					<div class="content" id="maj">
-						{% if application.misesajour is empty %}
-							<div class="text"> Pas de mise à jour </td>
-						{% endif %}
-						
-						{% for miseajour in application.misesajour %}
-						<h3> <a id="maj_accordion{{miseajour.id}}"> + Mise à jour n° {{ miseajour.id }} </a> </h3>
-						
-						<table id="maj{{miseajour.id}}" class="maj">	
-							<tr>
-								<td id="label"> Type de mise à jour </td>
-								<td> {{ miseajour.type }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Version </td>
-								<td> {{ miseajour.version }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Indice </td>
-								<td> {{ miseajour.indice }} </td>
-							</tr>
-							<tr>
-								<td id="label"> OS cible </td>
-								<td> {{ miseajour.oscible }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Statut du patch </td>
-								<td> {{ miseajour.statutPatch }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Description </td>
-								<td> {{ miseajour.description }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Date de demande de mise à jour </td>
-								<td> 
-									{% if miseajour.dateDemandeMAJ is not null %}
-										{{ miseajour.dateDemandeMAJ|date('d.m.Y') }} 
-									{% endif%}
-								</td>
-							</tr>
-							<tr>
-								<td id="label"> Documentation technique </td>
-								<td> {{ miseajour.documentationTechnique }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Date de mise en production de la mise à jour </td>
-								<td> 
-									{% if miseajour.dateMiseEnProdMAJ is not null %}
-										{{ miseajour.dateMiseEnProdMAJ|date('d.m.Y') }} 
-									{% endif %}
-								</td>
-							</tr>
-							<tr>
-								<td id="label"> Personne chargée de la mise à jour </td>
-								<td> {{ miseajour.personneChargeeMAJ }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Nom de publication du patch </td>
-								<td> {{ miseajour.nomPublicationPatch }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Ligne de commande pour la télédistribution du patch </td>
-								<td> {{ miseajour.ligneCommandePatchTeledistribution }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Ligne de commande pour la publication du patch </td>
-								<td> {{ miseajour.ligneCommandePatchPublication }} </td>
-							</tr>
-							<tr>
-								<td id="label"> Chemin du patch </td>
-								<td> {{ miseajour.cheminPatch }} </td>
-							</tr>
+                        {#% fin onglet qualification %#}                      
+			{% endif %}
+                        {#% debut onglet Mise à jour %#}
+                        {% if(getAuthorisation('onglet mise a jour')) == true %}
+                            <ul id="accordion_maj" class="accordion">
+                                {% if(getAuthorisation('Item Mises a jour')) == true %}
+                                    <li>
+                                            <a id="maj_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
+                                            <a id="maj_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>					
+                                            <h2> Mises à jour </h2>
 
-						</table>
-						{% endfor %}
-						</li>
-			</ul>
-{#***************************************************************************************************************************************************************************#}						
-						{############################################################################################################################################}
-						{################################################ historique de modification ################################################################}
-						{############################################################################################################################################}
+                                            <div class="content" id="maj">
+                                                    {% if application.misesajour is empty %}
+                                                            <div class="text"> Pas de mise à jour </td>
+                                                    {% endif %}
+
+                                                    {% for miseajour in application.misesajour %}
+                                                    <h3> <a id="maj_accordion{{miseajour.id}}"> + Mise à jour n° {{ miseajour.id }} </a> </h3>
+
+                                                    <table id="maj{{miseajour.id}}" class="maj">	
+                                                            <tr>
+                                                                    <td id="label"> Type de mise à jour </td>
+                                                                    <td> {{ miseajour.type }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td id="label"> Version </td>
+                                                                    <td> {{ miseajour.version }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td id="label"> Indice </td>
+                                                                    <td> {{ miseajour.indice }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td id="label"> OS cible </td>
+                                                                    <td> {{ miseajour.oscible }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td id="label"> Statut du patch </td>
+                                                                    <td> {{ miseajour.statutPatch }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td id="label"> Description </td>
+                                                                    <td> {{ miseajour.description }} </td>
+                                                            </tr>
+                                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                                {% if app.session and app.session.get('role') in ['Administrateur',
+                                                                                                            'Responsable qualification',
+                                                                                                            'Intégrateur',
+                                                                                                            'Chef de produit'
+                                                                                                          ] %}
+                                                                    <tr>
+                                                                            <td id="label"> Date de demande de mise à jour </td>
+                                                                            <td> 
+                                                                                    {% if miseajour.dateDemandeMAJ is not null %}
+                                                                                            {{ miseajour.dateDemandeMAJ|date('d.m.Y') }} 
+                                                                                    {% endif%}
+                                                                            </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td id="label"> Documentation technique </td>
+                                                                        <td> {{ miseajour.documentationTechnique }} </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td id="label"> Date de mise en production de la mise à jour </td>
+                                                                        <td> 
+                                                                                {% if miseajour.dateMiseEnProdMAJ is not null %}
+                                                                                        {{ miseajour.dateMiseEnProdMAJ|date('d.m.Y') }} 
+                                                                                {% endif %}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <td id="label"> Personne chargée de la mise à jour </td>
+                                                                    <td> {{ miseajour.personneChargeeMAJ }} </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <td id="label"> Nom de publication du patch </td>
+                                                                    <td> {{ miseajour.nomPublicationPatch }} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td id="label"> Ligne de commande pour la télédistribution du patch </td>
+                                                                    <td> {{ miseajour.ligneCommandePatchTeledistribution }} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td id="label"> Ligne de commande pour la publication du patch </td>
+                                                                    <td> {{ miseajour.ligneCommandePatchPublication }} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td id="label"> Chemin du patch </td>
+                                                                    <td> {{ miseajour.cheminPatch }} </td>
+                                                                </tr>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                    </table>
+                                                    {% endfor %}
+                                                    </li>
+                                                {% endif %}
+                            </ul>
+                    {#% fin onglet mis a jour %#}
+                    {% endif %}
+{#%***************************************************************************************************************************************************************************%#}						
+						{#%##########################################################################################################################################%#}
+						{#%############################################### historique de modification ###############################################################%#}
+						{#%##########################################################################################################################################%#}
 						
 						<ul id="accordion_hdm"  class="accordion">
 							<li>
