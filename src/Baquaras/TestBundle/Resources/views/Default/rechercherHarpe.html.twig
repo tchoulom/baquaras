@@ -8,8 +8,8 @@
                 <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
                 <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
-                <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-                <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 		<style>
 			#zoneBouton {
 				 margin-top : -100px; 
@@ -127,33 +127,33 @@
 					var selectedItem = $("#form_rightValues option:selected");
 					$("#form_leftValues").append(selectedItem);
 				});
-                               
+                               /*
                                 var liste = [
                                     "Yamine",
                                     "Rachid",
                                     "Daniel",
                                     "Amira"
                                 ];
+                                */
                                 
-                                
-                                var getUsers = Routing.generate('ajoutUtilisateur');
+                                /*var getUsers = Routing.generate('ajoutUtilisateur');*/
                                 
                                 $("#form_recherche").autocomplete({
                                    // source : liste//"./../Entity/UtilisateurRepository.php"
                                     source: function( request, response ) {
                                     $.ajax({
-                                        url: "{{ path('getUsers/term')}},
-                                        dataType: "jsonp",
-                                        data: {
-                                            u: request.term
-                                        },
+                                        url: Routing.generate('ajoutUtilisateur', { 'term': value }),
+                                        dataType: "html",
+                                       /* data: {
+                                            term: request.term
+                                        },*/
                                         success: function( data ) {
                                             console.log(data);
-                                        },
-                                        error: function (xhr, ajaxOptions, thrownError) {
+                                        }
+                                        /* error: function (xhr, ajaxOptions, thrownError) {
                                             console.log(xhr.status);
                                             console.log(thrownError);
-                                        }
+                                        }*/
                                     });
                                 }
                                 });

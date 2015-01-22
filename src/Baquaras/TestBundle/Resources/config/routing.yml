@@ -65,6 +65,12 @@ rechercherUserHarpe:
 ajouterUser:
     path: /utilisateur/add/{cpteMatriculaire}
     defaults: {_controller:BaquarasTestBundle:Utilisateur:ajouterUser}
+    
+ajoutUtilisateur:
+    path: /utilisateur/{$term}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
+    options:
+        expose: true
 
 modifierUser:
     path: /utilisateur/edit/{userId}
@@ -245,8 +251,3 @@ modifStatutQualif:
     path:    /modifStatutQualif/{id}
     defaults: {_controller:BaquarasTestBundle:Appli:modifStatutQualif,id:null}
 
-getUsers:
-    path: /getUsers/{term}
-    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
-    options:
-        expose: true
