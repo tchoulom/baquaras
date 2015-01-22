@@ -1929,5 +1929,12 @@
 			
 			</form>		
 		</div>
+    <script>
+        $('form').submit(function () {
+            $selection = $(".modifierappli input, .modifierappli select, .modifierappli textarea, .modifierappli div");
+            $selection.removeAttr('disabled');
+            
+        });
+    </script>
     </body>
 </html>

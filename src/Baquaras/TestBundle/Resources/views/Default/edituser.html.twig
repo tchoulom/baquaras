@@ -22,7 +22,7 @@
 
             <form action="{{ path('modifierUser', {'userId' : user.id}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
 
-                {{ form_start(form) }}
+                {#{ form_start(form) }#}
 
                 <table>
                     <tr>
@@ -50,7 +50,8 @@
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.mail) }} </td> 
-                        <td id="text"> {{ form_widget(form.mail, { 'attr':{'disabled':'disabled'} }) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.mail, { 'attr':{'disabled':'disabled'} }) }} </td> 
+                    <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.mail) }} </td>
                     </tr>
                     <tr>
@@ -68,10 +69,7 @@
                             <a href="{{ path('listerUsers') }}">Retour</a> 
                             {{ form_widget(form.save) }} </td>
                     </tr>
-
                 </table>
-
-
 
                 {{ form_rest(form) }}
 
@@ -81,5 +79,13 @@
 
 
         </div>
+        <script>
+        $('form').submit(function () {
+            alert('test');
+            $selection = $(".ajouterUser input");
+            $selection.removeAttr('disabled');
+            
+        });
+    </script>
     </body>
 </html>

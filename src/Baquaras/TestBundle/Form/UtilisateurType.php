@@ -16,17 +16,13 @@ class UtilisateurType extends AbstractType
     {
         $builder
             ->add('nom', 'text', array(
-                'label' => 'Nom *',
-                'read_only'=> true))
+                'label' => 'Nom *'))
             ->add('prenom', 'text', array(
-                'label' => 'Prénom *',
-                'read_only' => true))
+                'label' => 'Prénom *'))
             ->add('cpteMatriculaire', 'text', array(
-                'label' => 'Compte matriculaire *',
-                'read_only' => true))
+                'label' => 'Compte matriculaire *'))
             ->add('mail', 'text', array(
-                'label' => 'Mail',
-                'read_only' => true))
+                'label' => 'Mail'))
             ->add('telephone', 'text', array(
                 'label' => 'Téléphone'))
             ->add('profil1', 'entity', array(
