@@ -30,7 +30,7 @@
 					</tr>
 				</table>
 			
-				<form action="{{path('modifierModeOperatoire', {'packageId': packageId }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="modifiermodeop">
+				<form action="{{path('modifierModeOperatoire', {'packageId': package.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="modifiermodeop">
 			
 				{{ form_start(form) }}
 				
