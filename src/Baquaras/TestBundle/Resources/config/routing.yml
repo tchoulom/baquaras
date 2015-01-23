@@ -77,10 +77,14 @@ supprimerUser:
 rechercherGroupeAD:
     path: /groupe/search/{applicationId}
     defaults: {_controller:BaquarasTestBundle:Groupe:rechercherGroupeAD}
+    options:
+        expose: true
 
 ajouterGroupeAD:
     path: /groupe/add/{applicationId}
     defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeAD}
+    options:
+        expose: true
 
 listerUsers:
     path: /utilisateurs/{sort}
