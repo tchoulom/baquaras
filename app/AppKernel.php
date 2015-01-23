@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Baquaras\TestBundle\BaquarasTestBundle(),
             new Baquaras\AppliBundle\BaquarasAppliBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
 
         );
 
