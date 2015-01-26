@@ -445,9 +445,9 @@ form.modifierappli {
 }
 .modifierappli ul.accordion li div.content {
 	padding:19px 10px 15px 10px;
-margin-top: 10px;
+/*	margin-top: 10px; */
 	background-color: #ddeded;
-	border-top:2px solid white;
+/*	border-top:2px solid white; */
 }
 .modifierappli ul#accordion_appli.accordion li h2 a#requis_accordion_moins,
 .modifierappli ul#accordion_appli.accordion li h2 a#requis_accordion_plus {
@@ -510,7 +510,7 @@ margin-top: 10px;
 	font-family: "Trebuchet MS", "robotolight";
 	padding:4px 6px;
 	float:left;
-	margin:15px 15px 25px 280px;
+	margin:15px 15px 25px 280px; 
 }
 .modifierappli button#baquaras_testbundle_application_save,
 .modifierappli button#baquaras_testbundle_application_modifStatutQualif {
@@ -544,7 +544,7 @@ margin-top: 10px;
 .modifierappli ul#accordion_maj.accordion li div#maj.content table#maj_liste {
 	width:1150px;
 	margin-left:10px;
-	margin-bottom: 10px;
+/*	margin-bottom: 10px; */
 }
 .modifierappli ul#accordion_appli.accordion li div#prerequis.content table#prerequis_liste tbody tr th,
 .modifierappli ul#accordion_appli.accordion li div#nonrequis.content table#nonrequis_liste tbody tr th,
@@ -883,12 +883,12 @@ margin-top: 10px;
 	width: 80px;
 }
 #ajouterDepartement form#ajouterDpt div.container table#form_left tbody tr td select#form_selectDpt {
-	width: 300px;
+	width: 150px;
 }
 #ajouterDepartement form table tbody tr td.text input,
 #ajouterDepartement form table tbody tr td.text select,
 #ajouterDepartement form table tbody tr td.text textarea {
-	width:200px;
+	width:150px;
 	font-size:0.9em;
 	font-family:"Trebuchet MS";
 }
@@ -1067,3 +1067,34 @@ div#onglet a:hover {
 	cursor: pointer;
 	
 }
+
+/**********************************BOOTSTRAP*****************************************************
+input[type="button"], button {
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+	border-color: #008080;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    margin: 15px 10px 0 0;
+    padding: 4px 6px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#form_enregistrer, #form_save{
+	background-color: #fff;
+    background-image: linear-gradient(to bottom, #ddeded, #ddeded) !important;
+    background-repeat: repeat-x;/*
+    border-color: #ddeded !important;
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	padding: 4px 6px;
+}*/
+
+

@@ -1,0 +1,37 @@
+<table id="liste">
+    <tr id="tr1">
+        <td> Prénom </td>
+        <td> Nom </td>
+        <td> Compte matriculaire </td>
+        <td> Téléphone </td>
+        <td> Mail </td>
+        <td> Profil(s) </td>
+        <td> Actions </td>
+    </tr>
+    {% for utilisateur in utilisateurs %}
+        <tr id="trimpair">
+            <td> {{ utilisateur.prenom }} </td>
+            <td> {{ utilisateur.nom }} </td>
+            <td> {{ utilisateur.cpteMatriculaire }} </td>
+            <td> {{ utilisateur.telephone }} </td>
+            <td> {{ utilisateur.mail }} </td>
+            <td> {{ utilisateur.profil1 }} {% if utilisateur.profil2 is not null %}, {{ utilisateur.profil2 }} {% endif %} </td>
+            <td> 
+                <a href="{{path('modifierUser', {'userId': utilisateur.id }) }}"> Modifier cet utilisateur </a> <br/>
+                <a href="{{path('supprimerUser', {'userId': utilisateur.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pré-requis ?')"> Supprimer cet utilisateur </a>
+            </td>
+        </tr>	
+    {% endfor %}
+
+</table>
+{% if pager.haveToPaginate %}
+    <div class="pagination pagination-centered">
+        <ul>
+            <li>
+                {{ pagerfanta(pager, 'default_translated') }}
+            </li>
+
+
+        </ul>
+    </div>
+{% endif %}

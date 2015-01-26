@@ -89,8 +89,8 @@ class ApplicationType extends AbstractType
 				'label' => 'Annuler'))*/
 			->add('save', 'submit', array(
 				'label' => 'Enregistrer les modifications'))
-			->add('modifStatutQualif' , 'button', array(
-				'label' => 'Gérer l\'avancement de la Qualification'))
+			/*->add('modifStatutQualif' , 'button', array(
+				'label' => 'Gérer l\'avancement de la Qualification'))*/
         ;
     }
     

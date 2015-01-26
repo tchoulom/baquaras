@@ -12,3 +12,4 @@ _sonata_admin:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+

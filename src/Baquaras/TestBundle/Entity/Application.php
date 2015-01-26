@@ -219,9 +219,9 @@ class Application
     public function __construct()
     {
         $this->appliReferenceeSIERA = null;
-		$this->appliSousGouvernance = null;
-		$this->dansCatalogueSIT = null;
-		$this->inscriteRevuePerformance = null;
+	$this->appliSousGouvernance = null;
+	$this->dansCatalogueSIT = null;
+	$this->inscriteRevuePerformance = null;
         $this->populationCible = new \Doctrine\Common\Collections\ArrayCollection();
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->preRequis = new \Doctrine\Common\Collections\ArrayCollection();
@@ -231,6 +231,7 @@ class Application
         $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 	
 	public function __toString()

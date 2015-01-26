@@ -794,7 +794,7 @@
                                                                                     'Technicien support',
                                                                                     'Chef de produit'
                                                                                 ] %}
-                                                            {% if app.session and app.session.get('role') != 'Technicien support' %}	
+                                                    {% if app.session and app.session.get('role') != 'Technicien support' %}	
                                                             <tr>
                                                                 <td id="label"> Nom du package </td>
                                                                 <td id="text"> {{ package.nom }} </td>
@@ -867,7 +867,7 @@
                                                             <td id="label"> Ligne de commande télédistribution </td>
                                                             <td> {{ package.ligneCommandeTeledistribution }} </td>
                                                         </tr>
-                                                    {%endif%}
+                                                    {% endif %}
                                                     <tr>
                                                             <td id="label"> Package virtualisé </td>
                                                             <td> {{ package.installation.packageVirtualise }} </td>

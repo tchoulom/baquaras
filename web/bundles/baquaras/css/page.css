@@ -112,3 +112,27 @@ html body div#page-sans-menu form {
 .pagination-right {
   text-align: right;
 }
+.sortlist ul li {
+    display: inline;
+    list-style: none; /* pour enlever les puces sur IE7 */
+    margin: 10px;
+}
+
+.sortlist ul li a,
+.sortlist ul li a:active,
+.sortlist ul li a:hover{
+    display: inline-block;
+    list-style: none;
+    background:#fff;
+    color:#4E5961;
+    text-decoration:none;
+}
+
+.sortlist ul li a:hover,
+.sortlist ul li.active a{
+    display: inline-block;
+    list-style: none;
+    color:#fff;
+    background:#058282;
+}
+
