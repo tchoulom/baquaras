@@ -115,8 +115,8 @@
 			
 			<script>
 				$("#btnLeft").click(function () {
-					document.getElementById("form_recherche").disabled = true;
-					document.getElementById("form_save").disabled = true;
+					document.getElementById("form_recherche").disabled = false;
+					document.getElementById("form_save").disabled = false;
 					var selectedItem = $("#form_leftValues option:selected");
 					$("#form_rightValues").append(selectedItem);
 				});
@@ -127,17 +127,6 @@
 					var selectedItem = $("#form_rightValues option:selected");
 					$("#form_leftValues").append(selectedItem);
 				});
-                               /*
-                                var liste = [
-                                    "Yamine",
-                                    "Rachid",
-                                    "Daniel",
-                                    "Amira"
-                                ];
-                                */
-                                
-                                /*var getUsers = Routing.generate('ajoutUtilisateur');*/
-                                
                                 $("#form_recherche").autocomplete({
                                     source: function( request, response ) {
                                     var element = $('#form_recherche').val();
@@ -145,46 +134,14 @@
                                         url: Routing.generate('ajoutUtilisateur', {term : element }),
                                         dataType: "JSON",
                                         success: function( data ) {
-                                            //$("#form_leftValues").append(data.nom);
-                                            $('#form_leftValues').html(data);
-                                        },
-                                         error: function () {
-                                            alert('error');
+                                            $("#form_leftValues").empty();
+                                            $.each(data, function(index, value) {
+                                                $("#form_leftValues").append('<option value="'+ index +'">'+ value +'</option>');
+                                            });
                                         }
                                     });
                                 }
                                 });
-                                document.getElementById("form_save").disabled = false;
-                                
-                                /*
-                                function autocomplet() {
-                                    var min_length = 0; // min caracters to display the autocomplete
-                                    var keyword = $('#form_recherche').val();
-                                    if (keyword.length >= min_length) {
-                                            $.ajax({
-                                                    source: function( request, response ) {
-                                                        jQuery.ajax({
-                                                            url: "../Entity",
-                                                            dataType: "json",
-                                                    type: 'POST',
-                                                    data: {keyword:keyword},
-                                                    success:function(data){
-                                                            $('#form_leftValues').show();
-                                                            $('#form_leftValues').html(data);
-                                                    }
-                                                });
-                                        } else {
-                                                $('#form_leftValues').hide();
-                                        }
-                                }
-                                
-                                function set_item(item) {
-                                    // change input value
-                                    $('#form_recherche').val(item);
-                                    // hide proposition list
-                                    $('#form_leftValues').hide();
-                                }
-                                */
 			</script>
 		{% endblock %}
 			

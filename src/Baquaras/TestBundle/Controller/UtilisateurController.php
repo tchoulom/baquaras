@@ -90,7 +90,7 @@ class UtilisateurController extends Controller
             $results = array();
             $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findUser($term);
             foreach ($user as $name) {
-                $results[] = $name['nom'];
+                $results[] = $name['nom'].' '.$name['prenom'];
             }
             
             return new Response(json_encode($results));
