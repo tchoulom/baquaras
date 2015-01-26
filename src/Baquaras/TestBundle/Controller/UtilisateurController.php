@@ -110,9 +110,13 @@ class UtilisateurController extends Controller
         
         public function ajoutUtilisateurAction($term)
         {
-            $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($term);
+            $results = array();
+            $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findUser($term);
+            foreach ($user as $name) {
+                $results[] = $name['nom'];
+            }
             
-            return $user;
+            return new Response(json_encode($results));
         }
         
 	

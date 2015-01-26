@@ -78,14 +78,14 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
      *
      * @return array(Utilisateur)
      */
-    public function findUser($term='value')
+    public function findUser($term='RACHID')
     {
         $query = $this->createQueryBuilder('u')
-            ->select('u.nom, u.prenom')
+            ->select('u.nom')
             ->where("u.nom LIKE :term")
             ->setParameter('term', '%'.$term.'%')
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
            // var_dump($query); die('test');
         return $query ;
     }

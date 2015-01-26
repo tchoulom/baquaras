@@ -67,7 +67,7 @@ ajouterUser:
     defaults: {_controller:BaquarasTestBundle:Utilisateur:ajouterUser}
     
 ajoutUtilisateur:
-    path: /utilisateur/{$term}
+    path: /utilisateur/{term}
     defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
     options:
         expose: true

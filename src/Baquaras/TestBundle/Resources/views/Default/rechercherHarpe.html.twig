@@ -139,21 +139,18 @@
                                 /*var getUsers = Routing.generate('ajoutUtilisateur');*/
                                 
                                 $("#form_recherche").autocomplete({
-                                   // source : liste//"./../Entity/UtilisateurRepository.php"
                                     source: function( request, response ) {
+                                    var element = $('#form_recherche').val();
                                     $.ajax({
-                                        url: Routing.generate('ajoutUtilisateur', { 'term': value }),
-                                        dataType: "html",
-                                       /* data: {
-                                            term: request.term
-                                        },*/
+                                        url: Routing.generate('ajoutUtilisateur', {term : element }),
+                                        dataType: "JSON",
                                         success: function( data ) {
-                                            console.log(data);
+                                            //$("#form_leftValues").append(data.nom);
+                                            $('#form_leftValues').html(data);
+                                        },
+                                         error: function () {
+                                            alert('error');
                                         }
-                                        /* error: function (xhr, ajaxOptions, thrownError) {
-                                            console.log(xhr.status);
-                                            console.log(thrownError);
-                                        }*/
                                     });
                                 }
                                 });
