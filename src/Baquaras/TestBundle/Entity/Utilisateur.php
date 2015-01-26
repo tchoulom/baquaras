@@ -322,7 +322,7 @@ class Utilisateur
      * @param \Baquaras\TestBundle\Entity\Profil $profil1
      * @return Utilisateur
      */
-    public function setProfil1(\Baquaras\TestBundle\Entity\Profil $profil1 = null)
+    public function setProfil1($profil1 = 1)
     {
         $this->profil1 = $profil1;
 

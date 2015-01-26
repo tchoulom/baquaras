@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title> Ajout d'un nouvel utilisateur </title>
+        <title> Modifier un utilisateur </title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
             <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/liste_applications.css') }}" type="text/css"/>
@@ -18,12 +18,11 @@
         {% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
 
         <div id="page">
+            <h1> Modifier le profil d'un utilisateur </h1>
 
-            <h1> Ajout d'un nouvel utilisateur </h1>
+            <form action="{{ path('modifierUser', {'userId' : user.id}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
 
-            <form action="{{ path('ajouterUser', {'cpteMatriculaire' : cpteMatriculaire}) }}" method="post" {{ form_enctype(form) }} class="ajouterUser" novalidate="novalidate">
-
-                {{ form_start(form) }}
+                {#{ form_start(form) }#}
 
                 <table>
                     <tr>
@@ -31,27 +30,28 @@
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.nom) }} </td> 
-                        <td id="text"> {{ form_widget(form.nom) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.nom, { 'attr':{'disabled':'disabled'} }) }} </td> <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.nom) }} </td>
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.prenom) }} </td> 
-                        <td id="text"> {{ form_widget(form.prenom) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.prenom, { 'attr':{'disabled':'disabled'} }) }} </td> <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.prenom) }} </td>
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.cpteMatriculaire) }} </td> 
-                        <td id="text"> {{ form_widget(form.cpteMatriculaire) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.cpteMatriculaire, { 'attr':{'disabled':'disabled'} }) }} </td> <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.cpteMatriculaire) }} </td>
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.telephone) }} </td> 
-                        <td id="text"> {{ form_widget(form.telephone) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.telephone, { 'attr':{'disabled':'disabled'} }) }} </td> <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.telephone) }} </td>
                     </tr>
                     <tr>
                         <td id="label"> {{ form_label(form.mail) }} </td> 
-                        <td id="text"> {{ form_widget(form.mail) }} </td> <tr> </tr> <td> </td>
+                        <td id="text"> {{ form_widget(form.mail, { 'attr':{'disabled':'disabled'} }) }} </td> 
+                    <tr> </tr> <td> </td>
                     <td id="errors"> {{ form_errors(form.mail) }} </td>
                     </tr>
                     <tr>
@@ -65,13 +65,11 @@
                     <td id="errors"> {{ form_errors(form.profil2) }} </td>
                     </tr>
                     <tr>
-                        <td> <a href="{{ path('rechercherUserHarpe') }}"> {{ form_widget(form.cancel) }} </a> </td>
-                        <td> {{ form_widget(form.save) }} </td>
+                        <td> 
+                            <a href="{{ path('listerUsers') }}">Retour</a> 
+                            {{ form_widget(form.save) }} </td>
                     </tr>
-
                 </table>
-
-
 
                 {{ form_rest(form) }}
 
@@ -81,5 +79,13 @@
 
 
         </div>
+        <script>
+        $('form').submit(function () {
+            alert('test');
+            $selection = $(".ajouterUser input");
+            $selection.removeAttr('disabled');
+            
+        });
+    </script>
     </body>
 </html>

@@ -252,7 +252,17 @@
 						</tr>#}
 						<tr>
 							<td id="label"> {{ form_label(form.inscriteRevuePerformance) }} </td>
-							<td> {{ form_widget(form.inscriteRevuePerformance) }} </td> </tr> <tr>
+                                                        {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                    'Responsable qualification',
+                                                                                                    'Qualificateur'
+                                                                                                ] 
+                                                        or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+
+                                                            <td> {{ form_widget(form.inscriteRevuePerformance) }} </td>
+                                                        {% else %}
+                                                            <td> {{ form_widget(form.inscriteRevuePerformance, {'attr':{ 'disabled':'disabled'} }) }} </td>
+                                                        {% endif %}
+                                                </tr> <tr>
 							<td id="error"> {{ form_errors(form.inscriteRevuePerformance) }} </td>
 						</tr>
 						<tr>
@@ -346,7 +356,7 @@
                                                                 {% endfor %}
                                                         </select>
                                                         {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                            <a href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Groupes habilités à l'installation','scrollbars=yes'); return false;"> > Ajouter un groupe d'utilisateurs </a>
+                                                            <a href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Groupes habilités à l''installation','scrollbars=yes'); return false;"> > Ajouter un groupe d'utilisateurs </a>
                                                         {% endif %}
                                                         </td> 
 						</tr>
@@ -980,6 +990,8 @@
                                                                                                 ] 
                                                             or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}              
                                                             <td> {{ form_widget(form.developpement.developpementSpecifique) }} </td>
+                                                        {% elseif app.session and app.session.get('role') %}
+                                                            <td> {{ form_widget(form.developpement.developpementSpecifique, { 'attr':{'disabled':'disabled'} }) }}
                                                         {% else %}
                                                             <td> {{ form_widget(form.developpement.developpementSpecifique, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
@@ -1495,10 +1507,10 @@
                                                                                                 ]) %}
                                                             <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
                                                         {% else %}
-                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES) }} </td>
+                                                            <td id="text"> {{ form_widget(package.nomEntreeTNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES, { 'attr':{'disabled':'disabled'} }) }} </td>
+							<td id="error"> {{ form_errors(package.nomEntreeTNSNAMES) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> {{ form_label(package.dossierTechnique) }} </td>
@@ -1906,9 +1918,7 @@
 			<div id="boutons">
 				
 				<a href="{{path('listerApplications')}}"> <input type="button" value="Annuler"> </a>
-				{{ form_widget(form.save) }}
-				<a href="{{path('modifStatutQualif',{'id': application.id}) }}">{{ form_widget(form.modifStatutQualif) }}</a>
-				
+				{{ form_widget(form.save) }}				
 			</div>
 			
 			<div id="clear"> </div>
@@ -1919,5 +1929,12 @@
 			
 			</form>		
 		</div>
+    <script>
+        $('form').submit(function () {
+            $selection = $(".modifierappli input, .modifierappli select, .modifierappli textarea, .modifierappli div");
+            $selection.removeAttr('disabled');
+            
+        });
+    </script>
     </body>
 </html>

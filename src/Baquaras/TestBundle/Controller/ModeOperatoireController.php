@@ -81,7 +81,7 @@ class ModeOperatoireController extends Controller
 			}
 		}
 
-		return $this->render('BaquarasTestBundle:ModeOperatoire:modifierModeOperatoire.html.twig', array('form' => $form->createView(), 'id' => $applicationId, 'modeOperatoire' => $modeOperatoire, 'package' => $package, 'packageId' => $packageId));
+		return $this->render('BaquarasTestBundle:ModeOperatoire:modifierModeOperatoire.html.twig', array('form' => $form->createView(), 'application' => $application, 'modeOperatoire' => $modeOperatoire, 'package' => $package));
 	}
 	
 	/**

@@ -2,7 +2,7 @@
 parameters:
     database_driver: pdo_pgsql
     database_host: bd-d-u07.info.ratp
-    database_port: 5450
+    database_port: 5450 
     database_name: u07
     database_user: u07
     database_password: u07
@@ -18,5 +18,5 @@ parameters:
     be_simple.sso_auth.client.option.curlopt_ssl_verifypeer.value : false
     sso_login_url : https://t-sahara.info.ratp/websso/login
     sso_logout_url : https://t-sahara.info.ratp/websso/logout
-    sso_logout_target : /
+    #sso_logout_target : /
     sso_validate_url : https://t-sahara.info.ratp/websso/serviceValidate
