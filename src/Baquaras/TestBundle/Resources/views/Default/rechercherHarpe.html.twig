@@ -22,17 +22,18 @@
 			}
 			#form_leftValues {
 				margin-left : 15px; 
-				width:150px;
-				height:150px;
+				width:210px;
+				height:250px;
 			}
 			#form_rightValues {
-				margin-left : 85px; 
+				margin-left : 15px; 
 				width:150px;
 				height:150px;
 			}
 			#form_enregistrer {
 				position : relative;
-				margin-top : 100px;
+				margin-top : 50px;
+                                margin-left: 220px;
 			}
 		</style>
 	</head>
@@ -44,8 +45,6 @@
 			<h1> Ajout/Suppression d'utilisateurs </h1>
 		
 			<form  action="{{ path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : action}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
-		
-			{{ form_start(form) }}
 			
 				<div class="container">
 							
@@ -66,7 +65,7 @@
                                                                         }}
 
                                                         </td> 
-							<td> {{ form_widget(form.save) }} </ </td>
+							
 						</tr> 
 					</table>
 				
@@ -96,15 +95,13 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3">
+							<td colspan="6">
 								<button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
 							</td>
 						</tr>
 					</table>
 						
 					{{ form_rest(form) }}
-					
-					{{ form_end(form) }}
 				
 				</div>
 				
@@ -116,7 +113,7 @@
 			<script>
 				$("#btnLeft").click(function () {
 					document.getElementById("form_recherche").disabled = false;
-					document.getElementById("form_save").disabled = false;
+					document.getElementById("form_save").disabled = true;
 					var selectedItem = $("#form_leftValues option:selected");
 					$("#form_rightValues").append(selectedItem);
 				});

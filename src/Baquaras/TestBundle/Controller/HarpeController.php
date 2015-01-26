@@ -27,7 +27,6 @@ class HarpeController extends Controller
 		$defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('recherche', 'text', array('label' => 'Nom de l\'agent'))
-			->add('save', 'submit', array('label' => 'Lancer la recherche'))
 			->getForm();
 			
 		$form->handleRequest($request);
