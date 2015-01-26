@@ -50,9 +50,9 @@ ajouterGroupeUserHarpe:
     path: /departement/search
     defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUserHarpe}
 
-ajouterGroupeUser:
-    path: /groupe/add/{id}
-    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUser}
+#ajouterGroupeUser:
+#    path: /groupe/add/{id}
+#    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUser}
 
 #----------------------------------------
 # UTILISATEURS/ GROUPES / DEPARTEMENTS

@@ -60,11 +60,6 @@
                         </td>
                         <td id="selectD">
                             <select name="rightValues" id="form_rightValues" multiple>
-                                {#% if rightValues is not empty %}
-                                    {#% for groupe in rightValues %}
-                                        <option> {#{ groupe }} </option>
-                                    {#% endfor %#}
-                                {#% endif %#}
                             </select>
                         </td>								
                     </tr>	
@@ -100,12 +95,14 @@
                         $("#form_leftValues").append(selectedItem);
                     });
                     $("#formregister").on("click", function (event) {
-                        var test = $("#form_rightValues").text();
+                        
+                        var test = $("#form_rightValues").val();
+                        alert(test);
                         $.ajax({
                             type: "POST",
                             url: Routing.generate('ajouterGroupeAD', {applicationId : 3 }),
                             dataType: "html",
-                            //data: test, 
+                            data: {group: test}, 
                             success: function (response) {
                                 alert('yes');
                             },

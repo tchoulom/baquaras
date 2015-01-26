@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Baquaras\TestBundle\Entity\Groupe;
+use Baquaras\TestBundle\Entity\Application;
 use Baquaras\TestBundle\Entity\GroupeApplication;
 use Baquaras\TestBundle\Entity\Utilisateur;
 use Baquaras\TestBundle\Form\GroupeType;
@@ -74,8 +75,7 @@ class GroupeController extends Controller {
         return $this->render('BaquarasTestBundle:Default:ajoutergroupuser.html.twig', array('form' => $form->createView(),));
     }
 
-    public function rechercherGroupeADAction(Request $request, $applicationId)
-    {
+    public function rechercherGroupeADAction(Request $request, $applicationId) {
         $items = array();
         $em = $this->getDoctrine()->getManager();
         $application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->find($applicationId);
@@ -111,81 +111,71 @@ class GroupeController extends Controller {
                 //// Recherche sur le nom
                 $search = ldap_search($connect, $base_dn, $filter, array(), 0, 0);
                 $info = ldap_get_entries($connect, $search);
-                for($i=0; $i<$info['count']; $i++) {
+                for ($i = 0; $i < $info['count']; $i++) {
                     $group = $info[$i]["cn"][0];
-                    array_push ($items, $group);
+                    array_push($items, $group);
                 }
                 ldap_close($connect);
             } else {
                 echo 'Impossible de connecter au serveur LDAP.';
             }
         }
-        
+
         if ($request->get('submitAction') == 'enregistrer') {
-           
-            $values =  $request->request->get('test');
-            var_dump($values); die('test');
-            var_dump($values); exit;
-         //   $formulaire = $request->request->get('lgb_bourselivresbundle_eleverechercheid');
+
+            $values = $request->request->get('test');
+            var_dump($values);
+            die('test');
+            var_dump($values);
+            exit;
+            //   $formulaire = $request->request->get('lgb_bourselivresbundle_eleverechercheid');
             // Reccuperation du contenu de l'array ayant comme champ ideleve //
-           // $ideleve = $formulaire['ideleve'];
-       // }
+            // $ideleve = $formulaire['ideleve'];
+            // }
             // on récupère le select des départements sélectionnés
             // le select ne contient que les id des départements
             $tab_form = $request->request->get('form_rightValues');
-           // $tab_form['form_rightValues'];
-          //  $grpes = $request->request->get('form_rightValues');
-            var_dump($tab_form); exit;
-           // var_dump($grpes); exit;
-            foreach ($grpes as $grpe) {
-                $groupe = new Groupe();
-                $groupe->setLibelle($rightVal);
-                $groupeApplication = new GroupeApplication();
-                $groupeApplication->setGroupe($groupe);
-                $groupeApplication->setApplication($application);
-                $em->persist($groupe);
-                $em->persist($groupeApplication);
-            }
-            $em->flush();
+            // $tab_form['form_rightValues'];
+            //  $grpes = $request->request->get('form_rightValues');
+            var_dump($tab_form);
+            exit;
+            // var_dump($grpes); exit;
+            /*     foreach ($grpes as $grpe) {
+              $groupe = new Groupe();
+              $groupe->setLibelle($rightVal);
+              $groupeApplication = new GroupeApplication();
+              $groupeApplication->setGroupe($groupe);
+              $groupeApplication->setApplication($application);
+              $em->persist($groupe);
+              $em->persist($groupeApplication);
+              }
+              $em->flush(); */
         }
 
         return $this->render('BaquarasTestBundle:Default:rechercherGroupeAD.html.twig', array('form' => $form->createView(), 'application' => $application, 'groupes' => $items, 'rightValues' => $rightValues));
     }
 
-    public function ajouterGroupeADAction(Request $request, $applicationId)
-    /*  */ {
-           if ($this->container->get('request')->isXmlHttpRequest()) {
-               die('ici1'); exit;
-           }
-           else die('non'); exit;
-           /*
-        $em = $this->getDoctrine()->getManager();
-        $application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->find($applicationId);
-        $resultats = array();
-        $resultats_membres = array();
-
-        $form = $this->createFormBuilder($defaultData)
-                ->add('leftValues', 'choice', array(
-                    'label' => 'champ gauche',
-                    'choices' => $resultats,
-                    'multiple' => true))
-                ->add('rightValues', 'choice', array(
-                    'label' => 'champ droite',
-                    'choices' => array(),
-                    'multiple' => true))
-                ->add('save', 'submit', array(
-                    'label' => 'Enregistrer'))
-                ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            
+    /*
+     * @ParamConverter("applicationId", class="BaquarasTestBundle:Application")
+     */
+    public function ajouterGroupeADAction(Request $request, Application $applicationId) 
+    {
+        if ($this->container->get('request')->isXmlHttpRequest()) {
+            if($applicationId instanceof Application ) {
+                $em = $this->getDoctrine()->getManager(); 
+                $groups = $request->request->get('group');
+                foreach ($groups as $grp) {
+                    $groupe = new Groupe();
+                    $groupe->setLibelle($grp);
+                    $groupeApplication = new GroupeApplication();
+                    $groupeApplication->setGroupe($groupe);
+                    $groupeApplication->setApplication($applicationId);
+                    $em->persist($groupe);
+                    $em->persist($groupeApplication);
+                }
+                $em->flush();
+            }
         }
-
-        return $this->render('BaquarasTestBundle:Default:ajouterGroupeAD.html.twig', array('form' => $form->createView(), 'application' => $application, 'resultats' => $resultats, 'resultatsMembres' => $resultats_membres));
-    
-            */ }
-            
+    }
 
 }

@@ -343,7 +343,7 @@
                                                                     {% endfor %}
                                                             </select>
                                                             {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                                <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'personnes'}) }}" onClick="window.open(this.href,'Personnes habilitées à l'installation','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'personnes'}) }}" onClick="window.open(this.href,'Personnes habilitées à l''installation','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
                                                             {% endif %}
                                                         </td>
 						</tr>
@@ -356,7 +356,7 @@
                                                                 {% endfor %}
                                                         </select>
                                                         {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                            <a href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Groupes habilités à l''installation','scrollbars=yes'); return false;"> > Ajouter un groupe d'utilisateurs </a>
+                                                            <a href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Groupes habilités à l''installation','width=1200,scrollbars=yes'); return false;"> > Ajouter un groupe d'utilisateurs </a>
                                                         {% endif %}
                                                         </td> 
 						</tr>
