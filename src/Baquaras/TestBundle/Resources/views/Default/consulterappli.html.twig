@@ -203,16 +203,8 @@
                                                     <tr> 
                                                         <td id="label"> Groupes habilités pour l'installation</td>
                                                         <td> 
-                                                            {% set i = 0 %}
-                                                            {% for agent in application.agents %}
-                                                                {# compteur pour faire un retour à la ligne #}
-                                                                {% set i = i + 1 %}
-                                                                {% if i >= 2 %}
-                                                                        </br>
-                                                                {% endif %}
-                                                                {% if agent.role == 'groupes' %}
-                                                                        {{ agent.libelle }}
-                                                                {% endif %}
+                                                            {% for groupeApplication in application.groupeApplications %}
+                                                                <a href="{{path('rechercheUsersAD', {'groupeId': groupeApplication.groupe.id})}}" class="popup">{{ groupeApplication.groupe.libelle }}</a>
                                                             {% endfor %}
                                                         </td>
                                                     </tr>
@@ -1361,5 +1353,11 @@
 						</ul>#}
 				
 		</div>
+         <script type="text/javascript">
+        $('.popup').click(function () {
+            window.open($(this).attr("href"), "popup", "scrollbars=yes");
+            return false;
+        });
+    </script>                                       
     </body>
 </html>

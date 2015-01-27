@@ -42,9 +42,7 @@ gestionUtilisateur:
 ajouterUtilisateur:
     path: /utilisateur/new/{champ}/{applicationId}
     defaults: {_controller:BaquarasTestBundle:Harpe:rechercherHarpe}
- 
-
-
+    
 
 ajouterGroupeUserHarpe:
     path: /departement/search
@@ -79,6 +77,10 @@ rechercherGroupeAD:
     defaults: {_controller:BaquarasTestBundle:Groupe:rechercherGroupeAD}
     options:
         expose: true
+
+rechercheUsersAD:
+    path: /groupe/utilisateurs/{groupeId}
+    defaults: {_controller:BaquarasTestBundle:Groupe:rechercheUtilisateurByGroupAd}
 
 ajouterGroupeAD:
     path: /groupe/add/{applicationId}
@@ -249,3 +251,5 @@ voirSuiviQualif:
 
 modifStatutQualif:
     path:    /modifStatutQualif/{id}
+        
+    

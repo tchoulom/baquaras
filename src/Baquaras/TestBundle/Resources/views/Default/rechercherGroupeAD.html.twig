@@ -90,26 +90,21 @@
                     });
 
                     $("#btnRight").click(function () {
-                        
                         var selectedItem = $("#form_rightValues option:selected");
                         $("#form_leftValues").append(selectedItem);
                     });
+                    
                     $("#formregister").on("click", function (event) {
-                        
-                        var test = $("#form_rightValues").val();
-                        alert(test);
+                        var rightValues = $("#form_rightValues").val();
+                        var id = {{application.id}};
                         $.ajax({
                             type: "POST",
-                            url: Routing.generate('ajouterGroupeAD', {applicationId : 3 }),
+                            url: Routing.generate('ajouterGroupeAD', {applicationId : id }),
                             dataType: "html",
-                            data: {group: test}, 
+                            data: {group: rightValues}, 
                             success: function (response) {
-                                alert('yes');
-                            },
-                            error: function () {
-                                alert('non');
+                                window.close();
                             }
-               
                         });
                     });
                   //  document.getElementById("form_save").disabled = false;

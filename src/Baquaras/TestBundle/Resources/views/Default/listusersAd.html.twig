@@ -1,0 +1,12 @@
+<table id="liste">
+    <tr id="tr1">
+        <td> Nom et Prénom </td>
+    </tr>
+    {% for utilisateur in users %}
+        <tr id="trimpair">
+            <td> {{ utilisateur.name | raw }} </td>
+           
+        </tr>	
+    {% endfor %}
+
+</table>

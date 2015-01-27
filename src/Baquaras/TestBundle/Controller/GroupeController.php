@@ -18,11 +18,6 @@ class GroupeController extends Controller {
     /* Rechercher un groupe d'utilisateurs dans Harpe */ {
         $em = $this->getDoctrine()->getManager();
 
-        // On charge le fichier xml
-        /* $xml = simplexml_load_file("C:/wamp/www/Symfony/src/Baquaras/TestBundle/Entity/structuresMetier_Full.xml");
-          $resultats = array();
-          $ids = array(); */
-
         $defaultData = array('message' => 'Message');
         $form = $this->createFormBuilder($defaultData)
                 ->add('champRecherche', 'text', array(
@@ -35,20 +30,6 @@ class GroupeController extends Controller {
         if ($form->isValid()) {
             // R�cup�ration du champ recherche
             $recherche = $form['champRecherche']->getData();
-            /* $i = 0;
-
-              foreach($xml->Groupe[0]->children() as $personne) {
-              // Parcours du fichier personnes pour trouver une correspondance sur le nom ou le pr�nom
-              // La cha�ne de caract�res entr�es est recherch�e en d�but, milieu et fin de cha�ne
-              $test = preg_match('#'.$recherche.'#', $personne->Generique['prenom'].' ');
-              $test2 = preg_match('#'.$recherche.'#', $personne->Generique['nom'].' ');
-
-              if ($test == 1 || $test2 == 1) {
-              $resultats[$i] = $personne->Generique['prenom'].' '.$personne->Generique['nom'];
-              $matricules[$i] = $personne['matricule'];
-              }
-              $i++;
-              } */
         }
         return $this->render('BaquarasTestBundle:Default:ajouterUserHarpe.html.twig', array('form' => $form->createView(), 'resultats' => $resultats, 'ids' => $ids));
     }
@@ -75,29 +56,27 @@ class GroupeController extends Controller {
         return $this->render('BaquarasTestBundle:Default:ajoutergroupuser.html.twig', array('form' => $form->createView(),));
     }
 
+    /*
+     * 
+     */
     public function rechercherGroupeADAction(Request $request, $applicationId) {
         $items = array();
         $em = $this->getDoctrine()->getManager();
         $application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->find($applicationId);
-        $resultats = array();
-        $resultats_membres = array();
         $rightValues = array();
-
         $defaultData = array('message' => 'Message');
         $form = $this->createFormBuilder($defaultData)
                 ->add('champRecherche', 'text', array(
                     'label' => 'Recherche'))
-                /* ->add('save', 'submit', array(
-                  'label' => 'Lancer la recherche')) */
                 ->getForm();
 
         $form->handleRequest($request);
         $gauche = $request->request->get('leftValues');
         if ($request->get('submitAction') == 'rechercher') {
             $expression = $form['champRecherche']->getData();
-
+            $connect = $this->connectAD();
             //// LDAP
-            $ldap_host = "ratp.infrawin.ratp";
+           /* $ldap_host = "ratp.infrawin.ratp";
             $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
             //$base_dn_member = "CN=JG90263,OU=CGF,OU=RATP,OU=Utilisateurs Entreprises,DC=ratp,DC=infrawin,DC=ratp";
             $filter = "(sAMAccountName=*$expression*)";
@@ -105,7 +84,11 @@ class GroupeController extends Controller {
             $ldap_user = "ratp\ServicemaintXP1";
             $ldap_pass = "CL@2pnXP1m@*";
             //// Connexion au LDAP
-            $connect = ldap_connect($ldap_host);
+            $connect = ldap_connect($ldap_host);*/
+            $filter = "(sAMAccountName=*$expression*)";
+            $ldap_user = "ratp\ServicemaintXP1";
+            $ldap_pass = "CL@2pnXP1m@*";
+            $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
             if ($connect) {
                 $bind = ldap_bind($connect, $ldap_user, $ldap_pass);
                 //// Recherche sur le nom
@@ -119,37 +102,7 @@ class GroupeController extends Controller {
             } else {
                 echo 'Impossible de connecter au serveur LDAP.';
             }
-        }
-
-        if ($request->get('submitAction') == 'enregistrer') {
-
-            $values = $request->request->get('test');
-            var_dump($values);
-            die('test');
-            var_dump($values);
-            exit;
-            //   $formulaire = $request->request->get('lgb_bourselivresbundle_eleverechercheid');
-            // Reccuperation du contenu de l'array ayant comme champ ideleve //
-            // $ideleve = $formulaire['ideleve'];
-            // }
-            // on récupère le select des départements sélectionnés
-            // le select ne contient que les id des départements
-            $tab_form = $request->request->get('form_rightValues');
-            // $tab_form['form_rightValues'];
-            //  $grpes = $request->request->get('form_rightValues');
-            var_dump($tab_form);
-            exit;
-            // var_dump($grpes); exit;
-            /*     foreach ($grpes as $grpe) {
-              $groupe = new Groupe();
-              $groupe->setLibelle($rightVal);
-              $groupeApplication = new GroupeApplication();
-              $groupeApplication->setGroupe($groupe);
-              $groupeApplication->setApplication($application);
-              $em->persist($groupe);
-              $em->persist($groupeApplication);
-              }
-              $em->flush(); */
+            
         }
 
         return $this->render('BaquarasTestBundle:Default:rechercherGroupeAD.html.twig', array('form' => $form->createView(), 'application' => $application, 'groupes' => $items, 'rightValues' => $rightValues));
@@ -162,9 +115,9 @@ class GroupeController extends Controller {
     {
         if ($this->container->get('request')->isXmlHttpRequest()) {
             if($applicationId instanceof Application ) {
-                $em = $this->getDoctrine()->getManager(); 
-                $groups = $request->request->get('group');
-                foreach ($groups as $grp) {
+               $em = $this->getDoctrine()->getManager(); 
+               $groups = $request->request->get('group');
+              foreach ($groups as $grp) {
                     $groupe = new Groupe();
                     $groupe->setLibelle($grp);
                     $groupeApplication = new GroupeApplication();
@@ -176,6 +129,126 @@ class GroupeController extends Controller {
                 $em->flush();
             }
         }
+        return new Response();
+    }
+    
+    /*
+     * get list users by groupe application from BD
+     * @ParamConverter("groupeId", class="BaquarasTestBundle:Groupe")
+     * 
+     */
+    public function rechercheUtilisateurByGroupAdAction(Groupe $groupeId)
+    {
+        $users = array();
+        $items = array();
+        $connect = $this->connectAD();
+        $expression = $this->ldap_escape($groupeId->getLibelle());
+        $filter = "(sAMAccountName=*$expression*)";
+        $filterAll = "(sAMAccountName=*)";
+        $ldap_user = "ratp\ServicemaintXP1";
+        $ldap_pass = "CL@2pnXP1m@*";
+        $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
+        if ($connect) {
+            $bind = ldap_bind($connect, $ldap_user, $ldap_pass);
+            //// Recherche sur le nom
+            $search = ldap_search($connect, $base_dn, $filter, array(), 0, 0);
+            $info = ldap_get_entries($connect, $search);
+            $nb_membres = count($info[0]["member"]);
+                for ($j = 0; $j < $nb_membres - 1; $j++) {
+                    $base_dn_membre = $info[0]["member"][$j];
+                    $search_membres = ldap_search($connect, $base_dn_membre, $filterAll, array(), 0, 0);
+                    $info_membres = ldap_get_entries($connect, $search_membres);
+                    if(array_key_exists('displayname', $info_membres[0])) {
+                        array_push($users, array('name' => $info_membres[0]["displayname"][0]));
+                    }                   
+                }
+            ldap_close($connect);
+        } else {
+            echo 'Impossible de connecter au serveur LDAP.';
+        }
+        return $this->render('BaquarasTestBundle:Default:listusersAd.html.twig', array('users' => $users));
+        
+        
+    }
+    
+    private function connectAD()
+    {
+        $ldap_host = "ratp.infrawin.ratp";
+        $connect = ldap_connect($ldap_host);
+        
+        return $connect;
+    }
+ 
+
+    /**
+     * @param string $subject The subject string
+     * @param string $ignore Set of characters to leave untouched
+     * @param int $flags Any combination of LDAP_ESCAPE_* flags to indicate the
+     *                   set(s) of characters to escape.
+     * @return string
+     */
+    function ldap_escape($subject, $ignore = '', $flags = 0)
+    {
+        define('LDAP_ESCAPE_FILTER', 0x01);
+        define('LDAP_ESCAPE_DN',     0x02);
+        static $charMaps = array(
+            LDAP_ESCAPE_FILTER => array('\\', '*', '(', ')', "\x00"),
+            LDAP_ESCAPE_DN     => array('\\', ',', '=', '+', '<', '>', ';', '"', '#'),
+        );
+
+        // Pre-process the char maps on first call
+        if (!isset($charMaps[0])) {
+            $charMaps[0] = array();
+            for ($i = 0; $i < 256; $i++) {
+                $charMaps[0][chr($i)] = sprintf('\\%02x', $i);;
+            }
+
+            for ($i = 0, $l = count($charMaps[LDAP_ESCAPE_FILTER]); $i < $l; $i++) {
+                $chr = $charMaps[LDAP_ESCAPE_FILTER][$i];
+                unset($charMaps[LDAP_ESCAPE_FILTER][$i]);
+                $charMaps[LDAP_ESCAPE_FILTER][$chr] = $charMaps[0][$chr];
+            }
+
+            for ($i = 0, $l = count($charMaps[LDAP_ESCAPE_DN]); $i < $l; $i++) {
+                $chr = $charMaps[LDAP_ESCAPE_DN][$i];
+                unset($charMaps[LDAP_ESCAPE_DN][$i]);
+                $charMaps[LDAP_ESCAPE_DN][$chr] = $charMaps[0][$chr];
+            }
+        }
+
+        // Create the base char map to escape
+        $flags = (int)$flags;
+        $charMap = array();
+        if ($flags & LDAP_ESCAPE_FILTER) {
+            $charMap += $charMaps[LDAP_ESCAPE_FILTER];
+        }
+        if ($flags & LDAP_ESCAPE_DN) {
+            $charMap += $charMaps[LDAP_ESCAPE_DN];
+        }
+        if (!$charMap) {
+            $charMap = $charMaps[0];
+        }
+
+        // Remove any chars to ignore from the list
+        $ignore = (string)$ignore;
+        for ($i = 0, $l = strlen($ignore); $i < $l; $i++) {
+            unset($charMap[$ignore[$i]]);
+        }
+
+        // Do the main replacement
+        $result = strtr($subject, $charMap);
+
+        // Encode leading/trailing spaces if LDAP_ESCAPE_DN is passed
+        if ($flags & LDAP_ESCAPE_DN) {
+            if ($result[0] === ' ') {
+                $result = '\\20' . substr($result, 1);
+            }
+            if ($result[strlen($result) - 1] === ' ') {
+                $result = substr($result, 0, -1) . '\\20';
+            }
+        }
+
+        return $result;
     }
 
 }
