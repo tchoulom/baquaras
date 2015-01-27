@@ -112,18 +112,21 @@
 			
 			<script>
 				$("#btnLeft").click(function () {
-					document.getElementById("form_recherche").disabled = false;
-					document.getElementById("form_save").disabled = true;
+					//document.getElementById("form_recherche").disabled = false;
+					//document.getElementById("form_save").disabled = true;
 					var selectedItem = $("#form_leftValues option:selected");
 					$("#form_rightValues").append(selectedItem);
 				});
 
 				$("#btnRight").click(function () {
-					document.getElementById("form_recherche").disabled = true;
-					document.getElementById("form_save").disabled = true;
+					//document.getElementById("form_recherche").disabled = true;
+					//document.getElementById("form_save").disabled = true;
 					var selectedItem = $("#form_rightValues option:selected");
 					$("#form_leftValues").append(selectedItem);
 				});
+                                
+                                $('#form_recherche').attr('placeholder', 'recherchez par nom ou prénom');
+                                
                                 $("#form_recherche").autocomplete({
                                     source: function( request, response ) {
                                     var element = $('#form_recherche').val();
