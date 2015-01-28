@@ -1018,7 +1018,7 @@ form table tbody tr td.valider button#baquaras_testbundle_autreprerequis_save {
 }*/
 
 /************************************************************************************************************************** Modifier statut ******************/
-#page form.ajouterappli table tbody tr#siera {
+#page form.ajouterappli table tbody tr.siera, #page form.ajouterappli table tbody tr.sierainfo {
 	display:none;
 }
 
