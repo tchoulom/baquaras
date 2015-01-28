@@ -14,8 +14,11 @@ use Baquaras\TestBundle\Form\UtilisateurType;
 
 class GroupeController extends Controller {
 
+    /* 
+     * Rechercher un groupe d'utilisateurs dans Harpe 
+     */
     public function ajouterGroupeUserHarpeAction(Request $request)
-    /* Rechercher un groupe d'utilisateurs dans Harpe */ {
+    {
         $em = $this->getDoctrine()->getManager();
 
         $defaultData = array('message' => 'Message');
@@ -59,9 +62,9 @@ class GroupeController extends Controller {
     /*
      * 
      */
-    public function rechercherGroupeADAction(Request $request, $applicationId) {
+    public function rechercherGroupeADAction(Request $request, $applicationId) 
+    {
         $items = array();
-        $em = $this->getDoctrine()->getManager();
         $application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->find($applicationId);
         $rightValues = array();
         $defaultData = array('message' => 'Message');
@@ -71,23 +74,12 @@ class GroupeController extends Controller {
                 ->getForm();
 
         $form->handleRequest($request);
-        $gauche = $request->request->get('leftValues');
         if ($request->get('submitAction') == 'rechercher') {
             $expression = $form['champRecherche']->getData();
             $connect = $this->connectAD();
-            //// LDAP
-           /* $ldap_host = "ratp.infrawin.ratp";
-            $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
-            //$base_dn_member = "CN=JG90263,OU=CGF,OU=RATP,OU=Utilisateurs Entreprises,DC=ratp,DC=infrawin,DC=ratp";
             $filter = "(sAMAccountName=*$expression*)";
-            $filterAll = "(sAMAccountName=*)";
-            $ldap_user = "ratp\ServicemaintXP1";
-            $ldap_pass = "CL@2pnXP1m@*";
-            //// Connexion au LDAP
-            $connect = ldap_connect($ldap_host);*/
-            $filter = "(sAMAccountName=*$expression*)";
-            $ldap_user = "ratp\ServicemaintXP1";
-            $ldap_pass = "CL@2pnXP1m@*";
+            $ldap_user = $this->container->getParameter('ldap_user');
+            $ldap_pass = $this->container->getParameter('ldap_pass');
             $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
             if ($connect) {
                 $bind = ldap_bind($connect, $ldap_user, $ldap_pass);
@@ -102,7 +94,6 @@ class GroupeController extends Controller {
             } else {
                 echo 'Impossible de connecter au serveur LDAP.';
             }
-            
         }
 
         return $this->render('BaquarasTestBundle:Default:rechercherGroupeAD.html.twig', array('form' => $form->createView(), 'application' => $application, 'groupes' => $items, 'rightValues' => $rightValues));
@@ -145,8 +136,8 @@ class GroupeController extends Controller {
         $expression = $this->ldap_escape($groupeId->getLibelle());
         $filter = "(sAMAccountName=*$expression*)";
         $filterAll = "(sAMAccountName=*)";
-        $ldap_user = "ratp\ServicemaintXP1";
-        $ldap_pass = "CL@2pnXP1m@*";
+        $ldap_user = $this->container->getParameter('ldap_user');
+        $ldap_pass = $this->container->getParameter('ldap_pass');
         $base_dn = "OU=SIT IET,OU=Delegation de groupes,OU=Groupes,DC=ratp,DC=infrawin,DC=ratp";
         if ($connect) {
             $bind = ldap_bind($connect, $ldap_user, $ldap_pass);
@@ -187,7 +178,7 @@ class GroupeController extends Controller {
      *                   set(s) of characters to escape.
      * @return string
      */
-    function ldap_escape($subject, $ignore = '', $flags = 0)
+    private function ldap_escape($subject, $ignore = '', $flags = 0)
     {
         define('LDAP_ESCAPE_FILTER', 0x01);
         define('LDAP_ESCAPE_DN',     0x02);

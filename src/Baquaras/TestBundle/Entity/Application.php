@@ -101,6 +101,20 @@ class Application
      * @ORM\Column(name="Nom_Application_SIERA", type="string", length=255, nullable=true)
      */
     private $nomApplicationSIERA;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_moa", type="string", length=255, nullable=true)
+     */
+    private $deptMoa;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_users", type="string", length=255, nullable=true)
+     */
+    private $deptUsers;
 
     /**
      * @var boolean
@@ -1061,4 +1075,50 @@ class Application
         return $this->utilisateur;
     }
    
+
+    /**
+     * Set deptMoa
+     *
+     * @param string $deptMoa
+     * @return Application
+     */
+    public function setDeptMoa($deptMoa)
+    {
+        $this->deptMoa = $deptMoa;
+
+        return $this;
+    }
+
+    /**
+     * Get deptMoa
+     *
+     * @return string 
+     */
+    public function getDeptMoa()
+    {
+        return $this->deptMoa;
+    }
+
+    /**
+     * Set deptUsers
+     *
+     * @param string $deptUsers
+     * @return Application
+     */
+    public function setDeptUsers($deptUsers)
+    {
+        $this->deptUsers = $deptUsers;
+
+        return $this;
+    }
+
+    /**
+     * Get deptUsers
+     *
+     * @return string 
+     */
+    public function getDeptUsers()
+    {
+        return $this->deptUsers;
+    }
 }

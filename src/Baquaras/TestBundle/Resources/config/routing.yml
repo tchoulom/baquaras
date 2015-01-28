@@ -97,7 +97,12 @@ listerUsers:
 #----------------
 # APPLICATIONS
 #----------------
-
+rechercheSiera:
+    path: /recherchesiera/{siera}
+    defaults: {_controller:BaquarasTestBundle:Appli:rechercheSiera}
+    options:
+        expose: true
+        
 listerApplications:
     path: /applications/{action}/{page}/{export}
     defaults: {_controller:BaquarasTestBundle:Appli:listerApplications,action:'lister',page:1, export:false}

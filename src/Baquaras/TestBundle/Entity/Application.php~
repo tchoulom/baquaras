@@ -101,6 +101,20 @@ class Application
      * @ORM\Column(name="Nom_Application_SIERA", type="string", length=255, nullable=true)
      */
     private $nomApplicationSIERA;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_moa", type="string", length=255, nullable=true)
+     */
+    private $deptMoa;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_users", type="string", length=255, nullable=true)
+     */
+    private $deptUsers;
 
     /**
      * @var boolean
@@ -200,9 +214,15 @@ class Application
      * @ORM\OneToMany(targetEntity="Agents", mappedBy="application")
      **/
     private $agents;
-	
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="application")
+     */
+    private $utilisateur;
 	/**
-     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application")
+     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
+     *
      **/
     private $groupeApplications;
 	
@@ -213,9 +233,9 @@ class Application
     public function __construct()
     {
         $this->appliReferenceeSIERA = null;
-		$this->appliSousGouvernance = null;
-		$this->dansCatalogueSIT = null;
-		$this->inscriteRevuePerformance = null;
+	$this->appliSousGouvernance = null;
+	$this->dansCatalogueSIT = null;
+	$this->inscriteRevuePerformance = null;
         $this->populationCible = new \Doctrine\Common\Collections\ArrayCollection();
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->preRequis = new \Doctrine\Common\Collections\ArrayCollection();
@@ -224,6 +244,8 @@ class Application
         $this->misesajour = new \Doctrine\Common\Collections\ArrayCollection();
         $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 	
 	public function __toString()
@@ -1017,5 +1039,109 @@ class Application
     public function getGroupeApplications()
     {
         return $this->groupeApplications;
+    }
+    
+    /**
+     * Add utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     * @return Application
+     */
+    public function addUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur[] = $utilisateur;
+        //$this->utilisateur->setApplication($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+   
+
+    /**
+     * Set deptMoa
+     *
+     * @param string $deptMoa
+     * @return Application
+     */
+    public function setDeptMoa($deptMoa)
+    {
+        $this->deptMoa = $deptMoa;
+
+        return $this;
+    }
+
+    /**
+     * Get deptMoa
+     *
+     * @return string 
+     */
+    public function getDeptMoa()
+    {
+        return $this->deptMoa;
+    }
+
+    /**
+     * Set deptUsers
+     *
+     * @param string $deptUsers
+     * @return Application
+     */
+    public function setDeptUsers($deptUsers)
+    {
+        $this->deptUsers = $deptUsers;
+
+        return $this;
+    }
+
+    /**
+     * Get deptUsers
+     *
+     * @return string 
+     */
+    public function getDeptUsers()
+    {
+        return $this->deptUsers;
+    }
+
+    /**
+     * Set clientSiera
+     *
+     * @param string $clientSiera
+     * @return Application
+     */
+    public function setClientSiera($clientSiera)
+    {
+        $this->clientSiera = $clientSiera;
+
+        return $this;
+    }
+
+    /**
+     * Get clientSiera
+     *
+     * @return string 
+     */
+    public function getClientSiera()
+    {
+        return $this->clientSiera;
     }
 }
