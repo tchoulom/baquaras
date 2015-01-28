@@ -13,7 +13,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		{ name: 'links' },
-		{ name: 'insert' },
+		{ name: 'insert',      groups : [ 'Link', 'Image', 'addFile', 'addImage' ] },
 		{ name: 'forms' },
 		{ name: 'tools' },
 		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
@@ -38,5 +38,11 @@ CKEDITOR.editorConfig = function( config ) {
         
         // Default width
         config.width ="650";
+        
+        config.extraPlugins = 'image';
+        
+        config.filebrowserUploadUrl =  '/bundles/js/ckeditor/plugins/image/dialogs/image.js?type=files';
+                
+            //$this->get('kernel')->getRootDir().'web/uploads';
         
 };

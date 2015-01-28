@@ -6,16 +6,24 @@
 		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
 	</head>
 	
-	<body>
+            <body>
 		
 		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+                {% block jquery_modop %}
+				
+                        <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+                        <script type="text/javascript" src="{{ asset('js/ckeditor/upload.js') }}"></script>
+                        <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                        <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+
+                {% endblock %}
+		
 		
 		<div id="page">
 		
 			<h1> Modifier le mode opératoire </h1>
 			
-			<script src="{{ asset('bundles/baquaras/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
-		
+
 			<form action="{{path('modifiermodeoperatoire', {'pck': pck }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="modifiermodeop">
 			
 				{{ form_start(form) }}
@@ -67,10 +75,12 @@
 					
 					{{ form_widget(form.save) }}
 					
-		        </div>			
+                                </div>			
 				 					
-			{{ form_end(form) }}
+                                {{ form_end(form) }}
 			
-		</form>
-    </body>
+                        </form>
+                </div>
+                                        
+            </body>
 </html>
