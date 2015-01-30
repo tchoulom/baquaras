@@ -28,7 +28,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	config.removeButtons = 'Underline,Subscript,Superscript,Anchor,Strikethrough,Source';
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
@@ -36,13 +36,21 @@ CKEDITOR.editorConfig = function( config ) {
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
         
+        //Plugins to remove from the toolbar
+        config.removePlugins = 'elementspath';
+        
         // Default width
         config.width ="650";
         
         config.extraPlugins = 'image';
         
-        config.filebrowserUploadUrl =  '/bundles/js/ckeditor/plugins/image/dialogs/image.js?type=files';
-                
-            //$this->get('kernel')->getRootDir().'web/uploads';
-        
-};
+        config.filebrowserUploadUrl =  CKEDITOR.basePath+'upload.php';
+
+        //$this->get('kernel')->getRootDir().'/web/uploads';
+        //CKEDITOR.plugins.basePath = '/web/uploads';
+        //var CKEDITOR_BASEPATH = $this->get('kernel')->getRootDir().'/web/uploads;
+}
+
+
+
+
