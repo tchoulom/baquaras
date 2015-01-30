@@ -105,9 +105,31 @@ class Application
     /**
      * @var string
      *
+     * @ORM\Column(name="Nom_Client_SIERA", type="string", length=255, nullable=true)
+     */
+    private $nomClientSIERA;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Id_Client_SIERA", type="string", length=255, nullable=true)
+     */
+    private $idClientSIERA;
+    
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="dept_moa", type="string", length=255, nullable=true)
      */
     private $deptMoa;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_moa", type="string", length=255, nullable=true)
+     */
+    private $codeMoa;    
     
     /**
      * @var string
@@ -1120,5 +1142,74 @@ class Application
     public function getDeptUsers()
     {
         return $this->deptUsers;
+    }
+
+    /**
+     * Set nomClientSIERA
+     *
+     * @param string $nomClientSIERA
+     * @return Application
+     */
+    public function setNomClientSIERA($nomClientSIERA)
+    {
+        $this->nomClientSIERA = $nomClientSIERA;
+
+        return $this;
+    }
+
+    /**
+     * Get nomClientSIERA
+     *
+     * @return string 
+     */
+    public function getNomClientSIERA()
+    {
+        return $this->nomClientSIERA;
+    }
+
+    /**
+     * Set idClientSIERA
+     *
+     * @param string $idClientSIERA
+     * @return Application
+     */
+    public function setIdClientSIERA($idClientSIERA)
+    {
+        $this->idClientSIERA = $idClientSIERA;
+
+        return $this;
+    }
+
+    /**
+     * Get idClientSIERA
+     *
+     * @return string 
+     */
+    public function getIdClientSIERA()
+    {
+        return $this->idClientSIERA;
+    }
+
+    /**
+     * Set codeMoa
+     *
+     * @param string $codeMoa
+     * @return Application
+     */
+    public function setCodeMoa($codeMoa)
+    {
+        $this->codeMoa = $codeMoa;
+
+        return $this;
+    }
+
+    /**
+     * Get codeMoa
+     *
+     * @return string 
+     */
+    public function getCodeMoa()
+    {
+        return $this->codeMoa;
     }
 }

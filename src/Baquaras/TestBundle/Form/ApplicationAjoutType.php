@@ -10,14 +10,27 @@ use Baquaras\TestBundle\Entity\ItemRepository;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Baquaras\TestBundle\Form\EventListener\AddFieldSubscriber;
+use Symfony\Component\DependencyInjection\Container;
 
 class ApplicationAjoutType extends AbstractType {
 
+    
+    private $container;
+    private $connection;
+    
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+        $this->connection = $this->container->get('doctrine.dbal.siera_connection');
+        
+    }
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
+        $container = $this->container;
         $builder
                 ->add('nom', 'text', array(
                     'label' => 'Nom de l\'application *'))
@@ -46,16 +59,46 @@ class ApplicationAjoutType extends AbstractType {
                     'multiple' => true,
                     'empty_value' => 'Sélectionner un ou plusieurs chefs de produit'))
                 ->add('appliReferenceeSIERA', 'checkbox', array(
-                    'label' => 'Référencée dans SIERA'))
+                    'label' => 'Rattachée à une application dans SIERA'))
                 ->add('nomApplicationSIERA', 'text', array(
                     'label' => 'Nom de l\'application dans SIERA'))
-                ->add('deptMoa', 'text', array(
+                ->add('nomClientSIERA', 'text', array(
+                    'label' => 'Client dans SIERA'))
+                ->add('deptMoa', 'hidden', array(
                     'label' => 'Departement MOA'))
-                ->add('deptUsers', 'text',array(
+                ->add('deptUsers', 'hidden',array(
                     'label' => 'Departement utilisateurs'))
                 ->add('save', 'submit', array(
                     'label' => 'Valider'))
-        ;
+                    
+                ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($container) {
+                    
+                    $application = $event->getData();
+                    $form = $event->getForm();
+                    if (!$application) {
+                        return;
+                    }
+
+                    // Check whether the user has chosen to display his email or not.
+                    // If the data was submitted previously, the additional value that is
+                    // included in the request variables needs to be removed.
+                    if (true === $application->getAppliReferenceeSIERA() &&
+                        $application->getNomApplicationSIERA()
+                        && $application->getNomClientSIERA()) {
+                        $results = $container->get('baquaras.connect_siera')->getAllInfosSiera($application->getNomClientSIERA(), $application->getNomApplicationSIERA());  
+                        
+                        foreach($results as $result) {
+                            $application->setCodeMoa($result['moa']) ;
+                            $application->setDeptMoa($result['dept_moa']);
+                            $application->setDeptUsers($result['dept_utilisateurs']);
+                            $application->setIdClientSIERA($result['id_application_siera']);
+                        }
+                   //  var_dump($results); exit;
+                    } 
+                        
+                })
+                ->getForm();
+
     }
 
     /**

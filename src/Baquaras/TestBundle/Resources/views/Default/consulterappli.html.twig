@@ -523,17 +523,12 @@
                                                     <tr>
                                                             <td id="label"> MOE </td>
                                                             <td id="read_only"> 
-                                                                    {% for agent in application.agents %}
-                                                                            {% if agent.role == 'moe' %}
-                                                                                    {{ agent.libelle }}
-                                                                            {% endif %}
-                                                                    {% endfor %}
+                                                                {#{ agent.libelle }#}
                                                             </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> Département MOE </td>
-                                                        <td id="read_only"> 
-                                                        </td>
+                                                        <td id="read_only"> SIT </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> MOA </td>
@@ -547,8 +542,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> Département MOA </td>
-                                                        <td id="read_only">	
-                                                        </td>
+                                                        <td id="read_only"> {{ application.deptMoa }}</td>
                                                     </tr>
                                                 {% endif %}
                                                 {% if app.session and app.session.get('role') in ['Administrateur',

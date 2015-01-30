@@ -656,12 +656,11 @@ class AppliController extends Controller {
         $installationp = new InstallationPackage();
         $package->setInstallation($installationp);
 
-        $form = $this->createForm(new ApplicationAjoutType, $application);
+        $form = $this->createForm('baquaras_testbundle_application', $application);
         $request = $this->get('request');
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            //$form->bind($request);
             if ($form->isValid()) {
                 foreach ($application->getUtilisateur() as $utilisateur) {
                     $utilisateur->addApplication($application);
@@ -681,7 +680,6 @@ class AppliController extends Controller {
                 $em->persist($qualification);
                 $em->persist($installationp);
                 $em->flush();
-
                 $this->get('session')->getFlashBag()->add('notice', 'Application ajoutée');
 
                 return $this->redirect($this->generateUrl('listerApplications'));
@@ -691,10 +689,10 @@ class AppliController extends Controller {
     }
 
     /**
+     * Fonction permettant la modification d'une application
      * @ParamConverter("application", options={"mapping": {"id": "id"}})
      */
     public function modifierApplicationAction(Application $application) {
-    // Fonction permettant la modification d'une application
         if ($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
             throw new AccessDeniedException('Accès limité');
         }
@@ -720,10 +718,10 @@ class AppliController extends Controller {
     }
 
     /**
+     * Fonction permettant la consultation d'une application
      * @ParamConverter("application", options={"mapping": {"id": "id"}})
      */
     public function consulterApplicationAction(Application $application) {
-    // Fonction permettant la consultation d'une application
         if (!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
             throw new AccessDeniedException('Accès limité');
         }
@@ -2247,7 +2245,12 @@ class AppliController extends Controller {
     public function rechercheSieraAction(Request $request, $siera)
     {
         $connection = $this->container->get('doctrine.dbal.siera_connection');
-        $results = $connection->query("select * from vue_baquaras where nom_application_siera = '$siera'")->fetchAll();
+        if($request->request->get('type') == 'application') {
+            $results = $this->container->get('baquaras.connect_siera')->getApplicationNameSiera($siera);
+        } elseif ($request->request->get('type') == 'client') {
+            $application = $request->request->get('application') ;//$siera,$application
+            $results = $this->container->get('baquaras.connect_siera')->getClientNameSiera($siera, $application);
+        }
         
         return new Response(json_encode($results));
         

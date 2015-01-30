@@ -14,9 +14,9 @@
 
             <h1> Ajouter une application </h1>
 
-            <form  action="{{ path('ajouterApplication') }}" method="post" {{ form_enctype(form) }} class="ajouterappli" novalidate="novalidate">
+            <form  action="{{ path('ajouterApplication') }}" method="post" {{ form_enctype(form) }} class="ajouterappli" novalidate="novalidate" >
 
-                {{ form_start(form) }}
+                {#{ form_start(form) }#}
 
                 <table>
 
@@ -56,10 +56,19 @@
                     <tr> </tr>
                     <tr class="siera">
                         <td id="label"> {{ form_label(form.nomApplicationSIERA) }} </td>
-                        <td id="text"> {{ form_widget(form.nomApplicationSIERA) }} </td> 
-                        <td > <a href="#" id ="rechercheSiera">Recherche</a> </td>
+                        <td id="text"> {{ form_widget(form.nomApplicationSIERA, {'attr' : {
+                                                                                        'id' : 'autocomplete',
+                                                                                        'class' : 'ui-autocomplete-input'} }) }} </td> 
                     </tr> <tr class="siera">
                         <td id="errors"> {{ form_errors(form.nomApplicationSIERA) }} </td>
+                    </tr>
+                    <tr class="sieraclient">
+                        <td id="label"> {{ form_label(form.nomClientSIERA) }} </td>
+                        <td id="text"> {{ form_widget(form.nomClientSIERA, {'attr' : {
+                                                                                        'id' : 'autocomplete',
+                                                                                        'class' : 'ui-autocomplete-input'} }) }} </td> 
+                    </tr> <tr class="sieraclient">
+                        <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
                     </tr>
                     <tr class="sierainfo">
                         <td id="label"> {{ form_label(form.deptMoa) }} </td>
@@ -78,8 +87,6 @@
 
                 </table>
 
-
-
                 {{ form_rest(form) }}
 
                 {{ form_end(form) }}
@@ -88,35 +95,64 @@
 
         </div>
         {% block jquery_ajouter %}
+            <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
             <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+             <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script>
-                $(document).ready(function () {
-                    $("#baquaras_testbundle_application_appliReferenceeSIERA").click(function () {
-                        $(".siera").toggle();
-                        $('#baquaras_testbundle_application_deptMoa').val('');
-                        $('#baquaras_testbundle_application_deptUsers').val('');
+                    $(function () {
+                        $('#baquaras_testbundle_application_appliReferenceeSIERA').change(function () {
+                            $(".siera").toggle(this.checked);
+                            if(this.checked === false ) {
+                                $(".sieraclient").hide();
+                            } 
+                        }).change();
                     });
-                    $('#rechercheSiera').click(function () {
+                    $("#baquaras_testbundle_application_nomApplicationSIERA").autocomplete({
+                        
+                        source: function( request, response ) {
                         var elem = $('#baquaras_testbundle_application_nomApplicationSIERA');
                         $.ajax({
                             type: "POST",
                             url: Routing.generate('rechercheSiera', {siera: elem.val()}),
+                            data: { type : 'application'},
                             dataType: "html",
                             success: function (data) {
                                 data=JSON.parse(data);
-                                $('.sierainfo').show();
-                                $.each (data, function (i) {
-                                    $('#baquaras_testbundle_application_deptMoa').val(data[i].dept_moa);
-                                    $('#baquaras_testbundle_application_deptUsers').val(data[i].dept_utilisateurs);
-                                });
+                                response($.map(data, function(objet){
+                                    return objet.nom_application_siera; // on retourne cette forme de suggestion
+                                }));
+                                $('ul.ui-autocomplete').removeAttr('style');
                             }
                         });
-                    });
+                    },
+                    select: function (event, ui) {
+                        $(".sieraclient").show();
+                        $("#baquaras_testbundle_application_nomClientSIERA").autocomplete({
+                            source: function( request, resp ) {
+                                var elem = $('#baquaras_testbundle_application_nomClientSIERA');
+                                $.ajax({
+                                    type: "POST",
+                                    data: {type : 'client', application: $('#baquaras_testbundle_application_nomApplicationSIERA').val()},
+                                    url: Routing.generate('rechercheSiera', {siera: elem.val()}),
+                                    dataType: "html",
+                                    success: function (results) {
+                                        results=JSON.parse(results);
+                                        resp($.map(results, function(objet){
+                                            return objet.nom_client_siera; // on retourne cette forme de suggestion
+                                        }));
+                                    }
+                                });
+                            }
+                        }); 
+                    },
+                    position : {
+                        position: 'absolute',                        
+                    }
                 });
-
+                
             </script>
         {% endblock %}
     </body>
