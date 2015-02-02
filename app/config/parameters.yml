@@ -6,6 +6,12 @@ parameters:
     database_name: u07
     database_user: u07
     database_password: u07
+    database_driver_siera: pdo_pgsql
+    database_host_siera: bd-d-siera.info.ratp
+    database_port_siera: 5490
+    database_name_siera: sra
+    database_user_siera: sra_lect
+    database_password_siera: sra_lect
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
@@ -20,3 +26,5 @@ parameters:
     sso_logout_url : https://t-sahara.info.ratp/websso/logout
     #sso_logout_target : /
     sso_validate_url : https://t-sahara.info.ratp/websso/serviceValidate
+    ldap_user: ratp\ServicemaintXP1
+    ldap_pass: CL@2pnXP1m@*
