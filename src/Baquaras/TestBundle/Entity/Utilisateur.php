@@ -116,6 +116,11 @@ class Utilisateur
      * @ORM\JoinTable(name="utilisateur_application")
      **/
     private $application;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", mappedBy="utilisateurs")
+     **/
+    private $droitsApplication;
 	
     /**
      * Get id
@@ -369,6 +374,7 @@ class Utilisateur
         $this->evolutionsStatut = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->droitsApplication = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -474,5 +480,48 @@ class Utilisateur
     public function getCompleteName()
     {
         return sprintf('%s - %s', $this->nom, $this->prenom);
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $application
+     */
+    public function removeApplication(\Baquaras\TestBundle\Entity\Application $application)
+    {
+        $this->application->removeElement($application);
+    }
+
+    /**
+     * Add droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $droitsApplication
+     * @return Utilisateur
+     */
+    public function addDroitsApplication(\Baquaras\TestBundle\Entity\Application $droitsApplication)
+    {
+        $this->droitsApplication[] = $droitsApplication;
+    
+        return $this;
+    }
+
+    /**
+     * Remove droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $droitsApplication
+     */
+    public function removeDroitsApplication(\Baquaras\TestBundle\Entity\Application $droitsApplication)
+    {
+        $this->droitsApplication->removeElement($droitsApplication);
+    }
+
+    /**
+     * Get droitsApplication
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDroitsApplication()
+    {
+        return $this->droitsApplication;
     }
 }

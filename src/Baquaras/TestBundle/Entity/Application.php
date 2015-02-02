@@ -232,10 +232,11 @@ class Application
      **/
     private $misesajour;
 	
-	/**
-     * @ORM\OneToMany(targetEntity="Agents", mappedBy="application")
+     /**
+     * @ORM\ManyToMany(targetEntity="Application", mappedBy="applications")
+     * @ORM\JoinTable(name="droits_application")
      **/
-    private $agents;
+    private $droitsApplication ;
 
     /**
      *
@@ -264,7 +265,7 @@ class Application
         $this->nonRequis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->autresPreRequis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->misesajour = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->droitsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
         
@@ -915,39 +916,7 @@ class Application
         return $this->misesajour;
     }
 
-    /**
-     * Add agents
-     *
-     * @param \Baquaras\TestBundle\Entity\Agents $agents
-     * @return Application
-     */
-    public function addAgent(\Baquaras\TestBundle\Entity\Agents $agents)
-    {
-        $this->agents[] = $agents;
-
-        return $this;
-    }
-
-    /**
-     * Remove agents
-     *
-     * @param \Baquaras\TestBundle\Entity\Agents $agents
-     */
-    public function removeAgent(\Baquaras\TestBundle\Entity\Agents $agents)
-    {
-        $this->agents->removeElement($agents);
-    }
-
-    /**
-     * Get agents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAgents()
-    {
-        return $this->agents;
-    }
-
+    
     /**
      * Add autresPreRequis
      *
@@ -1211,5 +1180,38 @@ class Application
     public function getCodeMoa()
     {
         return $this->codeMoa;
+    }
+
+    /**
+     * Add droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $droitsApplication
+     * @return Application
+     */
+    public function addDroitsApplication(\Baquaras\TestBundle\Entity\Utilisateur $droitsApplication)
+    {
+        $this->droitsApplication[] = $droitsApplication;
+    
+        return $this;
+    }
+
+    /**
+     * Remove droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $droitsApplication
+     */
+    public function removeDroitsApplication(\Baquaras\TestBundle\Entity\Utilisateur $droitsApplication)
+    {
+        $this->droitsApplication->removeElement($droitsApplication);
+    }
+
+    /**
+     * Get droitsApplication
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDroitsApplication()
+    {
+        return $this->droitsApplication;
     }
 }
