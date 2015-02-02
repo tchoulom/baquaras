@@ -699,7 +699,6 @@ class AppliController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $pck = $application->getPackages()->first();
-
         $form = $this->createForm(new ApplicationType($application->getId()), $application);
 
         $request = $this->get('request');
