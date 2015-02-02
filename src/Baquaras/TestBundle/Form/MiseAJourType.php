@@ -48,8 +48,8 @@ class MiseAJourType extends AbstractType
 				'property' => 'libelle'))
 			->add('description', 'textarea', array(
 				'label' => 'Description'))
-			->add('documentationTechnique', 'file', array(
-				'label' => 'Documentation technique'))
+			/*/*->add('documentationTechnique', 'file', array(
+				'label' => 'Documentation technique'))*/
 			->add('commentaire', 'textarea', array(
 				'label' => 'Commentaire'))	
 			->add('dateMiseEnProdMAJ', 'date', array(

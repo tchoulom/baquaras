@@ -1609,53 +1609,53 @@
                                             <a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
                                             <a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
                                             <h2> Scripts </h2>
+                                            {% if pck is not empty %}
+                                                <div class="content" id="scripts">
+                                                <div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id}) }}" class="popup"> Ajouter un script </a> </div>
 
-                                            <div class="content" id="scripts">
-                                            <div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id}) }}" class="popup"> Ajouter un script </a> </div>
+                                                        {% for package in application.packages %}
+                                                                {% if package.scripts is not empty %}
 
-                                                    {% for package in application.packages %}
-                                                            {% if package.scripts is not empty %}
+                                                                <h3> Liste des scripts </h3>
 
-                                                            <h3> Liste des scripts </h3>
+                                                                <table id="scripts_liste">
+                                                                        <tr>
+                                                                                <th> Nom </th>
+                                                                                <th> Fonction </th>
+                                                                                <th> Type </th>
+                                                                                <th> Technologie </th>
+                                                                                <th> OS </th>
+                                                                                <th> Condition d'exécution </th>
+                                                                                <th> Condition de lancement </th>
+                                                                                <th> Actions </th>
+                                                                        </tr>
 
-                                                            <table id="scripts_liste">
-                                                                    <tr>
-                                                                            <th> Nom </th>
-                                                                            <th> Fonction </th>
-                                                                            <th> Type </th>
-                                                                            <th> Technologie </th>
-                                                                            <th> OS </th>
-                                                                            <th> Condition d'exécution </th>
-                                                                            <th> Condition de lancement </th>
-                                                                            <th> Actions </th>
-                                                                    </tr>
+                                                                {% for script in package.scripts %}
 
-                                                            {% for script in package.scripts %}
+                                                                        <tr>
+                                                                                <td> {{ script.nom }} </td>
+                                                                                <td> {{ script.fonction }} </td>
+                                                                                <td> {{ script.type }} </td>
+                                                                                <td> {{ script.techno }} </td>
+                                                                                <td> {{ script.oscible }} </td>
+                                                                                <td> {{ script.conditionExecution }} </td>
+                                                                                <td> {{ script.conditionLancement }} </td>
+                                                                                {% if app.session.get('role') in ['Administrateur','Responsable qualification','Qualificateur'] %}
+                                                                                    <td>
+                                                                                            <a href="{{path('modifierScript', {'scriptId' : script.id }) }}" class="popup"> Modifier</a>&nbsp;
+                                                                                            <a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" class="popup"> Supprimer </a>
+                                                                                    </td>
+                                                                                {% endif %}
+                                                                        </tr>
+                                                                {% endfor %}
 
-                                                                    <tr>
-                                                                            <td> {{ script.nom }} </td>
-                                                                            <td> {{ script.fonction }} </td>
-                                                                            <td> {{ script.type }} </td>
-                                                                            <td> {{ script.techno }} </td>
-                                                                            <td> {{ script.oscible }} </td>
-                                                                            <td> {{ script.conditionExecution }} </td>
-                                                                            <td> {{ script.conditionLancement }} </td>
-                                                                            {% if app.session.get('role') in ['Administrateur','Responsable qualification','Qualificateur'] %}
-                                                                                <td>
-                                                                                        <a href="{{path('modifierScript', {'scriptId' : script.id }) }}" class="popup"> Modifier</a>&nbsp;
-                                                                                        <a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" class="popup"> Supprimer </a>
-                                                                                </td>
-                                                                            {% endif %}
-                                                                    </tr>
-                                                            {% endfor %}
+                                                                </table>
 
-                                                            </table>
+                                                        {% endif %}
+                                                {% endfor %}
 
-                                                    {% endif %}
-                                            {% endfor %}
-
-                                            </div>
-
+                                                </div>
+                                            {% endif %}
                                     </li>
                                {% endif %}
 			</ul>
@@ -1939,6 +1939,7 @@
             window.open($(this).attr("href"), "popup", "height=620,width=850,resizable=no,toolbar=no,menubar=no,location=no,status=no");
             return false;
         });
+        
     </script>
     </body>
 </html>
