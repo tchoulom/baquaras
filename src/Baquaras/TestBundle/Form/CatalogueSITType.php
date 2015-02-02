@@ -39,7 +39,7 @@ class CatalogueSITType extends AbstractType
 				'label' => 'Version payée'))
             ->add('cout', 'text', array(
 				'label' => 'Coût (en euros)'))
-            ->add('docInfoComplementaire', new FichierType())
+            //->add('docInfoComplementaire', new FichierType())
         ;
     }
     

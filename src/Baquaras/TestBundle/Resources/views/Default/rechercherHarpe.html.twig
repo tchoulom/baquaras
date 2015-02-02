@@ -73,11 +73,11 @@
 						<tr>
 							<td>
 								<select id="form_leftValues" name="leftValues[]" multiple>
-									{% if agents is defined %}
+									{#% if agents is defined %}
 										{% for agent in agents %}
 											<option> {{ agent.prenom }} {{ agent.nom }} </option>
 										{% endfor %}
-									{% endif %}
+									{% endif %#}
 								</select>
 							</td>
 							<td>
@@ -87,9 +87,9 @@
 							<td>
 								<select id="form_rightValues" name="rightValues[]" multiple>
 									{% if rightValues is defined %}
-										{% for agent in rightValues %}
+										{#% for agent in rightValues %}
 											<option> {{ agent }} </option>
-										{% endfor %}
+										{% endfor %#}
 									{% endif %}
 								</select>
 							</td>

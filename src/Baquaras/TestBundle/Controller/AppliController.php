@@ -705,7 +705,7 @@ class AppliController extends Controller {
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            $application->getRefCatalogue()->getDocInfoComplementaire()->upload();
+           // $application->getRefCatalogue()->getDocInfoComplementaire()->upload();
             $em->persist($application);
             $em->flush();
 
@@ -770,10 +770,10 @@ class AppliController extends Controller {
 
         /* Catalogue */
         $catalogue = $application->getRefCatalogue();
-        $application->setRefCatalogue();
+       /* $application->setRefCatalogue();
         if (!empty($catalogue)) {
             $em->remove($catalogue);
-        }
+        }*/
 
         /* Packages Pré-requis */
         $preRequisApplication = $application->getPreRequis();

@@ -98,16 +98,16 @@
 						<td> {{ application.description }} </td>
 						<td> 
 							{% set i = 0 %}
-							{% for agent in application.agents %}
-								{% if agent.role == "personnes" %}
+							{#% for agent in application.agents %#}
+								{#% if agent.role == "personnes" %}
 									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
+									{#% set i = i + 1 %}
 									{% if i >= 2 %}
 										</br>
 									{% endif %}
-									{{ agent.libelle }} 
-								{% endif %}
-							 {% endfor %} 
+									{#{ agent.libelle }#} 
+								{#% endif %}
+							 {#% endfor %#} 
 						</td>
 						<td> 
 							{% if application.installation.installationADistance is defined %}
