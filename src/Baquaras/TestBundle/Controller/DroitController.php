@@ -22,14 +22,14 @@ use Baquaras\TestBundle\Form\DroitWorkflowType;
 
 class DroitController extends Controller
 {
+    
 	public function modifierDroitsPageAction(Request $request, $type) 
-	// Fonction permettant d'éditer les droits utilisateurs relatifs à l'accès aux pages
 	{
 		$em = $this->getDoctrine()->getManager();
 		$droit = new Droit();
 		$form = $this->createForm(new DroitType(), $droit, array('intention' => $type));
 		
-		$profils = $this->getDoctrine()->getRepository('BaquarasTestBundle:Profil')->findAll();
+		$profils = $this->getDoctrine()->getRepository('BaquarasTestBundle:Profil')->getProfilWithoutAdmin();
 		$pages = $this->getDoctrine()->getRepository('BaquarasTestBundle:Page')->findBy(array('type' => $type));
 		$droits = $this->getDoctrine()->getRepository('BaquarasTestBundle:Droit')->findAll();
 		$request = $this->get('request');
@@ -37,21 +37,22 @@ class DroitController extends Controller
 			$form->bind($request);
 			if ($form->isValid()) {
 				$em = $this->getDoctrine()->getManager();
-				
 				$profil = $form["profil"]->getData();
 				$page = $form["page"]->getData();
 				$acces = $form["acces"]->getData();
-				
-				foreach($droits as $value) {
-					if ($value->getProfil() == $profil) {
-						if ($value->getPage() == $page) {
-							$em->remove($value);
-						}
-					}				
-				}
-				$em->persist($droit);
-				$em->flush();
-				$this->get('session')->getFlashBag()->add('notice', 'Droits utilisateurs mis à jour');
+                                $drt = $em->getRepository('BaquarasTestBundle:Droit')->findOneBy(array('page' => $page->getId(), 'profil' => $profil->getId()));
+                                if(empty($drt)) {
+                                    $droit = new Droit();
+                                    $droit->setProfil($profil);
+                                    $droit->setPage($page);
+                                    $droit->setAcces($acces);
+                                    $em->persist($droit);
+                                } else {
+                                    $drt->setAcces($acces);
+                                    $em->persist($drt);
+                                }
+                                $em->flush();
+                                $this->get('session')->getFlashBag()->add('notice', 'Droits utilisateurs mis à jour');				
 				
 				return $this->redirect($this->generateUrl('droitsAccess', array('type' => $type)));
 			}

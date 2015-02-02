@@ -692,14 +692,14 @@ class AppliController extends Controller {
      * Fonction permettant la modification d'une application
      * @ParamConverter("application", options={"mapping": {"id": "id"}})
      */
-    public function modifierApplicationAction(Application $application) {
+    public function modifierApplicationAction(Application $application)
+    {
         if ($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
             throw new AccessDeniedException('Accès limité');
         }
         $em = $this->getDoctrine()->getManager();
 
         $pck = $application->getPackages()->first();
-
         $form = $this->createForm(new ApplicationType($application->getId()), $application);
 
         $request = $this->get('request');

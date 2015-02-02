@@ -20,7 +20,11 @@ class DroitType extends AbstractType
 				'label' => 'Profil *',
 				'empty_value' => 'Sélectionner un profil',
 				'class' => 'BaquarasTestBundle:Profil',
-				'property' => 'libelle'))
+				'property' => 'libelle',
+                                'query_builder' =>  function(\Baquaras\TestBundle\Entity\ProfilRepository $er) {
+                                                        return $er->createQueryBuilder('p')
+                                                            ->where('p.id != 8');
+                                                },))
             ->add('page', 'entity', array(
 				'label' => 'Page *',
 				'empty_value' => 'Sélectionner une page/onglet/champ',
