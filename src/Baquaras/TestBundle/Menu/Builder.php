@@ -48,7 +48,7 @@ class Builder extends ContainerAware
                         'route' => 'droitsAccess',
                         'routeParameters' => array('type' => 1)
                         ))->getParent()
-                ->addChild('Gestion  d\'accès des ongles', array(
+                ->addChild('Gestion d\'accès aux onglets', array(
                         'route' => 'droitsAccess',
                         'routeParameters' => array('type' => 2)
                         ))->getParent()
@@ -59,7 +59,7 @@ class Builder extends ContainerAware
                 /*->addChild('Gestion des applications', array(
                     'route' => 'listerApplicationsAdmin'
                     ))->getParent()*/
-                ->addChild('Gestion des listes déroulantes', array(
+                ->addChild('Gestion des listes', array(
                     'route' => 'listerItem'
                     ))->getParent()
                 /*->addChild('Ajouter un utilisateur', array(

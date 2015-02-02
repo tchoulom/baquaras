@@ -6,7 +6,6 @@
     </head>
 
     <body>
-
         {% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
         {% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
 
@@ -81,7 +80,7 @@
                         <td id="errors"> {{ form_errors(form.deptUsers) }} </td>
                     </tr>
                     <tr>
-                        <td class="annuler"> <a href="{{path('accueil')}}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
+                        <td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
                         <td class="valider"> {{ form_widget(form.save) }} </td>
                     </tr>
 
