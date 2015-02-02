@@ -2244,12 +2244,11 @@ class AppliController extends Controller {
      */
     public function rechercheSieraAction(Request $request, $siera)
     {
-        $connection = $this->container->get('doctrine.dbal.siera_connection');
+        $results = array();
         if($request->request->get('type') == 'application') {
             $results = $this->container->get('baquaras.connect_siera')->getApplicationNameSiera($siera);
         } elseif ($request->request->get('type') == 'client') {
-            $application = $request->request->get('application') ;//$siera,$application
-            $results = $this->container->get('baquaras.connect_siera')->getClientNameSiera($siera, $application);
+            $results = $this->container->get('baquaras.connect_siera')->getClientNameSiera($siera);
         }
         
         return new Response(json_encode($results));

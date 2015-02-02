@@ -30,12 +30,11 @@ class ConnectSiera
     
     /*
      * @param string $siera
-     * @param string $application
      * @return array
      */
-    public function  getClientNameSiera($siera,$application)
+    public function  getClientNameSiera($siera)
     {
-        $results = $this->connection->query("select nom_client_siera from vue_baquaras where nom_client_siera LIKE '%$siera%' AND nom_application_siera = '$application'")->fetchAll();
+        $results = $this->connection->query("select nom_client_siera from vue_baquaras where nom_application_siera = '$siera'")->fetchAll();
         
         return $results;
     }

@@ -63,9 +63,7 @@
                     </tr>
                     <tr class="sieraclient">
                         <td id="label"> {{ form_label(form.nomClientSIERA) }} </td>
-                        <td id="text"> {{ form_widget(form.nomClientSIERA, {'attr' : {
-                                                                                        'id' : 'autocomplete',
-                                                                                        'class' : 'ui-autocomplete-input'} }) }} </td> 
+                        <td id="text"> {{ form_widget(form.nomClientSIERA) }} </td> 
                     </tr> <tr class="sieraclient">
                         <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
                     </tr>
@@ -110,7 +108,6 @@
                         }).change();
                     });
                     $("#baquaras_testbundle_application_nomApplicationSIERA").autocomplete({
-                        
                         source: function( request, response ) {
                         var elem = $('#baquaras_testbundle_application_nomApplicationSIERA');
                         $.ajax({
@@ -128,24 +125,21 @@
                         });
                     },
                     select: function (event, ui) {
+                        $("#baquaras_testbundle_application_nomClientSIERA").empty();
                         $(".sieraclient").show();
-                        $("#baquaras_testbundle_application_nomClientSIERA").autocomplete({
-                            source: function( request, resp ) {
-                                var elem = $('#baquaras_testbundle_application_nomClientSIERA');
+                                var elem = $('#baquaras_testbundle_application_nomApplicationSIERA');
                                 $.ajax({
                                     type: "POST",
-                                    data: {type : 'client', application: $('#baquaras_testbundle_application_nomApplicationSIERA').val()},
+                                    data: {type : 'client'},
                                     url: Routing.generate('rechercheSiera', {siera: elem.val()}),
                                     dataType: "html",
                                     success: function (results) {
                                         results=JSON.parse(results);
-                                        resp($.map(results, function(objet){
-                                            return objet.nom_client_siera; // on retourne cette forme de suggestion
-                                        }));
+                                        $.each(results, function(index, value) {
+                                              $("#baquaras_testbundle_application_nomClientSIERA").append('<option value="'+ index +'">'+ value['nom_client_siera'] +'</option>');
+                                        });
                                     }
                                 });
-                            }
-                        }); 
                     },
                     position : {
                         position: 'absolute',                        

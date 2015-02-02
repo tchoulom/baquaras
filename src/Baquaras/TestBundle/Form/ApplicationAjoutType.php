@@ -62,7 +62,7 @@ class ApplicationAjoutType extends AbstractType {
                     'label' => 'Rattachée à une application dans SIERA'))
                 ->add('nomApplicationSIERA', 'text', array(
                     'label' => 'Nom de l\'application dans SIERA'))
-                ->add('nomClientSIERA', 'text', array(
+                ->add('nomClientSIERA', 'choice', array(
                     'label' => 'Client dans SIERA'))
                 ->add('deptMoa', 'hidden', array(
                     'label' => 'Departement MOA'))
@@ -93,7 +93,6 @@ class ApplicationAjoutType extends AbstractType {
                             $application->setDeptUsers($result['dept_utilisateurs']);
                             $application->setIdClientSIERA($result['id_application_siera']);
                         }
-                   //  var_dump($results); exit;
                     } 
                         
                 })
