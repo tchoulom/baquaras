@@ -1175,12 +1175,12 @@
                                                                     or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                                     {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier) }}
                                                                {% else %}
-                                                                   {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }}
+                                                                   {#{{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }}#}
                                                                {% endif %}
 							</td> 
 						</tr> 
 						<tr> 
-							<td id="error"> {{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }} </td>
+							<td id="error"> {#{{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }}#} </td>
 						</tr>					
 					</table>
 					</div>
