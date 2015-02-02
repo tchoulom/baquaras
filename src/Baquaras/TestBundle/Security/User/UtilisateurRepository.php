@@ -74,6 +74,21 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
         return $class === 'Baquaras\TestBundle\Security\User\User';
     }
     
+    /**
+     *
+     * @return array(Utilisateur)
+     */
+    public function findUser($term)
+    {
+        $data = strtolower($term);
+        $query = $this->createQueryBuilder('u')
+            ->select('u.nom, u.prenom')
+            ->where("LOWER(u.nom) LIKE :term or LOWER(u.prenom) LIKE :term")
+            ->setParameter('term', '%'.$data.'%')
+            ->orderBy('u.nom', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+        return $query ;
+    }
     
 }
-

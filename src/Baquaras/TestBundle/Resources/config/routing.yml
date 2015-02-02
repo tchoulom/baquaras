@@ -94,6 +94,12 @@ listerUsers:
     options:
         expose: true
 
+ajoutUtilisateur:
+    path: /utilisateur/{term}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
+    options:
+        expose: true
+
 #----------------
 # APPLICATIONS
 #----------------
@@ -256,5 +262,3 @@ voirSuiviQualif:
 
 modifStatutQualif:
     path:    /modifStatutQualif/{id}
-        
-    

@@ -21,13 +21,12 @@ class HarpeController extends Controller
 	public function rechercherHarpeAction(Request $request, Application $application, $champ, $action)
     {
 		$em = $this->getDoctrine()->getManager();
-		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
+		//$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$rightValues = array();
 		
 		$defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('recherche', 'text', array('label' => 'Nom de l\'agent'))
-			->add('save', 'submit', array('label' => 'Lancer la recherche'))
 			->getForm();
 			
 		$form->handleRequest($request);
@@ -62,6 +61,7 @@ class HarpeController extends Controller
 		}
 		
 		if($form->isValid()) {
+                    die('test2');
 			$recherche = $form['recherche']->getData();
 						
 			foreach($xml->Personnes[0]->children() as $personne) {

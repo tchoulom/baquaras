@@ -12,106 +12,82 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 
-class UtilisateurController extends Controller {
+class UtilisateurController extends Controller
+{
 
-    public function rechercherUserHarpeAction(Request $request) 
-    {
-        $em = $this->getDoctrine()->getManager();
+        /* 
+         * Affiche le formulaire pour ajouter un utilisateur
+         */
+	public function ajouterUserAction($cpteMatriculaire)
+	{
+            $utilisateur = new Utilisateur();
+            $form = $this->createForm(new UtilisateurType, $utilisateur);
 
-        // On charge le fichier xml
-        $xml = simplexml_load_file($this->container->get('kernel')->getRootDir() . '/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
-        $resultats = array();
-        $cpteMatriculaires = array();
-        $count = 0;
+            $request = $this->get('request');	
+            if ($request->getMethod() == 'POST') {
+                    $form->bind($request);
+                    if ($form->isValid()) {
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($utilisateur);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('notice', 'Utilisateur ajouté');
 
-        $defaultData = array('message' => 'Message');
-        $form = $this->createFormBuilder($defaultData)
-                    ->add('champRecherche', 'text', array(
-                        'label' => 'Recherche à partir du nom'))
-                    ->add('save', 'submit', array(
-                        'label' => 'Lancer la recherche'))
-                    ->getForm();
+                            return $this->redirect($this->generateUrl('listerUsers'));
+                    }
+            }
+            return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
+	}
+        
+        public function ajoutUtilisateurAction($term)
+        {
+            $results = array();
+            $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findUser($term);
+            foreach ($user as $name) {
+                $results[] = $name['nom'].' '.$name['prenom'];
+            }
+            
+            return new Response(json_encode($results));
+        }
+        
+	
+	public function modifierUserAction($userId) 
+	{
+		$user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($userId);
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            // Récupération du champ recherche
-            $recherche = $form['champRecherche']->getData();
-            $i = 0;
-
-            foreach ($xml->Personnes[0]->children() as $personne) {
-                // Parcours du fichier personnes pour trouver une correspondance sur le nom ou le prénom
-                // La chaîne de caractères entrées est recherchée en début, milieu et fin de chaîne
-                $test = preg_match('#^' . $recherche . '#i', $personne->Generique['prenom'] . ' ');
-                $test2 = preg_match('#^' . $recherche . '#i', $personne->Generique['nom'] . ' ');
-                $test3 = preg_match('#^' . $recherche . '#i', $personne['cpteMatriculaire'] . ' ');
-
-                if ($test == 1 || $test2 == 1 || $test3 == 1) {
-                    $count++;
-                    $resultats[$i] = $personne->Generique['prenom'] . ' ' . $personne->Generique['nom'];
-                    $cpteMatriculaires[$i] = $personne['cpteMatriculaire'];
+                if(!$user) {
+                    throw new \Exception('cet utilisateur n\'existe pas');
                 }
-                $i++;
-            }
-        }
-        return $this->render('BaquarasTestBundle:Default:rechercherUserHarpe.html.twig', array('form' => $form->createView(), 'resultats' => $resultats, 'count' => $count, 'cpteMatriculaires' => $cpteMatriculaires));
-    }
-    /* Affiche le formulaire pour ajouter un utilisateur */
-    public function ajouterUserAction($cpteMatriculaire)
-    {
-        $utilisateur = new Utilisateur();
-        $form = $this->createForm(new UtilisateurType, $utilisateur);
+		$em = $this->getDoctrine()->getManager();
+		$form = $this->createForm(new UtilisateurType(), $user);
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($utilisateur);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('notice', 'Utilisateur ajouté');
+		$request = $this->get('request');
+		
+		if ($request->getMethod() == 'POST') {
+			$form->bind($request);
+			$em->persist($user);
+			$em->flush();
+			
+			$this->get('session')->getFlashBag()->add('notice','Utilisateur mis à jour');
 
-                return $this->redirect($this->generateUrl('listerUsers'));
-            }
-        }
-        return $this->render('BaquarasTestBundle:Default:ajouteruser.html.twig', array('form' => $form->createView(), 'cpteMatriculaire' => $cpteMatriculaire));
-    }
+			return $this->redirect($this->generateUrl('listerUsers'));
+		}
 
-    public function modifierUserAction($userId) {
-        $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($userId);
-
-        if (!$user) {
-            throw new \Exception('cet utilisateur n\'existe pas');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new UtilisateurType(), $user);
-
-        $request = $this->get('request');
-
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-            $em->persist($user);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('notice', 'Utilisateur mis à jour');
-
-            return $this->redirect($this->generateUrl('listerUsers'));
-        }
-
-        return $this->render('BaquarasTestBundle:Default:edituser.html.twig', array('form' => $form->createView(), 'user' => $user));
-    }
-
-    public function supprimerUserAction($userId) {
-        $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($userId);
-
-        $em = $this->getDoctrine()->getManager();
-        $user->setProfil1();
-        $em->persist($user);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add('notice', 'Profil supprimé');
-
-        return $this->redirect($this->generateUrl('listerUsers'));
-    }
+		return $this->render('BaquarasTestBundle:Default:edituser.html.twig', array('form' => $form->createView(), 'user' => $user));
+	}
+	
+	public function supprimerUserAction($userId) 
+	{
+		$user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->find($userId);
+		
+		$em = $this->getDoctrine()->getManager();
+                $user->setProfil1();
+		$em->persist($user);
+		$em->flush();
+		
+		$this->get('session')->getFlashBag()->add('notice', 'Profil supprimé');
+		
+		return $this->redirect($this->generateUrl('listerUsers'));
+	}	
 
     public function listerUsersAction(Request $request, $sort = null) {
         $em = $this->getDoctrine()->getManager();
