@@ -1,12 +1,26 @@
-<table id="liste">
-    <tr id="tr1">
-        <td> Nom et Prénom </td>
-    </tr>
-    {% for utilisateur in users %}
-        <tr id="trimpair">
-            <td> {{ utilisateur.name | raw }} </td>
-           
-        </tr>	
-    {% endfor %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title> Liste des utilisateurs AD</title>
+        {% include 'BaquarasTestBundle:Default:css.html.twig' %}
+    </head>
 
-</table>
+<body>
+    <div id="listerUsers">
+            <div id="tableauUsers">
+                    <table id="liste">
+                            <tr id="tr1">
+                                    <td> Nom et Prénom </td>
+                            </tr>
+                            {% for utilisateur in users %}
+                                    <tr id="trimpair">
+                                            <td> {{ utilisateur.name | raw }} </td>
+
+                                    </tr>	
+                            {% endfor %}
+
+                    </table>
+            </div>
+    </div>
+</body>
+</html>
