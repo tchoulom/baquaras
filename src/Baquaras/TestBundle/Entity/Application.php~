@@ -233,17 +233,21 @@ class Application
     private $misesajour;
 	
      /**
-     * @ORM\ManyToMany(targetEntity="Application", mappedBy="applications")
-     * @ORM\JoinTable(name="droits_application")
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="usersDroit")
      **/
     private $droitsApplication ;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="applications")
+     */
+    private $moes;
 
     /**
      *
      * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="application")
      */
     private $utilisateur;
-	/**
+    /**
      * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
      *
      **/
@@ -268,6 +272,7 @@ class Application
         $this->droitsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->moes = new \Doctrine\Common\Collections\ArrayCollection();
         
     }
 	
@@ -1191,7 +1196,7 @@ class Application
     public function addDroitsApplication(\Baquaras\TestBundle\Entity\Utilisateur $droitsApplication)
     {
         $this->droitsApplication[] = $droitsApplication;
-    
+
         return $this;
     }
 
@@ -1213,5 +1218,38 @@ class Application
     public function getDroitsApplication()
     {
         return $this->droitsApplication;
+    }
+
+    /**
+     * Add moes
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $moes
+     * @return Application
+     */
+    public function addMo(\Baquaras\TestBundle\Entity\Utilisateur $moes)
+    {
+        $this->moes[] = $moes;
+
+        return $this;
+    }
+
+    /**
+     * Remove moes
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $moes
+     */
+    public function removeMo(\Baquaras\TestBundle\Entity\Utilisateur $moes)
+    {
+        $this->moes->removeElement($moes);
+    }
+
+    /**
+     * Get moes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMoes()
+    {
+        return $this->moes;
     }
 }

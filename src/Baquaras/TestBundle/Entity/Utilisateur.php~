@@ -118,9 +118,17 @@ class Utilisateur
     private $application;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Application", mappedBy="utilisateurs")
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="moes", cascade={"persist"})
+     * @ORM\JoinTable(name="moa_application")
      **/
-    private $droitsApplication;
+    private $applications;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="droitsApplication")
+     * @ORM\JoinTable(name="droits_application")
+
+     **/
+    private $usersDroit;
 	
     /**
      * Get id
@@ -374,7 +382,8 @@ class Utilisateur
         $this->evolutionsStatut = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->droitsApplication = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->usersDroit = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -493,35 +502,45 @@ class Utilisateur
     }
 
     /**
-     * Add droitsApplication
+     * Get applications
      *
-     * @param \Baquaras\TestBundle\Entity\Application $droitsApplication
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    /**
+     * Add usersDroit
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
      * @return Utilisateur
      */
-    public function addDroitsApplication(\Baquaras\TestBundle\Entity\Application $droitsApplication)
+    public function addUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
     {
-        $this->droitsApplication[] = $droitsApplication;
-    
+        $this->usersDroit[] = $usersDroit;
+
         return $this;
     }
 
     /**
-     * Remove droitsApplication
+     * Remove usersDroit
      *
-     * @param \Baquaras\TestBundle\Entity\Application $droitsApplication
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
      */
-    public function removeDroitsApplication(\Baquaras\TestBundle\Entity\Application $droitsApplication)
+    public function removeUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
     {
-        $this->droitsApplication->removeElement($droitsApplication);
+        $this->usersDroit->removeElement($usersDroit);
     }
 
     /**
-     * Get droitsApplication
+     * Get usersDroit
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDroitsApplication()
+    public function getUsersDroit()
     {
-        return $this->droitsApplication;
+        return $this->usersDroit;
     }
 }

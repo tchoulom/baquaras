@@ -605,8 +605,12 @@ class AppliController extends Controller {
         return $response;
     }
 
-    public function ajouterApplicationAction(Request $request) {
-    // Fonction permettant d'ajouter/créer une application
+    /*
+     *  Fonction permettant d'ajouter/créer une application
+     * 
+     */
+    public function ajouterApplicationAction(Request $request) 
+    {
         if ($this->container->get('management_roles')->RoleVerified('ajouter une application') === false) {
             throw new AccessDeniedException('Accès limité');
         }
@@ -658,18 +662,15 @@ class AppliController extends Controller {
 
         $form = $this->createForm('baquaras_testbundle_application', $application);
         $request = $this->get('request');
-
+        $id = $this->container->get('session')->get('iduser');
+        if(!$id) {
+            throw new AccessDeniedException('Accès limité vous devez se connecter');
+        }
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                foreach ($application->getUtilisateur() as $utilisateur) {
-                    $utilisateur->addApplication($application);
-                    $em->persist($utilisateur);
-                }
                 $em = $this->getDoctrine()->getManager();
-
                 $em->persist($application);
-
                 $em->persist($installation);
                 $em->persist($gestion);
                 $em->persist($architecture);
@@ -680,8 +681,13 @@ class AppliController extends Controller {
                 $em->persist($qualification);
                 $em->persist($installationp);
                 $em->flush();
+                foreach($application->getUtilisateur() as $utilisateur) {
+                    $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('id'=>$utilisateur->getId()));
+                    $user->addApplication($application);
+                    $em->persist($user);
+                    $em->flush();
+                }
                 $this->get('session')->getFlashBag()->add('notice', 'Application ajoutée');
-
                 return $this->redirect($this->generateUrl('listerApplications'));
             }
         }
@@ -721,11 +727,15 @@ class AppliController extends Controller {
      * Fonction permettant la consultation d'une application
      * @ParamConverter("application", options={"mapping": {"id": "id"}})
      */
-    public function consulterApplicationAction(Application $application) {
+    public function consulterApplicationAction(Application $application) 
+    {
         if (!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
             throw new AccessDeniedException('Accès limité');
         }
-        return $this->render('BaquarasTestBundle:Default:consulterappli.html.twig', array('application' => $application,));
+        if($application->getCodeMoa()) {
+            $moa = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire'=> $application->getCodeMoa()));
+        }
+        return $this->render('BaquarasTestBundle:Default:consulterappli.html.twig', array('application' => $application, 'moa' => isset($moa)?$moa:null));
     }
 
     /**
@@ -2248,6 +2258,7 @@ class AppliController extends Controller {
         if($request->request->get('type') == 'application') {
             $results = $this->container->get('baquaras.connect_siera')->getApplicationNameSiera($siera);
         } elseif ($request->request->get('type') == 'client') {
+            $siera = str_replace('%20', ' ', $siera);
             $results = $this->container->get('baquaras.connect_siera')->getClientNameSiera($siera);
         }
         

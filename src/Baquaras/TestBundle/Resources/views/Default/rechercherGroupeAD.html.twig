@@ -46,10 +46,10 @@
                 <table id="zoneForm">
                     <tr>
                         <td id="selectG"> 
-                            <select id="form_leftValues" multiple>
+                            <select ie-select-fix id="form_leftValues" multiple>
                                 {% if groupes is not empty %}
                                     {% for groupe in groupes %}
-                                        <option> {{groupe }} </option>
+                                        <option size="1"> {{groupe }} </option>
                                     {% endfor %}
                                 {% endif %}
                             </select>

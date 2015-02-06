@@ -35,7 +35,6 @@ class ConnectSiera
     public function  getClientNameSiera($siera)
     {
         $results = $this->connection->query("select nom_client_siera from vue_baquaras where nom_application_siera = '$siera'")->fetchAll();
-        
         return $results;
     }
     

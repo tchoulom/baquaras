@@ -32,7 +32,7 @@ class CreateUsersCommand extends ContainerAwareCommand
         try {
             $users = simplexml_load_file($this->getContainer()->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
             foreach ($users->Personnes[0]->children() as $user) {
-                //$profil1 = $em->getRepository('BaquarasTestBundle:Profil')->find(1);
+                $profil1 = $em->getRepository('BaquarasTestBundle:Profil')->find(1);
                 $person = new Utilisateur();
                 $person->setPrenom($user->Generique['prenom']);
                 $person->setNom($user->Generique['nom']);
@@ -41,7 +41,7 @@ class CreateUsersCommand extends ContainerAwareCommand
                 $person->setCivilite($user->Generique['civilite']);
                 $person->setTelephone($user->Contact['tel']);
                 $person->setMail($user->Contact['mail']);
-                $person->setProfil1();
+                $person->setProfil1($profil1);
                 $validator = $this->getContainer()->get('validator');
                 $errors = $validator->validate($person);
                 if (count($errors) > 0) {

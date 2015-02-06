@@ -47,7 +47,7 @@ class ApplicationAjoutType extends AbstractType {
                     },
                     'label' => 'Type de l\'application *',
                     'empty_value' => 'Sélectionner un type d\'application'))
-                ->add('utilisateur', 'entity', array(
+                ->add('moes', 'entity', array(
                     'class' => 'BaquarasTestBundle:Utilisateur',
                     'property' => 'getCompleteName',
                     'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) {
@@ -62,39 +62,34 @@ class ApplicationAjoutType extends AbstractType {
                     'label' => 'Rattachée à une application dans SIERA'))
                 ->add('nomApplicationSIERA', 'text', array(
                     'label' => 'Nom de l\'application dans SIERA'))
-                ->add('nomClientSIERA', 'choice', array(
-                    'label' => 'Client dans SIERA'))
+                ->add('nomClientSIERA', 'hidden', array(
+                    'required' => false))    
                 ->add('deptMoa', 'hidden', array(
-                    'label' => 'Departement MOA'))
+                    'label' => 'Departement MOA',
+                    'required' => false))
                 ->add('deptUsers', 'hidden',array(
-                    'label' => 'Departement utilisateurs'))
+                    'label' => 'Departement utilisateurs',
+                    'required' => false))
                 ->add('save', 'submit', array(
                     'label' => 'Valider'))
                     
                 ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($container) {
-                    
                     $application = $event->getData();
                     $form = $event->getForm();
-                    if (!$application) {
-                        return;
-                    }
-
-                    // Check whether the user has chosen to display his email or not.
-                    // If the data was submitted previously, the additional value that is
-                    // included in the request variables needs to be removed.
                     if (true === $application->getAppliReferenceeSIERA() &&
-                        $application->getNomApplicationSIERA()
-                        && $application->getNomClientSIERA()) {
+                        $application->getNomApplicationSIERA() && $application->getNomClientSIERA()) {
                         $results = $container->get('baquaras.connect_siera')->getAllInfosSiera($application->getNomClientSIERA(), $application->getNomApplicationSIERA());  
-                        
                         foreach($results as $result) {
+                            if($result['moe'] ) {
+                               $moe = $container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire'=>$result['moe']));
+                              $application->addUtilisateur($moe);
+                            }
                             $application->setCodeMoa($result['moa']) ;
                             $application->setDeptMoa($result['dept_moa']);
                             $application->setDeptUsers($result['dept_utilisateurs']);
                             $application->setIdClientSIERA($result['id_application_siera']);
                         }
-                    } 
-                        
+                    }
                 })
                 ->getForm();
 

@@ -43,14 +43,14 @@
                         <td id="errors"> {{ form_errors(form.type) }} </td>
                     </tr>
                     <tr>
-                        <td id="label"> {{ form_label(form.appliReferenceeSIERA) }} </td>
+                        <td id="label" style="display:none"> {{ form_label(form.appliReferenceeSIERA) }} </td>
                         <td> {{ form_widget(form.appliReferenceeSIERA) }} </td> </tr> <tr> <td> </td>
                         <td id="errors"> {{ form_errors(form.appliReferenceeSIERA) }} </td>
                     </tr>
-                    <tr>
-                        <td id="label"> {{ form_label(form.utilisateur) }} </td>
-                        <td id="text"> {{ form_widget(form.utilisateur) }} </td> </tr> <tr> <td> </td>
-                        <td id="errors"> {{ form_errors(form.utilisateur) }} </td>
+                    <tr id="moes">
+                        <td id="label"> {{ form_label(form.moes) }} </td>
+                        <td id="text"> {{ form_widget(form.moes) }} </td> </tr> <tr> <td> </td>
+                        <td id="errors"> {{ form_errors(form.moes) }} </td>
                     </tr>
                     <tr> </tr>
                     <tr class="siera">
@@ -59,14 +59,14 @@
                                                                                         'id' : 'autocomplete',
                                                                                         'class' : 'ui-autocomplete-input'} }) }} </td> 
                     </tr> <tr class="siera">
-                        <td id="errors"> {{ form_errors(form.nomApplicationSIERA) }} </td>
+                        <td id="errors">{{ form_errors(form.nomApplicationSIERA) }} </td>
                     </tr>
                     <tr class="sieraclient">
-                        <td id="label"> {{ form_label(form.nomClientSIERA) }} </td>
-                        <td id="text"> {{ form_widget(form.nomClientSIERA) }} </td> 
-                    </tr> <tr class="sieraclient">
-                        <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
-                    </tr>
+                        <td id="label"> Nom du client SIERA </td>
+                        <td id="text"> 
+                            <select id="select_siera"></select>
+                        </td>
+                    </tr> 
                     <tr class="sierainfo">
                         <td id="label"> {{ form_label(form.deptMoa) }} </td>
                         <td id="text"> {{ form_widget(form.deptMoa) }} </td>
@@ -76,6 +76,11 @@
                         <td id="label"> {{ form_label(form.deptUsers) }} </td>
                         <td id="text"> {{ form_widget(form.deptUsers) }} </td>
                         <td id="errors"> {{ form_errors(form.deptUsers) }} </td>
+                    </tr>
+                    <tr class="sierainfo">
+                        <td id="label"> {{ form_label(form.nomClientSIERA) }} </td>
+                        <td id="text"> {{ form_widget(form.nomClientSIERA) }} </td>
+                        <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
                     </tr>
                     <tr>
                         <td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
@@ -104,7 +109,11 @@
                             $(".siera").toggle(this.checked);
                             if(this.checked === false ) {
                                 $(".sieraclient").hide();
-                            } 
+                           //     $("#moes").show();
+                            }
+                          /*  else {
+                                $("#moes").hide();
+                            } */
                         }).change();
                     });
                     $("#baquaras_testbundle_application_nomApplicationSIERA").autocomplete({
@@ -125,25 +134,40 @@
                         });
                     },
                     select: function (event, ui) {
-                        $("#baquaras_testbundle_application_nomClientSIERA").empty();
-                        $(".sieraclient").show();
-                                var elem = $('#baquaras_testbundle_application_nomApplicationSIERA');
+                      //  $("#baquaras_testbundle_application_nomClientSIERA").empty();
+                        $('#baquaras_testbundle_application_nomClientSIERA').empty();
                                 $.ajax({
                                     type: "POST",
                                     data: {type : 'client'},
-                                    url: Routing.generate('rechercheSiera', {siera: elem.val()}),
+                                    url: Routing.generate('rechercheSiera', {siera: ui.item.label}),
                                     dataType: "html",
                                     success: function (results) {
+                                        
                                         results=JSON.parse(results);
+                                        $(".sieraclient").show();
+                                        $('#select_siera').html('<option> Choisir un client Siera</option>');
                                         $.each(results, function(index, value) {
-                                              $("#baquaras_testbundle_application_nomClientSIERA").append('<option value="'+ index +'">'+ value['nom_client_siera'] +'</option>');
+                                           // for (var i=0, total = results.length; i < total; i++) {
+                                           
+                                            $('#select_siera').append('<option value="'+ value['nom_client_siera'] +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');  
+                                            //
+//
+ //$('#baquaras_testbundle_application_clientSiera').append('<option value="'+ index +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');
+                                          //  $("#baquaras_testbundle_application_clientSiera").append('<option value="'+ value['nom_client_siera'] +' selected ">'+ value['nom_client_siera'] +'</option>');
                                         });
                                     }
-                                });
+                                               
+                                        
+                                    });
+                               
                     },
                     position : {
-                        position: 'absolute',                        
+                        position: 'absolute',                    
                     }
+                });
+                $("#select_siera").change(function() {
+                  $("#baquaras_testbundle_application_nomClientSIERA").val($("#select_siera").val());
+                    
                 });
                 
             </script>
