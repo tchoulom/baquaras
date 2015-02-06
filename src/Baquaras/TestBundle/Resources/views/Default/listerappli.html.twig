@@ -240,12 +240,22 @@
 
 		</div>
                 <script>
+                /*
                 $(function(){
                     $('#liste').tablesorter({
                        widgets : ['zebra', 'columns'],
                        sortInitialOrder: "asc",
                        
                         });
+                });
+                */
+                $(function() {
+                // call the tablesorter plugin
+                $("table").tablesorter({
+                  // initialize zebra striping of the table
+                   widgets : ['zebra', 'columns'],
+                   sortInitialOrder: "asc"
+                    });
                 });
                 </script>
                
