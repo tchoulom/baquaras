@@ -112,12 +112,12 @@
                                             }).trigger('change');
 
                                             $("#ud").change(function() {
-                                                    mafonctionchange('ul','ud');;
+                                                    mafonctionchange('ul','ud');
                                             });
-
+                                            
                                             function mafonctionchange(selecteur,selecteurparent)
                                             {         
-                                                    $('#'+selecteur).empty(); 
+                                                    $('#'+selecteur).empty();    
                                                     $.ajax({
                                                             url: "{{ path('ajouterDepartement', {'applicationId' : application.id})}}",
                                                             type: 'POST',
@@ -139,10 +139,31 @@
                                                                     if (selecteur == 'ud') {
                                                                             mafonctionchange('ul','ud');
                                                                     }
+                                                                    /*                                            
+                                                                    if ( $("#departement").val() == "0" ).change(function(){
+                                                                            $('#ud').css('display','none');     
+                                                                    }
+
+                                                                    
+                                                                    if ( $("#ul").val() == "" ) {
+                                                                        $('#unite_locale').hide();     
+                                                                    }
+                                                                    
+                                                                    if ( $("#departement").val() == "0" ) {
+                                                                        $('#ul').css('display','none');     
+                                                                    }*/
+                                                                    //var_dump($("#ud:empty"));exit();
+                                                                    
                                                             }
                                                     });
                                             }
                                             /*
+                                            $( "#departement option:selected" ).change(function() {
+                                                if (selecteur == 'ud') {
+                                                    $( "ul" ).empty();
+                                                }
+                                            });
+                                            
                                             //////////////////////////////////////////////////////////////
                                                 $('select#departement').change(function() {
 
@@ -161,7 +182,7 @@
                                                 }); 
 
                                             
-                                            
+                                          /*   
                                             
                                         jQuery(document).ready(function($) {
                                            $('#departement, #ud, #ul').autocomplete({
