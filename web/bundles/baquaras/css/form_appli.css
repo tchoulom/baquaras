@@ -198,7 +198,7 @@ th {
 .consulterappli ul.accordion li div.content {
 	border:none;
 	border-top:2px solid white;
-	padding:
+	//padding:
 }
 .consulterappli ul.accordion li div.content table{
 	font-size:0.8em;
@@ -221,6 +221,9 @@ th {
 }
 .consulterappli ul.accordion li div.content table tbody tr td {
 	padding:6px 10px;
+}
+.consulterappli ul.accordion li div.content table tbody tr td a {
+	color: #54aaa9;
 }
 .consulterappli ul.accordion li div.content table tbody tr td#label {
 	width: 260px;
@@ -1017,7 +1020,7 @@ form table tbody tr td.valider button#baquaras_testbundle_autreprerequis_save {
 }*/
 
 /************************************************************************************************************************** Modifier statut ******************/
-#page form.ajouterappli table tbody tr#siera {
+#page form.ajouterappli table tbody tr.siera, #page form.ajouterappli table tbody tr.sierainfo, #page form.ajouterappli table tbody tr.sieraclient {
 	display:none;
 }
 
@@ -1095,5 +1098,15 @@ input[type="button"], button {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	padding: 4px 6px;
 }*/
-
+.ui-autocomplete {
+    display: block; 
+    width: 355px; 
+    position: relative; 
+    top: -88px;
+    list-style:none;  
+    left: 519px;
+    padding-left:20px;
+    background-color:#eeeeee; 
+    padding-left:0px
+}
 

@@ -11,9 +11,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Utilisateur
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\UtilisateurRepository")
+ * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Security\User\UtilisateurRepository")
  * @UniqueEntity(
  * 		fields={"cpteMatriculaire"},
+ * 		message="Cet utilisateur a déjà été ajouté"
+ *		)
+ * @UniqueEntity(
+ * 		fields={"nom","prenom","mail"},
  * 		message="Cet utilisateur a déjà été ajouté"
  *		)
  */
@@ -70,10 +74,10 @@ class Utilisateur
      */
     private $matricule;
 	
-	/**
+    /**
      * @var string
-     *
      * @ORM\Column(name="Mail", type="string", length=255, nullable=true)
+     * @Assert\Email()
      */
     private $mail;
 	
@@ -106,6 +110,25 @@ class Utilisateur
      * @ORM\OneToMany(targetEntity="ModificationApplication", mappedBy="utilisateur")
      **/
     private $modifsApplication;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="utilisateur", cascade={"persist"})
+     * @ORM\JoinTable(name="utilisateur_application")
+     **/
+    private $application;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="moes", cascade={"persist"})
+     * @ORM\JoinTable(name="moa_application")
+     **/
+    private $applications;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="droitsApplication")
+     * @ORM\JoinTable(name="droits_application")
+
+     **/
+    private $usersDroit;
 	
     /**
      * Get id
@@ -312,7 +335,7 @@ class Utilisateur
      * @param \Baquaras\TestBundle\Entity\Profil $profil1
      * @return Utilisateur
      */
-    public function setProfil1(\Baquaras\TestBundle\Entity\Profil $profil1 = null)
+    public function setProfil1($profil1 = 1)
     {
         $this->profil1 = $profil1;
 
@@ -358,6 +381,9 @@ class Utilisateur
     {
         $this->evolutionsStatut = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifsApplication = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->application = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->usersDroit = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -419,10 +445,102 @@ class Utilisateur
     /**
      * Get modifsApplication
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModifsApplication()
     {
         return $this->modifsApplication;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $application
+    public function setApplication(\Baquaras\TestBundle\Entity\Application $application = null)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Baquaras\TestBundle\Entity\Application
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
+     * Add Application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $Application
+     * @return Utilisateur
+     */
+    public function addApplication(\Baquaras\TestBundle\Entity\Application $Application)
+    {
+        $this->application[] = $Application;
+
+        return $this;
+    }
+
+    public function getCompleteName()
+    {
+        return sprintf('%s - %s', $this->nom, $this->prenom);
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $application
+     */
+    public function removeApplication(\Baquaras\TestBundle\Entity\Application $application)
+    {
+        $this->application->removeElement($application);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    /**
+     * Add usersDroit
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
+     * @return Utilisateur
+     */
+    public function addUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
+    {
+        $this->usersDroit[] = $usersDroit;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersDroit
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
+     */
+    public function removeUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
+    {
+        $this->usersDroit->removeElement($usersDroit);
+    }
+
+    /**
+     * Get usersDroit
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsersDroit()
+    {
+        return $this->usersDroit;
     }
 }

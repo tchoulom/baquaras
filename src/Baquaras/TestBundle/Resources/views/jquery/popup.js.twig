@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+	<head>
+		<title> Login </title>
+		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
+	</head>
+
+	<body>
+	
+		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 	
+
+		<div id="page">
+					
+			<h1> Suivi des qualifications </h1>
+			
+			{% if error %}
+				<div>{{ error.message }}</div>
+			{% endif %}
+                        
+		</div>
+		
+    </body>
+</html>

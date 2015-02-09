@@ -77,16 +77,28 @@ sonata_block:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
-        mapping_types:
-            enum: string
-            point: string
+        default_connection:   default
+        connections:
+            default:
+                driver:   "%database_driver%"
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+                mapping_types:
+                    enum: string
+                    point: string
+            siera:
+                driver:   "%database_driver_siera%"
+                host:     "%database_host_siera%"
+                port:     "%database_port_siera%"
+                dbname:   "%database_name_siera%"
+                user:     "%database_user_siera%"
+                password: "%database_password_siera%"
+                charset:  UTF8
+                
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"

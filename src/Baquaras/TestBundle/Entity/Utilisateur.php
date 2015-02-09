@@ -116,6 +116,19 @@ class Utilisateur
      * @ORM\JoinTable(name="utilisateur_application")
      **/
     private $application;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="moes", cascade={"persist"})
+     * @ORM\JoinTable(name="moa_application")
+     **/
+    private $applications;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Application", inversedBy="droitsApplication")
+     * @ORM\JoinTable(name="droits_application")
+
+     **/
+    private $usersDroit;
 	
     /**
      * Get id
@@ -369,6 +382,8 @@ class Utilisateur
         $this->evolutionsStatut = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modifsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->usersDroit = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -474,5 +489,58 @@ class Utilisateur
     public function getCompleteName()
     {
         return sprintf('%s - %s', $this->nom, $this->prenom);
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $application
+     */
+    public function removeApplication(\Baquaras\TestBundle\Entity\Application $application)
+    {
+        $this->application->removeElement($application);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+    /**
+     * Add usersDroit
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
+     * @return Utilisateur
+     */
+    public function addUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
+    {
+        $this->usersDroit[] = $usersDroit;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersDroit
+     *
+     * @param \Baquaras\TestBundle\Entity\Application $usersDroit
+     */
+    public function removeUsersDroit(\Baquaras\TestBundle\Entity\Application $usersDroit)
+    {
+        $this->usersDroit->removeElement($usersDroit);
+    }
+
+    /**
+     * Get usersDroit
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsersDroit()
+    {
+        return $this->usersDroit;
     }
 }

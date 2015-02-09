@@ -21,20 +21,19 @@ class HarpeController extends Controller
 	public function rechercherHarpeAction(Request $request, Application $application, $champ, $action)
     {
 		$em = $this->getDoctrine()->getManager();
-		$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
+		//$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$rightValues = array();
 		
 		$defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('recherche', 'text', array('label' => 'Nom de l\'agent'))
-			->add('save', 'submit', array('label' => 'Lancer la recherche'))
 			->getForm();
 			
 		$form->handleRequest($request);
 		// récupération des mouvements dans le select de gauche (supression)
 		$gauche = $request->request->get('leftValues');
 		// récupération des agents déjà enregistrés
-		$agents = $this->getDoctrine()->getRepository('BaquarasTestBundle:Agents')->findByRole($action);
+		/*$agents = $this->getDoctrine()->getRepository('BaquarasTestBundle:Agents')->findByRole($action);
 		foreach($agents as $agent) {
 			$retire = false;
 			if(!empty($gauche)) {
@@ -45,9 +44,9 @@ class HarpeController extends Controller
 			}
 			if(!$retire)
 				$rightValues[] = $agent->getLibelle();
-		}
+		}*/
 		// récupération des mouvements dans le select de droite (ajout)
-		$select = $request->request->get('rightValues');
+	/*	$select = $request->request->get('rightValues');
 		if(!empty($select)) {
 			foreach($select as $agent) {
 				// empêche d'avoir deux fois le même agent dans le select de droite
@@ -59,12 +58,13 @@ class HarpeController extends Controller
 				if(!$doublon)
 					array_push($rightValues, $agent);
 			}
-		}
+		}*/
 		
 		if($form->isValid()) {
+                   // die('test2');
 			$recherche = $form['recherche']->getData();
 						
-			foreach($xml->Personnes[0]->children() as $personne) {
+			/*foreach($xml->Personnes[0]->children() as $personne) {
 				$doublon = false;
 				$test = preg_match('#'.$recherche.'#i', $personne->Generique['prenom']);
 				$test2 = preg_match('#'.$recherche.'#i', $personne->Generique['nom']);
@@ -83,7 +83,7 @@ class HarpeController extends Controller
 						$resultats[] = array('prenom' => $personne->Generique['prenom'],
 										'nom' => $personne->Generique['nom']);
 				}	
-			}
+			}*/
 		}
 		if($request->request->get('enregistrer') == 'enregistrer') {
 			if(!empty($gauche)) {
@@ -106,7 +106,7 @@ class HarpeController extends Controller
 				$em->flush();
 			}
 		}
-		if(empty($resultats)) {
+		//if(empty($resultats)) {
 			/*foreach($xml->Personnes[0]->children() as $personne) {
 				$doublon = false;
 				if(!empty($rightValues)) {
@@ -123,7 +123,7 @@ class HarpeController extends Controller
 											'nom' => $personne->Generique['nom']);
 			}	*/
 			$resultats = array();
-		}
+		//}
 		
 		return $this->render('BaquarasTestBundle:Default:rechercherHarpe.html.twig', array('form' => $form->createView(), 'action' => $action, 'rightValues' => $rightValues, 'application'=> $application, 'champ' => $champ, 'agents' => $resultats));
 	}

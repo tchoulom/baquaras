@@ -156,63 +156,55 @@
                                                         <td id="label"> Assistance </td>
                                                         <td id="read_only">
                                                                 {% set i = 0 %}
-                                                                {% for agent in application.agents %}
+                                                                {#% for agent in application.agents %}
                                                                         {# compteur pour faire un retour à la ligne #}
-                                                                        {% set i = i + 1 %}
+                                                                        {#% set i = i + 1 %}
                                                                         {% if i >= 2 %}
                                                                                 </br>
                                                                         {% endif %}
-                                                                        {% if agent.role == 'assistance' %}
+                                                                        {#% if agent.role == 'assistance' %}
                                                                                 {{ agent.libelle }}
                                                                         {% endif %}
-                                                                {% endfor %}
+                                                                {#% endfor %#}
                                                         </td>
                                                     </tr>
                                                     <tr> 
                                                         <td id="label"> Droits application </td> 
                                                         <td id="read_only"> 
                                                                 {% set i = 0 %}
-                                                                {% for agent in application.agents %}
+                                                                {#% for agent in application.agents %}
                                                                         {# compteur pour faire un retour à la ligne #}
-                                                                        {% set i = i + 1 %}
-                                                                        {% if i >= 2 %}
+                                                                        {#% set i = i + 1 %}
+                                                                        {#% if i >= 2 %}
                                                                                 </br>
-                                                                        {% endif %}
-                                                                        {% if agent.role == 'ayantDroit' %}
+                                                                        {#% endif %}
+                                                                        {#% if agent.role == 'ayantDroit' %}
                                                                                 {{ agent.libelle }}
                                                                         {% endif %}
-                                                                {% endfor %}
+                                                                {#% endfor %#}
                                                         </td> 
                                                     </tr>
                                                     <tr> 
                                                         <td id="label"> Personnes habilitées pour l'installation </td>
                                                         <td> 
-                                                            {% set i = 0 %}
+                                                            {#% set i = 0 %}
                                                             {% for agent in application.agents %}
                                                                 {# compteur pour faire un retour à la ligne #}
-                                                                {% set i = i + 1 %}
+                                                                {#% set i = i + 1 %}
                                                                 {% if i >= 2 %}
                                                                         </br>
                                                                 {% endif %}
                                                                 {% if agent.role == 'personnes' %}
                                                                         {{ agent.libelle }}
                                                                 {% endif %}
-                                                            {% endfor %}
+                                                            {% endfor %#}
                                                         </td>
                                                     </tr>
                                                     <tr> 
                                                         <td id="label"> Groupes habilités pour l'installation</td>
                                                         <td> 
-                                                            {% set i = 0 %}
-                                                            {% for agent in application.agents %}
-                                                                {# compteur pour faire un retour à la ligne #}
-                                                                {% set i = i + 1 %}
-                                                                {% if i >= 2 %}
-                                                                        </br>
-                                                                {% endif %}
-                                                                {% if agent.role == 'groupes' %}
-                                                                        {{ agent.libelle }}
-                                                                {% endif %}
+                                                            {% for groupeApplication in application.groupeApplications %}
+                                                                <a href="{{path('rechercheUsersAD', {'groupeId': groupeApplication.groupe.id})}}" class="popup">{{ groupeApplication.groupe.libelle }}</a>
                                                             {% endfor %}
                                                         </td>
                                                     </tr>
@@ -530,33 +522,25 @@
                                                                                             ] %}					
                                                     <tr>
                                                             <td id="label"> MOE </td>
-                                                            <td id="read_only"> 
-                                                                    {% for agent in application.agents %}
-                                                                            {% if agent.role == 'moe' %}
-                                                                                    {{ agent.libelle }}
-                                                                            {% endif %}
-                                                                    {% endfor %}
+                                                            <td id="read_only">
+                                                                    {% for moe in application.utilisateur %}
+                                                                        {{ moe.prenom }} {{ moe.nom }}
+                                                                    {%endfor%}
                                                             </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> Département MOE </td>
-                                                        <td id="read_only"> 
-                                                        </td>
+                                                        <td id="read_only"> SIT </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> MOA </td>
                                                         <td id="read_only"> 
-                                                                {% for agent in application.agents %}
-                                                                        {% if agent.role == 'moa' %}
-                                                                                {{ agent.libelle }}
-                                                                        {% endif %}
-                                                                {% endfor %}
+                                                             {{ moa }}
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> Département MOA </td>
-                                                        <td id="read_only">	
-                                                        </td>
+                                                        <td id="read_only"> {{ application.deptMoa }}</td>
                                                     </tr>
                                                 {% endif %}
                                                 {% if app.session and app.session.get('role') in ['Administrateur',
@@ -761,9 +745,9 @@
                                                 <tr>
                                                         <td id="label"> Documentation informations complémentaires </td>
                                                         <td id="text">
-                                                                {% if application.refCatalogue.docInfoComplementaire is not empty %}
+                                                                {#% if application.refCatalogue.docInfoComplementaire is not empty %}
                                                                         <a href = "{{path('consulterFichier', {'id' : application.refCatalogue.docInfoComplementaire.id }) }}"> {{ application.refCatalogue.docInfoComplementaire.url }} </a>
-                                                                {% endif %}
+                                                                {% endif %#}
                                                         </td>
                                                 </tr>					
                                         </table>
@@ -1254,7 +1238,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td id="label"> Documentation technique </td>
-                                                                        <td> {{ miseajour.documentationTechnique }} </td>
+                                                                        <td> {#{ miseajour.documentationTechnique }#} </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td id="label"> Date de mise en production de la mise à jour </td>
@@ -1361,5 +1345,11 @@
 						</ul>#}
 				
 		</div>
+         <script type="text/javascript">
+        $('.popup').click(function () {
+            window.open($(this).attr("href"), "popup", "scrollbars=yes");
+            return false;
+        });
+    </script>                                       
     </body>
 </html>

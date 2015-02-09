@@ -12,6 +12,7 @@
 		{% include 'BaquarasTestBundle:Default:menu.html.twig' %}
 		{% include 'BaquarasTestBundle:Default:onglets.html.twig' %}
 		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %}
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 				
 		<div id="page">
 				
@@ -231,7 +232,7 @@
                                                     <td id="error"> {{ form_errors(form.appliSousGouvernance) }} </td>
 						</tr>
 						<tr>
-                                                    <td id="label"> {{ form_label(form.dansCatalogueSIT) }} </td>
+                                                    <td id="label"> {#{ form_label(form.dansCatalogueSIT) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification',
                                                                                                     'Qualificateur'
@@ -240,10 +241,10 @@
                                                             <td> {{ form_widget(form.dansCatalogueSIT) }} </td>
                                                             {% else %}
                                                             <td> {{ form_widget(form.dansCatalogueSIT, { 'attr':{'disabled':'disabled'} }) }} </td>
-                                                    {% endif %}
+                                                    {% endif %#}
                                                 </tr> 
                                                 <tr>
-                                                    <td id="error"> {{ form_errors(form.dansCatalogueSIT) }} </td>
+                                                    <td id="error"> {#{ form_errors(form.dansCatalogueSIT) }#} </td>
 						</tr>
 						{#<tr>
 							<td id="label"> {{ form_label(form.refCatalogue) }} </td>
@@ -292,7 +293,7 @@
                                                                                                     'Qualificateur'
                                                                                                 ] 
                                                                         or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
-                                                                        <a href="{{path('ajouterDepartement', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Population cible','width=1200,scrollbars=yes'); return false;"> > Modifier les départements </a>
+                                                                        <a href="{{path('ajouterDepartement', {'applicationId' : application.id}) }}" class="popup"> Modifier les départements </a>
                                                         {% endif %}
                                                                 </td>
 						<tr>
@@ -306,14 +307,14 @@
 							<td id="label"> Assistance </td>
 							<td id="text"> 
 								<select id="listAssistance" multiple>
-									{% for agent in application.agents %}
+									{#% for agent in application.agents %}
 										{% if agent.role =="assistance" %}
 											<option> {{ agent.libelle }} </option>
 										{% endif %}
-									{% endfor %}
+									{% endfor %#}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'assistance'}) }}" onClick="window.open(this.href,'Assistance','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'assistance'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                         </td>
                                                                 {% endif %}
                                                     
@@ -321,14 +322,14 @@
 							<td id="label"> Utilisateurs ayant les droits </td>
 							<td id="text"> 
 								<select id="listAyantDroit" multiple>
-									{% for agent in application.agents %}
+									{#% for agent in application.agents %}
 										{% if agent.role =="ayantDroit" %}
 											<option> {{ agent.libelle }} </option>
 										{% endif %}
-									{% endfor %}
+									{% endfor %#}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'ayantDroit'}) }}" onClick="window.open(this.href,'Utilisateurs ayant les droits','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'ayantDroit'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                                 {% endif %}
                                                         </td>
 						</tr>
@@ -336,29 +337,29 @@
 							<td id="label"> Personnes habilitées à installer </td>
 							<td id="text"> 
                                                             <select id="listPersonnes" multiple>
-                                                                    {% for agent in application.agents %}
+                                                                    {#% for agent in application.agents %}
                                                                             {% if agent.role =="personnes" %}
                                                                                     <option> {{ agent.libelle }} </option>
                                                                             {% endif %}
-                                                                    {% endfor %}
+                                                                    {% endfor %#}
                                                             </select>
                                                             {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                                <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'personnes'}) }}" onClick="window.open(this.href,'Personnes habilitées à l'installation','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'personnes'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                             {% endif %}
                                                         </td>
 						</tr>
 						<tr>
                                                     <td id="label"> Groupes habilités à installer </td>
-                                                    <td id="text"> 
+                                                    <td id="text">
                                                         <select id="groupesInstall" multiple> 
-                                                                {% for groupeApplication in application.groupeApplications %}
-                                                                        <option> {{ groupeApplication.groupe.libelle }} </option>
-                                                                {% endfor %}
+                                                            {% for groupeApplication in application.groupeApplications %}
+                                                                <option> {{ groupeApplication.groupe.libelle }} </option>
+                                                            {% endfor %}
                                                         </select>
                                                         {% if app.session and app.session.get('role') !=  'Technicien support' %}
-                                                            <a href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" onClick="window.open(this.href,'Groupes habilités à l''installation','scrollbars=yes'); return false;"> > Ajouter un groupe d'utilisateurs </a>
+                                                            <a  href="{{path('rechercherGroupeAD', {'applicationId' : application.id}) }}" class="popup" > Ajouter un groupe d'utilisateurs </a>
                                                         {% endif %}
-                                                        </td> 
+                                                    </td>
 						</tr>
                                                 {% endif %}
 					</table>
@@ -811,11 +812,11 @@
 							<td id="label"> MOE </td>
 							<td id="text"> 
 								<select id="listMOE">
-									{% for agent in application.agents %}
+									{#% for agent in application.agents %}
 										{% if agent.role =="moe" %}
 											<option> {{ agent.libelle }} </option>
 										{% endif %}
-									{% endfor %}
+									{% endfor %#}
 								</select>
                                                                 {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification',
@@ -823,7 +824,7 @@
                                                                                                     'Intégrateur'
                                                                                                 ] 
                                                                     or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
-                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" onClick="window.open(this.href,'MOE','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                                 {% endif %}
 							</td>
 						</tr>					
@@ -831,11 +832,11 @@
 							<td id="label"> MOA </td>
 							<td id="text"> 
 								<select id="listMOA">
-									{% for agent in application.agents %}
+									{#% for agent in application.agents %}
 										{% if agent.role =="moa" %}
 											<option> {{ agent.libelle }} </option>
 										{% endif %}
-									{% endfor %}
+									{% endfor %#}
 								</select>
                                                                 {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification',
@@ -843,7 +844,7 @@
                                                                                                     'Intégrateur'
                                                                                                 ] 
                                                                     or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}             
-                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moa'}) }}" onClick="window.open(this.href,'MOA','width=1200,resizable=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moa'}) }}" class="popup"> Modifier les utilisateurs </a>
 							        {% endif %}
                                                         </td>
 						</tr>
@@ -1071,7 +1072,7 @@
 
 					<table>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.referenceApplication) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.referenceApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1083,10 +1084,10 @@
                                                             {% endif %}
                                                 
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.referenceApplication) }} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.referenceApplication) }#} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.usageApplication) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.usageApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1096,10 +1097,10 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.usageApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.usageApplication) }} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.usageApplication) }#} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1135,10 +1136,10 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.typeCatalogue, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.typeCatalogue) }} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.typeCatalogue) }#} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.versionPayee) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.versionPayee) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1151,7 +1152,7 @@
 							<td id="error"> {{ form_errors(form.refCatalogue.versionPayee) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.cout) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.cout) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1161,12 +1162,12 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.cout, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.cout) }} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.cout) }#} </td>
 						</tr>
 						<tr>
-							<td id="label"> {{ form_label(form.refCatalogue.docInfoComplementaire.fichier) }} </td>
+							<td id="label"> {#{ form_label(form.refCatalogue.docInfoComplementaire.fichier) }#} </td>
 							<td id="text">
-								{% if application.refCatalogue.docInfoComplementaire.url is defined %}
+								{#% if application.refCatalogue.docInfoComplementaire.url is defined %}
 									{{ application.refCatalogue.docInfoComplementaire.url }} 
 								{% endif %}
                                                                 {% if app.session and (app.session.get('role') in ['Administrateur',
@@ -1174,13 +1175,12 @@
                                                                                                 ] 
                                                                     or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                                     {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier) }}
-                                                               {% else %}
-                                                                   {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }}
-                                                               {% endif %}
+                                                               {% else %#}
+                                                                   {#{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }#}
 							</td> 
 						</tr> 
 						<tr> 
-							<td id="error"> {{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }} </td>
+							<td id="error"> {#{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }#} </td>
 						</tr>					
 					</table>
 					</div>
@@ -1535,12 +1535,12 @@
                                                             {#<td id="read_only"> {{ form_widget(package.modeOperatoire.libelle) }} </td>#}
                                                             {% if pck.modeOperatoire is not null %}
                                                                     <td id="text"> 
-                                                                            <a href="{{path('modifierModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Modifier le mode opératoire','scrollbars=yes, width=900'); return false;"> Modifier le mode opératoire </a> <br/>
+                                                                            <a href="{{path('modifierModeOperatoire', {'packageId' : pck.id }) }}" class="popup"> Modifier le mode opératoire </a> <br/>
                                                                             {#<a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" target="_blank"> Visualiser le mode opératoire </a> <br/>#}
-                                                                            <a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'Visualiser le mode opératoire','scrollbars=yes, width=900'); return false;"> Visualiser le mode opératoire </a>								
+                                                                            <a href="{{path('voirModeOperatoire', {'packageId' : pck.id }) }}" class="popup"> Visualiser le mode opératoire </a>								
                                                                     </td>
                                                             {% else %}
-                                                                    <td id="text"> <a href="{{path('genererModeOperatoire', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','scrollbars=yes, width=900'); return false;"> Générer un mode opératoire </a> </td>
+                                                                    <td id="text"> <a href="{{path('genererModeOperatoire', {'packageId' : pck.id }) }}" class="popup"> Générer un mode opératoire </a> </td>
                                                             {% endif %}
                                                         {% endif %}
 						</tr>
@@ -1609,53 +1609,53 @@
                                             <a id="scripts_accordion_plus" class="icone"> <img src="{{ asset('bundles/baquaras/images/plus.jpg') }}" height=20 width=20> </a> 
                                             <a id="scripts_accordion_moins" class="icone"> <img src="{{ asset('bundles/baquaras/images/moins.jpg') }}" height=20 width=20> </a>
                                             <h2> Scripts </h2>
+                                            {% if pck is not empty %}
+                                                <div class="content" id="scripts">
+                                                <div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id}) }}" class="popup"> Ajouter un script </a> </div>
 
-                                            <div class="content" id="scripts">
-                                            <div class="lien"> <a href="{{path('ajouterScript', {'packageId' : pck.id }) }}" onClick="window.open(this.href,'','menubar=no,height=500,width=760,resizable=yes'); return false;"> > Ajouter un script </a> </div>
+                                                        {% for package in application.packages %}
+                                                                {% if package.scripts is not empty %}
 
-                                                    {% for package in application.packages %}
-                                                            {% if package.scripts is not empty %}
+                                                                <h3> Liste des scripts </h3>
 
-                                                            <h3> Liste des scripts </h3>
+                                                                <table id="scripts_liste">
+                                                                        <tr>
+                                                                                <th> Nom </th>
+                                                                                <th> Fonction </th>
+                                                                                <th> Type </th>
+                                                                                <th> Technologie </th>
+                                                                                <th> OS </th>
+                                                                                <th> Condition d'exécution </th>
+                                                                                <th> Condition de lancement </th>
+                                                                                <th> Actions </th>
+                                                                        </tr>
 
-                                                            <table id="scripts_liste">
-                                                                    <tr>
-                                                                            <th> Nom </th>
-                                                                            <th> Fonction </th>
-                                                                            <th> Type </th>
-                                                                            <th> Technologie </th>
-                                                                            <th> OS </th>
-                                                                            <th> Condition d'exécution </th>
-                                                                            <th> Condition de lancement </th>
-                                                                            <th> Actions </th>
-                                                                    </tr>
+                                                                {% for script in package.scripts %}
 
-                                                            {% for script in package.scripts %}
+                                                                        <tr>
+                                                                                <td> {{ script.nom }} </td>
+                                                                                <td> {{ script.fonction }} </td>
+                                                                                <td> {{ script.type }} </td>
+                                                                                <td> {{ script.techno }} </td>
+                                                                                <td> {{ script.oscible }} </td>
+                                                                                <td> {{ script.conditionExecution }} </td>
+                                                                                <td> {{ script.conditionLancement }} </td>
+                                                                                {% if app.session.get('role') in ['Administrateur','Responsable qualification','Qualificateur'] %}
+                                                                                    <td>
+                                                                                            <a href="{{path('modifierScript', {'scriptId' : script.id }) }}" class="popup"> Modifier</a>&nbsp;
+                                                                                            <a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" class="popup"> Supprimer </a>
+                                                                                    </td>
+                                                                                {% endif %}
+                                                                        </tr>
+                                                                {% endfor %}
 
-                                                                    <tr>
-                                                                            <td> {{ script.nom }} </td>
-                                                                            <td> {{ script.fonction }} </td>
-                                                                            <td> {{ script.type }} </td>
-                                                                            <td> {{ script.techno }} </td>
-                                                                            <td> {{ script.oscible }} </td>
-                                                                            <td> {{ script.conditionExecution }} </td>
-                                                                            <td> {{ script.conditionLancement }} </td>
-                                                                            {% if app.session.get('role') in ['Administrateur','Responsable qualification','Qualificateur'] %}
-                                                                                <td>
-                                                                                        <a href="{{path('modifierScript', {'scriptId' : script.id }) }}" onClick="window.open(this.href,'','height=500,width=760,resizable=yes'); return false;"> Modifier</a>&nbsp;
-                                                                                        <a href="{{path('supprimerScript', {'scriptId' : script.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce script ?')"> Supprimer </a>
-                                                                                </td>
-                                                                            {% endif %}
-                                                                    </tr>
-                                                            {% endfor %}
+                                                                </table>
 
-                                                            </table>
+                                                        {% endif %}
+                                                {% endfor %}
 
-                                                    {% endif %}
-                                            {% endfor %}
-
-                                            </div>
-
+                                                </div>
+                                            {% endif %}
                                     </li>
                                {% endif %}
 			</ul>
@@ -1757,7 +1757,7 @@
                                                         {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
                                                             <td id="text"> 
                                                                     {{ form_widget(package.qualification.agentPreQualif) }} 
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                             </td> 
                                                         {% else %}
                                                             <td id="text"> 
@@ -1793,7 +1793,7 @@
                                                         {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
                                                             <td id="text"> 
                                                                     {{ form_widget(package.qualification.agentQualif) }} 
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" onClick="window.open(this.href,'','width=1200,scrollbars=yes'); return false;"> > Modifier les utilisateurs </a>
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" class="popup"> Modifier les utilisateurs </a>
                                                             </td>
                                                         {% else %}
                                                             <td id="text"> 
@@ -1847,7 +1847,7 @@
 							
 					<div class="content" id="maj">
                                         {% if(getAuthorisation('ajouter une mise')) == true %}
-                                            <div class="lien"> <a href="{{path('ajouterMAJ', {'id' : application.id }) }}" onClick="window.open(this.href,'','height=620,width=760,scrollbars=yes'); return false;"> > Ajouter une mise à jour </a> </div>
+                                            <div class="lien"> <a class="popup" href="{{path('ajouterMAJ', {'id' : application.id }) }}" > Ajouter une mise à jour </a> </div>
 				        {% endif %}
 						{% if application.misesajour is not empty %}
 							
@@ -1871,7 +1871,7 @@
 									<td> {{ maj.indice }} </td>
 									<td> {{ maj.statutPatch }} </td>
 									<td> 
-										<a href="{{path('modifierMAJ', {'majId' : maj.id}) }}" onClick="window.open(this.href,'','height=620,width=760,scrollbars=yes'); return false;"> Modifier </a>&nbsp;
+										<a class="popup" href="{{path('modifierMAJ', {'majId' : maj.id}) }}" > Modifier </a>&nbsp;
 										<a href="{{path('supprimerMAJ', {'majId' : maj.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette mise à jour ?')"> Supprimer </a>
 									</td>
 								</tr>
@@ -1929,12 +1929,17 @@
 			
 			</form>		
 		</div>
-    <script>
+    <script type="text/javascript">
         $('form').submit(function () {
             $selection = $(".modifierappli input, .modifierappli select, .modifierappli textarea, .modifierappli div");
             $selection.removeAttr('disabled');
             
         });
+        $('.popup').click(function () {
+            window.open($(this).attr("href"), "popup", "height=620,width=850,resizable=no,toolbar=no,menubar=no,location=no,status=no");
+            return false;
+        });
+        
     </script>
     </body>
 </html>

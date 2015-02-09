@@ -3,6 +3,7 @@ parameters:
     management_roles.class: Baquaras\TestBundle\Services\ManagementRoles
     authorisation_extension.class: Baquaras\TestBundle\Twig\AuthorisationExtension
     baquaras.security.logout_success_handler.class: Baquaras\TestBundle\Services\LogoutSuccess
+    baquaras.connect_siera.class: Baquaras\TestBundle\Services\ConnectSiera
 
 services:
     user_provider:
@@ -22,5 +23,16 @@ services:
             - [ setManagementRoles, [ @management_roles ] ]
         tags:
             -  { name: twig.extension }
+            
     baquaras.security.logout_success_handler:
         class: "%baquaras.security.logout_success_handler.class%"
+    
+    baquaras.connect_siera:
+        class: "%baquaras.connect_siera.class%"
+        arguments: ['@service_container']
+    
+    baquaras.form.type.application_ajout:
+        class: Baquaras\TestBundle\Form\ApplicationAjoutType
+        arguments: ['@service_container']
+        tags:
+            - { name: form.type, alias: baquaras_testbundle_application }

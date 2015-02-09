@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProfilRepository extends EntityRepository
 {
+    /*
+     * get profils withour admin
+     * @return array
+     */
+    public function getProfilWithoutAdmin()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.id != 8')
+            ->getQuery()
+            ->getResult();
+        return $query;
+    }
 }

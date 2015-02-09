@@ -10,6 +10,8 @@
                 <link rel="stylesheet" href="{{ asset('bundles/baquarastest/js/theme/smoothness/jquery-ui.css') }}" type="text/css"/>
                 <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
                 <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 		<style>
 			#zoneBouton {
 				 margin-top : -100px; 
@@ -22,17 +24,18 @@
 			}
 			#form_leftValues {
 				margin-left : 15px; 
-				width:150px;
-				height:150px;
+				width:210px;
+				height:250px;
 			}
 			#form_rightValues {
-				margin-left : 85px; 
+				margin-left : 15px; 
 				width:150px;
 				height:150px;
 			}
 			#form_enregistrer {
 				position : relative;
-				margin-top : 100px;
+				margin-top : 50px;
+                                margin-left: 220px;
 			}
 		</style>
 	</head>
@@ -40,13 +43,11 @@
     <body>
                 <div id="page">	
                     
-                        <div id="rechercheHarpe">
-
+                        <div class="rechercheHarpe">
+		
                                 <h1> Ajout/Suppression d'utilisateurs </h1>
 
                                 <form  action="{{ path('rechercherHarpe', {'champ' : 1,'applicationId' : application.id, 'action' : action}) }}" method="post" {{ form_enctype(form) }} class="rechercherHarpe" novalidate="novalidate">
-
-                                {{ form_start(form) }}
 
                                         <div class="container">
 
@@ -67,7 +68,7 @@
                                                                                 }}
 
                                                                 </td> 
-                                                                <td> {{ form_widget(form.save) }} </ </td>
+
                                                         </tr> 
                                                 </table>
 
@@ -75,11 +76,11 @@
                                                         <tr>
                                                                 <td>
                                                                         <select id="form_leftValues" name="leftValues[]" multiple>
-                                                                                {% if agents is defined %}
+                                                                                {#% if agents is defined %}
                                                                                         {% for agent in agents %}
                                                                                                 <option> {{ agent.prenom }} {{ agent.nom }} </option>
                                                                                         {% endfor %}
-                                                                                {% endif %}
+                                                                                {% endif %#}
                                                                         </select>
                                                                 </td>
                                                                 <td>
@@ -89,23 +90,21 @@
                                                                 <td>
                                                                         <select id="form_rightValues" name="rightValues[]" multiple>
                                                                                 {% if rightValues is defined %}
-                                                                                        {% for agent in rightValues %}
+                                                                                        {#% for agent in rightValues %}
                                                                                                 <option> {{ agent }} </option>
-                                                                                        {% endfor %}
+                                                                                        {% endfor %#}
                                                                                 {% endif %}
                                                                         </select>
                                                                 </td>
                                                         </tr>
                                                         <tr>
-                                                                <td colspan="3">
+                                                                <td colspan="6">
                                                                         <button type="submit" id="form_enregistrer" name="enregistrer" value="enregistrer"> Enregistrer </button>
                                                                 </td>
                                                         </tr>
                                                 </table>
 
                                                 {{ form_rest(form) }}
-
-                                                {{ form_end(form) }}
 
                                         </div>
 
@@ -116,64 +115,42 @@
 
                                 <script>
                                         $("#btnLeft").click(function () {
-                                                document.getElementById("form_recherche").disabled = true;
-                                                document.getElementById("form_save").disabled = true;
+                                                //document.getElementById("form_recherche").disabled = false;
+                                                //document.getElementById("form_save").disabled = true;
                                                 var selectedItem = $("#form_leftValues option:selected");
                                                 $("#form_rightValues").append(selectedItem);
                                         });
 
                                         $("#btnRight").click(function () {
-                                                document.getElementById("form_recherche").disabled = true;
-                                                document.getElementById("form_save").disabled = true;
+                                                //document.getElementById("form_recherche").disabled = true;
+                                                //document.getElementById("form_save").disabled = true;
                                                 var selectedItem = $("#form_rightValues option:selected");
                                                 $("#form_leftValues").append(selectedItem);
                                         });
 
-                                        var liste = [
-                                            "Yamine",
-                                            "Rachid",
-                                            "Daniel",
-                                            "Amira"
-                                        ];
+                                        $('#form_recherche').attr('placeholder', 'recherchez par nom ou prénom');
 
                                         $("#form_recherche").autocomplete({
-                                            source : liste//"./../Entity/UtilisateurRepository.php"
-                                        });
-                                        document.getElementById("form_save").disabled = false;
-
-                                        /*
-                                        function autocomplet() {
-                                            var min_length = 0; // min caracters to display the autocomplete
-                                            var keyword = $('#form_recherche').val();
-                                            if (keyword.length >= min_length) {
-                                                    $.ajax({
-                                                            source: function( request, response ) {
-                                                                jQuery.ajax({
-                                                                    url: "../Entity",
-                                                                    dataType: "json",
-                                                            type: 'POST',
-                                                            data: {keyword:keyword},
-                                                            success:function(data){
-                                                                    $('#form_leftValues').show();
-                                                                    $('#form_leftValues').html(data);
-                                                            }
-                                                        });
-                                                } else {
-                                                        $('#form_leftValues').hide();
+                                            source: function( request, response ) {
+                                            var element = $('#form_recherche').val();
+                                            $.ajax({
+                                                url: Routing.generate('ajoutUtilisateur', {term : element }),
+                                                dataType: "JSON",
+                                                success: function( data ) {
+                                                    $("#form_leftValues").empty();
+                                                    $.each(data, function(index, value) {
+                                                        $("#form_leftValues").append('<option value="'+ index +'">'+ value +'</option>');
+                                                    });
                                                 }
+                                            });
                                         }
-
-                                        function set_item(item) {
-                                            // change input value
-                                            $('#form_recherche').val(item);
-                                            // hide proposition list
-                                            $('#form_leftValues').hide();
-                                        }
-                                        */
+                                        });
                                 </script>
                         {% endblock %}
-
+			
                         </div>
+                    
                 </div>	
+					
     </body>
 </html>

@@ -1,93 +1,176 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<head>
-		<title> Ajout d'une application </title>
-		{% include 'BaquarasTestBundle:Default:css.html.twig' %}
-	</head>
+    <head>
+        <title> Ajout d'une application </title>
+        {% include 'BaquarasTestBundle:Default:css.html.twig' %}
+    </head>
 
     <body>
-		
-		{% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
-		{% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
-			
-		<div id="page">
-		
-			<h1> Ajouter une application </h1>
-		
-			<form  action="{{ path('ajouterApplication') }}" method="post" {{ form_enctype(form) }} class="ajouterappli" novalidate="novalidate">
-		
-			{{ form_start(form) }}
-			
-			<table>
-				
-				<tr> 
-					<td id="errors"> {{ form_errors(form) }} </td>
-				</tr>
-				<tr>
-					<td id="label"> {{ form_label(form.nom) }} </td>
-					<td  id="text"> {{ form_widget(form.nom) }} </td> </tr> <tr> <td> </td> 
-					<td id="errors"> {{ form_errors(form.nom) }} </td>
-				</tr>
-					<tr>
-						<td id="label"> {{ form_label(form.version) }} </td>
-						<td id="text"> {{ form_widget(form.version) }} </td> </tr> <tr> <td> </td> 
-						<td id="errors"> {{ form_errors(form.version) }} </td>
-					</tr>
-					<tr>
-						<td id="label"> {{ form_label(form.description) }} </td>
-						<td id="text"> {{ form_widget(form.description) }} </td> </tr> <tr> <td> </td> 
-						<td id="errors"> {{ form_errors(form.description) }} </td>
-					</tr>
-					<tr>
-						<td id="label"> {{ form_label(form.type) }} </td>
-						<td id="text"> {{ form_widget(form.type) }} </td> </tr> <tr> <td> </td> 
-						<td id="errors"> {{ form_errors(form.type) }} </td>
-					</tr>
-					<tr>
-						<td id="label"> {{ form_label(form.appliReferenceeSIERA) }} </td>
-						<td> {{ form_widget(form.appliReferenceeSIERA) }} </td> </tr> <tr> <td> </td>
-						<td id="errors"> {{ form_errors(form.appliReferenceeSIERA) }} </td>
-					</tr>
-					<tr>
-						<td id="label"> {{ form_label(form.utilisateur) }} </td>
-						<td id="text"> {{ form_widget(form.utilisateur) }} </td> </tr> <tr> <td> </td>
-						<td id="errors"> {{ form_errors(form.utilisateur) }} </td>
-					</tr>
-					<tr> </tr>
-					
-						{% block jquery_ajouter %}
-							<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"> </script>
-							<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"> </script>
-							<script>
-								$(document).ready(function(){
-									$("#baquaras_testbundle_application_appliReferenceeSIERA").click(function(){
-										$("#siera").toggle();
-									});
-								});
-							</script>
-						{% endblock %}
-					
-					<tr id="siera">
-						<td id="label"> {{ form_label(form.nomApplicationSIERA) }} </td>
-						<td id="text"> {{ form_widget(form.nomApplicationSIERA) }} </td> </tr> <tr> <td> </td> 
-						<td id="errors"> {{ form_errors(form.nomApplicationSIERA) }} </td>
-					</tr>
-					<tr>
-						<td class="annuler"> <a href="{{path('accueil')}}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
-						<td class="valider"> {{ form_widget(form.save) }} </td>
-					</tr>
-			
-				</table>
-			
-				
-				
-				{{ form_rest(form) }}
-			
-			{{ form_end(form) }}
+        {% include 'BaquarasTestBundle:Default:menu.html.twig' %} 
+        {% include 'BaquarasTestBundle:Default:jquery2.html.twig' %} 
 
-			</form>
-		
-		</div>
-		
+        <div id="page">
+
+            <h1> Ajouter une application </h1>
+
+            <form  action="{{ path('ajouterApplication') }}" method="post" {{ form_enctype(form) }} class="ajouterappli" novalidate="novalidate" >
+
+                {#{ form_start(form) }#}
+
+                <table>
+
+                    <tr> 
+                        <td id="errors"> {{ form_errors(form) }} </td>
+                    </tr>
+                    <tr>
+                        <td id="label"> {{ form_label(form.nom) }} </td>
+                        <td  id="text"> {{ form_widget(form.nom) }} </td> </tr> <tr> <td> </td> 
+                        <td id="errors"> {{ form_errors(form.nom) }} </td>
+                    </tr>
+                    <tr>
+                        <td id="label"> {{ form_label(form.version) }} </td>
+                        <td id="text"> {{ form_widget(form.version) }} </td> </tr> <tr> <td> </td> 
+                        <td id="errors"> {{ form_errors(form.version) }} </td>
+                    </tr>
+                    <tr>
+                        <td id="label"> {{ form_label(form.description) }} </td>
+                        <td id="text"> {{ form_widget(form.description) }} </td> </tr> <tr> <td> </td> 
+                        <td id="errors"> {{ form_errors(form.description) }} </td>
+                    </tr>
+                    <tr>
+                        <td id="label"> {{ form_label(form.type) }} </td>
+                        <td id="text"> {{ form_widget(form.type) }} </td> </tr> <tr> <td> </td> 
+                        <td id="errors"> {{ form_errors(form.type) }} </td>
+                    </tr>
+                    <tr>
+                        <td id="label" style="display:none"> {{ form_label(form.appliReferenceeSIERA) }} </td>
+                        <td> {{ form_widget(form.appliReferenceeSIERA) }} </td> </tr> <tr> <td> </td>
+                        <td id="errors"> {{ form_errors(form.appliReferenceeSIERA) }} </td>
+                    </tr>
+                    <tr id="moes">
+                        <td id="label"> {{ form_label(form.moes) }} </td>
+                        <td id="text"> {{ form_widget(form.moes) }} </td> </tr> <tr> <td> </td>
+                        <td id="errors"> {{ form_errors(form.moes) }} </td>
+                    </tr>
+                    <tr> </tr>
+                    <tr class="siera">
+                        <td id="label"> {{ form_label(form.nomApplicationSIERA) }} </td>
+                        <td id="text"> {{ form_widget(form.nomApplicationSIERA, {'attr' : {
+                                                                                        'id' : 'autocomplete',
+                                                                                        'class' : 'ui-autocomplete-input'} }) }} </td> 
+                    </tr> <tr class="siera">
+                        <td id="errors">{{ form_errors(form.nomApplicationSIERA) }} </td>
+                    </tr>
+                    <tr class="sieraclient">
+                        <td id="label"> Nom du client SIERA </td>
+                        <td id="text"> 
+                            <select id="select_siera"></select>
+                        </td>
+                    </tr> 
+                    <tr class="sierainfo">
+                        <td id="label"> {{ form_label(form.deptMoa) }} </td>
+                        <td id="text"> {{ form_widget(form.deptMoa) }} </td>
+                        <td id="errors"> {{ form_errors(form.deptMoa) }} </td>
+                    </tr>
+                    <tr class="sierainfo">
+                        <td id="label"> {{ form_label(form.deptUsers) }} </td>
+                        <td id="text"> {{ form_widget(form.deptUsers) }} </td>
+                        <td id="errors"> {{ form_errors(form.deptUsers) }} </td>
+                    </tr>
+                    <tr class="sierainfo">
+                        <td id="label"> {{ form_label(form.nomClientSIERA) }} </td>
+                        <td id="text"> {{ form_widget(form.nomClientSIERA) }} </td>
+                        <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
+                    </tr>
+                    <tr>
+                        <td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
+                        <td class="valider"> {{ form_widget(form.save) }} </td>
+                    </tr>
+
+                </table>
+
+                {{ form_rest(form) }}
+
+                {{ form_end(form) }}
+
+            </form>
+
+        </div>
+        {% block jquery_ajouter %}
+            <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/form_appli.css') }}" type="text/css"/>
+            <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+             <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-ui.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            <script>
+                    $(function () {
+                        $('#baquaras_testbundle_application_appliReferenceeSIERA').change(function () {
+                            $(".siera").toggle(this.checked);
+                            if(this.checked === false ) {
+                                $(".sieraclient").hide();
+                           //     $("#moes").show();
+                            }
+                          /*  else {
+                                $("#moes").hide();
+                            } */
+                        }).change();
+                    });
+                    $("#baquaras_testbundle_application_nomApplicationSIERA").autocomplete({
+                        source: function( request, response ) {
+                        var elem = $('#baquaras_testbundle_application_nomApplicationSIERA');
+                        $.ajax({
+                            type: "POST",
+                            url: Routing.generate('rechercheSiera', {siera: elem.val()}),
+                            data: { type : 'application'},
+                            dataType: "html",
+                            success: function (data) {
+                                data=JSON.parse(data);
+                                response($.map(data, function(objet){
+                                    return objet.nom_application_siera; // on retourne cette forme de suggestion
+                                }));
+                                $('ul.ui-autocomplete').removeAttr('style');
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                      //  $("#baquaras_testbundle_application_nomClientSIERA").empty();
+                        $('#baquaras_testbundle_application_nomClientSIERA').empty();
+                                $.ajax({
+                                    type: "POST",
+                                    data: {type : 'client'},
+                                    url: Routing.generate('rechercheSiera', {siera: ui.item.label}),
+                                    dataType: "html",
+                                    success: function (results) {
+                                        
+                                        results=JSON.parse(results);
+                                        $(".sieraclient").show();
+                                        $('#select_siera').html('<option> Choisir un client Siera</option>');
+                                        $.each(results, function(index, value) {
+                                           // for (var i=0, total = results.length; i < total; i++) {
+                                           
+                                            $('#select_siera').append('<option value="'+ value['nom_client_siera'] +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');  
+                                            //
+//
+ //$('#baquaras_testbundle_application_clientSiera').append('<option value="'+ index +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');
+                                          //  $("#baquaras_testbundle_application_clientSiera").append('<option value="'+ value['nom_client_siera'] +' selected ">'+ value['nom_client_siera'] +'</option>');
+                                        });
+                                    }
+                                               
+                                        
+                                    });
+                               
+                    },
+                    position : {
+                        position: 'absolute',                    
+                    }
+                });
+                $("#select_siera").change(function() {
+                  $("#baquaras_testbundle_application_nomClientSIERA").val($("#select_siera").val());
+                    
+                });
+                
+            </script>
+        {% endblock %}
     </body>
 </html>

@@ -12,9 +12,8 @@
                         <link rel="stylesheet" href="{{ asset('bundles/baquaras/css/theme.default.css') }}" type="text/css"/>
 		{% endblock %} 
       
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-1.3.1.min.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.widgets.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery-latest.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('bundles/baquarastest/js/jquery.tablesorter.min.js') }}"></script>
 
 	</head>
 	
@@ -99,16 +98,16 @@
 						<td> {{ application.description }} </td>
 						<td> 
 							{% set i = 0 %}
-							{% for agent in application.agents %}
-								{% if agent.role == "personnes" %}
+							{#% for agent in application.agents %#}
+								{#% if agent.role == "personnes" %}
 									{# compteur pour faire un retour à la ligne #}
-									{% set i = i + 1 %}
+									{#% set i = i + 1 %}
 									{% if i >= 2 %}
 										</br>
 									{% endif %}
-									{{ agent.libelle }} 
-								{% endif %}
-							 {% endfor %} 
+									{#{ agent.libelle }#} 
+								{#% endif %}
+							 {#% endfor %#} 
 						</td>
 						<td> 
 							{% if application.installation.installationADistance is defined %}
@@ -241,6 +240,7 @@
 
 		</div>
                 <script>
+                /*
                 $(function(){
                     $('#liste').tablesorter({
                        widgets : ['zebra', 'columns'],
@@ -248,7 +248,15 @@
                        
                         });
                 });
-                debug: true;
+                */
+                $(function() {
+                // call the tablesorter plugin
+                $("table").tablesorter({
+                  // initialize zebra striping of the table
+                   widgets : ['zebra', 'columns'],
+                   sortInitialOrder: "asc"
+                    });
+                });
                 </script>
                
 	</body>

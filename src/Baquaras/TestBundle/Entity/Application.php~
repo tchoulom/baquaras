@@ -101,6 +101,42 @@ class Application
      * @ORM\Column(name="Nom_Application_SIERA", type="string", length=255, nullable=true)
      */
     private $nomApplicationSIERA;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom_Client_SIERA", type="string", length=255, nullable=true)
+     */
+    private $nomClientSIERA;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Id_Client_SIERA", type="string", length=255, nullable=true)
+     */
+    private $idClientSIERA;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_moa", type="string", length=255, nullable=true)
+     */
+    private $deptMoa;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_moa", type="string", length=255, nullable=true)
+     */
+    private $codeMoa;    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dept_users", type="string", length=255, nullable=true)
+     */
+    private $deptUsers;
 
     /**
      * @var boolean
@@ -196,13 +232,24 @@ class Application
      **/
     private $misesajour;
 	
-	/**
-     * @ORM\OneToMany(targetEntity="Agents", mappedBy="application")
+     /**
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="usersDroit")
      **/
-    private $agents;
-	
-	/**
-     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application")
+    private $droitsApplication ;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="applications")
+     */
+    private $moes;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="application")
+     */
+    private $utilisateur;
+    /**
+     * @ORM\OneToMany(targetEntity="GroupeApplication", mappedBy="application", cascade={"persist"})
+     *
      **/
     private $groupeApplications;
 	
@@ -213,17 +260,20 @@ class Application
     public function __construct()
     {
         $this->appliReferenceeSIERA = null;
-		$this->appliSousGouvernance = null;
-		$this->dansCatalogueSIT = null;
-		$this->inscriteRevuePerformance = null;
+	$this->appliSousGouvernance = null;
+	$this->dansCatalogueSIT = null;
+	$this->inscriteRevuePerformance = null;
         $this->populationCible = new \Doctrine\Common\Collections\ArrayCollection();
         $this->packages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->preRequis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->nonRequis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->autresPreRequis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->misesajour = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->droitsApplication = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groupeApplications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->moes = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 	
 	public function __toString()
@@ -871,39 +921,7 @@ class Application
         return $this->misesajour;
     }
 
-    /**
-     * Add agents
-     *
-     * @param \Baquaras\TestBundle\Entity\Agents $agents
-     * @return Application
-     */
-    public function addAgent(\Baquaras\TestBundle\Entity\Agents $agents)
-    {
-        $this->agents[] = $agents;
-
-        return $this;
-    }
-
-    /**
-     * Remove agents
-     *
-     * @param \Baquaras\TestBundle\Entity\Agents $agents
-     */
-    public function removeAgent(\Baquaras\TestBundle\Entity\Agents $agents)
-    {
-        $this->agents->removeElement($agents);
-    }
-
-    /**
-     * Get agents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAgents()
-    {
-        return $this->agents;
-    }
-
+    
     /**
      * Add autresPreRequis
      *
@@ -1017,5 +1035,221 @@ class Application
     public function getGroupeApplications()
     {
         return $this->groupeApplications;
+    }
+    
+    /**
+     * Add utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     * @return Application
+     */
+    public function addUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur[] = $utilisateur;
+        //$this->utilisateur->setApplication($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+   
+
+    /**
+     * Set deptMoa
+     *
+     * @param string $deptMoa
+     * @return Application
+     */
+    public function setDeptMoa($deptMoa)
+    {
+        $this->deptMoa = $deptMoa;
+
+        return $this;
+    }
+
+    /**
+     * Get deptMoa
+     *
+     * @return string 
+     */
+    public function getDeptMoa()
+    {
+        return $this->deptMoa;
+    }
+
+    /**
+     * Set deptUsers
+     *
+     * @param string $deptUsers
+     * @return Application
+     */
+    public function setDeptUsers($deptUsers)
+    {
+        $this->deptUsers = $deptUsers;
+
+        return $this;
+    }
+
+    /**
+     * Get deptUsers
+     *
+     * @return string 
+     */
+    public function getDeptUsers()
+    {
+        return $this->deptUsers;
+    }
+
+    /**
+     * Set nomClientSIERA
+     *
+     * @param string $nomClientSIERA
+     * @return Application
+     */
+    public function setNomClientSIERA($nomClientSIERA)
+    {
+        $this->nomClientSIERA = $nomClientSIERA;
+
+        return $this;
+    }
+
+    /**
+     * Get nomClientSIERA
+     *
+     * @return string 
+     */
+    public function getNomClientSIERA()
+    {
+        return $this->nomClientSIERA;
+    }
+
+    /**
+     * Set idClientSIERA
+     *
+     * @param string $idClientSIERA
+     * @return Application
+     */
+    public function setIdClientSIERA($idClientSIERA)
+    {
+        $this->idClientSIERA = $idClientSIERA;
+
+        return $this;
+    }
+
+    /**
+     * Get idClientSIERA
+     *
+     * @return string 
+     */
+    public function getIdClientSIERA()
+    {
+        return $this->idClientSIERA;
+    }
+
+    /**
+     * Set codeMoa
+     *
+     * @param string $codeMoa
+     * @return Application
+     */
+    public function setCodeMoa($codeMoa)
+    {
+        $this->codeMoa = $codeMoa;
+
+        return $this;
+    }
+
+    /**
+     * Get codeMoa
+     *
+     * @return string 
+     */
+    public function getCodeMoa()
+    {
+        return $this->codeMoa;
+    }
+
+    /**
+     * Add droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $droitsApplication
+     * @return Application
+     */
+    public function addDroitsApplication(\Baquaras\TestBundle\Entity\Utilisateur $droitsApplication)
+    {
+        $this->droitsApplication[] = $droitsApplication;
+
+        return $this;
+    }
+
+    /**
+     * Remove droitsApplication
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $droitsApplication
+     */
+    public function removeDroitsApplication(\Baquaras\TestBundle\Entity\Utilisateur $droitsApplication)
+    {
+        $this->droitsApplication->removeElement($droitsApplication);
+    }
+
+    /**
+     * Get droitsApplication
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDroitsApplication()
+    {
+        return $this->droitsApplication;
+    }
+
+    /**
+     * Add moes
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $moes
+     * @return Application
+     */
+    public function addMo(\Baquaras\TestBundle\Entity\Utilisateur $moes)
+    {
+        $this->moes[] = $moes;
+
+        return $this;
+    }
+
+    /**
+     * Remove moes
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $moes
+     */
+    public function removeMo(\Baquaras\TestBundle\Entity\Utilisateur $moes)
+    {
+        $this->moes->removeElement($moes);
+    }
+
+    /**
+     * Get moes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMoes()
+    {
+        return $this->moes;
     }
 }

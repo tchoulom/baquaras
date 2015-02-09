@@ -42,17 +42,15 @@ gestionUtilisateur:
 ajouterUtilisateur:
     path: /utilisateur/new/{champ}/{applicationId}
     defaults: {_controller:BaquarasTestBundle:Harpe:rechercherHarpe}
- 
-
-
+    
 
 ajouterGroupeUserHarpe:
     path: /departement/search
     defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUserHarpe}
 
-ajouterGroupeUser:
-    path: /groupe/add/{id}
-    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUser}
+#ajouterGroupeUser:
+#    path: /groupe/add/{id}
+#    defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeUser}
 
 #----------------------------------------
 # UTILISATEURS/ GROUPES / DEPARTEMENTS
@@ -80,6 +78,10 @@ rechercherGroupeAD:
     options:
         expose: true
 
+rechercheUsersAD:
+    path: /groupe/utilisateurs/{groupeId}
+    defaults: {_controller:BaquarasTestBundle:Groupe:rechercheUtilisateurByGroupAd}
+
 ajouterGroupeAD:
     path: /groupe/add/{applicationId}
     defaults: {_controller:BaquarasTestBundle:Groupe:ajouterGroupeAD}
@@ -92,10 +94,21 @@ listerUsers:
     options:
         expose: true
 
+ajoutUtilisateur:
+    path: /utilisateur/{term}
+    defaults: {_controller:BaquarasTestBundle:Utilisateur:ajoutUtilisateur}
+    options:
+        expose: true
+
 #----------------
 # APPLICATIONS
 #----------------
-
+rechercheSiera:
+    path: /recherchesiera/{siera}
+    defaults: {_controller:BaquarasTestBundle:Appli:rechercheSiera}
+    options:
+        expose: true
+        
 listerApplications:
     path: /applications/{action}/{page}/{export}
     defaults: {_controller:BaquarasTestBundle:Appli:listerApplications,action:'lister',page:1, export:false}

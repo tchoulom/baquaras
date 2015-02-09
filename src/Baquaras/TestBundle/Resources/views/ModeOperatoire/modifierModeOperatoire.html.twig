@@ -9,6 +9,12 @@
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/page.css') }}" type="text/css"/>
 			<link rel="stylesheet" href="{{ asset('bundles/baquaras/css/fenetre.css') }}" type="text/css"/>
 		{% endblock %} 
+                {% block jquery_modop %}	
+                        <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+                        <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+                        <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+                {% endblock %}
+		
 	</head>
 	
 	<body>
