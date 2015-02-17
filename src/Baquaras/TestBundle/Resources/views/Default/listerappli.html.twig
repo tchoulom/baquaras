@@ -210,7 +210,7 @@
 							</td>
 						{% endif %}
                                                 {#% if is_granted('IS_AUTHENTICATED_FULLY') %#}
-                                                    <td>
+                                                    {#<td>                                                        
                                                         {% if(getAuthorisation('modifier une application')) == true %}
                                                             <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
                                                         {% endif %}
@@ -220,8 +220,64 @@
                                                         {% if(getAuthorisation('supprimer une application')) == true %}
                                                             <a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
                                                         {% endif %}
+                                                    </td>#}
+                                               {#%endif%#} {#Ernest TCHOULOM Commentaire 12-02-2015#}
+                                                    
+                                                   <td>   
+                                                     {% set admin = ["Administrateur", "Responsable qualification"] %}
+                                                     {% set adminChefProd = ["Administrateur", "Chef de produit", "Responsable qualification"] %}
+                                                     {% set adminChefProdQualif = ["Administrateur", "Chef de produit", "Responsable qualification", "Qualificateur"] %}
+                                                     {% set adminChefProdQualifIntegra = ["Administrateur", "Chef de produit", "Responsable qualification", "Qualificateur", "Intégrateur"] %}
+                                                     {% set adminQualif = ["Administrateur", "Responsable qualification", "Qualificateur"] %}
+                                                     {% set adminIntegra = ["Administrateur", "Responsable qualification", "Intégrateur"] %}
+                                                    {% for package in application.packages %}
+                                                        {% if package.statutQualif.libelle is defined %}
+                                                                {% if package.statutQualif.libelle is not null %}
+                                                                    {% if package.statutQualif.libelle == "Planifiée" %}
+                                                                        {% if user.profil1.libelle in adminChefProd %}
+                                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                        {% else %}
+                                                                            <span  style="color:gray;">Modifier</span><br> 
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if package.statutQualif.libelle == "Pré-qualifiée" %}
+                                                                        {% if user.profil1.libelle in adminChefProdQualif %}
+                                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                        {% else %}
+                                                                            <span  style="color:gray;">Modifier</span><br>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if package.statutQualif.libelle == "Packaging" or package.statutQualif.libelle == "Pré-production"  %}
+                                                                        {% if user.profil1.libelle in adminQualif %}
+                                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                        {% else %}
+                                                                            <span  style="color:gray;">Modifier</span><br>                                                                          
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if package.statutQualif.libelle == "En production" or package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance" or package.statutQualif.libelle == "Retirée de la production" %}
+                                                                        {% if user.profil1.libelle in adminIntegra %}
+                                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                        {% else %}
+                                                                            <span  style="color:gray;">Modifier</span><br>
+                                                                        {% endif %}
+                                                                    {% endif %}     
+                                                                    
+                                                                    {% if package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance" %}                                                                                     
+                                                                        <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>                                               
+                                                                    {% else %}                                                                           
+                                                                        <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
+                                                                    {% endif %}
+                                                                    
+                                                                    {% if user.profil1.libelle in admin %}                                                            
+                                                                        <a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
+                                                                    {% else %}
+                                                                        <span  style="color:gray;">Supprimer</span>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
                                                     </td>
-                                                {#%endif%#}
+                                                
 					</tr>
                                         
 					{% endfor %}

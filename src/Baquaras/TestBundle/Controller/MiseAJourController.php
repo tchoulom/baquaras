@@ -75,10 +75,12 @@ class MiseAJourController extends Controller
 		return $this->render('BaquarasTestBundle:Default:modifierMAJ.html.twig', array('form' => $form->createView(), 'maj' => $maj));
 	}
 	
-	public function supprimerMAJAction($majId)
+	public function supprimerMAJAction($applId, $majId)
 	//
 	{
-		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
+                $em = $this->getDoctrine()->getManager();  //Modif Ernest TCHOULOM 13-02-2015
+                $application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->find($majId);
 		$maj = $this->getDoctrine()->getRepository('BaquarasTestBundle:MiseAJour')->find($majId);
 		
 		$this->get('session')->getFlashBag()->add('notice','MAJ supprimée');

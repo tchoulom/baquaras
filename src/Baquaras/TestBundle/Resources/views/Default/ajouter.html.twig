@@ -149,7 +149,10 @@
                                         $.each(results, function(index, value) {
                                            // for (var i=0, total = results.length; i < total; i++) {
                                            
-                                            $('#select_siera').append('<option value="'+ value['nom_client_siera'] +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');  
+                                            if(value['nom_client_siera'] == null)
+                                                $('#select_siera').append('<option> Pas de client Siera </option>');  
+                                            else
+                                                $('#select_siera').append('<option value="'+ value['nom_client_siera'] +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');  
                                             //
 //
  //$('#baquaras_testbundle_application_clientSiera').append('<option value="'+ index +'" selected="selected"> '+ value['nom_client_siera'] +' </option>');

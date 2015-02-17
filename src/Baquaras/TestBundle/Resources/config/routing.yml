@@ -214,7 +214,7 @@ modifierMAJ:
     defaults: {_controller:BaquarasTestBundle:MiseAJour:modifierMAJ}
 
 supprimerMAJ:
-    path: /{majId}/maj/delete
+    path: /{applId}/{majId}/maj/delete
     defaults: {_controller:BaquarasTestBundle:MiseAJour:supprimerMAJ}
 
 # LISTES/ITEMS

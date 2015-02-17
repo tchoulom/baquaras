@@ -1872,7 +1872,8 @@
 									<td> {{ maj.statutPatch }} </td>
 									<td> 
 										<a class="popup" href="{{path('modifierMAJ', {'majId' : maj.id}) }}" > Modifier </a>&nbsp;
-										<a href="{{path('supprimerMAJ', {'majId' : maj.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette mise à jour ?')"> Supprimer </a>
+										{#<a href="{{path('supprimerMAJ', {'majId' : maj.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette mise à jour ?')"> Supprimer </a>#} {#Ernest TCHOULOM Commentaire 12-02-2015#}
+                                                                                <a href="{{path('supprimerMAJ', {'applId' : application.id, 'majId' : maj.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette mise à jour ?')"> Supprimer </a>
 									</td>
 								</tr>
 							{% endfor %}

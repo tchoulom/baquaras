@@ -535,8 +535,11 @@
                                                     <tr>
                                                         <td id="label"> MOA </td>
                                                         <td id="read_only"> 
-                                                             {{ moa }}
-                                                        </td>
+                                                             {#{{ moa }}#}
+                                                             {% if moa.prenom is defined and moa.nom is defined %}
+                                                                {{ moa.prenom }} {{ moa.nom }} {#Ernest TCHOULOM 16-02-2015#}
+                                                             {% endif %}
+                                                             </td>
                                                     </tr>
                                                     <tr>
                                                         <td id="label"> Département MOA </td>
@@ -1174,6 +1177,34 @@
 							<td id="label"> Statut </td>
 							<td id="text"> {% for package in application.packages %} {{ package.statutQualif.libelle }} {% endfor %} </td>
 						</tr>
+                                                {#Begin Ernest TCHOULOM 16-02-2015#}
+                                                <tr>
+                                                    <td id="label"> Date de démarrage packaging </td>
+                                                    <td>
+                                                        {% for package in application.packages %}
+                                                            {% if package.qualification.dateDemarragePackaging is not null %}
+                                                                {{ package.qualification.dateDemarragePackaging|date('d.m.Y')  }} 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="label"> Agent chargé de la qualification </td>
+                                                    <td>
+                                                        {% for package in application.packages %}
+                                                            {{ package.qualification.agentQualif }}
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="label"> Commentaire </td>
+                                                    <td>
+                                                        {% for package in application.packages %}
+                                                            {{ package.qualification.commentaire }}
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                                {#End Ernest TCHOULOM 16-02-2015#}
 					</table>
 				</li>
                             {% endif %}

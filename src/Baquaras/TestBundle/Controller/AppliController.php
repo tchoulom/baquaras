@@ -51,6 +51,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AppliController extends Controller {
 
     public function listerApplicationsAction($action, $page, $export) {
+      
+       $user = $this->container->get('security.context')->getToken()->getUser(); //Ernest TCHOULOM 13-02-2015
+       $username = $user->getUsername();
+        //$username = $this->container->get('security.context')->getToken()->getUser();
+       $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
     // Fonction listant les applications qualifiées
         if ($this->container->get('management_roles')->RoleVerified('Liste des applications') === false) {
             throw new AccessDeniedException('Accès limité');
@@ -173,7 +178,8 @@ class AppliController extends Controller {
 
         if ($export)
             return $this->forward('BaquarasTestBundle:Appli:exporter', array('applications' => $applications, 'action' => $action));
-        return $this->render('BaquarasTestBundle:Default:listerappli.html.twig', array('form' => $form->createView(), 'applications' => $applications, 'pagination' => $pagination, 'action' => $action));
+        return $this->render('BaquarasTestBundle:Default:listerappli.html.twig', 
+                array('form' => $form->createView(), 'applications' => $applications, 'pagination' => $pagination, 'action' => $action , 'user' => $user));
     }
 
     /*
@@ -687,6 +693,11 @@ class AppliController extends Controller {
                     $em->persist($user);
                     $em->flush();
                 }
+                
+                //Begin Enest TCHOULOM 16-02-2015
+                //$results = $this->container->get('baquaras.connect_siera')->createAppliInSiera($application->getId(), $application->getNomApplicationSIERA());
+                //End Enest TCHOULOM 16-02-2015
+                
                 $this->get('session')->getFlashBag()->add('notice', 'Application ajoutée');
                 return $this->redirect($this->generateUrl('listerApplications'));
             }
