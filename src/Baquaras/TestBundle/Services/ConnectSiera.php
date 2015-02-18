@@ -83,5 +83,5 @@ class ConnectSiera
         //$conn->update('user', array('username' => 'jwage'), array('id' => 1));
         // INSERT INTO vue_baquaras (id_baquaras) VALUES (?) ($idBaquaras)
     }
-
+   
 }

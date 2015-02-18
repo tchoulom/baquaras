@@ -696,6 +696,7 @@ class AppliController extends Controller {
                 
                 //Begin Enest TCHOULOM 16-02-2015
                 //$results = $this->container->get('baquaras.connect_siera')->createAppliInSiera($application->getId(), $application->getNomApplicationSIERA());
+                  //$application = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application')->createAppliInViewBaquaras($application->getId(), $application->getNom(), $application->getDeptMoa(), $application->getDeptUsers(), $application->getNomApplicationSIERA());
                 //End Enest TCHOULOM 16-02-2015
                 
                 $this->get('session')->getFlashBag()->add('notice', 'Application ajoutée');

@@ -96,5 +96,58 @@ class ApplicationRepository extends EntityRepository
         ;
     
 	}
+        
+        /*
+     * @param string $siera
+     * @param string $siera
+     * @return array
+     */
+    public function  createAppliInBaquaras($id_application_siera, $id_client_siera, $nom_application_siera, $dept_moa, $dept_users, $code_moa) //Ernest TCHOULOM 17-02-2015
+    {
+        //$sql = "CREATE OR REPLACE RULE vue_baquaras_insert AS ON INSERT TO vue_baquaras DO ALSO INSERT INTO vue_baquaras (id_baquaras, nom_application_siera) VALUES ($idBaquaras, '".$nomAppliBaquaras."')";      
+        ////$sql = "INSERT INTO application(id, id_client_siera, nom_application_siera, dept_moa, dept_users, code_moa) VALUES ($id_application_siera, $id_client_siera, '".$nom_application_siera."', '".$dept_moa."', '".$dept_users."', '".$code_moa."')";      
+        // $stmt = $this->connection->query($sql1);
+        //$stmt = $this->connection->query($sql);
+        //$stmt->bindValue(':invoice', $invoiceId);
+        //Exec($sql);
+       //$result = $sql->execute();
+        //$qb = $this->createQueryBuilder('a');
+        $this->getEntityManager()->createQueryBuilder()
+        ->insert('application')
+        ->values(
+            array(
+                'id' => '?',
+                'id_client_siera' => '?',
+                'nom_application_siera' => '?',
+                'dept_moa' => '?',
+                'dept_users' => '?',
+                'code_moa' => '?'
+            )
+        )
+        ->setParameter(0, $id_application_siera)
+        ->setParameter(1, $id_client_siera)
+        ->setParameter(0, $nom_application_siera)
+        ->setParameter(1, $dept_moa)
+        ->setParameter(0, $dept_users)
+        ->setParameter(1, $code_moa)
+         ;
+        
+       /*$query = $this->getEntityManager()->createQuery("INSERT INTO application(id, id_client_siera, nom_application_siera, dept_moa, dept_users, code_moa) VALUES ($id_application_siera, $id_client_siera, '".$nom_application_siera."', '".$dept_moa."', '".$dept_users."', '".$code_moa."')")
+        ;
+       $query->execute();*/
+
+    }
+    
+    public function updateLastInsertedAppli($lastId,$newId)
+    {
+        $qB = $this->getEntityManager()->createQueryBuilder();
+        $qB ->update('BaquarasTestBundle:Application', 'a')
+            ->set('a.id', '?1')
+            ->where('a.id = ?2')
+            ->setParameter(1, $newId)
+            ->setParameter(2, $lastId);
+             $qB->getQuery()->execute();
+    }
+
 
 }
