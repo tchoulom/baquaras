@@ -172,7 +172,7 @@ class HarpeController extends Controller
 											$doublon = true;
 									}
 									if(!$doublon)
-										$list[] = $unite;
+										$listDpt[] = $unite;
 								}
 							}
 						}
@@ -191,7 +191,7 @@ class HarpeController extends Controller
 												$doublon = true;
 										}
 										if(!$doublon)
-											$list[] = $entite; 
+											$listDpt[] = $entite; 
 									}
 								}
 							}
@@ -199,7 +199,7 @@ class HarpeController extends Controller
 					}
 				}
 			}
-			return new JsonResponse($list);
+			return new JsonResponse($listDpt);
 		}
 		
 		if($request->request->get('enregistrer') == 'enregistrer') {
