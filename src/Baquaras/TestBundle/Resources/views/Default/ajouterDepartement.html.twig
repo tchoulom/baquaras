@@ -94,20 +94,24 @@
                                             
                                             $("#btnLeftDpt").click(function () {
                                                     var selectedItem = $("#departement option:gt(0):selected");
-                                                    $("#form_selectDpt").append(selectedItem);
+                                                    selectedItem.clone().prependTo("#form_selectDpt");
+                                                    //$("#form_selectDpt").append(selectedItem);
                                             });
                                             
                                             $("#btnLeftUD").click(function () {
                                                     var selectedItem = $("#ud option:selected");
-                                                    $("#form_selectDpt").append(selectedItem);
+                                                    selectedItem.clone().prependTo("#form_selectDpt");
+                                                    //$("#form_selectDpt").append(selectedItem);
                                             });
                                             $("#btnLeftUL").click(function () {
                                                     var selectedItem = $("#ul option:selected");
-                                                    $("#form_selectDpt").append(selectedItem);
+                                                    selectedItem.clone().prependTo("#form_selectDpt");
+                                                    //$("#form_selectDpt").append(selectedItem);
                                             });
                                             $("#btnRight").click(function () {
                                                     var selectedItem = $("#form_selectDpt option:selected");
-                                                    $("#departement").append(selectedItem);
+                                                    selectedItem.remove();
+                                                    //$("#departement").append(selectedItem);
                                             }); 
                                             
                                             $("#departement").change(function() {
