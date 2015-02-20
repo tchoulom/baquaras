@@ -38,13 +38,14 @@
 			
 				{### Pagination alphabétique ###}
 				<div id="pagination_alphab"> 
-					{#<div class='position_link'>
-						<a href="{{ path('listerApplications', {'triSuiviQualif': 'Toutes', 'page': pagination.page}) }}">Toutes</a>&nbsp;
+					<div class='position_link filtre'>
+						<a href="{{ path('listerApplications', {'triSuiviQualif': 'Toutes', 'page': pagination.page}) }}">Toutes les applications</a>&nbsp;
 						<a href="{{ path('listerApplications', {'triSuiviQualif': '@', 'page': pagination.page}) }}">@</a>&nbsp;
+                                                <a href="{{ path('listerApplications', {'triSuiviQualif': '7', 'page': pagination.page}) }}">7</a>&nbsp;
 						{% for lettre in 'A'..'Z' %}
 							<a href="{{ path('listerApplications',{'triSuiviQualif': lettre, 'page': pagination.page})}}">{{ lettre|upper }}</a>&nbsp;
 						{% endfor %}
-					</div>#}
+					</div>
 				</div>
 				<table id="liste" class="tablesorter">
 					<thead>

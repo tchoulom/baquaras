@@ -168,10 +168,10 @@
 	background: #9FE6E6; 
 	box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba( 255, 255, 255, 0.4); 
 }
-#listerappli div#export {
+#listerappli div#export, #listerappli div.filtre {
 	margin-top: 10px;
 }
-#listerappli div#export a {
+#listerappli div#export a, #listerappli div.filtre a {
 	color: #058282;
 	font-size: 0.9em;
 }

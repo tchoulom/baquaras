@@ -32,6 +32,9 @@
                         <div id="texte"> {{ flashMessage }} </div> <br/>
                     {% endfor %}
                 </div>
+                <div>
+                    <input type="text" placeholder="rechercher un utilisateur" />
+                </div>
                 <div id="tableauUsers">
                     {% include 'BaquarasTestBundle:Default:listuser.html.twig' with {'utilisateurs': utilisateurs, 'pager': pager} %}
                 </div>
