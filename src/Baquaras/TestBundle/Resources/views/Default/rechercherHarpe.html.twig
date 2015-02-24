@@ -53,11 +53,11 @@
 
                                                 <table id="tab1">
                                                         <tr> 
-                                                                <td id="errors"> {{ form_errors(form) }} </td>
+                                                                <td id="errors"> {#{ form_errors(form) }#} </td>
                                                         </tr>
                                                         <tr>
-                                                                <td id="label"> {{ form_label(form.recherche) }} </td>
-                                                                <td  id="text"> {{ form_widget(form.recherche, {
+                                                                <td id="label"> {{ form_label(form.nom) }} </td>
+                                                                <td  id="text"> {{ form_widget(form.nom, {
                                                                                         'label': 'Recherche', 
                                                                                         'attr' : {
                                                                                                 'id' : 'autocomplete',
@@ -74,13 +74,13 @@
 
                                                 <table id="zoneForm">
                                                         <tr>
-                                                                <td>
+                                                                <td>                   
                                                                         <select id="form_leftValues" name="leftValues[]" multiple>
                                                                                 {#% if agents is defined %}
                                                                                         {% for agent in agents %}
                                                                                                 <option> {{ agent.prenom }} {{ agent.nom }} </option>
                                                                                         {% endfor %}
-                                                                                {% endif %#}
+                                                                                {% endif %#}                           
                                                                         </select>
                                                                 </td>
                                                                 <td>
@@ -104,7 +104,8 @@
                                                         </tr>
                                                 </table>
 
-                                                {{ form_rest(form) }}
+                                                {#{ form_rest(form) }#}
+                                                
 
                                         </div>
 
@@ -128,18 +129,18 @@
                                                 $("#form_leftValues").append(selectedItem);
                                         });
 
-                                        $('#form_recherche').attr('placeholder', 'recherchez par nom ou prénom');
+                                        $('#baquaras_testbundle_application_nom').attr('placeholder', 'recherchez par nom ou prénom');
 
-                                        $("#form_recherche").autocomplete({
+                                        $("#baquaras_testbundle_application_nom").autocomplete({
                                             source: function( request, response ) {
-                                            var element = $('#form_recherche').val();
+                                            var element = $('#baquaras_testbundle_application_nom').val();
                                             $.ajax({
                                                 url: Routing.generate('ajoutUtilisateur', {term : element }),
                                                 dataType: "JSON",
                                                 success: function( data ) {
                                                     $("#form_leftValues").empty();
                                                     $.each(data, function(index, value) {
-                                                        $("#form_leftValues").append('<option value="'+ index +'">'+ value +'</option>');
+                                                        $("#form_leftValues").append('<option value="'+ value +'">'+ value +'</option>');
                                                     });
                                                 }
                                             });

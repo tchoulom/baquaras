@@ -307,11 +307,14 @@
 							<td id="label"> Assistance </td>
 							<td id="text"> 
 								<select id="listAssistance" multiple>
-									{#% for agent in application.agents %}
-										{% if agent.role =="assistance" %}
-											<option> {{ agent.libelle }} </option>
-										{% endif %}
-									{% endfor %#}
+                                                                    {#% for agent in application.agents %}
+                                                                        {% if agent.role =="assistance" %}
+                                                                            <option> {{ agent.libelle }} </option>
+                                                                        {% endif %}
+                                                                    {% endfor %#}
+                                                                    {% for utilisateur in application.utilisateur %}
+                                                                        <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                    {% endfor %}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
                                                                     <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'assistance'}) }}" class="popup"> Modifier les utilisateurs </a>
@@ -327,6 +330,9 @@
 											<option> {{ agent.libelle }} </option>
 										{% endif %}
 									{% endfor %#}
+                                                                        {% for utilisateur in application.utilisateur %}
+                                                                            <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                        {% endfor %}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
                                                                     <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'ayantDroit'}) }}" class="popup"> Modifier les utilisateurs </a>
@@ -342,6 +348,9 @@
                                                                                     <option> {{ agent.libelle }} </option>
                                                                             {% endif %}
                                                                     {% endfor %#}
+                                                                    {% for utilisateur in application.utilisateur %}
+                                                                        <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                    {% endfor %}
                                                             </select>
                                                             {% if app.session and app.session.get('role') !=  'Technicien support' %}
                                                                 <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'personnes'}) }}" class="popup"> Modifier les utilisateurs </a>

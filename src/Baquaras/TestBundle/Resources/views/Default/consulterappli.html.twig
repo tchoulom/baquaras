@@ -523,9 +523,13 @@
                                                     <tr>
                                                             <td id="label"> MOE </td>
                                                             <td id="read_only">
-                                                                    {% for moe in application.utilisateur %}
-                                                                        {{ moe.prenom }} {{ moe.nom }}
-                                                                    {%endfor%}
+                                                                {% for moe in application.Utilisateur %}
+                                                                     {% if moe.Prenom == "Jerome" %}
+                                                                         Jerome
+                                                                     {%else%}
+                                                                        {{ moe.Prenom }} {{ moe.Nom }}
+                                                                    {%endif%}
+                                                                {%endfor%}
                                                             </td>
                                                     </tr>
                                                     <tr>
