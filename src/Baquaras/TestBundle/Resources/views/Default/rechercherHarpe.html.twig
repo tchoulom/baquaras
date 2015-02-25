@@ -56,8 +56,8 @@
                                                                 <td id="errors"> {#{ form_errors(form) }#} </td>
                                                         </tr>
                                                         <tr>
-                                                                <td id="label"> {{ form_label(form.nom) }} </td>
-                                                                <td  id="text"> {{ form_widget(form.nom, {
+                                                                <td id="label"> Nom de l'agent </td>
+                                                                <td  id="text"> {#{ form_widget(form.utilisateur.nom, {
                                                                                         'label': 'Recherche', 
                                                                                         'attr' : {
                                                                                                 'id' : 'autocomplete',
@@ -65,7 +65,13 @@
 
 
                                                                                         }} ) 
-                                                                                }}
+                                                                                }#}
+                                                                    <input id="baquaras_testbundle_application_nom" type="text" name="baquaras_testbundle_application_nom" class="ui-autocomplete-input" style="width:;"> 
+                                                                    {#% for user in form['utilisateur'] %}
+                                                                        {% if user.nom is defined  %}
+                                                                            {{ form_widget(user.nom, { 'attr': { 'id' : 'autocomplete', 'class' : 'ui-autocomplete-input',}}) }}
+                                                                        {% endif %}
+                                                                    {% endfor %#}
 
                                                                 </td> 
 

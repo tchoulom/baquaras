@@ -11,7 +11,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+//use Symfony\Bundle\FrameworkBundle\Command\Command;
 
+//class BaquarasCronCommand extends ContainerAwareCommand
 class BaquarasCronCommand extends ContainerAwareCommand
 {
      /*private $container;
@@ -55,7 +57,7 @@ class BaquarasCronCommand extends ContainerAwareCommand
                 if($oneApplication == null)
                     $application = $kernel->getContainer()->get('doctrine')->getRepository('BaquarasTestBundle:Application')->createAppliInBaquaras($result['id_baquaras'], $result['id_client_siera'], $result['nom_application_siera'], $result['dept_moa'], $result['dept_utilisateurs'], $result['moa']);
                  */
-                if($result['id_application_siera'] == 1018)
+                if($result['id_application_siera'] == 1016)
                 {
                     $oneApplication = $kernel->getContainer()->get('doctrine')->getRepository('BaquarasTestBundle:Application')->findOneBy(array('id'=>$result['id_application_siera'])); //id'=>$result['id_baquaras']
                     if($oneApplication == null){
@@ -75,7 +77,7 @@ class BaquarasCronCommand extends ContainerAwareCommand
                 //Mise à jour depuis la vue Siera dans Baquaras
                 foreach($allApplications as $application) {
                     //if($result['id_baquaras'] == $application->getId()) {
-                    if(($result['id_client_siera'] == 43) && ($application->getId() == 2)) { //Pour Tester la mise à jour
+                    if(($result['id_client_siera'] == 429) && ($application->getId() == 2)) { //Pour Tester la mise à jour
                       $application->setIdClientSIERA($result['id_client_siera']);
                       $application->setNomApplicationSIERA($result['nom_application_siera']);
                       $application->setDeptMoa($result['dept_moa']);

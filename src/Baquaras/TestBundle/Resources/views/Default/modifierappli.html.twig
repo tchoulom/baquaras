@@ -294,7 +294,7 @@
                                                                                                 ] 
                                                                         or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                                         <a href="{{path('ajouterDepartement', {'applicationId' : application.id}) }}" class="popup"> Modifier les départements </a>
-                                                        {% endif %}
+                                                                    {% endif %}
                                                                 </td>
 						<tr>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
