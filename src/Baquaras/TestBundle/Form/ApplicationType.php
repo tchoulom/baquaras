@@ -11,7 +11,8 @@ use Baquaras\TestBundle\Entity\AgentsRepository;
 
 class ApplicationType extends AbstractType
 {
-	public function __construct($id) {
+    public function __construct($id) {
+   //public function __construct($id= '') { //Ernest TCHOULOM 24-02-2015
 		$this->id = $id;
     }
 	
@@ -91,6 +92,18 @@ class ApplicationType extends AbstractType
 				'label' => 'Enregistrer les modifications'))
 			/*->add('modifStatutQualif' , 'button', array(
 				'label' => 'Gérer l\'avancement de la Qualification'))*/
+                        //->add('nom', 'text', array('label' => 'Nom de l\'agent')) //Ernest TCHOULOM 20-02-2015
+                        ->add('utilisateur', 'collection', array('label' => 'Utilisateur', 'type' => new UtilisateurType(),
+        		'prototype'=>true,
+        		'allow_add' => true,
+        		'allow_delete' => true,
+        		'by_reference' => true,
+                        /*'multiple' => true*/)) //Ernest TCHOULOM 20-02-2015
+                       /* ->add('populationCible', 'collection', array('label' => 'Utilisateur', 'type' => new PopulationCibleType(),
+        		'prototype'=>true,
+        		'allow_add' => true,
+        		'allow_delete' => true,
+        		'by_reference' => true,))*/ //Ernest TCHOULOM 20-02-2015
         ;
     }
     

@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Baquaras\TestBundle\Entity\Agents;
 use Baquaras\TestBundle\Entity\Application;
+use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Entity\PopulationCible;
+use Baquaras\TestBundle\Entity\Utilisateur;
 
 class HarpeController extends Controller
 {
@@ -24,14 +26,22 @@ class HarpeController extends Controller
 		//$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$rightValues = array();
 		
-		$defaultData = array('message' => 'Message');
+		/*$defaultData = array('message' => 'Message');
 		$form = $this->createFormBuilder($defaultData)
 			->add('recherche', 'text', array('label' => 'Nom de l\'agent'))
-			->getForm();
+			->getForm();*/ //Ernest TCHOULOM 24-02-2015 Commentaire
+	        
+                //$defaultData = array('message' => 'Message');
+		//$form = $this->createForm(new ApplicationType($defaultData), $application); //Ernest TCHOULOM 24-02-2015 
 			
-		$form->handleRequest($request);
+                $form = $this->createForm(new ApplicationType($application->getId()), $application);//Ernest TCHOULOM 24-02-2015
+                    //$form->add('recherche', 'text', array('label' => 'Nom de l\'agent'))
+			//->getForm();
+                
+		//$form->handleRequest($request);//ET Comment
 		// récupération des mouvements dans le select de gauche (supression)
-		$gauche = $request->request->get('leftValues');
+		$gauche = $request->request->get('leftValues');//Ernest TCHOULOM Commentaire 19-02-2015
+                //$gauche = $request->request->get('rightValues');//Ernest TCHOULOM 19-02-2015 rightValues
 		// récupération des agents déjà enregistrés
 		/*$agents = $this->getDoctrine()->getRepository('BaquarasTestBundle:Agents')->findByRole($action);
 		foreach($agents as $agent) {
@@ -60,9 +70,11 @@ class HarpeController extends Controller
 			}
 		}*/
 		
-		if($form->isValid()) {
+		if($form->isValid()) { //ET Comment
                    // die('test2');
-			$recherche = $form['recherche']->getData();
+			//$recherche = $form['recherche']->getData();//eRNEST tchoulom commentaire 24-02-2015
+                          $recherche = $form->getData(); //Begin Check if site Label is alredy existing
+    			  $recherche = $recherche->getNom();
 						
 			/*foreach($xml->Personnes[0]->children() as $personne) {
 				$doublon = false;
@@ -86,6 +98,7 @@ class HarpeController extends Controller
 			}*/
 		}
 		if($request->request->get('enregistrer') == 'enregistrer') {
+                        $form->handleRequest($request);
 			if(!empty($gauche)) {
 			// on enlève les agents qui sont passés dans le select de gauche
 				foreach($gauche as $personne) {
@@ -95,16 +108,36 @@ class HarpeController extends Controller
 				}
 				$em->flush();
 			}
+                        
+                        /*$select = $request->request->get('rightValues'); //Ernest TCHOULOM 20-02-2015
 			if(!empty($select)) {
 				foreach($select as $personne) {
-					$agent = new Agents();
-					$agent->setLibelle($personne);
-					$agent->setApplication($application);
-					$agent->setRole($action);
-					$em->persist($agent);
+                                    $agent = new Agents();
+                                    $agent->setLibelle($personne);
+                                    $agent->setApplication($application);
+                                    $agent->setRole($action);
+                                    $em->persist($agent);
 				}
 				$em->flush();
-			}
+			}*///Ernest TCHOULOM Commentaire 20-02-2015
+                        $select = $request->request->get('rightValues'); //Ernest TCHOULOM 20-02-2015
+                        //$select = $_POST['rightValues'];
+			if(!empty($select)) {
+				foreach($select as $personne) {                                 
+                                    $personne = explode(" ", $personne);
+                                    if(count($personne) == 2)
+                                        $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0], 'prenom'=>$personne[1]));                           
+                                    if(count($personne) == 3)
+                                        $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0].' '.$personne[1], 'prenom'=>$personne[2]));                           
+                                    
+                                    foreach($utilisateur as $user) {
+                                    if(($user != null) && is_object($user))
+                                      $user->addApplication($application);
+                                    $em->persist($application);
+                                    }
+				}
+				$em->flush();
+			}//Ernest TCHOULOM Commentaire 20-02-2015
 		}
 		//if(empty($resultats)) {
 			/*foreach($xml->Personnes[0]->children() as $personne) {
