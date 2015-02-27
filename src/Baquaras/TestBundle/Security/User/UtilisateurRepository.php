@@ -90,5 +90,14 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
             ->getArrayResult();
         return $query ;
     }
+	
+	public function truncateTableUtilisateur()
+    {
+        $qB = $this->getEntityManager()->createQueryBuilder('TRUNCATE TABLE utilisateur');
+         //    $qB->execute();
+		 /*$qB = $this->getEntityManager();
+		 $qB->query('TRUNCATE TABLE utilisateur');
+          $qB->getQuery()->execute();*/
+    }
     
 }
