@@ -28,6 +28,8 @@
 	font-family: "Trebuchet MS";
 	font-size: 0.8em;
 	color: #444444;
+	display: inline;
+	margin-left: 25px;
 }
 #page div#flashbag #img {
 	display: block;
