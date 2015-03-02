@@ -60,7 +60,7 @@ class AppliController extends Controller {
         if ($this->container->get('management_roles')->RoleVerified('Liste des applications') === false) {
             throw new AccessDeniedException('Accès limité');
         }
-        $maxApplications = 6; // nombre d'applications affichées par page
+        $maxApplications = 30; // nombre d'applications affichées par page
         $repository = $this->getDoctrine()->getRepository('BaquarasTestBundle:Application');
         $applications_count = $repository->countApplications();
 
