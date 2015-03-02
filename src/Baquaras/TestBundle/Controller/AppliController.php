@@ -670,7 +670,7 @@ class AppliController extends Controller {
         $request = $this->get('request');
         $id = $this->container->get('session')->get('iduser');
         if(!$id) {
-            throw new AccessDeniedException('Accès limité vous devez se connecter');
+            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
         }
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -713,7 +713,7 @@ class AppliController extends Controller {
     public function modifierApplicationAction(Application $application)
     {
         if ($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
-            throw new AccessDeniedException('Accès limité');
+            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
         }
         $em = $this->getDoctrine()->getManager();
         //Begin ET 02-03-2015
@@ -746,7 +746,7 @@ class AppliController extends Controller {
     public function consulterApplicationAction(Application $application) 
     {
         if (!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
-            throw new AccessDeniedException('Accès limité');
+            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
         }
         if($application->getCodeMoa()) {
             $moa = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire'=> $application->getCodeMoa()));
@@ -759,10 +759,10 @@ class AppliController extends Controller {
      */
     public function supprimerApplicationAction(Application $application) {
         if (!$this->container->get('management_roles')->RoleVerified('supprimer une application')) {
-            throw new AccessDeniedException('Accès limité');
+            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
         }
         if ($this->container->get('management_roles')->RoleVerified() === false) {
-            throw new AccessDeniedException('Accès limité');
+            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
         }
         $em = $this->getDoctrine()->getManager();
 
@@ -1763,31 +1763,31 @@ class AppliController extends Controller {
         // 1 - Types d'application
         $item1 = new Item();
         $item1->setListe($liste1);
-        $item1->setLibelle("Bureautique");
+        $item1->setLibelle("Anti-virus/Sécurité");
         $em->persist($item1);
         $item2 = new Item();
         $item2->setListe($liste1);
-        $item2->setLibelle("Métier");
+        $item2->setLibelle("Bureautique");
         $em->persist($item2);
         $item3 = new Item();
         $item3->setListe($liste1);
-        $item3->setLibelle("Progiciel");
+        $item3->setLibelle("Exploitation/Supervision");
         $em->persist($item3);
         $item4 = new Item();
         $item4->setListe($liste1);
-        $item4->setLibelle("Système");
+        $item4->setLibelle("Maintenance");
         $em->persist($item4);
         $item5 = new Item();
         $item5->setListe($liste1);
-        $item5->setLibelle("Maintenance");
+        $item5->setLibelle("Métier");
         $em->persist($item5);
         $item6 = new Item();
         $item6->setListe($liste1);
-        $item6->setLibelle("Utilitaire");
+        $item6->setLibelle("Outil de communication");
         $em->persist($item6);
         $item7 = new Item();
         $item7->setListe($liste1);
-        $item7->setLibelle("Anti-virus/Sécurité");
+        $item7->setLibelle("Progiciel");
         $em->persist($item7);
         $item8 = new Item();
         $item8->setListe($liste1);
@@ -1795,11 +1795,11 @@ class AppliController extends Controller {
         $em->persist($item8);
         $item9 = new Item();
         $item9->setListe($liste1);
-        $item9->setLibelle("Outil de communication");
+        $item9->setLibelle("Système");
         $em->persist($item9);
         $item10 = new Item();
         $item10->setListe($liste1);
-        $item10->setLibelle("Exploitation/Supervision");
+        $item10->setLibelle("Utilitaire");
         $em->persist($item10);
 
         // 2 - Liaisons Office
@@ -1867,7 +1867,7 @@ class AppliController extends Controller {
         $em->persist($item22);
 
         // 4 - Paliers techniques
-        $item36 = new Item();
+        /* $item36 = new Item();
         $item36->setListe($liste4);
         $item36->setLibelle("XP SP1");
         $em->persist($item36);
@@ -1878,15 +1878,15 @@ class AppliController extends Controller {
         $item38 = new Item();
         $item38->setListe($liste4);
         $item38->setLibelle("NT");
-        $em->persist($item38);
-        $item39 = new Item();
-        $item39->setListe($liste4);
-        $item39->setLibelle("W7 codée en 32 bits");
-        $em->persist($item39);
-        $item40 = new Item();
-        $item40->setListe($liste4);
-        $item40->setLibelle("W7 codée en 64 bits");
-        $em->persist($item40);
+        $em->persist($item38); */
+        $item36 = new Item();
+        $item36->setListe($liste4);
+        $item36->setLibelle("W7 en 64 bits");
+        $em->persist($item36);
+        $item37 = new Item();
+        $item37->setListe($liste4);
+        $item37->setLibelle("W7 en 32 bits");
+        $em->persist($item37);
 
         // 5 - Versions de l'outil packaging
         $item23 = new Item();
