@@ -716,7 +716,11 @@ class AppliController extends Controller {
             throw new AccessDeniedException('Accès limité');
         }
         $em = $this->getDoctrine()->getManager();
-
+        //Begin ET 02-03-2015
+         $user = $this->container->get('security.context')->getToken()->getUser(); //Ernest TCHOULOM 13-02-2015
+         $username = $user->getUsername();
+         $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
+       //End ET 02-03-2015             
         $pck = $application->getPackages()->first();
         $form = $this->createForm(new ApplicationType($application->getId()), $application);
 
@@ -732,7 +736,7 @@ class AppliController extends Controller {
             return $this->redirect($this->generateUrl('listerApplications'));
         }
 
-        return $this->render('BaquarasTestBundle:Default:modifierappli.html.twig', array('form' => $form->createView(), 'application' => $application, 'pck' => $pck));
+        return $this->render('BaquarasTestBundle:Default:modifierappli.html.twig', array('form' => $form->createView(), 'application' => $application, 'pck' => $pck, 'user' => $user));
     }
 
     /**

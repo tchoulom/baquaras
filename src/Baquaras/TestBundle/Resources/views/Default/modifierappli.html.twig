@@ -1855,9 +1855,27 @@
 					<h2> Informations sur les mises à jour </h2>
 							
 					<div class="content" id="maj">
-                                        {% if(getAuthorisation('ajouter une mise')) == true %}
+                                            {% set admin = ["Administrateur", "Responsable qualification"] %}
+                                            {% set adminChefProd = ["Administrateur", "Chef de produit", "Responsable qualification"] %}
+                                            {% set adminChefProdQualif = ["Administrateur", "Chef de produit", "Responsable qualification", "Qualificateur"] %}
+                                            {% set adminChefProdQualifIntegra = ["Administrateur", "Chef de produit", "Responsable qualification", "Qualificateur", "Intégrateur"] %}
+                                            {% set adminQualif = ["Administrateur", "Responsable qualification", "Qualificateur"] %}
+                                            {% set adminIntegra = ["Administrateur", "Responsable qualification", "Intégrateur"] %}
+                                           {% for package in application.packages %}
+                                               {% if package.statutQualif.libelle is defined %}
+                                                       {% if package.statutQualif.libelle is not null %}
+                                                           {% if user.profil1.libelle in adminIntegra and (package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance") %}                                                                                     
+                                                               <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>                                               
+                                                           {% else %}                                                                           
+                                                               <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
+                                                           {% endif %}
+                                                       {% endif %}
+                                               {% endif %}
+                                           {% endfor %}
+                                                     
+                                        {#% if(getAuthorisation('ajouter une mise')) == true %}
                                             <div class="lien"> <a class="popup" href="{{path('ajouterMAJ', {'id' : application.id }) }}" > Ajouter une mise à jour </a> </div>
-				        {% endif %}
+				        {% endif %#}{#ET Comment 02-03-2015#}
 						{% if application.misesajour is not empty %}
 							
 							<h3> Liste des mises à jour </h3>
@@ -1935,7 +1953,7 @@
 			
 			</div>
 			
-			{{ form_end(form) }}
+			{#{ form_end(form) }#}
 			
 			</form>		
 		</div>

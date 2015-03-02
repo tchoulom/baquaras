@@ -13,8 +13,8 @@ class QualificationType extends AbstractType
 	public function __construct($id) {
 		$this->id = $id;
     }
-	
-        /**
+   
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -53,21 +53,26 @@ class QualificationType extends AbstractType
 				'label' => 'Date de mise en production',
 				'format' => 'dd MM yyyy',
 				'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
+
             ->add('pVPrequalification','file', array(
 				'label' => 'PV de pré-qualification' ))
 			->add('agentPreQualif', 'entity', array(
 				'label' => 'Agent chargé de la pré-qualification',
-				'class' => 'BaquarasTestBundle:Agents',
+				'class' => 'BaquarasTestBundle:Utilisateur',
+                                'attr' => array('class' => 'form-control select2'),
+                                'empty_value' => 'Sélectionner l\'agent chargé de pré-qualification',
                 'property' => 'libelle',
-                'query_builder' => function(AgentsRepository $er) use ($id)
+                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) use ($id)
                 {
                         return $er->createQueryBuilder('a')
-                                        ->where('a.application = :id')
-										->andWhere('a.role = :role')
+                                        ->where('a.id = :id')
+					->andWhere('a.profil1 = :profil1')
                                         ->setParameter('id', $id)
-										->setParameter('role', 'preQualif');
+					->setParameter('profil1', 1);
                 },
-				'read_only' => 'true'))
+				))
+            
+            /*->add('type', 'choice', array('label' => 'Type', 'choices' => $this->libelle(), 'attr' => array('class' => 'form-control select2'), 'empty_value' => 'Sélectionnez l\'agent')) */                                   
             ->add('pVQualification', 'file', array(
 				'label' => 'PV de Qualification'))
             ->add('datePVQualification', 'date', array(
@@ -76,15 +81,16 @@ class QualificationType extends AbstractType
 				'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
 			->add('agentQualif', 'entity', array(
 				'label' => 'Agent chargé de la qualification',
-				'class' => 'BaquarasTestBundle:Agents',
+				'class' => 'BaquarasTestBundle:Utilisateur',
                 'property' => 'libelle',
-                'query_builder' => function(AgentsRepository $er) use ($id)
+                'empty_value' => 'Sélectionner l\'agent chargé de qualification',            
+                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) use ($id)
                 {
                         return $er->createQueryBuilder('a')
-                                        ->where('a.application = :id')
-										->andWhere('a.role = :role')
+                                        ->where('a.id = :id')
+                                        ->andWhere('a.profil1 = :profil1')
                                         ->setParameter('id', $id)
-										->setParameter('role', 'qualif');
+                                        ->setParameter('profil1', 1);
                 },
 				'read_only' => 'true'))
             ->add('sousCompte', 'text', array(
@@ -94,6 +100,8 @@ class QualificationType extends AbstractType
             /*->add('package')*/
         ;
     }
+    
+
     
     /**
      * @param OptionsResolverInterface $resolver

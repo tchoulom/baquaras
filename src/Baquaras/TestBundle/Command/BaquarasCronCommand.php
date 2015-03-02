@@ -16,15 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //class BaquarasCronCommand extends ContainerAwareCommand
 class BaquarasCronCommand extends ContainerAwareCommand
 {
-     /*private $container;
-     private $connection;
-
-     public function __construct(Container $container)
-     {
-        $this->container = $container;
-        $this->connection = $this->container->get('doctrine.dbal.siera_connection');
-     }*/
-        
     protected function configure()
     {
         $this
@@ -51,12 +42,6 @@ class BaquarasCronCommand extends ContainerAwareCommand
             $results = $kernel->getContainer()->get('baquaras.connect_siera')->getSieraView();
             //$userLogService = $this->container->get('eco_user.userLogs');  //Appel du service "userLogs"
             foreach($results as $result) {
-                //Insertion depuis la vue Siera dans Baquaras
-                /*
-                 $oneApplication = $kernel->getContainer()->get('doctrine')->getRepository('BaquarasTestBundle:Application')->findOneBy(array('id'=>$result['id_baquaras']));
-                if($oneApplication == null)
-                    $application = $kernel->getContainer()->get('doctrine')->getRepository('BaquarasTestBundle:Application')->createAppliInBaquaras($result['id_baquaras'], $result['id_client_siera'], $result['nom_application_siera'], $result['dept_moa'], $result['dept_utilisateurs'], $result['moa']);
-                 */
                 if($result['id_application_siera'] == 1016)
                 {
                     $oneApplication = $kernel->getContainer()->get('doctrine')->getRepository('BaquarasTestBundle:Application')->findOneBy(array('id'=>$result['id_application_siera'])); //id'=>$result['id_baquaras']

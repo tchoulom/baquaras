@@ -90,5 +90,11 @@ class UtilisateurRepository extends EntityRepository implements UserProviderInte
             ->getArrayResult();
         return $query ;
     }
+	
+    public function truncateTableUtilisateur()
+    {
+         $this->getEntityManager()->createQuery('DELETE FROM Baquaras\TestBundle\Entity\Utilisateur')->execute();
+          //$qB = $this->getEntityManager()->createQueryBuilder('TRUNCATE TABLE utilisateur');
+    }
     
 }
