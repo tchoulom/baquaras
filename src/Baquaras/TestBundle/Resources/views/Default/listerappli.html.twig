@@ -262,7 +262,7 @@
                                                                         {% endif %}
                                                                     {% endif %}     
                                                                     
-                                                                    {% if package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance" %}                                                                                     
+                                                                    {% if user.profil1.libelle in adminIntegra and (package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance") %}                                                                                     
                                                                         <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>                                               
                                                                     {% else %}                                                                           
                                                                         <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
