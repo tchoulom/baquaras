@@ -752,9 +752,9 @@
                                                 <tr>
                                                         <td id="label"> Documentation informations complémentaires </td>
                                                         <td id="text">
-                                                                {#% if application.refCatalogue.docInfoComplementaire is not empty %}
-                                                                        <a href = "{{path('consulterFichier', {'id' : application.refCatalogue.docInfoComplementaire.id }) }}"> {{ application.refCatalogue.docInfoComplementaire.url }} </a>
-                                                                {% endif %#}
+                                                                {% if application.refCatalogue.docInfoComplementaire is not empty %}
+                                                                        <a href = "{{path('consulterFichier', {'id' : application.refCatalogue.docInfoComplementaire.id }) }}"> {{ application.refCatalogue.docInfoComplementaire.FileName }} </a>
+                                                                {% endif %}
                                                         </td>
                                                 </tr>					
                                         </table>
@@ -902,7 +902,11 @@
                                                         </tr>
                                                         <tr>
                                                             <td id="label"> Dossier Technique </td>
-                                                            <td id="text"> {{ package.dossierTechnique }} </td>
+                                                            <td id="text"> 
+                                                                {% if package.dossierTechnique is not null %}
+                                                                        <a href = "{{path('consulterFichier', {'id' : package.dossierTechnique.id }) }}"> {{ package.dossierTechnique.FileName }} </a>
+                                                                {% endif %}
+                                                            </td>
                                                         </tr>
                                                     {% endif %}
                                                 {% endif %}
@@ -1111,7 +1115,13 @@
                                                                                                       ] %}
                                                         <tr>
                                                             <td id="label"> PV de pré-qualification </td>
-                                                            <td> {{ package.qualification.pVPrequalification }} </td>
+                                                            <td>
+                                                                 {% if package.qualification.pVPrequalification is not null %}
+                                                                     
+                                                                        <a href = "{{path('consulterFichier', {'id' : package.qualification.pVPrequalification.id }) }}"> {{ package.qualification.pVPrequalification.fileName }} </a>
+                                                                      
+                                                                 {% endif %}
+                                                            </td>
                                                         </tr>
                                                     {% endif %}
                                                     {% if app.session and app.session.get('role') in ['Administrateur',
@@ -1138,7 +1148,11 @@
                                                                                                       ] %}
                                                         <tr>
                                                             <td id="label"> PV de qualification </td>
-                                                            <td> {{ package.qualification.pVQualification }} </td>
+                                                            <td>
+                                                                {% if package.qualification.pVQualification is not null %}
+                                                                        <a href = "{{path('consulterFichier', {'id' : package.qualification.pVQualification.id }) }}"> {{ package.qualification.pVQualification.FileName }} </a>
+                                                                 {% endif %}
+                                                            </td>
                                                         </tr>
                                                     {% endif %}
                                                     {% if app.session and app.session.get('role') in ['Administrateur',

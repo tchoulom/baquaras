@@ -233,42 +233,46 @@
                                                     {% for package in application.packages %}
                                                         {% if package.statutQualif.libelle is defined %}
                                                                 {% if package.statutQualif.libelle is not null %}
-                                                                    {% if package.statutQualif.libelle == "Planifiée" %}
+                                                                    {% if package.statutQualif.libelle == "Planifiée" and user is not null %}
                                                                         {% if user.profil1.libelle in adminChefProd %}
                                                                             <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
                                                                         {% else %}
                                                                             <span  style="color:gray;">Modifier</span><br> 
                                                                         {% endif %}
                                                                     {% endif %}
-                                                                    {% if package.statutQualif.libelle == "Pré-qualifiée" %}
+                                                                    {% if package.statutQualif.libelle == "Pré-qualifiée" and user is not null %}
                                                                         {% if user.profil1.libelle in adminChefProdQualif %}
                                                                             <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
                                                                         {% else %}
                                                                             <span  style="color:gray;">Modifier</span><br>
                                                                         {% endif %}
                                                                     {% endif %}
-                                                                    {% if package.statutQualif.libelle == "Packaging" or package.statutQualif.libelle == "Pré-production"  %}
+                                                                    {% if package.statutQualif.libelle == "Packaging" or package.statutQualif.libelle == "Pré-production" and user is not null  %}
                                                                         {% if user.profil1.libelle in adminQualif %}
                                                                             <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
                                                                         {% else %}
                                                                             <span  style="color:gray;">Modifier</span><br>                                                                          
                                                                         {% endif %}
                                                                     {% endif %}
-                                                                    {% if package.statutQualif.libelle == "En production" or package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance" or package.statutQualif.libelle == "Retirée de la production" %}
-                                                                        {% if user.profil1.libelle in adminIntegra %}
-                                                                            <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                    {% if package.statutQualif.libelle == "En production" or package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance" or package.statutQualif.libelle == "Retirée de la production" and user is not null %}
+                                                                        {% if user is not null %}
+                                                                            {% if user.profil1.libelle in adminIntegra %}
+                                                                                <a href="{{path('modifierApplication', {'id': application.id }) }}"> Modifier </a> <br/>
+                                                                            {% else %}
+                                                                                <span  style="color:gray;">Modifier</span><br>
+                                                                            {% endif %}
                                                                         {% else %}
-                                                                            <span  style="color:gray;">Modifier</span><br>
+                                                                                <span  style="color:gray;">Modifier</span><br>
                                                                         {% endif %}
                                                                     {% endif %}     
                                                                     
-                                                                    {% if user.profil1.libelle in adminIntegra and (package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance") %}                                                                                     
+                                                                    {% if user is not null and user.profil1.libelle in adminIntegra and (package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance") %}                                                                                     
                                                                         <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>                                               
                                                                     {% else %}                                                                           
                                                                         <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
                                                                     {% endif %}
                                                                     
-                                                                    {% if user.profil1.libelle in admin %}                                                            
+                                                                    {% if user is not null and user.profil1.libelle in admin %}                                                            
                                                                         <a href="{{path('supprimerApplication', {'id' : application.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette application ?')"> Supprimer </a> <br/>
                                                                     {% else %}
                                                                         <span  style="color:gray;">Supprimer</span>

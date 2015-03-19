@@ -28,14 +28,18 @@
 							<td> {{ form_errors(form) }} </td>
 						</tr>
 						<tr> 
-							<td class="label"> {{ form_label(form.liste) }} </td>
-							<td class="text"> {{ form_widget(form.liste) }} </td> </tr> <tr>  <td> </td>
-							<td class="errors"> {{ form_errors(form.liste) }} </td>
+							<td id="label"> {{ form_label(form.liste) }} </td>
+							<td id="text"> {{ form_widget(form.liste) }} </td> 
+							<td id="errors"> {{ form_errors(form.liste) }} </td>
 						</tr>
 						<tr>
-							<td class="label"> {{ form_label(form.libelle) }} </td>
-							<td class="text"> {{ form_widget(form.libelle) }} </td> </tr> <tr> <td> </td>
-							<td class="errors"> {{ form_errors(form.libelle) }} </td>
+							<td id="label"> {{ form_label(form.libelle) }} </td>
+							<td id="text"> {{ form_widget(form.libelle) }} </td> 
+							<td id="errors"> {{ form_errors(form.libelle) }} </td>
+						</tr>
+						<tr>
+							<td class="annuler"> </td>
+							<td class="valider"> {{ form_widget(form.save) }} <button onClick="window.close()"> Annuler </button> </td>
 						</tr>
 					</table>
 

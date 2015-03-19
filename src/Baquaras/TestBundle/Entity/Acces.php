@@ -3,11 +3,12 @@
 namespace Baquaras\TestBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Acces
  *
- * @ORM\Table()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idx_1", columns={"id"})})
  * @ORM\Entity(repositoryClass="Baquaras\TestBundle\Entity\AccesRepository")
  */
 class Acces

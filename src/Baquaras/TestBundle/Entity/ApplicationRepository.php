@@ -148,6 +148,31 @@ class ApplicationRepository extends EntityRepository
             ->setParameter(2, $lastId);
              $qB->getQuery()->execute();
     }
+    
+    public function updateLienBaquarasLastInsertedAppli($lastId,$newId)
+    {
+        $qB = $this->getEntityManager()->createQueryBuilder();
+        $qB ->update('BaquarasTestBundle:Application', 'a')
+            ->set('a.lien_baquaras', '?1')
+            ->where('a.id = ?2')
+            ->setParameter(1, $newId)
+            ->setParameter(2, $lastId);
+             $qB->getQuery()->execute();
+    }
+    
+    public function getLastApplication($max = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+                   ->orderBy('a.id', 'DESC');
+			
+        if($max)
+        {
+            $qb->setMaxResults($max);
+        }
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 
 
 }

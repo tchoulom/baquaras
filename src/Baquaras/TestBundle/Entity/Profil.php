@@ -18,7 +18,7 @@ class Profil
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -34,6 +34,10 @@ class Profil
      */
     private $droits;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Utilisateur", mappedBy="profil")
+     **/
+    private $utilisateur;
 	
 
 
@@ -113,6 +117,43 @@ class Profil
     public function __construct()
     {
         $this->droits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateur = new \Doctrine\Common\Collections\ArrayCollection();//ERnest TCHOULOM 11-03-2015
     }
+    
+    //Begin Ernest TCHOULOM 11-03-2015
+        /**
+     * Add utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     * @return Profil
+     */
+    public function addUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur[] = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\Baquaras\TestBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+    
+    //End Ernest TCHOULOM 11-03-2015
 
 }

@@ -31,6 +31,12 @@ class Utilisateur
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+     /**
+     * @ORM\ManyToMany(targetEntity="\Baquaras\AppliBundle\Entity\Role", inversedBy="moes", cascade={"persist"})
+     * @ORM\JoinTable(name="utilisateur_role")
+     **/
+    private $role;   //ET 03-03-2015
 
 	/**
      * @var string
@@ -384,6 +390,7 @@ class Utilisateur
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usersDroit = new \Doctrine\Common\Collections\ArrayCollection();
         $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->role = new \Doctrine\Common\Collections\ArrayCollection();//ET 03-03-2015
     }
 
     /**
@@ -543,4 +550,40 @@ class Utilisateur
     {
         return $this->usersDroit;
     }
+    
+    /*Begin ET 03-03-2015*/
+     
+    /**
+     * Add modifsApplication
+     *
+     * @param \Baquaras\AppliBundle\Entity\Role $role
+     * @return Role
+     */
+    public function addRole(\Baquaras\AppliBundle\Entity\Role $role)
+    {
+        $this->role[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param \Baquaras\AppliBundle\Entity\Role $role
+     */
+    public function removeRole(\Baquaras\AppliBundle\Entity\Role $role)
+    {
+        $this->role->removeElement($role);
+    }
+
+    /**
+     * Get role
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+    /*End ET 03-03-2015*/
 }

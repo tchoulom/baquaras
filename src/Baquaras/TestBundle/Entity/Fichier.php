@@ -30,6 +30,13 @@ class Fichier
     private $url;
 	
     private $fichier;
+    
+   /**
+     * @var string
+     *
+     * @ORM\Column(name="fileName", type="string", length=255, nullable=true)
+     */
+    private $fileName;
 
 
     /**
@@ -101,4 +108,40 @@ class Fichier
 	{
 		return __DIR__.'/../../../../web/'.$this->getUploadDir();
 	}
+        
+        /**
+        * Set url
+        *
+        * @param string $fileName
+        * @return Fichier
+        */
+       public function setFileName($fileName)
+       {
+           $this->fileName = $fileName;
+
+           return $this;
+       }
+
+       /**
+        * Get fileName
+        *
+        * @return string 
+        */
+       public function getFileName()
+       {
+           return $this->fileName;
+       }
+       public function getOriginalFileName()
+       {
+           //return $this->fileName;
+           if (null === $this->fichier) 
+                return;
+           $fileName = $this->fichier->getClientOriginalName();// On récupère le nom original du fichier
+           return $fileName;
+       }
+       
+      /*  public function getFileName()
+       {
+            $fileName = $this->fichier->getClientOriginalName();// On récupère le nom original du fichier
+       }*/
 }

@@ -306,14 +306,15 @@
                                                         or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
 							<td id="label"> Assistance </td>
 							<td id="text"> 
-								<select id="listAssistance" multiple>
-                                                                    {#% for agent in application.agents %}
-                                                                        {% if agent.role =="assistance" %}
-                                                                            <option> {{ agent.libelle }} </option>
-                                                                        {% endif %}
-                                                                    {% endfor %#}
+								<select id="listAssistance" multiple>                                     
                                                                     {% for utilisateur in application.utilisateur %}
-                                                                        <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                        {% if utilisateur is defined %}
+                                                                            {% for role in utilisateur.role %}
+                                                                                {% if role == "Assistance" %}
+                                                                                    <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% endif %}
                                                                     {% endfor %}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
@@ -331,7 +332,13 @@
 										{% endif %}
 									{% endfor %#}
                                                                         {% for utilisateur in application.utilisateur %}
-                                                                            <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                            {% if utilisateur is defined %}
+                                                                                {% for role in utilisateur.role %}
+                                                                                    {% if role == "AyantDroit" %}
+                                                                                        <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            {% endif %}
                                                                         {% endfor %}
 								</select>
                                                                 {% if app.session and app.session.get('role') !=  'Technicien support' %}
@@ -348,8 +355,14 @@
                                                                                     <option> {{ agent.libelle }} </option>
                                                                             {% endif %}
                                                                     {% endfor %#}
-                                                                    {% for utilisateur in application.utilisateur %}
-                                                                        <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                   {% for utilisateur in application.utilisateur %}
+                                                                        {% if utilisateur is defined %}
+                                                                            {% for role in utilisateur.role %}
+                                                                                {% if role == "HabiliteInstaller" %}
+                                                                                    <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% endif %}
                                                                     {% endfor %}
                                                             </select>
                                                             {% if app.session and app.session.get('role') !=  'Technicien support' %}
@@ -818,35 +831,43 @@
 					<div class="content" id="gestion">						
 					<table>						
 						<tr>
-							<td id="label"> MOE </td>
+							<td id="label"> Chef de produit </td>
 							<td id="text"> 
-								<select id="listMOE">
-									{#% for agent in application.agents %}
-										{% if agent.role =="moe" %}
-											<option> {{ agent.libelle }} </option>
-										{% endif %}
-									{% endfor %#}
-								</select>
-                                                                {% if app.session and (app.session.get('role') in ['Administrateur',
-                                                                                                    'Responsable qualification',
-                                                                                                    'Qualificateur',
-                                                                                                    'Intégrateur'
-                                                                                                ] 
-                                                                    or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
-                                                                        <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" class="popup"> Modifier les utilisateurs </a>
-                                                                {% endif %}
+                                                            <select id="listMOE" multiple>
+                                                                {% for utilisateur in application.utilisateur %}
+                                                                    {% if utilisateur is defined %}
+                                                                        {% for role in utilisateur.role %}
+                                                                            {% if role == "MOE" %}
+                                                                                <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                            {% if app.session and (app.session.get('role') in ['Administrateur',
+                                                                                                'Responsable qualification',
+                                                                                                'Qualificateur',
+                                                                                                'Intégrateur'
+                                                                                            ] 
+                                                                or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
+                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'moe'}) }}" class="popup"> Modifier les utilisateurs </a>
+                                                            {% endif %}
 							</td>
 						</tr>					
 						<tr>
 							<td id="label"> MOA </td>
-							<td id="text"> 
-								<select id="listMOA">
-									{#% for agent in application.agents %}
-										{% if agent.role =="moa" %}
-											<option> {{ agent.libelle }} </option>
-										{% endif %}
-									{% endfor %#}
-								</select>
+							<td id="text">
+                                                            <select id="listMOA" multiple>
+                                                                {% for utilisateur in application.utilisateur %}
+                                                                    {% if utilisateur is defined %}
+                                                                        {% for role in utilisateur.role %}
+                                                                            {% if role == "MOA" %}
+                                                                                <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </select>
                                                                 {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification',
                                                                                                     'Qualificateur',
@@ -1081,7 +1102,7 @@
 
 					<table>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.referenceApplication) }} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.referenceApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1093,10 +1114,10 @@
                                                             {% endif %}
                                                 
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.referenceApplication) }#} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.referenceApplication) }}</td>
 						</tr>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.usageApplication) }} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.usageApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1106,10 +1127,10 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.usageApplication, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.usageApplication) }#} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.usageApplication) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.dateMiseEnLigneApplication) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1145,10 +1166,10 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.typeCatalogue, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.typeCatalogue) }#} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.typeCatalogue) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.versionPayee) }} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.versionPayee) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1161,7 +1182,7 @@
 							<td id="error"> {{ form_errors(form.refCatalogue.versionPayee) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.cout) }} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.cout) }} </td>
                                                         {% if app.session and (app.session.get('role') in ['Administrateur',
                                                                                                     'Responsable qualification'
                                                                                                 ] 
@@ -1171,12 +1192,12 @@
                                                             <td id="text"> {{ form_widget(form.refCatalogue.cout, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
                                                 </tr> <tr>
-							<td id="error"> {{ form_errors(form.refCatalogue.cout) }#} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.cout) }} </td>
 						</tr>
 						<tr>
-							<td id="label"> {#{ form_label(form.refCatalogue.docInfoComplementaire.fichier) }#} </td>
+							<td id="label"> {{ form_label(form.refCatalogue.docInfoComplementaire.fichier) }} </td>
 							<td id="text">
-								{#% if application.refCatalogue.docInfoComplementaire.url is defined %}
+								{% if application.refCatalogue.docInfoComplementaire.url is defined %}
 									{{ application.refCatalogue.docInfoComplementaire.url }} 
 								{% endif %}
                                                                 {% if app.session and (app.session.get('role') in ['Administrateur',
@@ -1184,12 +1205,14 @@
                                                                                                 ] 
                                                                     or (app.session.get('role') == 'Chef de produit' and getAuthorisationChefProject(app.session.get('iduser') ,application) )) %}
                                                                     {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier) }}
-                                                               {% else %#}
-                                                                   {#{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }#}
+                                                               
+								{% else %}
+                                                                   {{ form_widget(form.refCatalogue.docInfoComplementaire.fichier, { 'attr':{'disabled':'disabled'} }) }}
+								{% endif %}
 							</td> 
 						</tr> 
 						<tr> 
-							<td id="error"> {#{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }#} </td>
+							<td id="error"> {{ form_errors(form.refCatalogue.docInfoComplementaire.fichier) }} </td>
 						</tr>					
 					</table>
 					</div>
@@ -1527,12 +1550,13 @@
                                                                                                         'Responsable qualification',
                                                                                                     'Qualificateur',
                                                                                                 ]) %}
-                                                            <td id="text"> {{ form_widget(package.dossierTechnique) }} </td>
+                                                            <td id="text"> {{ form_widget(package.dossierTechnique.fichier) }} </td>
                                                         {% else %}
-                                                            <td id="text"> {{ form_widget(package.dossierTechnique, { 'attr':{'disabled':'disabled'} }) }} </td>
+                                                            <td id="text"> {{ form_widget(package.dossierTechnique.fichier, { 'attr':{'disabled':'disabled'} }) }} </td>
                                                         {% endif %}
-                                                </tr> <tr>
-							<td id="error"> {{ form_errors(package.dossierTechnique) }} </td>
+                                                </tr> 
+                                                <tr>
+							<td id="error"> {{ form_errors(package.dossierTechnique.fichier) }} </td>
 						</tr>
 						<tr>
 							<td id="label"> Mode opératoire </td>
@@ -1766,7 +1790,7 @@
                                                         {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
                                                             <td id="text"> 
                                                                     {{ form_widget(package.qualification.agentPreQualif) }} 
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" class="popup"> Modifier les utilisateurs </a>
+                                                                    {#<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'preQualif'}) }}" class="popup"> Modifier les utilisateurs </a>#}
                                                             </td> 
                                                         {% else %}
                                                             <td id="text"> 
@@ -1802,7 +1826,7 @@
                                                         {% if app.session and (app.session.get('role') in ['Administrateur','Responsable qualification']) %}
                                                             <td id="text"> 
                                                                     {{ form_widget(package.qualification.agentQualif) }} 
-                                                                    <a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" class="popup"> Modifier les utilisateurs </a>
+                                                                    {#<a href="{{path('rechercherHarpe', {'applicationId' : application.id, 'champ' : 1, 'action' : 'qualif'}) }}" class="popup"> Modifier les utilisateurs </a>#}
                                                             </td>
                                                         {% else %}
                                                             <td id="text"> 
@@ -1863,13 +1887,17 @@
                                             {% set adminIntegra = ["Administrateur", "Responsable qualification", "Intégrateur"] %}
                                            {% for package in application.packages %}
                                                {% if package.statutQualif.libelle is defined %}
-                                                       {% if package.statutQualif.libelle is not null %}
+                                                    {% if user is not null %}
+                                                       {% if user.profil1.libelle is not null and package.statutQualif.libelle is not null %}
                                                            {% if user.profil1.libelle in adminIntegra and (package.statutQualif.libelle == "Publiée" or package.statutQualif.libelle == "Non publiée" or package.statutQualif.libelle == "Télédistribuée" or package.statutQualif.libelle == "Publiée et télédistribuée" or package.statutQualif.libelle == "Publiée pour maintenance") %}                                                                                     
                                                                <a href="{{path('ajouterMAJ', {'id' : application.id }) }}"> Ajouter Mise à jour </a> <br/>                                               
                                                            {% else %}                                                                           
                                                                <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
                                                            {% endif %}
                                                        {% endif %}
+                                                     {% else %}                                                                           
+                                                        <span  style="color:gray;">Ajouter Mise à jour</span><br>                                                                         
+                                                      {% endif %}
                                                {% endif %}
                                            {% endfor %}
                                                      
@@ -1945,7 +1973,7 @@
 				
 			<div id="boutons">
 				
-				<a href="{{path('listerApplications')}}"> <input type="button" value="Annuler"> </a>
+				<a href="{{path('listerApplications')}}"> <button id="baquaras_testbundle_application_cancel" type="button" value="Annuler">Annuler</button> </a>
 				{{ form_widget(form.save) }}				
 			</div>
 			

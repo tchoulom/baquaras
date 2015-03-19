@@ -43,8 +43,8 @@
                         <td id="errors"> {{ form_errors(form.type) }} </td>
                     </tr>
                     <tr>
-                        <td id="label" style="display:none"> {{ form_label(form.appliReferenceeSIERA) }} </td>
-                        <td> {{ form_widget(form.appliReferenceeSIERA) }} </td> </tr> <tr> <td> </td>
+                        <td id="label"> {{ form_label(form.appliReferenceeSIERA) }} </td>
+                        <td> {{ form_widget(form.appliReferenceeSIERA, {'attr' : { 'style' : 'margin-left:2px'}}) }} </td> </tr> <tr> <td> </td>
                         <td id="errors"> {{ form_errors(form.appliReferenceeSIERA) }} </td>
                     </tr>
                     <tr id="moes">
@@ -83,8 +83,8 @@
                         <td id="errors"> {{ form_errors(form.nomClientSIERA) }} </td>
                     </tr>
                     <tr>
-                        <td class="annuler"> <button onClick="window.close()"> Annuler </button> </td>
-                        <td class="valider"> {{ form_widget(form.save) }} </td>
+                        <td class="annuler"> </td>
+                        <td class="valider"> {{ form_widget(form.save) }} <button onClick="window.close()"> Annuler </button> </td>
                     </tr>
 
                 </table>

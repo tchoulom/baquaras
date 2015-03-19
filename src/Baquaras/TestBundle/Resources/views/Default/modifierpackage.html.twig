@@ -103,6 +103,11 @@
 							<td id="error"> {{ form_errors(form.nomEntreeTNSNAMES) }} </td>
 						</tr>
 						<tr>
+							<td id="label"> {#{ form_label(form.dossierTechnique) }#} </td>
+							<td id="text"> {#{ form_widget(form.dossierTechnique) }#} </td> </tr> <tr>
+							<td id="error"> {#{ form_errors(form.dossierTechnique) }#} </td>
+						</tr>
+						<tr>
 							<td id="label"> {{ form_label(form.commentaire) }} </td>
 							<td id="text"> {{ form_widget(form.commentaire) }} </td> </tr> <tr>
 							<td id="error"> {{ form_errors(form.commentaire) }} </td>

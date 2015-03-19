@@ -49,11 +49,11 @@
                                                                     <button type="button" id="btnRight"> << </button>
                                                             </td>
                                                             <td rowspan="3">
-                                                                    <select id="form_selectDpt" name="selectDpt[]" multiple>
-                                                                            {% for pop in application.populationCible %}
-                                                                                    <option> {{ pop.libelle }} </option>
-                                                                            {% endfor %}
-                                                                    </select>
+                                                                <select id="form_selectDpt" name="selectDpt[]" multiple>
+                                                                        {% for pop in application.populationCible %}
+                                                                                <option> {{ pop.libelle }} </option>
+                                                                        {% endfor %}
+                                                                </select>
                                                             </td>
                                                     </tr>
                                                     <tr id="unite_departementale">

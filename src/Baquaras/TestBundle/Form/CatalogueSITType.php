@@ -22,7 +22,7 @@ class CatalogueSITType extends AbstractType
 	
         $builder
             ->add('referenceApplication', 'text', array(
-				'label' => 'Référénce de l\'application dans le catalogue'))
+				'label' => 'Référence de l\'application dans le catalogue'))
             ->add('usageApplication', 'text', array(
 				'label' => 'Usage de l\'application'))
             ->add('dateMiseEnLigneApplication', 'date', array(
@@ -39,7 +39,7 @@ class CatalogueSITType extends AbstractType
 				'label' => 'Version payée'))
             ->add('cout', 'text', array(
 				'label' => 'Coût (en euros)'))
-            //->add('docInfoComplementaire', new FichierType())
+            ->add('docInfoComplementaire', new FichierType())
         ;
     }
     

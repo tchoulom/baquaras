@@ -136,11 +136,9 @@ class Package
      * @ORM\Column(name="Commentaire", type="string", length=2000, nullable=true)
      */
     private $commentaire;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="Dossier_Technique", type="string", length=2000, nullable=true)
+
+   /**
+     * @ORM\OneToOne(targetEntity="Fichier", cascade={"persist"})
      */
     private $dossierTechnique;
 
@@ -545,10 +543,10 @@ class Package
     /**
      * Set dossierTechnique
      *
-     * @param string $dossierTechnique
+     * @param \Baquaras\TestBundle\Entity\Package $dossierTechnique
      * @return Package
      */
-    public function setDossierTechnique($dossierTechnique)
+    public function setDossierTechnique(\Baquaras\TestBundle\Entity\Fichier $dossierTechnique = null)
     {
         $this->dossierTechnique = $dossierTechnique;
 
@@ -558,7 +556,7 @@ class Package
     /**
      * Get dossierTechnique
      *
-     * @return string 
+     * @return \Baquaras\TestBundle\Entity\Fichier 
      */
     public function getDossierTechnique()
     {

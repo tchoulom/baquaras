@@ -60,6 +60,13 @@
                         </td>
                         <td id="selectD">
                             <select name="rightValues" id="form_rightValues" multiple>
+                                {% for utilisateur in application.utilisateur %}
+                                    {% if utilisateur is defined %}
+                                        {% if utilisateur.Profil1.libelle == "Chef de produit" %}
+                                              <option> {{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             </select>
                         </td>								
                     </tr>	

@@ -72,7 +72,6 @@
                                                                             {{ form_widget(user.nom, { 'attr': { 'id' : 'autocomplete', 'class' : 'ui-autocomplete-input',}}) }}
                                                                         {% endif %}
                                                                     {% endfor %#}
-
                                                                 </td> 
 
                                                         </tr> 
@@ -95,11 +94,57 @@
                                                                 </td>
                                                                 <td>
                                                                         <select id="form_rightValues" name="rightValues[]" multiple>
-                                                                                {% if rightValues is defined %}
+                                                                            {% for userOfAppli in usersOfAppli %}
+                                                                                {% if userOfAppli is defined %}
+                                                                                    {% if userOfAppli is defined %}
+                                                                                        {% for role in userOfAppli.role %}
+                                                                                            {% if role is defined %}
+                                                                                                {% if action == "assistance" %}
+                                                                                                    {% if role == "Assistance" %}
+                                                                                                        {% if userOfAppli.nom is defined and userOfAppli.prenom is defined  %}
+                                                                                                            <option value="{{userOfAppli.nom}} {{userOfAppli.prenom}}">{{userOfAppli.nom}} {{userOfAppli.prenom}}</option>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                                {% if action == "ayantDroit" %}
+                                                                                                    {% if role == "AyantDroit" %}
+                                                                                                        {% if userOfAppli.nom is defined and userOfAppli.prenom is defined  %}
+                                                                                                            <option value="~userOfAppli.nom~">{{userOfAppli.nom}} {{userOfAppli.prenom}}</option>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                                {% if action == "personnes" %}
+                                                                                                    {% if role == "HabiliteInstaller" %}
+                                                                                                        {% if userOfAppli.nom is defined and userOfAppli.prenom is defined  %}
+                                                                                                            <option value="~userOfAppli.nom~">{{userOfAppli.nom}} {{userOfAppli.prenom}}</option>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                                {% if action == "moe" %}
+                                                                                                    {% if userOfAppli.profil1 == "Chef de produit" %}
+                                                                                                        {% if userOfAppli.nom is defined and userOfAppli.prenom is defined  %}
+                                                                                                            <option value="~userOfAppli.nom~">{{userOfAppli.nom}} {{userOfAppli.prenom}}</option>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                                {% if action == "moa" %}
+                                                                                                    {% if role == "MOA" %}
+                                                                                                        {% if userOfAppli.nom is defined and userOfAppli.prenom is defined  %}
+                                                                                                            <option value="~userOfAppli.nom~">{{userOfAppli.nom}} {{userOfAppli.prenom}}</option>
+                                                                                                        {% endif %}
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
+                                                                                            {% endif %}
+                                                                                        {#% for agent in rightValues %}
+                                                                                                <option> {{ agent }} </option>
+                                                                                        {% endfor %#}
+                                                                                         {% endfor %}
+                                                                                    {% endif %}
                                                                                         {#% for agent in rightValues %}
                                                                                                 <option> {{ agent }} </option>
                                                                                         {% endfor %#}
                                                                                 {% endif %}
+                                                                            {% endfor %}
                                                                         </select>
                                                                 </td>
                                                         </tr>

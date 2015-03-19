@@ -14,6 +14,7 @@ use Baquaras\TestBundle\Entity\Application;
 use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Entity\PopulationCible;
 use Baquaras\TestBundle\Entity\Utilisateur;
+use Baquaras\AppliBundle\Entity\Role;
 
 class HarpeController extends Controller
 {
@@ -21,7 +22,7 @@ class HarpeController extends Controller
 	 * @ParamConverter("application", options={"mapping": {"applicationId": "id"}})
 	 */
 	public function rechercherHarpeAction(Request $request, Application $application, $champ, $action)
-    {
+        {
 		$em = $this->getDoctrine()->getManager();
 		//$xml = simplexml_load_file($this->container->get('kernel')->getRootDir().'/../src/Baquaras/TestBundle/Entity/personnes_Full.xml');
 		$rightValues = array();
@@ -108,32 +109,218 @@ class HarpeController extends Controller
 				}
 				$em->flush();
 			}
-                        
-                        /*$select = $request->request->get('rightValues'); //Ernest TCHOULOM 20-02-2015
-			if(!empty($select)) {
-				foreach($select as $personne) {
-                                    $agent = new Agents();
-                                    $agent->setLibelle($personne);
-                                    $agent->setApplication($application);
-                                    $agent->setRole($action);
-                                    $em->persist($agent);
-				}
-				$em->flush();
-			}*///Ernest TCHOULOM Commentaire 20-02-2015
+                       
                         $select = $request->request->get('rightValues'); //Ernest TCHOULOM 20-02-2015
-                        //$select = $_POST['rightValues'];
+                        $leftValues = $request->request->get('leftValues'); //Ernest TCHOULOM 04-03-2015
+                        
+                        if(!empty($leftValues)) //Remove user from application
+                        {
+                            foreach($leftValues as $personne) 
+                            {                                 
+                                $personne = explode(" ", $personne);
+                                if(count($personne) == 2)
+                                {
+                                    $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0], 'prenom'=>$personne[1]));                           
+                                    foreach($utilisateur as $user) 
+                                    {
+                                        foreach($user->getRole() as $role) 
+                                        {
+                                            if($action == "assistance")
+                                            {
+                                                if($role->getName() == "Assistance")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "ayantDroit")
+                                            {
+                                                if($role->getName() == "AyantDroit")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "personnes")
+                                            {
+                                                if($role->getName() == "HabiliteInstaller")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                             if($action == "moa")
+                                            {
+                                                if($role->getName() == "MOA")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "moe")
+                                            {
+                                                if($role->getName() == "MOE")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if(count($personne) == 3)
+                                {
+                                    $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0].' '.$personne[1], 'prenom'=>$personne[2]));                           
+
+                                    foreach($utilisateur as $user) 
+                                    {
+                                       foreach($user->getRole() as $role) 
+                                        {
+                                            if($action == "assistance")
+                                            {
+                                                if($role->getName() == "Assistance")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "ayantDroit")
+                                            {
+                                                if($role->getName() == "AyantDroit")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "personnes")
+                                            {
+                                                if($role->getName() == "HabiliteInstaller")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                             if($action == "moa")
+                                            {
+                                                if($role->getName() == "MOA")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "moe")
+                                            {
+                                                if($role->getName() == "MOE")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
 			if(!empty($select)) {
-				foreach($select as $personne) {                                 
+				foreach($select as $personne) 
+                                {                                 
                                     $personne = explode(" ", $personne);
                                     if(count($personne) == 2)
                                         $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0], 'prenom'=>$personne[1]));                           
                                     if(count($personne) == 3)
                                         $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0].' '.$personne[1], 'prenom'=>$personne[2]));                           
                                     
-                                    foreach($utilisateur as $user) {
-                                    if(($user != null) && is_object($user))
-                                      $user->addApplication($application);
-                                    $em->persist($application);
+                                    foreach($utilisateur as $user) 
+                                    {
+                                        if(($user != null) && is_object($user))
+                                        {
+                                            $countAppForUser = 0;
+                                            $countAssistanceForUser = 0;
+                                            $countaynatDroitForUser = 0;
+                                            $countHabilInstForUser = 0;
+                                            $countMOA = 0;
+                                            $countMOE = 0;
+                                            foreach ($user->getApplication() as $userApp) //Applications attribuees au user
+                                            {
+                                              if($userApp->getId() == $application->getId())
+                                                  $countAppForUser++;
+
+                                              /*if($userApp->getId() == $application->getId())
+                                              {*///}//ET 09-03-2015
+                                                  foreach ($user->getRole() as $userRole)
+                                                  {
+                                                       if($userRole->getName() == "Assistance")
+                                                           $countAssistanceForUser++;           //Le user auquel on souhaite attribuer l application a dejà le role Assistance
+                                                       if($userRole->getName() == "AyantDroit")
+                                                           $countaynatDroitForUser++;
+                                                       if($userRole->getName() == "HabiliteInstaller")
+                                                           $countHabilInstForUser++;
+                                                       if($userRole->getName() == "MOE")
+                                                           $countMOE++;
+                                                       if($userRole->getName() == "MOA")
+                                                           $countMOA++;
+                                                  }
+
+                                              //}//ET 09-03-2015
+                                            }
+                                            if($countAppForUser == 0)
+                                              $user->addApplication($application); //On ajoute l application a lutilisateur
+                                             
+                                            //Un utilisateur peut avoir plusieurs différents types des roles(assistance,ayantDroit...), mais ne peut avoir plusieurs fois le meme type de role
+                                             if($countAssistanceForUser == 0)
+                                             {
+                                                if($action == "assistance")  //On ajoute le role "Assistance" a lutilisateur
+                                                {
+                                                   $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"Assistance"));
+                                                   $user->addRole($role[0]); 
+                                                }
+                                             }
+                                             if($countaynatDroitForUser == 0)
+                                             {
+                                                if($action == "ayantDroit")
+                                                {
+                                                   $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"AyantDroit"));
+                                                   $user->addRole($role[0]); 
+                                                }
+                                             }
+                                             if($countHabilInstForUser == 0)
+                                             {
+                                                if($action == "personnes")
+                                                {
+                                                   $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"HabiliteInstaller"));
+                                                   $user->addRole($role[0]); 
+                                                }
+                                             }
+
+                                             if($countMOE == 0)
+                                             {
+                                                if($action == "moe")
+                                                {
+                                                   $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"MOE"));
+                                                   $user->addRole($role[0]); 
+                                                }
+                                             }
+                                             if($countMOA == 0)
+                                             {
+                                                if($action == "moa")
+                                                {
+                                                   $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"MOA"));
+                                                   $user->addRole($role[0]); 
+                                                }
+                                             }
+                                        }
+                                        $em->persist($application);
                                     }
 				}
 				$em->flush();
@@ -157,8 +344,8 @@ class HarpeController extends Controller
 			}	*/
 			$resultats = array();
 		//}
-		
-		return $this->render('BaquarasTestBundle:Default:rechercherHarpe.html.twig', array('form' => $form->createView(), 'action' => $action, 'rightValues' => $rightValues, 'application'=> $application, 'champ' => $champ, 'agents' => $resultats));
+                
+		return $this->render('BaquarasTestBundle:Default:rechercherHarpe.html.twig', array('form' => $form->createView(), 'action' => $action, 'usersOfAppli' => $application->getUtilisateur(), 'rightValues' => $rightValues, 'application'=> $application, 'champ' => $champ, 'agents' => $resultats));
 	}
 	
 	/**
@@ -238,7 +425,132 @@ class HarpeController extends Controller
 		if($request->request->get('enregistrer') == 'enregistrer') {
 			// on récupère le select des départements sélectionnés
 			// le select ne contient que les id des départements
+                        
+                    //Begin Ernest TCHOULOM 05-03-2015
+                        $leftValues = $request->request->get('leftValues'); //Ernest TCHOULOM 04-03-2015
+                        
+                        if(!empty($leftValues)) //Remove user from application
+                        {
+                            foreach($leftValues as $personne) 
+                            {                                 
+                                $personne = explode(" ", $personne);
+                                if(count($personne) == 2)
+                                {
+                                    $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0], 'prenom'=>$personne[1]));                           
+                                    foreach($utilisateur as $user) 
+                                    {
+                                        foreach($user->getRole() as $role) 
+                                        {
+                                            if($action == "assistance")
+                                            {
+                                                if($role->getName() == "Assistance")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "ayantDroit")
+                                            {
+                                                if($role->getName() == "AyantDroit")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "personnes")
+                                            {
+                                                if($role->getName() == "HabiliteInstaller")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                             if($action == "moa")
+                                            {
+                                                if($role->getName() == "MOA")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "moe")
+                                            {
+                                                if($role->getName() == "MOE")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if(count($personne) == 3)
+                                {
+                                    $utilisateur = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('nom'=>$personne[0].' '.$personne[1], 'prenom'=>$personne[2]));                           
+
+                                    foreach($utilisateur as $user) 
+                                    {
+                                       foreach($user->getRole() as $role) 
+                                        {
+                                            if($action == "assistance")
+                                            {
+                                                if($role->getName() == "Assistance")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "ayantDroit")
+                                            {
+                                                if($role->getName() == "AyantDroit")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "personnes")
+                                            {
+                                                if($role->getName() == "HabiliteInstaller")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                             if($action == "moa")
+                                            {
+                                                if($role->getName() == "MOA")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                            if($action == "moe")
+                                            {
+                                                if($role->getName() == "MOE")
+                                                {
+                                                    $user->removeRole($role);
+                                                    $em->persist($role);
+                                                    $em->flush();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    //End Ernest TCHOULOM 05-03-2015
+                    
 			$pop = $request->request->get('selectDpt');
+                        if(!empty($pop))
 			foreach($pop as $dpt) {
 				$cible = new PopulationCible();
 				// on donne le bon nom

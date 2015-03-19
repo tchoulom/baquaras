@@ -44,8 +44,8 @@
 					<td id="errors"> {{ form_errors(form.oscible) }} </td>
 				</tr>					
 				<tr> 
-					<td class="annuler"> <a href="{{path('modifierApplication', {'id': application.id }) }}"> <button type="button" value="Annuler"> Annuler </button> </a> </td>
-					<td class="valider"> {{ form_widget(form.save) }} </td> 
+					<td class="annuler"> </td>
+					<td class="valider"> {{ form_widget(form.save) }} <a href="{{path('modifierApplication', {'id': application.id }) }}"> <button type="button" value="Annuler"> Annuler </button> </a> </td> 
 				</tr>
 				<tr> 
 					<td colspan="2"> {{ form_rest(form) }} </td>

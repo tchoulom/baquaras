@@ -253,7 +253,19 @@ class Application
      **/
     private $groupeApplications;
 	
-	
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_application_siera", type="integer", nullable=true)
+     */
+    private $id_application_siera;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lien_baquaras", type="string", length=255, nullable=true)
+     */
+    private $lien_baquaras;
 	/**
      * Constructor
      */
@@ -1251,5 +1263,51 @@ class Application
     public function getMoes()
     {
         return $this->moes;
+    }
+    
+     /**
+     * Set id_application_siera
+     *
+     * @param integer $id_application_siera
+     * @return Application
+     */
+    public function setIdApplicationSiera($id_application_siera)
+    {
+        $this->id_application_siera = $id_application_siera;
+
+        return $this;
+    }
+
+    /**
+     * Get id_application_siera
+     *
+     * @return integer 
+     */
+    public function getIdApplicationSiera()
+    {
+        return $this->id_application_siera;
+    }
+    
+    /**
+     * Set lien_baquaras
+     *
+     * @param string $lien_baquaras
+     * @return Application
+     */
+    public function setLienBaquaras($lien_baquaras)
+    {
+        $this->lien_baquaras = $lien_baquaras;
+
+        return $this;
+    }
+
+    /**
+     * Get lien_baquaras
+     *
+     * @return string 
+     */
+    public function getLienBaquaras()
+    {
+        return $this->lien_baquaras;
     }
 }

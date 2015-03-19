@@ -29,7 +29,7 @@
 			
 			{{ form_errors(form) }}
 		 
-			<div>
+			
 				<table>
 					<tr>
 						<td id="label"> {{ form_label(form.profil) }} </td>
@@ -46,11 +46,14 @@
 						<td> {{ form_widget(form.acces) }} </td> </tr> <tr> <td> </td>
 						<td id="errors"> {{ form_errors(form.acces) }} </td>
 					</tr>
+					<tr>
+						<td id="label"></td>
+						<td>{{ form_widget(form.save) }}</td>
+					</tr>
 				</table>
 					
-				{{ form_widget(form.save) }}
-					
-		    </div>
+		    
+			
 			
 			{{ form_end(form) }}
 		

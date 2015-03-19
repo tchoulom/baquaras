@@ -13,6 +13,7 @@ use Baquaras\TestBundle\Entity\AutrePreRequis;
 use Baquaras\TestBundle\Entity\AutrePreRequisApplication;
 use Baquaras\TestBundle\Entity\CatalogueSIT;
 use Baquaras\TestBundle\Entity\DeveloppementApplication;
+use Baquaras\TestBundle\Entity\Droit;
 use Baquaras\TestBundle\Entity\DroitWorkflow;
 use Baquaras\TestBundle\Entity\Fichier;
 use Baquaras\TestBundle\Entity\GestionApplication;
@@ -33,6 +34,8 @@ use Baquaras\TestBundle\Entity\Qualification;
 use Baquaras\TestBundle\Entity\Script;
 use Baquaras\TestBundle\Entity\Statut;
 use Baquaras\TestBundle\Entity\Utilisateur;
+use Baquaras\TestBundle\Entity\PopulationCible;
+use Baquaras\AppliBundle\Entity\Role;
 use Baquaras\TestBundle\Entity\PageRepository;
 use Baquaras\TestBundle\Form\ApplicationType;
 use Baquaras\TestBundle\Form\ApplicationAjoutType;
@@ -53,10 +56,14 @@ class AppliController extends Controller {
     public function listerApplicationsAction($action, $page, $export) {
       
        $user = $this->container->get('security.context')->getToken()->getUser(); //Ernest TCHOULOM 13-02-2015
-       $username = $user->getUsername();
-        //$username = $this->container->get('security.context')->getToken()->getUser();
-       $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
-    // Fonction listant les applications qualifiées
+       if(($user != null) && is_object($user))
+      {
+        $username = $user->getUsername();
+        $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
+      }
+      else
+        $user = null;
+// Fonction listant les applications qualifiées
         if ($this->container->get('management_roles')->RoleVerified('Liste des applications') === false) {
             throw new AccessDeniedException('Accès limité');
         }
@@ -233,6 +240,11 @@ class AppliController extends Controller {
                     'empty_value' => 'Sélectionner une application',
                     'class' => 'BaquarasTestBundle:Application',
                     'property' => 'NomAndVersion'))
+                ->add('autrePreRequis', 'entity', array(
+                    'label' => 'Applications qui ont des prérequis',
+                    'empty_value' => 'Sélectionner un prérequis',
+                    'class' => 'BaquarasTestBundle:Application',
+                    'property' => 'NomAndVersion'))
                 ->add('save', 'submit', array('label' => 'Rechercher'))
                 ->getForm();
 
@@ -251,6 +263,7 @@ class AppliController extends Controller {
             $appliClientServeur = $form["appliClientServeur"]->getData();
             $statut = $form["statut"]->getData();
             $preRequis = $form["preRequis"]->getData();
+            $preRequisAppli = $form["autrePreRequis"]->getData();
 
             if ($nomListe != null) {
                 $applications->clear();
@@ -628,6 +641,10 @@ class AppliController extends Controller {
         /* Installation */
         $installation = new InstallationApplication();
         $application->setInstallation($installation);
+        
+        /* Utilisateur */ //ET
+        //$moes = new Utilisateur();
+        //$moes-addApplication($application);
 
         /* Développement */
         $developpement = new DeveloppementApplication();
@@ -670,12 +687,26 @@ class AppliController extends Controller {
         $request = $this->get('request');
         $id = $this->container->get('session')->get('iduser');
         if(!$id) {
-            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
+            throw new AccessDeniedException('Accès limité vous devez vous connecter');
         }
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                
+                //Begin Ernest TCHOULOM 17-03-2015
+                    $data = $request->request->all();
+                    $moes = $data['baquaras_testbundle_application']['moes'];
+                    $moes = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findBy(array('id'=>$moes));
+                    foreach ($moes as $moes)
+                    {
+                        $moes->addApplication($application);
+                        $role = $this->getDoctrine()->getRepository('BaquarasAppliBundle:Role')->findBy(array('name'=>"MOE"));
+                        $moes->addRole($role[0]);  //On lui rajopute le role MOE(Chef de produit)
+                        $em->persist($moes);
+                    }
+                //Begin Ernest TCHOULOM 16-03-2015
+                
                 $em->persist($application);
                 $em->persist($installation);
                 $em->persist($gestion);
@@ -687,12 +718,12 @@ class AppliController extends Controller {
                 $em->persist($qualification);
                 $em->persist($installationp);
                 $em->flush();
-                foreach($application->getUtilisateur() as $utilisateur) {
+                /*foreach($application->getUtilisateur() as $utilisateur) {
                     $user = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('id'=>$utilisateur->getId()));
                     $user->addApplication($application);
                     $em->persist($user);
                     $em->flush();
-                }
+                }*/
                 
                 //Begin Enest TCHOULOM 16-02-2015
                 //$results = $this->container->get('baquaras.connect_siera')->createAppliInSiera($application->getId(), $application->getNomApplicationSIERA());
@@ -713,13 +744,18 @@ class AppliController extends Controller {
     public function modifierApplicationAction(Application $application)
     {
         if ($this->container->get('management_roles')->RoleVerified('modifier une application') === false) {
-            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
+            throw new AccessDeniedException('Accès limité');
         }
         $em = $this->getDoctrine()->getManager();
         //Begin ET 02-03-2015
          $user = $this->container->get('security.context')->getToken()->getUser(); //Ernest TCHOULOM 13-02-2015
-         $username = $user->getUsername();
-         $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
+         if(($user != null) && is_object($user))
+        {
+          $username = $user->getUsername();
+          $user = $this->container->get('doctrine')->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire' =>$username));
+        }
+        else
+          $user = null;
        //End ET 02-03-2015             
         $pck = $application->getPackages()->first();
         $form = $this->createForm(new ApplicationType($application->getId()), $application);
@@ -727,10 +763,36 @@ class AppliController extends Controller {
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-           // $application->getRefCatalogue()->getDocInfoComplementaire()->upload();
+            //Begin Ernest TCHOULOM 06-03-2015
+            //$fileUploaded = null;
+            $fileUploadedCatalogueSIT = $application->getRefCatalogue()->getDocInfoComplementaire(); //CATALOGUESIT
+            $fileUploadedCatalogueSIT->setFileName($fileUploadedCatalogueSIT->getOriginalFileName());
+            $application->getRefCatalogue()->getDocInfoComplementaire()->upload();
             $em->persist($application);
+            
+            foreach ($application->getPackages() as $onePackage) //PACKAGE
+            {
+                $fileUploadedPackage = $onePackage->getDossierTechnique();
+                $fileUploadedPackage->setFileName($fileUploadedPackage->getOriginalFileName());
+                $onePackage->getDossierTechnique()->upload();
+                $em->persist($application);
+            }
+            
+            foreach ($application->getPackages() as $onePackage)
+            {
+                $fileUploadedPvPrequalif = $onePackage->getQualification()->getPVPrequalification();  //PRE QUALIFICATION
+                $fileUploadedPvPrequalif->setFileName($fileUploadedPvPrequalif->getOriginalFileName());
+                $onePackage->getQualification()->getPVPrequalification()->upload();
+                $em->persist($application);
+                
+                $fileUploadedPvQualif = $onePackage->getQualification()->getPVQualification();   //QUALIFICATION
+                $fileUploadedPvQualif->setFileName($fileUploadedPvQualif->getOriginalFileName());
+                $onePackage->getQualification()->getPVQualification()->upload();
+                $em->persist($application);
+            }
+            
             $em->flush();
-
+            //End Ernest TCHOULOM 06-03-2015
             $this->get('session')->getFlashBag()->add('notice', 'Application mise à jour');
 
             return $this->redirect($this->generateUrl('listerApplications'));
@@ -746,7 +808,7 @@ class AppliController extends Controller {
     public function consulterApplicationAction(Application $application) 
     {
         if (!$this->container->get('management_roles')->RoleVerified('consulter les d')) {
-            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
+            throw new AccessDeniedException('Accès limité');
         }
         if($application->getCodeMoa()) {
             $moa = $this->getDoctrine()->getRepository('BaquarasTestBundle:Utilisateur')->findOneBy(array('cpteMatriculaire'=> $application->getCodeMoa()));
@@ -759,10 +821,10 @@ class AppliController extends Controller {
      */
     public function supprimerApplicationAction(Application $application) {
         if (!$this->container->get('management_roles')->RoleVerified('supprimer une application')) {
-            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
+            throw new AccessDeniedException('Accès limité');
         }
-        if ($this->container->get('management_roles')->RoleVerified() === false) {
-            throw new AccessDeniedException('Accès limité, vous n\'avez pas les droits');
+        if ($this->container->get('management_roles')->RoleVerified('supprimer une application') === false) { //Ernest TCHOULOM 09-03-2015
+            throw new AccessDeniedException('Accès limité');
         }
         $em = $this->getDoctrine()->getManager();
 
@@ -796,10 +858,10 @@ class AppliController extends Controller {
 
         /* Catalogue */
         $catalogue = $application->getRefCatalogue();
-       /* $application->setRefCatalogue();
+		$application->setRefCatalogue();
         if (!empty($catalogue)) {
             $em->remove($catalogue);
-        }*/
+        }
 
         /* Packages Pré-requis */
         $preRequisApplication = $application->getPreRequis();
@@ -869,7 +931,16 @@ class AppliController extends Controller {
                 $em->remove($value);
             }
         }
-
+        
+        //Begin Ernest TCHOULOM 09-03-2015
+         /* Population Cible */
+        $populationCible = $application->getPopulationCible();
+        if (!$populationCible->isEmpty()) {
+            foreach ($populationCible->toArray() as $value) {
+                $em->remove($value);
+            }
+        }
+       //End Ernest TCHOULOM 09-03-2015
         /* Scripts */
 
         /* Application */
@@ -889,11 +960,26 @@ class AppliController extends Controller {
 
         return $response;
     }
-
+   
     public function initialiserAction() {
     // Iniatilise les tables Item et Liste, permettant la customisation de listes déroulantes
         $em = $this->getDoctrine()->getManager();
-
+        
+        //Begin Ernest TCHOULOM 09-03-2015
+            $resultStatus = null;
+            $resultStatus = $em->getRepository('BaquarasTestBundle:Statut')->findAll();
+            if ( $resultStatus != null ) //On doit initialiser une seule fois
+            {
+                $this->get('session')->getFlashBag()->add('notice', 'Initialisation déjà effectuée');
+                return $this->redirect($this->generateUrl('listerApplications'));
+            }
+            /*if( false == $this->container->get('security.context')->isGranted('IS_FULLY_AUTHENTICATED') )
+            {
+                $this->get('session')->getFlashBag()->add('notice', 'Vous devez vous connecter');
+                return $this->redirect($this->generateUrl('listerApplications'));
+            }*/
+        //End Ernest TCHOULOM 09-03-2015
+        
         // Statuts
         $statut1 = new Statut();
         $statut1->setLibelle("Planifiée");
@@ -976,31 +1062,104 @@ class AppliController extends Controller {
         // Pages
         $page1 = new Page();
         $page1->setLibelle("Liste des applications qualifiées");
+        $page1->setType(1);
         $em->persist($page1);
         $page2 = new Page();
         $page2->setLibelle("Ajouter une application");
+        $page2->setType(1);
         $em->persist($page2);
         $page3 = new Page();
         $page3->setLibelle("Modifier une application");
+        $page3->setType(1);
         $em->persist($page3);
         $page4 = new Page();
         $page4->setLibelle("Consulter les détails d'une application");
+        $page4->setType(1);
         $em->persist($page4);
         $page5 = new Page();
         $page5->setLibelle("Ajouter une mise à jour");
+        $page5->setType(1);
         $em->persist($page5);
         $page6 = new Page();
         $page6->setLibelle("Supprimer une application");
+        $page6->setType(1);
         $em->persist($page6);
         $page7 = new Page();
         $page7->setLibelle("Recherche");
+        $page7->setType(1);
         $em->persist($page7);
         $page8 = new Page();
         $page8->setLibelle("Liste des applications en cours de qualification");
+        $page8->setType(1);
         $em->persist($page8);
         $page9 = new Page();
         $page9->setLibelle("Administration");
+        $page9->setType(1);
         $em->persist($page9);
+        $page10 = new Page();
+        $page10->setLibelle("Onglet application");
+        $page10->setType(2);
+        $em->persist($page10);
+        $page11 = new Page();
+        $page11->setLibelle("Onglet package");
+        $page11->setType(2);
+        $em->persist($page11);
+        $page12 = new Page();
+        $page12->setLibelle("Onglet qualification");
+        $page12->setType(2);
+        $em->persist($page12);
+        $page13 = new Page();
+        $page13->setLibelle("Onglet mise à jour");
+        $page13->setType(2);
+        $em->persist($page13);
+        $page14 = new Page();
+        $page14->setLibelle("Informations sur l'application");
+        $page14->setType(3);
+        $em->persist($page14);
+        $page15 = new Page();
+        $page15->setLibelle("Pre-Requis/Non-Requis/Autres pre-requis");
+        $page15->setType(3);
+        $em->persist($page15);
+        $page16 = new Page();
+        $page16->setLibelle("Architecture");
+        $page16->setType(3);
+        $em->persist($page16);
+        $page17 = new Page();
+        $page17->setLibelle("Gestion");
+        $page17->setType(3);
+        $em->persist($page17);
+        $page18 = new Page();
+        $page18->setLibelle("Installation");
+        $page18->setType(3);
+        $em->persist($page18);
+        $page19 = new Page();
+        $page19->setLibelle("Developpement");
+        $page19->setType(3);
+        $em->persist($page19);
+        $page20 = new Page();
+        $page20->setLibelle("Catalogue SIT");
+        $page20->setType(3);
+        $em->persist($page20);
+        $page21 = new Page();
+        $page21->setLibelle("Informations sur le package");
+        $page21->setType(3);
+        $em->persist($page21);
+        $page22 = new Page();
+        $page22->setLibelle("Scripts");
+        $page22->setType(3);
+        $em->persist($page22);
+        $page23 = new Page();
+        $page23->setLibelle("Informations sur la qualification");
+        $page23->setType(3);
+        $em->persist($page23);
+        $page24 = new Page();
+        $page24->setLibelle("Historique de l'avancement de la qualification");
+        $page24->setType(3);
+        $em->persist($page24);
+        $page25 = new Page();
+        $page25->setLibelle("Item Mises a jour");
+        $page25->setType(3);
+        $em->persist($page25);
 
         // Accès
         $acces1 = new Acces();
@@ -1683,6 +1842,1103 @@ class AppliController extends Controller {
         $dw16->setAcces($acces1);
         $em->persist($dw16);
 
+		
+        // Droits
+        // 8 - Utilisateur Non Connecté
+        $dt1 = new Droit();
+        $dt1->setProfil($profil8);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil8);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil8);
+        $dt3->setPage($page3);
+        $dt3->setAcces(0);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil8);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil8);
+        $dt5->setPage($page5);
+        $dt5->setAcces(0);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil8);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil8);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil8);
+        $dt8->setPage($page8);
+        $dt8->setAcces(0);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil8);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil8);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil8);
+        $dt11->setPage($page11);
+        $dt11->setAcces(0);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil8);
+        $dt12->setPage($page12);
+        $dt12->setAcces(0);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil8);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil8);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil8);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil8);
+        $dt16->setPage($page16);
+        $dt16->setAcces(0);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil8);
+        $dt17->setPage($page17);
+        $dt17->setAcces(0);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil8);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil8);
+        $dt19->setPage($page19);
+        $dt19->setAcces(0);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil8);
+        $dt20->setPage($page20);
+        $dt20->setAcces(0);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil8);
+        $dt21->setPage($page21);
+        $dt21->setAcces(0);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil8);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil8);
+        $dt23->setPage($page23);
+        $dt23->setAcces(0);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil8);
+        $dt24->setPage($page24);
+        $dt24->setAcces(0);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil8);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 7 - Lecteur avancé 
+        $dt1 = new Droit();
+        $dt1->setProfil($profil7);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil7);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil7);
+        $dt3->setPage($page3);
+        $dt3->setAcces(0);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil7);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil7);
+        $dt5->setPage($page5);
+        $dt5->setAcces(0);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil7);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil7);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil7);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil7);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil7);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil7);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil7);
+        $dt12->setPage($page12);
+        $dt12->setAcces(0);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil7);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil7);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil7);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil7);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil7);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil7);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil7);
+        $dt19->setPage($page19);
+        $dt19->setAcces(0);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil7);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil7);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil7);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil7);
+        $dt23->setPage($page23);
+        $dt23->setAcces(0);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil7);
+        $dt24->setPage($page24);
+        $dt24->setAcces(0);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil7);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 6 - Technicien support
+        $dt1 = new Droit();
+        $dt1->setProfil($profil6);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil6);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil6);
+        $dt3->setPage($page3);
+        $dt3->setAcces(0);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil6);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil6);
+        $dt5->setPage($page5);
+        $dt5->setAcces(0);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil6);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil6);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil6);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil6);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil6);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil6);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil6);
+        $dt12->setPage($page12);
+        $dt12->setAcces(0);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil6);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil6);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil6);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil6);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil6);
+        $dt17->setPage($page17);
+        $dt17->setAcces(0);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil6);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil6);
+        $dt19->setPage($page19);
+        $dt19->setAcces(0);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil6);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil6);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil6);
+        $dt22->setPage($page22);
+        $dt22->setAcces(0);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil6);
+        $dt23->setPage($page23);
+        $dt23->setAcces(0);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil6);
+        $dt24->setPage($page24);
+        $dt24->setAcces(0);
+        $em->persist($dt24);
+        $em->flush();
+		$dt25 = new Droit();
+        $dt25->setProfil($profil6);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 5 - Intégrateur
+        $dt1 = new Droit();
+        $dt1->setProfil($profil5);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil5);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil5);
+        $dt3->setPage($page3);
+        $dt3->setAcces(1);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil5);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil5);
+        $dt5->setPage($page5);
+        $dt5->setAcces(1);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil5);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil5);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil5);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil5);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil5);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil5);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil5);
+        $dt12->setPage($page12);
+        $dt12->setAcces(1);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil5);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil5);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil5);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil5);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil5);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil5);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil5);
+        $dt19->setPage($page19);
+        $dt19->setAcces(1);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil5);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil5);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil5);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil5);
+        $dt23->setPage($page23);
+        $dt23->setAcces(1);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil5);
+        $dt24->setPage($page24);
+        $dt24->setAcces(1);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil5);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 4 - Chef de produit
+        $dt1 = new Droit();
+        $dt1->setProfil($profil4);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil4);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil4);
+        $dt3->setPage($page3);
+        $dt3->setAcces(1);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil4);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil4);
+        $dt5->setPage($page5);
+        $dt5->setAcces(0);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil4);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil4);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil4);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil4);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil4);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil4);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil4);
+        $dt12->setPage($page12);
+        $dt12->setAcces(1);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil4);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil4);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil4);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil4);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil4);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil4);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil4);
+        $dt19->setPage($page19);
+        $dt19->setAcces(1);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil4);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil4);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil4);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil4);
+        $dt23->setPage($page23);
+        $dt23->setAcces(1);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil4);
+        $dt24->setPage($page24);
+        $dt24->setAcces(1);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil4);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 3 - Qualificateur
+        $dt1 = new Droit();
+        $dt1->setProfil($profil3);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil3);
+        $dt2->setPage($page2);
+        $dt2->setAcces(0);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil3);
+        $dt3->setPage($page3);
+        $dt3->setAcces(1);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil3);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil3);
+        $dt5->setPage($page5);
+        $dt5->setAcces(0);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil3);
+        $dt6->setPage($page6);
+        $dt6->setAcces(0);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil3);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil3);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil3);
+        $dt9->setPage($page9);
+        $dt9->setAcces(0);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil3);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil3);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil3);
+        $dt12->setPage($page12);
+        $dt12->setAcces(1);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil3);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil3);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil3);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil3);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $em->flush();
+        $dt17 = new Droit();
+        $dt17->setProfil($profil3);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil3);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil3);
+        $dt19->setPage($page19);
+        $dt19->setAcces(1);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil3);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil3);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil3);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil3);
+        $dt23->setPage($page23);
+        $dt23->setAcces(1);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil3);
+        $dt24->setPage($page24);
+        $dt24->setAcces(1);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil3);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+
+        // 2 - Responsable qualification
+        $dt1 = new Droit();
+        $dt1->setProfil($profil2);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil2);
+        $dt2->setPage($page2);
+        $dt2->setAcces(1);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil2);
+        $dt3->setPage($page3);
+        $dt3->setAcces(1);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil2);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil2);
+        $dt5->setPage($page5);
+        $dt5->setAcces(1);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil2);
+        $dt6->setPage($page6);
+        $dt6->setAcces(1);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil2);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil2);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil2);
+        $dt9->setPage($page9);
+        $dt9->setAcces(1);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil2);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil2);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil2);
+        $dt12->setPage($page12);
+        $dt12->setAcces(1);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil2);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil2);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil2);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil2);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $dt17 = new Droit();
+        $dt17->setProfil($profil2);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil2);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil2);
+        $dt19->setPage($page19);
+        $dt19->setAcces(1);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil2);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil2);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil2);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil2);
+        $dt23->setPage($page23);
+        $dt23->setAcces(1);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil2);
+        $dt24->setPage($page24);
+        $dt24->setAcces(1);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil2);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+		
+		
+        // 1 - Administrateur
+        $dt1 = new Droit();
+        $dt1->setProfil($profil1);
+        $dt1->setPage($page1);
+        $dt1->setAcces(1);
+        $em->persist($dt1);
+        $dt2 = new Droit();
+        $dt2->setProfil($profil1);
+        $dt2->setPage($page2);
+        $dt2->setAcces(1);
+        $em->persist($dt2);
+        $dt3 = new Droit();
+        $dt3->setProfil($profil1);
+        $dt3->setPage($page3);
+        $dt3->setAcces(1);
+        $em->persist($dt3);
+        $dt4 = new Droit();
+        $dt4->setProfil($profil1);
+        $dt4->setPage($page4);
+        $dt4->setAcces(1);
+        $em->persist($dt4);
+        $dt5 = new Droit();
+        $dt5->setProfil($profil1);
+        $dt5->setPage($page5);
+        $dt5->setAcces(1);
+        $em->persist($dt5);
+        $dt6 = new Droit();
+        $dt6->setProfil($profil1);
+        $dt6->setPage($page6);
+        $dt6->setAcces(1);
+        $em->persist($dt6);
+        $dt7 = new Droit();
+        $dt7->setProfil($profil1);
+        $dt7->setPage($page7);
+        $dt7->setAcces(1);
+        $em->persist($dt7);
+        $dt8 = new Droit();
+        $dt8->setProfil($profil1);
+        $dt8->setPage($page8);
+        $dt8->setAcces(1);
+        $em->persist($dt8);
+        $dt9 = new Droit();
+        $dt9->setProfil($profil1);
+        $dt9->setPage($page9);
+        $dt9->setAcces(1);
+        $em->persist($dt9);
+        $dt10 = new Droit();
+        $dt10->setProfil($profil1);
+        $dt10->setPage($page10);
+        $dt10->setAcces(1);
+        $em->persist($dt10);
+        $dt11 = new Droit();
+        $dt11->setProfil($profil1);
+        $dt11->setPage($page11);
+        $dt11->setAcces(1);
+        $em->persist($dt11);
+        $dt12 = new Droit();
+        $dt12->setProfil($profil1);
+        $dt12->setPage($page12);
+        $dt12->setAcces(1);
+        $em->persist($dt12);
+        $dt13 = new Droit();
+        $dt13->setProfil($profil1);
+        $dt13->setPage($page13);
+        $dt13->setAcces(1);
+        $em->persist($dt13);
+        $dt14 = new Droit();
+        $dt14->setProfil($profil1);
+        $dt14->setPage($page14);
+        $dt14->setAcces(1);
+        $em->persist($dt14);
+        $dt15 = new Droit();
+        $dt15->setProfil($profil1);
+        $dt15->setPage($page15);
+        $dt15->setAcces(1);
+        $em->persist($dt15);
+        $dt16 = new Droit();
+        $dt16->setProfil($profil1);
+        $dt16->setPage($page16);
+        $dt16->setAcces(1);
+        $em->persist($dt16);
+        $dt17 = new Droit();
+        $dt17->setProfil($profil1);
+        $dt17->setPage($page17);
+        $dt17->setAcces(1);
+        $em->persist($dt17);
+        $em->flush();
+        $dt18 = new Droit();
+        $dt18->setProfil($profil1);
+        $dt18->setPage($page18);
+        $dt18->setAcces(1);
+        $em->persist($dt18);
+        $em->flush();
+        $dt19 = new Droit();
+        $dt19->setProfil($profil1);
+        $dt19->setPage($page19);
+        $dt19->setAcces(1);
+        $em->persist($dt19);
+        $em->flush();
+        $dt20 = new Droit();
+        $dt20->setProfil($profil1);
+        $dt20->setPage($page20);
+        $dt20->setAcces(1);
+        $em->persist($dt20);
+        $em->flush();
+        $dt21 = new Droit();
+        $dt21->setProfil($profil1);
+        $dt21->setPage($page21);
+        $dt21->setAcces(1);
+        $em->persist($dt21);
+        $em->flush();
+        $dt22 = new Droit();
+        $dt22->setProfil($profil1);
+        $dt22->setPage($page22);
+        $dt22->setAcces(1);
+        $em->persist($dt22);
+        $em->flush();
+        $dt23 = new Droit();
+        $dt23->setProfil($profil1);
+        $dt23->setPage($page23);
+        $dt23->setAcces(1);
+        $em->persist($dt23);
+        $em->flush();
+        $dt24 = new Droit();
+        $dt24->setProfil($profil1);
+        $dt24->setPage($page24);
+        $dt24->setAcces(1);
+        $em->persist($dt24);
+        $em->flush();
+        $dt25 = new Droit();
+        $dt25->setProfil($profil1);
+        $dt25->setPage($page25);
+        $dt25->setAcces(1);
+        $em->persist($dt25);
+        $em->flush();
+		
         // Droits page
         // Listes 
         $liste1 = new Liste();
@@ -1763,31 +3019,31 @@ class AppliController extends Controller {
         // 1 - Types d'application
         $item1 = new Item();
         $item1->setListe($liste1);
-        $item1->setLibelle("Anti-virus/Sécurité");
+        $item1->setLibelle("Bureautique");
         $em->persist($item1);
         $item2 = new Item();
         $item2->setListe($liste1);
-        $item2->setLibelle("Bureautique");
+        $item2->setLibelle("Métier");
         $em->persist($item2);
         $item3 = new Item();
         $item3->setListe($liste1);
-        $item3->setLibelle("Exploitation/Supervision");
+        $item3->setLibelle("Progiciel");
         $em->persist($item3);
         $item4 = new Item();
         $item4->setListe($liste1);
-        $item4->setLibelle("Maintenance");
+        $item4->setLibelle("Système");
         $em->persist($item4);
         $item5 = new Item();
         $item5->setListe($liste1);
-        $item5->setLibelle("Métier");
+        $item5->setLibelle("Maintenance");
         $em->persist($item5);
         $item6 = new Item();
         $item6->setListe($liste1);
-        $item6->setLibelle("Outil de communication");
+        $item6->setLibelle("Utilitaire");
         $em->persist($item6);
         $item7 = new Item();
         $item7->setListe($liste1);
-        $item7->setLibelle("Progiciel");
+        $item7->setLibelle("Anti-virus/Sécurité");
         $em->persist($item7);
         $item8 = new Item();
         $item8->setListe($liste1);
@@ -1795,11 +3051,11 @@ class AppliController extends Controller {
         $em->persist($item8);
         $item9 = new Item();
         $item9->setListe($liste1);
-        $item9->setLibelle("Système");
+        $item9->setLibelle("Outil de communication");
         $em->persist($item9);
         $item10 = new Item();
         $item10->setListe($liste1);
-        $item10->setLibelle("Utilitaire");
+        $item10->setLibelle("Exploitation/Supervision");
         $em->persist($item10);
 
         // 2 - Liaisons Office
@@ -1867,7 +3123,8 @@ class AppliController extends Controller {
         $em->persist($item22);
 
         // 4 - Paliers techniques
-        /* $item36 = new Item();
+        /*
+        $item36 = new Item();
         $item36->setListe($liste4);
         $item36->setLibelle("XP SP1");
         $em->persist($item36);
@@ -1879,14 +3136,14 @@ class AppliController extends Controller {
         $item38->setListe($liste4);
         $item38->setLibelle("NT");
         $em->persist($item38); */
-        $item36 = new Item();
-        $item36->setListe($liste4);
-        $item36->setLibelle("W7 en 64 bits");
-        $em->persist($item36);
-        $item37 = new Item();
-        $item37->setListe($liste4);
-        $item37->setLibelle("W7 en 32 bits");
-        $em->persist($item37);
+        $item39 = new Item();
+        $item39->setListe($liste4);
+        $item39->setLibelle("W7 en 64 bits");
+        $em->persist($item39);
+        $item40 = new Item();
+        $item40->setListe($liste4);
+        $item40->setLibelle("W7 en 32 bits");
+        $em->persist($item40);
 
         // 5 - Versions de l'outil packaging
         $item23 = new Item();
@@ -2078,6 +3335,24 @@ class AppliController extends Controller {
         $os3->setLibelle("Windows 7/Windows XP");
         $em->persist($os3);
 
+        // Roles
+       $role1 = new Role();
+       $role1->setName("Assistance");
+       $em->persist($role1); //
+       $role2 = new Role();
+       $role2->setName("AyantDroit");
+       $em->persist($role2); //
+       $role3 = new Role();
+       $role3->setName("HabiliteInstaller");
+       $em->persist($role3); //
+       $role4 = new Role();
+       $role4->setName("MOA");
+       $em->persist($role4); //
+       $role5 = new Role();
+       $role5->setName("MOE");
+       $em->persist($role5); //
+
+		
         // 23 - Liaisons Access
         $liais1 = new Item();
         $liais1->setListe($liste23);
@@ -2097,6 +3372,7 @@ class AppliController extends Controller {
         $em->persist($liais4);
         /**/
         $em->flush();
+        //$nbInit = true; //Ernest TCHOULOM 09-03-2015
         $this->get('session')->getFlashBag()->add('notice', 'BDD initialisée');
 
 

@@ -105,8 +105,10 @@ class PackageType extends AbstractType
 					},	
 				'property' => 'libelle',
 				'empty_value' => 'Sélectionner une entrée'))
-			->add('dossierTechnique', 'file', array(
-				'label' => 'Dossier technique'))
+            /*->add('dossierTechnique', 'file', array(
+                    'label' => 'Dossier technique'))*///Ernest TCHOULOM COMMENTAIRE 06-03-2015
+              ->add('dossierTechnique', new FichierType(), array(
+                    'label' => 'Dossier technique'))//Ernest TCHOULOM COMMENTAIRE 06-03-201
             ->add('commentaire', 'textarea', array(
 				'label' => 'Commentaire'))
             ->add('creationCustomActions', 'choice', array(

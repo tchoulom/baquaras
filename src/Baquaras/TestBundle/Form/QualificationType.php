@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Baquaras\TestBundle\Entity\ItemRepository;
 use Baquaras\TestBundle\Entity\AgentsRepository;
+use Baquaras\TestBundle\Entity\QualificationRepository;
+use Baquaras\TestBundle\Security\User\UtilisateurRepository;
 
 class QualificationType extends AbstractType
 {
@@ -54,45 +56,50 @@ class QualificationType extends AbstractType
 				'format' => 'dd MM yyyy',
 				'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
 
-            ->add('pVPrequalification','file', array(
+            ->add('pVPrequalification', new FichierType(), array( //Ernest TCHOULOM "new FichierType()"
 				'label' => 'PV de pré-qualification' ))
-			->add('agentPreQualif', 'entity', array(
+	    ->add('agentPreQualif', 'entity', array(                                                     //Ernest TCHOULOM 11-03-2015
 				'label' => 'Agent chargé de la pré-qualification',
 				'class' => 'BaquarasTestBundle:Utilisateur',
                                 'attr' => array('class' => 'form-control select2'),
                                 'empty_value' => 'Sélectionner l\'agent chargé de pré-qualification',
-                'property' => 'libelle',
-                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) use ($id)
+                'property' => 'getCompleteName',
+                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) //use ($id)//Ernest TCHOULOM 11-03-2015
                 {
                         return $er->createQueryBuilder('a')
-                                        ->where('a.id = :id')
-					->andWhere('a.profil1 = :profil1')
-                                        ->setParameter('id', $id)
-					->setParameter('profil1', 1);
+                                  ->leftJoin('a.profil1', 'prof')
+                                  ->addSelect('prof')
+                                  ->where('prof.libelle = :libelle1')
+                                  ->setParameter('libelle1', 'Qualificateur')   
+                                  ->orWhere('prof.libelle = :libelle2')
+                                  ->setParameter('libelle2', 'Responsable qualification');
                 },
-				))
+		) )
             
             /*->add('type', 'choice', array('label' => 'Type', 'choices' => $this->libelle(), 'attr' => array('class' => 'form-control select2'), 'empty_value' => 'Sélectionnez l\'agent')) */                                   
-            ->add('pVQualification', 'file', array(
+            ->add('pVQualification', new FichierType(), array( //Ernest TCHOULOM "new FichierType()"
 				'label' => 'PV de Qualification'))
             ->add('datePVQualification', 'date', array(
 				'label' => 'Date du PV de qualification',
 				'format' => 'dd MM yyyy',
 				'empty_value' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour')))
-			->add('agentQualif', 'entity', array(
+	->add('agentQualif', 'entity', array(                                                           //Ernest TCHOULOM 11-03-2015
 				'label' => 'Agent chargé de la qualification',
 				'class' => 'BaquarasTestBundle:Utilisateur',
-                'property' => 'libelle',
+                'property' => 'getCompleteName',
                 'empty_value' => 'Sélectionner l\'agent chargé de qualification',            
-                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) use ($id)
+                'query_builder' => function(\Baquaras\TestBundle\Security\User\UtilisateurRepository $er) //use ($id) //Ernest TCHOULOM 11-03-2015
                 {
-                        return $er->createQueryBuilder('a')
-                                        ->where('a.id = :id')
-                                        ->andWhere('a.profil1 = :profil1')
-                                        ->setParameter('id', $id)
-                                        ->setParameter('profil1', 1);
+                         return $er->createQueryBuilder('a')
+                                  ->leftJoin('a.profil1', 'prof')
+                                  ->addSelect('prof')
+                                  ->where('prof.libelle = :libelle1')
+                                  ->setParameter('libelle1', 'Qualificateur')   
+                                  ->orWhere('prof.libelle = :libelle2')
+                                  ->setParameter('libelle2', 'Responsable qualification');
                 },
-				'read_only' => 'true'))
+		))
+
             ->add('sousCompte', 'text', array(
 				'label' => 'Sous compte'))
 			->add('commentaire', 'textarea', array(

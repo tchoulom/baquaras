@@ -64,11 +64,11 @@ class ApplicationType extends AbstractType
 					},	
 				'property' => 'libelle',
 				'empty_value' => 'Sélectionnez un système d\'exploitation'))				
-          /*  ->add('dansCatalogueSIT', 'choice', array(
+            ->add('dansCatalogueSIT', 'choice', array(
 				'label'=>'Application référencée dans le catalogue SIT',
 				'choices' => array(1=>'Oui', 0=> 'Non'),
 				'expanded' => true,
-				'multiple' => false))*/
+				'multiple' => false))
             ->add('inscriteRevuePerformance', 'choice', array(
 				'label'=>'Application inscrite dans la revue performance',
 				'choices' => array(1=>'Oui', 0=> 'Non'),
@@ -77,7 +77,7 @@ class ApplicationType extends AbstractType
             /*->add('groupes', 'text', array(
 				'label' => 'Groupes habilités à installer',
 				'read_only' => 'true' ))*/
-			//->add('refCatalogue', new CatalogueSITType($id))
+			->add('refCatalogue', new CatalogueSITType($id))
 			->add('architecture', new ArchitectureApplicationType())
 			->add('installation', new InstallationApplicationType())
 			->add('developpement', new DeveloppementApplicationType())

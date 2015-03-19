@@ -69,25 +69,20 @@ class Qualification
      * @ORM\Column(name="Date_Production_Qualification", type="datetime", nullable=true)
      */
     private $dateProductionQualification;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="Agent_PreQualif", type="string", length=1000, nullable=true)
-     */
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="qualifications")
+     * @ORM\JoinColumn(name="agentPreQualif", referencedColumnName="id", nullable=true)
+     **/
     private $agentPreQualif;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="PV_Prequalification", type="string", length=1000, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fichier", cascade={"persist"})
      */
     private $pVPrequalification;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="PV_Qualification", type="string", length=1000, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fichier", cascade={"persist"})
      */
     private $pVQualification;
 
@@ -98,11 +93,10 @@ class Qualification
      */
     private $datePVQualification;
 	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="Agent_Qualif", type="string", length=1000, nullable=true)
-     */
+    /**
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="qualifications")
+     * @ORM\JoinColumn(name="agentQualif", referencedColumnName="id", nullable=true)
+     **/
     private $agentQualif;
 	
     /**
@@ -267,13 +261,13 @@ class Qualification
         return $this->dateProductionQualification;
     }
 
-    /**
+     /**
      * Set pVPrequalification
      *
-     * @param string $pVPrequalification
+     * @param \Baquaras\TestBundle\Entity\Qualification $pVPrequalification
      * @return Qualification
      */
-    public function setPVPrequalification($pVPrequalification)
+    public function setPVPrequalification(\Baquaras\TestBundle\Entity\Fichier $pVPrequalification = null)
     {
         $this->pVPrequalification = $pVPrequalification;
 
@@ -283,7 +277,7 @@ class Qualification
     /**
      * Get pVPrequalification
      *
-     * @return string 
+     * @return \Baquaras\TestBundle\Entity\Fichier 
      */
     public function getPVPrequalification()
     {
@@ -293,10 +287,10 @@ class Qualification
     /**
      * Set pVQualification
      *
-     * @param string $pVQualification
+     * @param \Baquaras\TestBundle\Entity\Qualification $pVQualification
      * @return Qualification
      */
-    public function setPVQualification($pVQualification)
+    public function setPVQualification(\Baquaras\TestBundle\Entity\Fichier $pVQualification = null)
     {
         $this->pVQualification = $pVQualification;
 
@@ -306,7 +300,7 @@ class Qualification
     /**
      * Get pVQualification
      *
-     * @return string 
+     * @return \Baquaras\TestBundle\Entity\Fichier 
      */
     public function getPVQualification()
     {
@@ -385,10 +379,10 @@ class Qualification
     /**
      * Set agentPreQualif
      *
-     * @param string $agentPreQualif
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $agentPreQualif
      * @return Qualification
      */
-    public function setAgentPreQualif($agentPreQualif)
+    public function setAgentPreQualif(\Baquaras\TestBundle\Entity\Utilisateur $agentPreQualif = null)
     {
         $this->agentPreQualif = $agentPreQualif;
 
@@ -398,20 +392,20 @@ class Qualification
     /**
      * Get agentPreQualif
      *
-     * @return string 
+     * @return \Baquaras\TestBundle\Entity\Utilisateur 
      */
     public function getAgentPreQualif()
     {
         return $this->agentPreQualif;
     }
-
+ 
     /**
      * Set agentQualif
      *
-     * @param string $agentQualif
+     * @param \Baquaras\TestBundle\Entity\Utilisateur $agentQualif
      * @return Qualification
      */
-    public function setAgentQualif($agentQualif)
+    public function setAgentQualif(\Baquaras\TestBundle\Entity\Utilisateur $agentQualif = null)
     {
         $this->agentQualif = $agentQualif;
 
@@ -421,7 +415,7 @@ class Qualification
     /**
      * Get agentQualif
      *
-     * @return string 
+     * @return \Baquaras\TestBundle\Entity\Utilisateur 
      */
     public function getAgentQualif()
     {
